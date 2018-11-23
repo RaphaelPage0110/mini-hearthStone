@@ -1,4 +1,5 @@
 import identifiers.*;
+import inter.ClientServerInterface;
 
 import java.util.List;
 

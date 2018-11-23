@@ -1,8 +1,10 @@
+package inter;
+
 import identifiers.*;
 
 import java.util.List;
 
-interface ClientServerInterface {
+public interface ClientServerInterface {
 
     void attack(IdMinion minion, IdTarget target);
     void castSpell(IdSpell spell, IdTarget target);

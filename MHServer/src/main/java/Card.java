@@ -1,4 +1,3 @@
-package MHServer;
 
 public abstract class Card {
 	
@@ -9,10 +8,16 @@ public abstract class Card {
 		WARRIOR;
 	}
 	
-	protected void attack(Card target);
+	protected void attack(Card target) {
+
+	}
 	
-	protected void attack(Hero target);
+	protected void attack(Hero target) {
+
+	}
 	
-	protected void summon();	
+	protected void summon() {
+
+	}
 	
 }

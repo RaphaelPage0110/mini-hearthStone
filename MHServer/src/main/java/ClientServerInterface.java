@@ -1,17 +1,19 @@
-package MHServer;
+import identifiers.*;
+
+import java.util.List;
 
 interface ClientServerInterface {
 
-    void attack(idMinion, idTarget);
-    void castSpell(idSpell, idTarget);
-    void summon(idMinion);
+    void attack(IdMinion minion, IdTarget target);
+    void castSpell(IdSpell spell, IdTarget target);
+    void summon(IdMinion minion);
     void createHand();
     void skipTurn();
     void draw();
     void surrender();
-    void notify(idPlayer, idPlayer);
-    void getState(List<Integer>);
-    void matchmaking(idClient);
-    void tryMatch(idClient);
+    void notifyPlayers(IdPlayer player1, IdPlayer player2);
+    void getState(List<Integer> updatesList);
+    void matchmaking(IdPlayer client);
+    void tryMatch(IdPlayer client);
 
 }

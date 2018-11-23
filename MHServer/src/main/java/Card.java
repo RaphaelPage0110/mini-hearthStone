@@ -9,10 +9,6 @@ public abstract class Card {
 		WARRIOR;
 	}
 	
-	protected void attack(Card target);
-	
-	protected void attack(Hero target);
-	
-	protected void summon();	
+	public int cost;
 	
 }

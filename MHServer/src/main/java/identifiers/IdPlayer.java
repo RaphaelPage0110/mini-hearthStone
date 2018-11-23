@@ -1,4 +1,4 @@
 package identifiers;
 
-public class IdPlayer implements Id {
+public class IdPlayer extends Id {
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mini-hearthStone" />
+        <module name="mini-hearthstone-client" />
+        <module name="mini-hearthstone-database" />
+        <module name="mini-hearthstone-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mini-hearthStone" target="1.5" />
+      <module name="mini-hearthstone-client" target="1.5" />
+      <module name="mini-hearthstone-database" target="1.5" />
+      <module name="mini-hearthstone-server" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

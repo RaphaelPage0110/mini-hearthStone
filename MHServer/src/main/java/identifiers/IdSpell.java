@@ -1,4 +1,4 @@
 package identifiers;
 
-public class IdSpell extends Id {
+public class IdSpell implements Id {
 }

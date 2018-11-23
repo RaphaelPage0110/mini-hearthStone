@@ -1,4 +1,4 @@
 package identifiers;
 
-public class Id {
+interface Id {
 }

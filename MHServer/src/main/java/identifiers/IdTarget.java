@@ -1,4 +1,4 @@
 package identifiers;
 
-public class IdTarget extends Id {
+public class IdTarget implements Id {
 }

@@ -1,4 +1,3 @@
-package MHServer;
 
 public abstract class Card {
 	
@@ -8,7 +7,5 @@ public abstract class Card {
 		MAGE,
 		WARRIOR;
 	}
-	
-	public int cost;
 	
 }

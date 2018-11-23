@@ -1,0 +1,4 @@
+package identifiers;
+
+interface Id {
+}

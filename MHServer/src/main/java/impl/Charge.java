@@ -2,7 +2,7 @@ package impl;
 
 import inter.*;
 
-public class Charge implements MinionAction {
+public class Charge implements CardAction {
 
     private Minion myMinion;
 

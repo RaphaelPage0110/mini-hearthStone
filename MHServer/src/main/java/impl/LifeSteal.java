@@ -3,7 +3,7 @@ package impl;
 import inter.MinionAction;
 import inter.Target;
 
-public class LifeSteal implements MinionAction {
+public class LifeSteal implements CardAction {
 
     private Minion myMinion;
 

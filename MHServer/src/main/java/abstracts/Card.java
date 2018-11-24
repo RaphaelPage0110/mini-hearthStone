@@ -11,7 +11,7 @@ public abstract class Card {
         WARRIOR;
     }
     protected CardType type;
-    protected Hero hero;
+    protected Player player;
     protected int requiredMana;
     protected int healthPoints;
     protected int damagePoints;
@@ -25,12 +25,12 @@ public abstract class Card {
         this.type = _type;
     }
 
-    public Hero getHero() {
+    public Player getPlayer() {
         return hero;
     }
 
-    public void setHero(Hero _hero) {
-        this.hero = _hero;
+    public void setPlayer(Player _player) {
+        this.player = _player;
     }
 
     public void setRequiredMana(int _requiredMana) {

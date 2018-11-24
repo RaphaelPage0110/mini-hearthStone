@@ -1,4 +1,4 @@
-package impl;
+package abstracts;
 
 import abstracts.Card;
 import identifiers.IdMinion;

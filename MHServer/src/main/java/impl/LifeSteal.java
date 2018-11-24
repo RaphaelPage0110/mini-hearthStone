@@ -1,7 +1,8 @@
 package impl;
 
-import inter.MinionAction;
+import inter.CardAction;
 import inter.Target;
+import abstracts.Minion;
 
 public class LifeSteal implements CardAction {
 
@@ -12,7 +13,7 @@ public class LifeSteal implements CardAction {
     }
 
     public void effect(Target myTarget) {
-        myMinion.getHero().heal(
+        myMinion.getPlayer().getMyHero().heal(
                 myTarget.takeDamage( myMinion.getDamagePoints()) );
     }
 }

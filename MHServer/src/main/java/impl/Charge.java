@@ -1,6 +1,8 @@
 package impl;
 
-import inter.*;
+import inter.Target;
+import inter.CardAction;
+import abstracts.Minion;
 
 public class Charge implements CardAction {
 

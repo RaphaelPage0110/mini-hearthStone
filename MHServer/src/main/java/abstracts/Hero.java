@@ -1,9 +1,9 @@
-package impl;
+package abstracts;
 
 import identifiers.IdHero;
 import inter.Target;
 
-public class Hero implements Target {
+public abstract class Hero implements Target {
 
     private IdHero id;
     private int healthPoints;

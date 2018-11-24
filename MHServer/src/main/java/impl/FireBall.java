@@ -1,6 +1,7 @@
 package impl;
 
-import inter.*;
+import inter.Target;
+import abstracts.Spell;
 
 public class FireBall implements CardAction {
 

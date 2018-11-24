@@ -8,11 +8,13 @@ public abstract class Card {
         COMMON,
         PALADIN,
         MAGE,
-        WARRIOR
+        WARRIOR;
     }
     protected CardType type;
     protected Hero hero;
     protected int requiredMana;
+    protected int healthPoints;
+    protected int damagePoints;
     protected ArrayList<CardAction> myActions;
 
     public CardType getType() {
@@ -31,10 +33,6 @@ public abstract class Card {
         this.hero = _hero;
     }
 
-    public void getHero(Hero _hero) {
-        return this.hero;
-    }
-
     public void setRequiredMana(int _requiredMana) {
         this.requiredMana = _requiredMana;
     }
@@ -42,7 +40,23 @@ public abstract class Card {
     public int getRequiredMana() {
         return this.requiredMana;
     }
-    
+
+    public int getHealthPoints() {
+        return this.healthPoints;
+    }
+
+    public int getDamagePoints() {
+        return this.damagePoints;
+    }
+
+    public void setHealthPoints(int _healthPoints) {
+        this.healthPoints = _healthPoints;
+    }
+
+    public void setDamagePoints(int _damagePoints) {
+        this.damagePoints = _damagePoints;
+    }
+
     public void effect(Target myTarget) {
  			 for (CardAction action : myActions) {
  					 action.effect(myTarget);

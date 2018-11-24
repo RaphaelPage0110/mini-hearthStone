@@ -4,27 +4,29 @@ import inter.MinionAction;
 
 import java.util.ArrayList;
 
-public class WolfRider extends Minion {
+public class Champion extends Minion {
 
-    public WolfRider() {
+    public Champion() {
         super();
         myActions.add(new Charge(this));
-        requiredMana = 3;
+        myActions.add(new LifeSteal(this));
+        requiredMana = 4;
         damagePoints = 3;
-        healthPoints = 1;
-        type = CardType.COMMON;
+        healthPoints = 2;
+        type = CardType.PALADIN;
     }
 
-    public WolfRider(int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
+    public Champion(int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
         super();
         myActions.add(new Charge(this));
+        myActions.add(new LifeSteal(this));
         requiredMana = _requiredMana;
         damagePoints = _damagePoints;
         healthPoints = _healthPoints;
         type = _type;
     }
 
-    public WolfRider(ArrayList<MinionAction> _myActions, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
+    public Champion(ArrayList<MinionAction> _myActions, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
         super();
         myActions = _myActions;
         requiredMana = _requiredMana;
@@ -32,5 +34,4 @@ public class WolfRider extends Minion {
         healthPoints = _healthPoints;
         type = _type;
     }
-
 }

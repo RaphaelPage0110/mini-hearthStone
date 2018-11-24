@@ -8,7 +8,7 @@ public abstract class Card {
         COMMON,
         PALADIN,
         MAGE,
-        WARRIOR;
+        WARRIOR
     }
     protected CardType type;
     protected Hero hero;

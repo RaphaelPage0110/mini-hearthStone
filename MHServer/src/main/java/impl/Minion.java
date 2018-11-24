@@ -4,16 +4,19 @@ import abstracts.Card;
 import identifiers.IdMinion;
 import inter.*;
 
+import java.util.ArrayList;
+
 public abstract class Minion extends Card implements Target {
 
     private IdMinion id;
-    protected MinionAction myAction;
+    protected ArrayList<MinionAction> myActions;
     protected int healthPoints;
     protected int damagePoints;
     protected int requiredMana;
 
     public Minion() {
         this.id = new IdMinion(this);
+        this.myActions = new ArrayList<MinionAction>();
     }
 
     public int getHealthPoints() {
@@ -46,6 +49,8 @@ public abstract class Minion extends Card implements Target {
     }
 
     public void effect(Target myTarget) {
-        myAction.effect(myTarget);
+        for (MinionAction action : myActions) {
+            action.effect(myTarget);
+        }
     }
 }

@@ -4,6 +4,11 @@ import inter.CardAction;
 import inter.Target;
 import abstracts.Minion;
 
+/**
+ * Class representing the special action "life steal".
+ * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
+ * @version 0.1
+ */
 public class LifeSteal implements CardAction {
 
     private Minion myMinion;

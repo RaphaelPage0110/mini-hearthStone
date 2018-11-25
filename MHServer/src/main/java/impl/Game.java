@@ -1,6 +1,7 @@
 package impl;
 
-import impl.Player;
+import abstracts.Minion;
+import identifiers.IdGame;
 import java.util.ArrayList;
 
 public class Game {
@@ -45,8 +46,8 @@ public class Game {
   	* Sets new value of minionsInPlay
   	* @param
   	*/
-  	public void addMinionsInPlay(ArrayList<Minion> _newMinion) {
-  		this.minionsInPlay.add(_newMinion);
+  	public void setMinionsInPlay(ArrayList<Minion> _newMinion) {
+  		this.minionsInPlay = _newMinion;
   	}
 
   	/**

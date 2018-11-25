@@ -1,6 +1,7 @@
 package impl;
 
-import inter.MinionAction;
+import abstracts.Minion;
+import inter.CardAction;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class Champion extends Minion {
         type = _type;
     }
 
-    public Champion(ArrayList<MinionAction> _myActions, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
+    public Champion(ArrayList<CardAction> _myActions, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
         super();
         myActions = _myActions;
         requiredMana = _requiredMana;

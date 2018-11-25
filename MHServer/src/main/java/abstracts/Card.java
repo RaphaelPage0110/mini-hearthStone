@@ -1,6 +1,10 @@
 package abstracts;
 
-import impl.Hero;
+import impl.Player;
+import inter.CardAction;
+import inter.Target;
+
+import java.util.ArrayList;
 
 public abstract class Card {
 
@@ -14,7 +18,6 @@ public abstract class Card {
     protected CardType type;
     protected Player player;
     protected int requiredMana;
-    protected int healthPoints;
     protected int damagePoints;
     protected ArrayList<CardAction> myActions;
 
@@ -28,31 +31,23 @@ public abstract class Card {
     }
 
     public Player getPlayer() {
-        return hero;
+        return this.player;
     }
 
     public void setPlayer(Player _player) {
         this.player = _player;
     }
 
-    public void setRequiredMana(int _requiredMana) {
-        this.requiredMana = _requiredMana;
-    }
-
     public int getRequiredMana() {
         return this.requiredMana;
     }
 
-    public int getHealthPoints() {
-        return this.healthPoints;
+    public void setRequiredMana(int _requiredMana) {
+        this.requiredMana = _requiredMana;
     }
 
     public int getDamagePoints() {
         return this.damagePoints;
-    }
-
-    public void setHealthPoints(int _healthPoints) {
-        this.healthPoints = _healthPoints;
     }
 
     public void setDamagePoints(int _damagePoints) {
@@ -60,8 +55,8 @@ public abstract class Card {
     }
 
     public void effect(Target myTarget) {
- 			 for (CardAction action : myActions) {
- 					 action.effect(myTarget);
- 			 }
- 	 }
+        for (CardAction action : myActions) {
+            action.effect(myTarget);
+        }
+    }
 }

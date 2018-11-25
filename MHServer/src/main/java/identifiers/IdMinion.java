@@ -1,6 +1,6 @@
 package identifiers;
 
-import impl.Minion;
+import abstracts.Minion;
 
 public class IdMinion extends IdTarget {
     private Minion minion;

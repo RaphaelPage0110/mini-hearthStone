@@ -10,12 +10,14 @@ public abstract class Card {
         MAGE,
         WARRIOR;
     }
+
     protected CardType type;
     protected Player player;
     protected int requiredMana;
     protected int healthPoints;
     protected int damagePoints;
     protected ArrayList<CardAction> myActions;
+
 
     public CardType getType() {
         return this.type;

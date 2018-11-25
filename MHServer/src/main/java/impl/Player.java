@@ -9,8 +9,8 @@ public class Player {
     private IdPlayer id;
     private IdPlayer idOpponent;
     private Hero myHero;
-    private <Minion> myMinions;
-    private <Card> myCards;
+    private ArrayList<Minion> myMinions;
+    private ArayList<Card> myCards;
     private int myMana;
 
     /**
@@ -19,7 +19,7 @@ public class Player {
     public addCard(Card _card) {
       myMinions.add(_card);
     }
-  
+
     public <Card> getMyCards() {
       return myCards;
     }

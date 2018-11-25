@@ -9,6 +9,10 @@ public class Tourbillon implements CardAction {
 
     private Spell mySpell;
 
+    public Tourbillon() {
+
+    }
+    
     public Tourbillon(Spell _mySpell) {
         mySpell = _mySpell;
     }

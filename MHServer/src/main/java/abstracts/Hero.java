@@ -8,6 +8,10 @@ public abstract class Hero implements Target {
     private IdHero id;
     private int healthPoints;
 
+    public Hero() {
+      this.id = new IdHero(this);
+    }
+
     public int takeDamage(int damagePoints) {
         //Add armor behavior
         int damages = damagePoints;

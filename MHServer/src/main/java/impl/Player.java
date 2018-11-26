@@ -15,14 +15,19 @@ public class Player {
     private ArrayList<Minion> myMinions;
     private ArrayList<Card> myCards;
     private int myMana;
+    private ArrayList<Card> myStock;
 
     /**
-    * add a new card to the Player's hand
-    */
+     * add a new card to the Player's hand
+     */
     public void addCard(Card card) {
         myCards.add(card);
     }
 
+    /**
+     * Returns value of myCards
+     * @return the list of the cards that are in the player's hand
+     */
     public ArrayList<Card> getMyCards() {
     	return myCards;
     }
@@ -40,7 +45,7 @@ public class Player {
 
   	/**
   	* Returns value of id
-  	* @return
+  	* @return id the id of the player
   	*/
   	public IdPlayer getId() {
   	    return id;
@@ -48,7 +53,7 @@ public class Player {
 
   	/**
   	* Sets new value of id
-  	* @param
+  	* @param id the id of the player
   	*/
   	public void setId(IdPlayer id) {
   	    this.id = id;
@@ -56,7 +61,7 @@ public class Player {
 
   	/**
   	* Returns value of myHero
-  	* @return
+  	* @return myHero the hero of the player
   	*/
   	public Hero getMyHero() {
   	    return myHero;
@@ -64,7 +69,7 @@ public class Player {
 
   	/**
   	* Sets new value of myHero
-  	* @param
+  	* @param myHero the hero of the player
   	*/
   	public void setMyHero(Hero myHero) {
   	    this.myHero = myHero;
@@ -72,7 +77,7 @@ public class Player {
 
   	/**
   	* Returns value of myMana
-  	* @return
+  	* @return myMana the current mana of a player
   	*/
   	public int getMyMana() {
   	    return myMana;
@@ -80,26 +85,45 @@ public class Player {
 
   	/**
   	* Sets new value of myMana
-  	* @param
+  	* @param myMana the current mana of a player
   	*/
+
   	public void setMyMana(int myMana) {
   	    this.myMana = myMana;
   	}
+
     /**
   	* Returns value of myGame
-  	* @return Game
+  	* @return myGame the game in which the player currently is
   	*/
   	public Game getMyGame() {
   	    return myGame;
   	}
 
   	/**
-  	* Sets new value of myMana
-  	* @param
+  	* Sets new value of myGame
+  	* @param myGame the game in which the player currently is
   	*/
   	public void setMyGame(Game myGame) {
   	    this.myGame = myGame;
   	}
+
+	/**
+	 * Returns value of myStock
+	 * @return myStock a part of the player's draw pile
+	 */
+	public ArrayList<Card> getMyStock() {
+		return myStock;
+	}
+
+	/**
+	 * add a new card to a Player's stock
+     * @param newCard a card to add to the draw pile's stock
+	 */
+	public void addCardToStock(Card newCard) {
+		myStock.add(newCard);
+	}
+
   	/**
   	* Default empty Player constructor
   	*/

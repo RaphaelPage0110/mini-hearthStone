@@ -21,13 +21,6 @@ public abstract class Hero implements Target {
     private int healthPoints;
 
     /**
-     * Default empty constructor which initializes the ID.
-     */
-    public Hero() {
-      this.id = new IdHero(this);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public int takeDamage(int damagePoints) {

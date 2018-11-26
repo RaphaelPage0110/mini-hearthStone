@@ -1,6 +1,5 @@
 package impl;
 
-import inter.CardAction;
 import inter.Target;
 import abstracts.Minion;
 import abstracts.Spell;
@@ -14,8 +13,8 @@ public class Tourbillon implements CardAction {
 
     }
     
-    public Tourbillon(Spell mySpell) {
-        this.mySpell = mySpell;
+    public Tourbillon(Spell _mySpell) {
+        mySpell = _mySpell;
     }
 
     public void effect(Target myTarget) {

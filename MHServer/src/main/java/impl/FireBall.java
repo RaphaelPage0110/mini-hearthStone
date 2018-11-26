@@ -3,6 +3,7 @@ package impl;
 import inter.CardAction;
 import inter.Target;
 import abstracts.Spell;
+import inter.CardAction;
 
 public class FireBall implements CardAction {
 

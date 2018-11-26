@@ -24,6 +24,16 @@ public abstract class Minion extends Card implements Target {
     protected int healthPoints;
 
     /**
+     * Indicates if the Minion can attack. Set to false by default, Charge behavior set it to true, and is also set to true at the next turn;
+     */
+    protected boolean canAttack;
+
+    /**
+     * Indicates if the Minion has Taunt behavior, which will be attacked as a priority.
+     */
+    protected boolean hasTaunt;
+
+    /**
      * Default empty constructor which initializes the ID and the list of actions.
      */
     public Minion() {
@@ -63,4 +73,35 @@ public abstract class Minion extends Card implements Target {
         return this.id;
     }
 
+    /**
+     * Returns the value of canAttack.
+     * @return this.canAttack.
+     */
+    public boolean isCanAttack() {
+        return this.canAttack;
+    }
+
+    /**
+     * Sets the new value of canAttack.
+     * @param canAttack the new value.
+     */
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    /**
+     * Returns the value of hasTaunt.
+     * @return this.hasTaunt.
+     */
+    public boolean isHasTaunt() {
+        return this.hasTaunt;
+    }
+
+    /**
+     * Sets the new value of hasTaunt.
+     * @param hasTaunt the new value.
+     */
+    public void setHasTaunt(boolean hasTaunt) {
+        this.hasTaunt = hasTaunt;
+    }
 }

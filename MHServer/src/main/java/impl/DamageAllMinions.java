@@ -5,11 +5,11 @@ import abstracts.Minion;
 import abstracts.Spell;
 import java.util.ArrayList;
 
-public class Whirlwind implements CardAction {
+public class DamageAllMinions implements CardAction {
 
     private Spell mySpell;
     
-    public Whirlwind(Spell mySpell) {
+    public DamageAllMinions(Spell mySpell) {
         this.mySpell = mySpell;
     }
 

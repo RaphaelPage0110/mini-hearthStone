@@ -138,5 +138,30 @@ public class Player {
         this.id = new IdPlayer(this);
   		this.myHero = myHero;
   		this.myMana = 0;
-	 }
+  	}
+
+    /**
+     * allow a player to draw a new card
+     */
+    public void draw() {
+
+        Card newCard;
+        newCard = this.myStock.get(0);
+        myCards.add(newCard);
+        myStock.remove(0);
+
+        refillStock();
+    }
+
+    /**
+     * refill the draw pile stock after it goes below 2 cards
+     * @ TODO: 26/11/18  write this method
+     */
+    private void refillStock() {
+
+        if(myStock.size()< 3) {
+            //...
+        }
+
+    }
 }

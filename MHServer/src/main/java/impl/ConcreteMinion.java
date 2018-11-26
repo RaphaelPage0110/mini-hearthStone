@@ -9,14 +9,14 @@ public class ConcreteMinion extends Minion {
 
     private String name;
 
-    public ConcreteMinion(String _name, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type, ArrayList<CardAction> _myActions) {
+    public ConcreteMinion(String name, int requiredMana, int damagePoints, int healthPoints, CardType type, ArrayList<CardAction> myActions) {
         super();
-        this.name = _name;
-        this.requiredMana = _requiredMana;
-        this.damagePoints = _damagePoints;
-        this.healthPoints = _healthPoints;
-        this.type = _type;
-        this.myActions = _myActions;
+        this.name = name;
+        this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
+        this.healthPoints = healthPoints;
+        this.type = type;
+        this.myActions = myActions;
     }
 
 }

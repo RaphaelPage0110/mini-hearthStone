@@ -16,22 +16,22 @@ public class WolfRider extends Minion {
         type = CardType.COMMON;
     }
 
-    public WolfRider(int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
+    public WolfRider(int requiredMana, int damagePoints, int healthPoints, CardType type) {
         super();
         myActions.add(new Charge(this));
-        requiredMana = _requiredMana;
-        damagePoints = _damagePoints;
-        healthPoints = _healthPoints;
-        type = _type;
+        this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
+        this.healthPoints = healthPoints;
+        this.type = type;
     }
 
-    public WolfRider(ArrayList<CardAction> _myActions, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
+    public WolfRider(ArrayList<CardAction> myActions, int requiredMana, int damagePoints, int healthPoints, CardType type) {
         super();
-        myActions = _myActions;
-        requiredMana = _requiredMana;
-        damagePoints = _damagePoints;
-        healthPoints = _healthPoints;
-        type = _type;
+        this.myActions = myActions;
+        this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
+        this.healthPoints = healthPoints;
+        this.type = type;
     }
 
 }

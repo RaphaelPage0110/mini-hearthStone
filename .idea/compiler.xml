@@ -6,11 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gs-spring-boot (1)" />
+        <module name="gs-spring-boot (2)" />
         <module name="mini-hearthstone" />
         <module name="mini-hearthstone-client" />
         <module name="mini-hearthstone-database" />
         <module name="mini-hearthstone-server" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gs-spring-boot (1)" target="1.8" />
+      <module name="gs-spring-boot (2)" target="1.8" />
+      <module name="mini-hearthstone-client" target="1.5" />
+      <module name="mini-hearthstone-database" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

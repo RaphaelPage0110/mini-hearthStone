@@ -59,10 +59,10 @@ public abstract class Card {
 
     /**
      * Sets the new value of type.
-     * @param _type the new value.
+     * @param type the new value.
      */
-    public void setType(CardType _type) {
-        this.type = _type;
+    public void setType(CardType type) {
+        this.type = type;
     }
 
     /**
@@ -75,10 +75,10 @@ public abstract class Card {
 
     /**
      * Sets the new value of player.
-     * @param _player the new value.
+     * @param player the new value.
      */
-    public void setPlayer(Player _player) {
-        this.player = _player;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     /**
@@ -91,10 +91,10 @@ public abstract class Card {
 
     /**
      * Sets the new value of requiredMana.
-     * @param _requiredMana the new value.
+     * @param requiredMana the new value.
      */
-    public void setRequiredMana(int _requiredMana) {
-        this.requiredMana = _requiredMana;
+    public void setRequiredMana(int requiredMana) {
+        this.requiredMana = requiredMana;
     }
 
     /**
@@ -107,10 +107,10 @@ public abstract class Card {
 
     /**
      * Sets the new value of damagePoints.
-     * @param _damagePoints the new value.
+     * @param damagePoints the new value.
      */
-    public void setDamagePoints(int _damagePoints) {
-        this.damagePoints = _damagePoints;
+    public void setDamagePoints(int damagePoints) {
+        this.damagePoints = damagePoints;
     }
 
     /**

@@ -13,8 +13,8 @@ public class Charge implements CardAction {
 
     private Minion myMinion;
 
-    public Charge(Minion _myMinion) {
-        myMinion = _myMinion;
+    public Charge(Minion myMinion) {
+        this.myMinion = myMinion;
     }
 
     public void effect(Target myTarget) {

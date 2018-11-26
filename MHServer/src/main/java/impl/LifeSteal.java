@@ -13,8 +13,8 @@ public class LifeSteal implements CardAction {
 
     private Minion myMinion;
 
-    public LifeSteal(Minion _myMinion) {
-        myMinion = _myMinion;
+    public LifeSteal(Minion myMinion) {
+        this.myMinion = myMinion;
     }
 
     public void effect(Target myTarget) {

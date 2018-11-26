@@ -27,12 +27,12 @@ public class Champion extends Minion {
         type = _type;
     }
 
-    public Champion(ArrayList<CardAction> _myActions, int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {
+    public Champion(ArrayList<CardAction> myActions, int requiredMana, int damagePoints, int healthPoints, CardType type) {
         super();
-        myActions = _myActions;
-        requiredMana = _requiredMana;
-        damagePoints = _damagePoints;
-        healthPoints = _healthPoints;
-        type = _type;
+        this.myActions = myActions;
+        this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
+        this.healthPoints = healthPoints;
+        this.type = type;
     }
 }

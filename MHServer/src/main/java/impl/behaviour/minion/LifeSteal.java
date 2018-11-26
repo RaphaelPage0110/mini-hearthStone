@@ -1,11 +1,11 @@
-package impl;
+package impl.behaviour.minion;
 
 import inter.CardAction;
 import inter.Target;
 import abstracts.Minion;
 
 /**
- * Class representing the special action "life steal".
+ * Class representing the special action "life steal" used for the "Chillblade Champion" (fr:Champion frisselame) minion.
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */

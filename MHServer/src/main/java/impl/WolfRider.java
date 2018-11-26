@@ -1,6 +1,7 @@
 package impl;
 
 import abstracts.Minion;
+import impl.behaviour.minion.Charge;
 import inter.CardAction;
 
 import java.util.ArrayList;

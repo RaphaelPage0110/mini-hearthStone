@@ -1,11 +1,11 @@
-package impl;
+package impl.behaviour.minion;
 
 import inter.Target;
 import inter.CardAction;
 import abstracts.Minion;
 
 /**
- * Class representing the special action "charge".
+ * Class representing the special action "charge" used for the "Wolf Rider" (fr:Chevaucheur de loup) minion.
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */

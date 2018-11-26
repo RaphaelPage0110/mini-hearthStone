@@ -1,10 +1,17 @@
-package impl;
+package impl.behaviour.generic;
 
 import abstracts.Minion;
 import abstracts.Spell;
+import impl.Player;
 import inter.CardAction;
 import inter.Target;
 
+/**
+ * Class representing the special action "Summon" used for the "Mirror Image" (fr:Image Miroir) spell.
+ * Summon two servants 0/2 with Taunt.
+ * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
+ * @version 0.1
+ */
 public class Summon implements CardAction {
 
     private Spell mySpell;

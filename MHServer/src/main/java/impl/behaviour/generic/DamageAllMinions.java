@@ -1,10 +1,16 @@
-package impl;
+package impl.behaviour.generic;
 import inter.CardAction;
 import inter.Target;
 import abstracts.Minion;
 import abstracts.Spell;
 import java.util.ArrayList;
 
+/**
+ * Class representing the special action "DamageAllMinions" used for the "Whirlwind" (fr:Tourbillon) spell.
+ * Deal 1 damage to ALL minions (including yours).
+ * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
+ * @version 0.1
+ */
 public class DamageAllMinions implements CardAction {
 
     private Spell mySpell;

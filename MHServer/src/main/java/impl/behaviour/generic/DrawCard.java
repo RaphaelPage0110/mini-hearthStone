@@ -1,4 +1,4 @@
-package impl;
+package impl.behaviour.generic;
 
 import abstracts.Spell;
 import inter.CardAction;

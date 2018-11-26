@@ -9,27 +9,23 @@ import java.util.ArrayList;
 public class Tourbillon implements CardAction {
 
     private Spell mySpell;
-
-    public Tourbillon() {
-
-    }
     
     public Tourbillon(Spell mySpell) {
         this.mySpell = mySpell;
     }
 
     public void effect(Target myTarget) {
-/*
+
       myTargets = new ArrayList<Minion>;
-      alliedMinions = new ArrayList<Minion>;
-      opponentsMinions = new ArrayList<Minion>;
+      int damage;
+      
+      damage = mySpell.getDamagePoints();
+      myTargets = mySpell.getPlayer().getMyGame().getMinionsInPlay();
+      
 
-      alliedMinions = mySpell.getPlayer().getMyMinions();
-      opponentsMinions = mySpell.getPlayer().getOpponentsMinions;
-      myTargets = alliedMinions.addAll(0, opponentsMinions);
-
-      for (Minion object: list) {
-        System.out.println(object);
-      }*/
+      for (Minion targeted: myTargets) {
+        targeted.takeDamage(damage);
+      }
+      
     }
 }

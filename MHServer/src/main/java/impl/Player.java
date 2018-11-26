@@ -19,8 +19,8 @@ public class Player {
     /**
     * add a new card to the Player's hand
     */
-    public void addCard(Card _card) {
-        myCards.add(_card);
+    public void addCard(Card card) {
+        myCards.add(card);
     }
 
     public ArrayList<Card> getMyCards() {
@@ -30,8 +30,8 @@ public class Player {
     /**
     * add a new minion to the Player's minions
     */
-    public void addMinion(Minion _minion) {
-        myMinions.add(_minion);
+    public void addMinion(Minion minion) {
+        myMinions.add(minion);
     }
 
     public ArrayList<Minion> getMyMinions() {
@@ -97,8 +97,8 @@ public class Player {
   	* Sets new value of myMana
   	* @param
   	*/
-  	public void setMyGame(Game _myGame) {
-  	    this.myGame = _myGame;
+  	public void setMyGame(Game myGame) {
+  	    this.myGame = myGame;
   	}
   	/**
   	* Default empty Player constructor
@@ -111,7 +111,7 @@ public class Player {
   	* Default Player constructor
   	*/
   	public Player(IdPlayer id, Hero myHero) {
-      this.id = new IdPlayer(this);
+        this.id = new IdPlayer(this);
   		this.myHero = myHero;
   		this.myMana = 0;
 	 }

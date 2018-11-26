@@ -44,10 +44,31 @@ public abstract class Card {
     protected int damagePoints;
 
     /**
+     * The name of the card
+     */
+    private String name;
+
+    /**
      * Reference the list of actions or behaviors of this card.
      */
     protected ArrayList<CardAction> myActions;
 
+
+    /**
+     * Returns the value of name.
+     * @return this.name.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Sets the new value of name.
+     * @param name the new name.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Returns the value of type.
@@ -111,6 +132,22 @@ public abstract class Card {
      */
     public void setDamagePoints(int damagePoints) {
         this.damagePoints = damagePoints;
+    }
+
+    /**
+     * Returns the value of myActions.
+     * @return this.myActions.
+     */
+    public ArrayList<CardAction> getMyActions() {
+        return this.myActions;
+    }
+
+    /**
+     * Sets the new value of myActions.
+     * @param newActions the new value.
+     */
+    public void setMyActions(ArrayList<CardAction> newActions) {
+        this.myActions = newActions;
     }
 
     /**

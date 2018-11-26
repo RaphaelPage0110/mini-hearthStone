@@ -1,4 +1,8 @@
 /target/
 /.idea/workspace.xml
+/.idea/compiler.xml
 /MHServer/target/
-.idea/
+/.idea/
+/.settings
+/.project
+/.classpath

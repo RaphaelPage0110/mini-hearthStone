@@ -104,4 +104,12 @@ public abstract class Minion extends Card implements Target {
     public void setHasTaunt(boolean hasTaunt) {
         this.hasTaunt = hasTaunt;
     }
+
+    /**
+     * Add a bonus to the damage points.
+     * @param bonus the number of points to add.
+     */
+    public void addDamagePoints(int bonus) {
+        this.damagePoints += bonus;
+    }
 }

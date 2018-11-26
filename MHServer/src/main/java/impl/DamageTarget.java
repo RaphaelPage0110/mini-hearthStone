@@ -5,12 +5,12 @@ import inter.Target;
 import abstracts.Spell;
 import inter.CardAction;
 
-public class FireBall implements CardAction {
+public class DamageTarget implements CardAction {
 
     private Spell mySpell;
     private Target myTarget;
 
-    public FireBall(Spell mySpell, Target myTarget) {
+    public DamageTarget(Spell mySpell, Target myTarget) {
         this.mySpell = mySpell;
         this.myTarget = myTarget;
     }

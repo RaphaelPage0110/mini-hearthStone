@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player {
 
     private IdPlayer id;
-    private IdPlayer idOpponent;
+    private Game myGame;
     private Hero myHero;
     private ArrayList<Minion> myMinions;
     private ArrayList<Card> myCards;
@@ -85,7 +85,21 @@ public class Player {
   	public void setMyMana(int myMana) {
   	    this.myMana = myMana;
   	}
+    /**
+  	* Returns value of myGame
+  	* @return Game
+  	*/
+  	public Game getMyGame() {
+  	    return myGame;
+  	}
 
+  	/**
+  	* Sets new value of myMana
+  	* @param
+  	*/
+  	public void setMyGame(Game _myGame) {
+  	    this.myGame = _myGame;
+  	}
   	/**
   	* Default empty Player constructor
   	*/
@@ -97,9 +111,8 @@ public class Player {
   	* Default Player constructor
   	*/
   	public Player(IdPlayer id, Hero myHero) {
-        this.id = new IdPlayer(this);
-  		this.id = id;
+      this.id = new IdPlayer(this);
   		this.myHero = myHero;
   		this.myMana = 0;
-	}
+	 }
 }

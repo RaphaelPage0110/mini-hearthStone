@@ -11,11 +11,9 @@ public class Game {
     private Player player1;
     private Player player2;
 
-    public Game(Player player1, Player player2) {
+    public Game() {
       this.id = new IdGame(this);
       this.minionsInPlay = new ArrayList<Minion>();
-      this.setPlayer1(player1);
-      this.setPlayer2(player2);
     }
 
   	/**

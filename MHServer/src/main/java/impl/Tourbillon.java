@@ -4,6 +4,7 @@ import inter.Target;
 import abstracts.Minion;
 import abstracts.Spell;
 import java.util.ArrayList;
+import inter.CardAction;
 
 public class Tourbillon implements CardAction {
 
@@ -12,7 +13,7 @@ public class Tourbillon implements CardAction {
     public Tourbillon() {
 
     }
-    
+
     public Tourbillon(Spell _mySpell) {
         mySpell = _mySpell;
     }

@@ -56,7 +56,7 @@ public abstract class Minion extends Card implements Target {
     }
 
     /**
-     * Returns the valu of id.
+     * Returns the value of id.
      * @return this.id.
      */
     public IdMinion getId() {

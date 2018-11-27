@@ -4,6 +4,12 @@ import abstracts.Spell;
 import inter.CardAction;
 import inter.Target;
 
+/**
+ * Class representing the special action "DrawCard" used for the "Shield Block" (fr:Maîtrise du blocage) spell.
+ * Draw a card.
+ * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
+ * @version 0.1
+ */
 public class DrawCard implements CardAction{
 
     private Spell mySpell;

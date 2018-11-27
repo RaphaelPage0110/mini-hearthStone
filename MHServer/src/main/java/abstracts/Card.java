@@ -53,6 +53,11 @@ public abstract class Card {
      */
     protected ArrayList<CardAction> myActions;
 
+    /**
+     * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
+     */
+    protected int bonus;
+
 
     /**
      * Returns the value of name.
@@ -148,6 +153,22 @@ public abstract class Card {
      */
     public void setMyActions(ArrayList<CardAction> newActions) {
         this.myActions = newActions;
+    }
+
+    /**
+     * Returns the value of bonus.
+     * @return this.bonus.
+     */
+    public int getBonus() {
+        return this.bonus;
+    }
+
+    /**
+     * Sets the new value of bonus.
+     * @param bonus the new value.
+     */
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
     }
 
     /**

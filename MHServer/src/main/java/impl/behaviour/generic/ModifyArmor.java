@@ -15,18 +15,16 @@ public class ModifyArmor implements CardAction {
 
 
     private Spell mySpell;
-    private int armorModifier;
 
-    public ModifyArmor(Spell mySpell, int armorPoints) {
+    public ModifyArmor(Spell mySpell) {
         this.mySpell = mySpell;
-        this.armorModifier = armorPoints;
     }
 
     public void effect(Target myTarget) {
 
         Hero hero;
         hero = (Hero)myTarget;
-        hero.addArmor(armorModifier);
+        hero.addArmor(mySpell.getBonus());
 
     }
 }

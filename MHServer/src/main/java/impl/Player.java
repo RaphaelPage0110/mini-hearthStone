@@ -147,6 +147,7 @@ public class Player {
   	*/
   	public Player() {
   	    this.id = new IdPlayer(this);
+  	    this.myAura = 0;
   	}
 
   	/**
@@ -156,6 +157,7 @@ public class Player {
 		this.id = new IdPlayer(this);
   		this.myHero = myHero;
   		this.myMana = 0;
+        this.myAura = 0;
   	}
 
     /**
@@ -197,5 +199,13 @@ public class Player {
      */
     public void setOpponent(Player opponent) {
         this.opponent = opponent;
+    }
+
+    /**
+     * Increases the aura value.
+     * @param additionalAura the bonus to add.
+     */
+    public void addAura(int additionalAura) {
+        this.myAura += additionalAura;
     }
 }

@@ -112,4 +112,17 @@ public abstract class Minion extends Card implements Target {
     public void addDamagePoints(int bonus) {
         this.damagePoints += bonus;
     }
+
+    public void attack(Target target) {
+        int totalDamage;
+        if(this.canAttack) {
+            totalDamage = this.damagePoints + this.getPlayer().getMyAura();
+            target.takeDamage(totalDamage);
+            if(target instanceof Minion) {
+
+                this.takeDamage(((Minion) target).getDamagePoints());
+
+            }
+        }
+    }
 }

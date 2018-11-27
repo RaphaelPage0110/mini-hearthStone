@@ -17,8 +17,25 @@ public class Player {
     private ArrayList<Card> myCards;
     private int myMana;
     private ArrayList<Card> myStock;
+    private int myAura; //used for spells that modifies the damage power of the minions
 
     /**
+     * Returns value of myAura
+     * @return the aura currently applied on the minion
+     */
+	public int getMyAura() {
+		return myAura;
+	}
+
+    /**
+     * Sets the new value of aura
+     * @param aura
+     */
+	public void setMyAura(int aura) {
+		this.myAura = aura;
+	}
+
+	/**
      * add a new card to the Player's hand
      */
     public void addCard(Card card) {

@@ -16,20 +16,20 @@ import java.util.ArrayList;
  */
 public class ModifyDamagePointsAllAllies implements CardAction {
 
-    private Spell mySpell;
+    private Minion myMinion;
     private int modifier;
 
-    public ModifyDamagePointsAllAllies(Spell newSpell, int dmgModifier) {
-        this.mySpell = newSpell;
+    public ModifyDamagePointsAllAllies(Minion newMinion, int dmgModifier) {
+        this.myMinion = newMinion;
         this.modifier = dmgModifier;
     }
 
     public void effect(Target myTarget) {
-        Player myPlayer = mySpell.getPlayer();
-        ArrayList<Minion> myAllies = myPlayer.getMyMinions();
+        Player myPlayer = myMinion.getPlayer();
+        int aura;
 
-        for (Minion friend : myAllies) {
-            friend.addDamagePoints(modifier);
-        }
+        aura = myPlayer.getMyAura();
+        aura += modifier;
+        myPlayer.setMyAura(aura);
     }
 }

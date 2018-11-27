@@ -16,6 +16,11 @@ public abstract class Hero implements Target {
     private IdHero id;
 
     /**
+     *  The name of the hero
+     */
+    private String heroName;
+
+    /**
      * Indicates the number of health points that this Hero has.
      */
     private int healthPoints;
@@ -63,6 +68,18 @@ public abstract class Hero implements Target {
      */
     public void setArmorPoints(int armor) {
         this.armorPoints = armor;
+    }
+
+    /**
+     * Returns value of heroName
+     * @return heroName the name of the hero
+     */
+    public String getHeroName() {
+        return heroName;
+    }
+
+    public void setHeroName(String heroName) {
+        this.heroName = heroName;
     }
 
     /**

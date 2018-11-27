@@ -152,8 +152,8 @@ public class Player {
   	/**
   	* Default Player constructor
   	*/
-  	public Player(IdPlayer id, Hero myHero) {
-        this.id = new IdPlayer(this);
+  	public Player( Hero myHero) {
+		this.id = new IdPlayer(this);
   		this.myHero = myHero;
   		this.myMana = 0;
   	}

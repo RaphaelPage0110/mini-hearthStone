@@ -12,12 +12,30 @@ public class Player {
     private IdPlayer id;
     private Game myGame;
     private Hero myHero;
+    private Player opponent;
     private ArrayList<Minion> myMinions;
     private ArrayList<Card> myCards;
     private int myMana;
     private ArrayList<Card> myStock;
+    private int myAura; //used for spells that modifies the damage power of the minions
 
     /**
+     * Returns value of myAura
+     * @return the aura currently applied on the minion
+     */
+	public int getMyAura() {
+		return myAura;
+	}
+
+    /**
+     * Sets the new value of aura
+     * @param aura
+     */
+	public void setMyAura(int aura) {
+		this.myAura = aura;
+	}
+
+	/**
      * add a new card to the Player's hand
      */
     public void addCard(Card card) {
@@ -163,5 +181,21 @@ public class Player {
             //...
         }
 
+    }
+
+    /**
+     * Returns the value of the opponent.
+     * @return this.opponent.
+     */
+    public Player getOpponent() {
+        return this.opponent;
+    }
+
+    /**
+     * Sets the new value of the opponent;
+     * @param opponent the new value;
+     */
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
     }
 }

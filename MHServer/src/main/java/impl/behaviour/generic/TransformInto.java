@@ -2,7 +2,7 @@ package impl.behaviour.generic;
 
 import abstracts.Minion;
 import abstracts.Spell;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 /**
@@ -11,7 +11,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class TransformInto implements CardAction {
+public class TransformInto implements Effect {
 
     private Spell mySpell;
     private Minion myMinion;
@@ -28,6 +28,6 @@ public class TransformInto implements CardAction {
         oldMinion.setDamagePoints(myMinion.getDamagePoints());
         oldMinion.setHealthPoints(myMinion.getHealthPoints());
         oldMinion.setType(myMinion.getType());
-        oldMinion.setMyActions(myMinion.getMyActions());
+        oldMinion.setMyEffects(myMinion.getMyEffects());
     }
 }

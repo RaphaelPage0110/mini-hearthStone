@@ -1,7 +1,7 @@
 package impl.behaviour.generic;
 
 import abstracts.Spell;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 /**
@@ -10,7 +10,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DrawCard implements CardAction{
+public class DrawCard implements Effect {
 
     private Spell mySpell;
 

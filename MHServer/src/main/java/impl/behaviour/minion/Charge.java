@@ -1,7 +1,7 @@
 package impl.behaviour.minion;
 
 import inter.Target;
-import inter.CardAction;
+import inter.Effect;
 import abstracts.Minion;
 
 /**
@@ -9,7 +9,7 @@ import abstracts.Minion;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class Charge implements CardAction {
+public class Charge implements Effect {
 
     private Minion myMinion;
 

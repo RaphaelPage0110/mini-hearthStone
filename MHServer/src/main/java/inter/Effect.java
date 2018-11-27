@@ -1,6 +1,6 @@
 package inter;
 
-public interface CardAction {
+public interface Effect {
 
     void effect(Target myTarget);
 }

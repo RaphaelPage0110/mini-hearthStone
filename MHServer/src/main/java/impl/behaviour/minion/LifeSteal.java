@@ -1,6 +1,6 @@
 package impl.behaviour.minion;
 
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 import abstracts.Minion;
 
@@ -9,7 +9,7 @@ import abstracts.Minion;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class LifeSteal implements CardAction {
+public class LifeSteal implements Effect {
 
     private Minion myMinion;
 

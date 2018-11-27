@@ -1,7 +1,7 @@
 package abstracts;
 
 import identifiers.IdMinion;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public abstract class Minion extends Card implements Target {
      */
     public Minion() {
         this.id = new IdMinion(this);
-        this.myActions = new ArrayList<CardAction>();
+        this.myEffects = new ArrayList<Effect>();
     }
 
     /**

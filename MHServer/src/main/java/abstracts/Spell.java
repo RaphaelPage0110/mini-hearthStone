@@ -1,9 +1,9 @@
 package abstracts;
 
 import identifiers.IdSpell;
-import inter.Target;
+
 import java.util.ArrayList;
-import inter.CardAction;
+import inter.Effect;
 
 public abstract class Spell extends Card {
 
@@ -22,6 +22,6 @@ public abstract class Spell extends Card {
 		*/
 	 public Spell() {
 			 this.id = new IdSpell(this);
-			 this.myActions = new ArrayList<CardAction>();
+			 this.myEffects = new ArrayList<Effect>();
 	 }
 }

@@ -1,7 +1,10 @@
 package abstracts;
 
 import identifiers.IdHero;
+import inter.Effect;
 import inter.Target;
+
+import java.util.ArrayList;
 
 /**
  * Abstract representation of a Hero.
@@ -29,6 +32,11 @@ public abstract class Hero implements Target {
      * Indicates the number of armor points that this Hero has.
      */
     private int armorPoints;
+
+    /**
+     * Reference the list of actions or behaviors of this card.
+     */
+    protected Effect myEffect;
 
     /**
      * Returns value of id
@@ -78,9 +86,30 @@ public abstract class Hero implements Target {
         return heroName;
     }
 
+    /**
+     * Sets new value of heroName
+     * @param heroName the name of the hero
+     */
     public void setHeroName(String heroName) {
         this.heroName = heroName;
     }
+
+    /**
+     * Returns the special ability of a hero
+     * @return myEffect the ability of a hero
+     */
+    public Effect getMyEffect() {
+        return myEffect;
+    }
+
+    /**
+     * Sets the new value of myEffects
+     * @param myEffect the special ability of a hero
+     */
+    public void setMyEffect(Effect myEffect) {
+        this.myEffect = myEffect;
+    }
+
 
     /**
      * {@inheritDoc}

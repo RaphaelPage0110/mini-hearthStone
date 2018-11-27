@@ -1,7 +1,7 @@
 package abstracts;
 
 import impl.Player;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public abstract class Card {
     /**
      * Reference the list of actions or behaviors of this card.
      */
-    protected ArrayList<CardAction> myActions;
+    protected ArrayList<Effect> myEffects;
 
     /**
      * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
@@ -140,19 +140,19 @@ public abstract class Card {
     }
 
     /**
-     * Returns the value of myActions.
-     * @return this.myActions.
+     * Returns the value of myEffects.
+     * @return this.myEffects.
      */
-    public ArrayList<CardAction> getMyActions() {
-        return this.myActions;
+    public ArrayList<Effect> getMyEffects() {
+        return this.myEffects;
     }
 
     /**
-     * Sets the new value of myActions.
+     * Sets the new value of myEffects.
      * @param newActions the new value.
      */
-    public void setMyActions(ArrayList<CardAction> newActions) {
-        this.myActions = newActions;
+    public void setMyEffects(ArrayList<Effect> newActions) {
+        this.myEffects = newActions;
     }
 
     /**
@@ -176,7 +176,7 @@ public abstract class Card {
      * @param myTarget the affected target.
      */
     public void effect(Target myTarget) {
-        for (CardAction action : myActions) {
+        for (Effect action : myEffects) {
             action.effect(myTarget);
         }
     }

@@ -5,7 +5,7 @@ import abstracts.Hero;
 import abstracts.Minion;
 import abstracts.Spell;
 import impl.Player;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageAllOpponents implements CardAction {
+public class DamageAllOpponents implements Effect {
 
     private Spell mySpell;
 

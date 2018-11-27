@@ -3,7 +3,7 @@ package impl.behaviour.generic;
 import abstracts.Minion;
 import abstracts.Spell;
 import impl.Player;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 /**
@@ -12,7 +12,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class Summon implements CardAction {
+public class Summon implements Effect {
 
     private Spell mySpell;
     private Minion myMinion;

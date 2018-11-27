@@ -2,7 +2,7 @@ package impl.behaviour.generic;
 
 import abstracts.Minion;
 import impl.Player;
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 
 
@@ -12,7 +12,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class BuffAlliedMinions implements CardAction {
+public class BuffAlliedMinions implements Effect {
 
     private Minion myMinion;
 

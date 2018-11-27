@@ -1,9 +1,8 @@
 package impl.behaviour.generic;
 
-import inter.CardAction;
+import inter.Effect;
 import inter.Target;
 import abstracts.Spell;
-import inter.CardAction;
 
 /**
  * Class representing the special action "DamageTarget" used for the "Fireball" (fr:Boule de feu) spell.
@@ -11,7 +10,7 @@ import inter.CardAction;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageTarget implements CardAction {
+public class DamageTarget implements Effect {
 
     private Spell mySpell;
     private Target myTarget;

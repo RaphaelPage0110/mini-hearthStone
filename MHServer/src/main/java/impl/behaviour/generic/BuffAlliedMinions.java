@@ -7,22 +7,27 @@ import inter.Target;
 
 
 /**
- * Class representing the special action "ModifyDamagePointsAllAllies" used for the "Raid Leader" (fr:Chef de raid) minion.
+ * Class representing the special action "BuffAlliedMinions" used for the "Raid Leader" (fr:Chef de raid) minion.
  * Your other minions have +1 attack.
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class ModifyDamagePointsAllAllies implements CardAction {
+public class BuffAlliedMinions implements CardAction {
 
     private Minion myMinion;
 
-    public ModifyDamagePointsAllAllies(Minion newMinion) {
+    public BuffAlliedMinions(Minion newMinion) {
         this.myMinion = newMinion;
     }
 
     public void effect(Target myTarget) {
         Player myPlayer = myMinion.getPlayer();
         int aura = myMinion.getBonus();
+        int damagePoints = myMinion.getDamagePoints();
+
+        //the minion buffs all allies
         myPlayer.addAura(aura);
+        //but not himself!
+        myMinion.addDamagePoints(-aura);
     }
 }

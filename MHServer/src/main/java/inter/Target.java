@@ -13,4 +13,15 @@ public interface Target {
      * @return the number of health points that the target has lost. Must be >= 0.
      */
     int takeDamage(int damagePoints);
+
+    /**
+     * Check if the Target points are below 0.
+     * @return true if the target is dead, false otherwise
+     */
+    boolean isDead();
+
+    /**
+     * what happens when a target dies
+     */
+    void dies();
 }

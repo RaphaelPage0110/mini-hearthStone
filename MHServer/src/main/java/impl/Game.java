@@ -10,6 +10,9 @@ public class Game {
     private ArrayList<Minion> minionsInPlay;
     private Player player1;
     private Player player2;
+    private Player winner;
+    private Player loser;
+    private boolean gameOver;
 
     public Game() {
       this.id = new IdGame(this);
@@ -79,4 +82,36 @@ public class Game {
   	public void setPlayer2(Player player2) {
   		this.player2 = player2;
   	}
+
+	public Player getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Player winner) {
+		this.winner = winner;
+	}
+
+	public Player getLoser() {
+		return loser;
+	}
+
+	public void setLoser(Player loser) {
+		this.loser = loser;
+	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	/**
+	 * allows a minion from the game. i.e when it dies
+	 * @param minion the minion to remove
+	 */
+	public void removeMinionFromGame(Minion minion){
+		minionsInPlay.remove(minion);
+	}
 }

@@ -1,6 +1,8 @@
 package abstracts;
 
 import identifiers.IdMinion;
+import impl.Game;
+import impl.Player;
 import inter.Effect;
 import inter.Target;
 
@@ -32,6 +34,11 @@ public abstract class Minion extends Card implements Target {
      * Indicates if the Minion has Taunt behavior, which will be attacked as a priority.
      */
     protected boolean hasTaunt;
+
+    /**
+     * Reference the list of actions or behaviors of this minions when it dies.
+     */
+    protected ArrayList<Effect> myDeathRattles;
 
     /**
      * Default empty constructor which initializes the ID and the list of actions.
@@ -113,6 +120,34 @@ public abstract class Minion extends Card implements Target {
         this.damagePoints += bonus;
     }
 
+    public ArrayList<Effect> getMyDeathRattles() {
+        return myDeathRattles;
+    }
+
+    public void setMyDeathRattles(ArrayList<Effect> myDeathRattles) {
+        this.myDeathRattles = myDeathRattles;
+    }
+
+    /**
+     * what happens when the minion dies
+     */
+    public void dies() {
+
+        //we go through all the minion's death rattles
+        for(Effect effect : myDeathRattles){
+            effect.effect(this);
+        }
+
+        //we then remove it from the game
+        Player player = this.getPlayer();
+        player.removeMinionFromPlay(this);
+
+    }
+
+    /**
+     * allows a minion to attack a target
+     * @param target the target of the minion's attack
+     */
     public void attack(Target target) {
         int totalDamage;
         if(this.canAttack) {
@@ -122,9 +157,45 @@ public abstract class Minion extends Card implements Target {
 
             if(target instanceof Minion) {
 
-                this.takeDamage(((Minion) target).getDamagePoints());
+                //the enemy retaliates
+                int enemyDamagePoints = ((Minion)target).getDamagePoints();
+                this.takeDamage(enemyDamagePoints);
+
+                if(target.isDead()) {
+                    target.dies();
+                }
+
+                if(this.isDead()) {
+
+                    this.dies();
+
+                }
+
+            }
+
+            //else the target is a hero
+            else {
+
+                if (target.isDead()) {
+
+                    target.dies();
+
+                }
 
             }
         }
     }
+
+    /**
+     * check if the minion is dead
+     * @return true if the minion is dead
+     */
+    public boolean isDead() {
+
+        boolean alive = healthPoints > 0;
+        return alive;
+
+    }
+
+
 }

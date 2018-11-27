@@ -1,6 +1,7 @@
 package abstracts;
 
 import identifiers.IdHero;
+import impl.Player;
 import inter.Effect;
 import inter.Target;
 
@@ -37,6 +38,8 @@ public abstract class Hero implements Target {
      * Reference the list of actions or behaviors of this card.
      */
     protected Effect myEffect;
+
+    protected Player myPlayer;
 
     /**
      * Returns value of id
@@ -110,6 +113,14 @@ public abstract class Hero implements Target {
         this.myEffect = myEffect;
     }
 
+    public Player getMyPlayer() {
+        return myPlayer;
+    }
+
+    public void setMyPlayer(Player myPlayer) {
+        this.myPlayer = myPlayer;
+    }
+
 
     /**
      * {@inheritDoc}
@@ -131,6 +142,26 @@ public abstract class Hero implements Target {
 
     public void addArmor(int armor) {
         this.armorPoints += armor;
+    }
+
+    /**
+     * check if the hero is dead
+     * @return true if the hero is dead
+     */
+    public boolean isDead() {
+
+        boolean alive = healthPoints > 0;
+        return alive;
+
+    }
+
+    /**
+     * what happens when the hero dies
+     */
+    public void dies() {
+
+        myPlayer.lost();
+
     }
 
     

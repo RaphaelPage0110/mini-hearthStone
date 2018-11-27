@@ -208,4 +208,25 @@ public class Player {
     public void addAura(int additionalAura) {
         this.myAura += additionalAura;
     }
+
+	/**
+	 * remove a minion from the game ie when it dies
+	 * @param minion the minion to remove
+	 */
+	public void removeMinionFromPlay(Minion minion){
+
+    	myMinions.remove(minion);
+    	myGame.removeMinionFromGame(minion);
+
+	}
+
+	/**
+	 * what happens when this player lose
+	 */
+	public void lost(){
+
+		myGame.setGameOver(true);
+		myGame.setWinner(this);
+
+	}
 }

@@ -1,37 +1,26 @@
 package impl.behaviour.generic;
 
-public class ModifyDamagePointsOneMinion {
-}
-
-/*
-package impl.behaviour.generic;
-
 import abstracts.Minion;
 import abstracts.Spell;
-import impl.Player;
 import inter.CardAction;
 import inter.Target;
 
-import java.util.ArrayList;
-
-public class ModifyDamagePointsAllAllies implements CardAction {
-
+/**
+ * Class representing the special action "ModifyDamagePointsOneMinion" used for the "Blessing of might" (fr:Bénédiction de puissance) spell.
+ * Give a minion +3 attack.
+ * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
+ * @version 0.1
+ */
+public class ModifyDamagePointsOneMinion implements CardAction {
     private Spell mySpell;
-    private int modifier;
 
-    public ModifyDamagePointsAllAllies(Spell newSpell, int dmgModifier) {
+    public ModifyDamagePointsOneMinion(Spell newSpell) {
         this.mySpell = newSpell;
-        this.modifier = dmgModifier;
     }
 
     public void effect(Target myTarget) {
-        Player myPlayer = mySpell.getPlayer();
-        ArrayList<Minion> myAllies = myPlayer.getMyMinions();
-
-        for (Minion friend : myAllies) {
-            friend.addDamagePoints(modifier);
-        }
+        Minion targetedMinion = (Minion) myTarget;
+        int bonus = mySpell.getBonus();
+        targetedMinion.addDamagePoints(bonus);
     }
 }
-
- */

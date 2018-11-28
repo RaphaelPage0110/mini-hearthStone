@@ -21,8 +21,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="mini-hearthstone" options="-parameters" />
-      <module name="mini-hearthstone-server" options="-parameters" />
+      <module name="mini-hearthstone" options="" />
+      <module name="mini-hearthstone-server" options="" />
     </option>
   </component>
 </project>

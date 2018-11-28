@@ -1,11 +1,10 @@
 package impl.behaviour.generic;
-
-
 import abstracts.Hero;
 import abstracts.Minion;
 import abstracts.Spell;
 import impl.Player;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageAllOpponents implements Effect {
+public class DamageAllOpponents extends NotTargetedEffect {
 
     private Spell mySpell;
 
@@ -25,15 +24,14 @@ public class DamageAllOpponents implements Effect {
     }
 
     @Override
-    public void effect(Target myTarget) {
-        ArrayList<Target> myAdversaries = new ArrayList<>();
+    public void effect() {
 
         Player myPlayer = mySpell.getPlayer();
         Player myOpponent = myPlayer.getOpponent();
         Hero hisHero = myOpponent.getMyHero();
         ArrayList<Minion> hisMinions = myOpponent.getMyMinions();
 
-        myAdversaries.addAll(hisMinions);
+        ArrayList<Target> myAdversaries = new ArrayList<>(hisMinions);
         myAdversaries.add(hisHero);
 
         for (Target target : myAdversaries) {

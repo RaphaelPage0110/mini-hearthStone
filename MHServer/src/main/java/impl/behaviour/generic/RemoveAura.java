@@ -3,6 +3,7 @@ package impl.behaviour.generic;
 import abstracts.Minion;
 import impl.Player;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 /**
@@ -10,7 +11,7 @@ import inter.Target;
  * Your other minions loose the raid leader aura when he dies.
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  */
-public class RemoveAura implements Effect {
+public class RemoveAura extends NotTargetedEffect {
 
     Minion myMinion;
 
@@ -20,7 +21,8 @@ public class RemoveAura implements Effect {
 
     }
 
-    public void effect(Target target) {
+    @Override
+    public void effect() {
 
         Player player = myMinion.getPlayer();
         int aura = myMinion.getBonus();

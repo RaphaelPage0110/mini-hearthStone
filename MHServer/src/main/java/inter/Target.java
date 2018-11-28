@@ -9,10 +9,10 @@ public interface Target {
 
     /**
      * Allows a target to be attacked and lose health points or armor points.
-     * @param damagePoints the number of damage points inflicted to this target. Must be >= 0.
+     * @param damageTaken the number of damage points inflicted to this target. Must be >= 0.
      * @return the number of health points that the target has lost. Must be >= 0.
      */
-    int takeDamage(int damagePoints);
+    int takeDamage(int damageTaken);
 
     /**
      * Check if the Target points are below 0.

@@ -1,5 +1,6 @@
 package impl.behaviour.minion;
 
+import inter.NotTargetedEffect;
 import inter.Target;
 import inter.Effect;
 import abstracts.Minion;
@@ -9,7 +10,7 @@ import abstracts.Minion;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class Charge implements Effect {
+public class Charge extends NotTargetedEffect {
 
     private Minion myMinion;
 
@@ -17,7 +18,8 @@ public class Charge implements Effect {
         this.myMinion = myMinion;
     }
 
-    public void effect(Target myTarget) {
+    @Override
+    public void effect() {
         myMinion.setCanAttack(true);
     }
 }

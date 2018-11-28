@@ -3,6 +3,7 @@ package impl.behaviour.generic;
 import inter.Effect;
 import inter.Target;
 import abstracts.Spell;
+import inter.TargetedEffect;
 
 /**
  * Class representing the special action "DamageTarget" used for the "Fireball" (fr:Boule de feu) spell.
@@ -10,7 +11,7 @@ import abstracts.Spell;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageTarget implements Effect {
+public class DamageTarget extends TargetedEffect {
 
     private Spell mySpell;
     private Target myTarget;
@@ -20,6 +21,7 @@ public class DamageTarget implements Effect {
         this.myTarget = myTarget;
     }
 
+    @Override
     public void effect(Target myTarget) {
         myTarget.takeDamage(mySpell.getDamagePoints());
     }

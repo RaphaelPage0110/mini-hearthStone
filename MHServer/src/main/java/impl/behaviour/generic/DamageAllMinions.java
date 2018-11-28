@@ -3,6 +3,8 @@ import inter.Effect;
 import inter.Target;
 import abstracts.Minion;
 import abstracts.Spell;
+import inter.TargetedEffect;
+
 import java.util.ArrayList;
 
 /**
@@ -11,7 +13,7 @@ import java.util.ArrayList;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageAllMinions implements Effect {
+public class DamageAllMinions extends TargetedEffect {
 
     private Spell mySpell;
     
@@ -19,6 +21,7 @@ public class DamageAllMinions implements Effect {
         this.mySpell = mySpell;
     }
 
+    @Override
     public void effect(Target myTarget) {
         ArrayList<Minion> myTargets;
         int damage;

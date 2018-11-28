@@ -125,11 +125,10 @@ public abstract class Hero implements Target {
     /**
      * {@inheritDoc}
      */
-    public int takeDamage(int damagePoints) {
+    public int takeDamage(int damageTaken) {
         //Add armor behavior
-        int damages = damagePoints;
-        this.healthPoints = this.healthPoints - damages;
-        return damages;
+        this.healthPoints = this.healthPoints - damageTaken;
+        return damageTaken;
     }
 
     /**
@@ -150,8 +149,7 @@ public abstract class Hero implements Target {
      */
     public boolean isDead() {
 
-        boolean alive = healthPoints > 0;
-        return alive;
+        return healthPoints <= 0;
 
     }
 

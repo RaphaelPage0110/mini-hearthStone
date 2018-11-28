@@ -127,7 +127,12 @@ public abstract class Hero implements Target {
      */
     public int takeDamage(int damageTaken) {
         //Add armor behavior
-        this.healthPoints = this.healthPoints - damageTaken;
+        if (damageTaken < this.armorPoints) {
+            this.armorPoints -= damageTaken;
+        } else {
+            this.healthPoints = this.healthPoints + this.armorPoints - damageTaken;
+            this.armorPoints = 0;
+        }
         return damageTaken;
     }
 

@@ -141,7 +141,7 @@ public abstract class Hero implements Target {
      * @param healingPoints the number of health points to be returned.
      */
     public void heal(int healingPoints) {
-        this.healthPoints = this.healthPoints + healingPoints;
+        this.healthPoints = Math.max(30,this.healthPoints + healingPoints);
     }
 
     public void addArmor(int armor) {

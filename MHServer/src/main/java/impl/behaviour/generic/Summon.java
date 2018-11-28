@@ -1,10 +1,15 @@
 package impl.behaviour.generic;
 
+import abstracts.Card;
 import abstracts.Minion;
 import abstracts.Spell;
+import impl.ConcreteMinion;
 import impl.Player;
+import impl.behaviour.minion.Taunt;
 import inter.Effect;
 import inter.Target;
+
+import java.util.ArrayList;
 
 /**
  * Class representing the special action "Summon" used for the "Mirror Image" (fr:Image Miroir) spell.
@@ -26,5 +31,21 @@ public class Summon implements Effect {
         Player player = mySpell.getPlayer();
 
         player.addMinion(myMinion);
+
+
+
+
+
+
+        /*ArrayList<Effect> uselessMinionAction = new ArrayList<>();
+        Minion uselessMinion = new ConcreteMinion("Useless Minion", 0, 0, 2, Card.CardType.MAGE, uselessMinionAction);
+        uselessMinionAction.add(new Taunt(uselessMinion));
+
+        Minion uselessMinion2 = uselessMinion.copy();
+
+        Player player = mySpell.getPlayer();
+
+        player.addMinion(uselessMinion);
+        player.addMinion(uselessMinion2);*/
     }
 }

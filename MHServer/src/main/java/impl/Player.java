@@ -17,22 +17,22 @@ public class Player {
     private ArrayList<Card> myCards;
     private int myMana;
     private ArrayList<Card> myStock;
-    private int myAura; //used for spells that modifies the damage power of the minions
+    private int myDamageAura; //used for spells that modifies the damage power of the minions
 
     /**
-     * Returns value of myAura
+     * Returns value of myDamageAura
      * @return the aura currently applied on the minion
      */
-	public int getMyAura() {
-		return myAura;
+	public int getMyDamageAura() {
+		return myDamageAura;
 	}
 
     /**
      * Sets the new value of aura
      * @param aura
      */
-	public void setMyAura(int aura) {
-		this.myAura = aura;
+	public void setMyDamageAura(int aura) {
+		this.myDamageAura = aura;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class Player {
   	*/
   	public Player() {
   	    this.id = new IdPlayer(this);
-  	    this.myAura = 0;
+  	    this.myDamageAura = 0;
   	}
 
   	/**
@@ -157,7 +157,7 @@ public class Player {
 		this.id = new IdPlayer(this);
   		this.myHero = myHero;
   		this.myMana = 0;
-        this.myAura = 0;
+        this.myDamageAura = 0;
   	}
 
     /**
@@ -206,7 +206,7 @@ public class Player {
      * @param additionalAura the bonus to add.
      */
     public void addAura(int additionalAura) {
-        this.myAura += additionalAura;
+        this.myDamageAura += additionalAura;
     }
 
 	/**

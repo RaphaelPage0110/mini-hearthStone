@@ -1,7 +1,6 @@
 package abstracts;
 
 import identifiers.IdMinion;
-import impl.Game;
 import impl.Player;
 import inter.Effect;
 import inter.Target;
@@ -152,7 +151,7 @@ public abstract class Minion extends Card implements Target {
         int totalDamage;
         if(this.canAttack) {
 
-            totalDamage = this.damagePoints + this.getPlayer().getMyAura();
+            totalDamage = this.damagePoints + this.getPlayer().getMyDamageAura();
             target.takeDamage(totalDamage);
 
             if(target instanceof Minion) {

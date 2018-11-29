@@ -1,5 +1,6 @@
 package impl.behaviour.generic;
 
+import abstracts.Hero;
 import inter.Effect;
 import inter.Target;
 import abstracts.Spell;
@@ -13,14 +14,20 @@ import abstracts.Spell;
 public class DamageTarget implements Effect {
 
     private Spell mySpell;
-    private Target myTarget;
+    private Hero myHero;
+    private int damage;
 
-    public DamageTarget(Spell mySpell, Target myTarget) {
+    public DamageTarget(Spell mySpell) {
         this.mySpell = mySpell;
-        this.myTarget = myTarget;
+        this.damage = mySpell.getDamagePoints();
+    }
+
+    public DamageTarget(Hero myHero, int damage) {
+        this.myHero = myHero;
+        this.damage = damage;
     }
 
     public void effect(Target myTarget) {
-        myTarget.takeDamage(mySpell.getDamagePoints());
+        myTarget.takeDamage(damage);
     }
 }

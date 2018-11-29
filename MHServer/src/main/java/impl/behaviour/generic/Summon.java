@@ -1,6 +1,7 @@
 package impl.behaviour.generic;
 
 import abstracts.Card;
+import abstracts.Hero;
 import abstracts.Minion;
 import abstracts.Spell;
 import impl.ConcreteMinion;
@@ -20,22 +21,29 @@ import java.util.ArrayList;
 public class Summon implements Effect {
 
     private Spell mySpell;
-    private Minion myMinion;
+    private Hero myHero;
+    private String myMinionKeyword;
 
-    public Summon(Spell newSpell, Minion newMinion) {
+    public Summon(Spell newSpell, String minionKeyword) {
         this.mySpell = newSpell;
-        this.myMinion = newMinion;
+        this.myMinionKeyword = minionKeyword;
+    }
+
+    public Summon(Hero myHero, String minionKeyword) {
+        this.myHero = myHero;
+        this.myMinionKeyword = minionKeyword;
+
     }
 
     public void effect(Target myTarget) {
         Player player = mySpell.getPlayer();
 
-        player.addMinion(myMinion);
+        ConcreteMinion minion = new ConcreteMinion();
+        Minion minionToSummon;
 
+        minionToSummon = minion.summon(myMinionKeyword);
 
-
-
-
+        player.addMinion(minionToSummon);
 
         /*ArrayList<Effect> uselessMinionAction = new ArrayList<>();
         Minion uselessMinion = new ConcreteMinion("Useless Minion", 0, 0, 2, Card.CardType.MAGE, uselessMinionAction);

@@ -12,12 +12,12 @@ public class ConcreteHero extends Hero {
     private Map<String,String> abilityKeyWord = new HashMap<String, String>();
 
 
-    public ConcreteHero(String heroName, int healthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
+    public ConcreteHero(String heroName, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
         super();
 
         this.heroName = heroName;
         this.armorPoints = armorPoints;
-        this.maxHealthPoints = healthPoints;
+        this.maxHealthPoints = maxHealthPoints;
         this.abilityKeyWord = abilityKeyWord;
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
@@ -68,6 +68,6 @@ public class ConcreteHero extends Hero {
 
     @Override
     public int getMaxHealthPoints() {
-        return getMaxHealthPoints();
+        return this.maxHealthPoints;
     }
 }

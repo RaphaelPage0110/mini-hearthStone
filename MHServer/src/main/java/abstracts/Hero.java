@@ -18,32 +18,32 @@ public abstract class Hero implements Target {
      * The ID of this Hero.
      */
     @Id
-    private String id;
+    protected String id;
 
     /**
      * The type of the hero (mage, warrior or paladin)
      */
-    private String heroType;
+    protected String heroType;
 
     /**
      *  The name of the hero
      */
-    private String heroName;
+    protected String heroName;
 
     /**
      * Indicates the maximum number of health points that this Hero has.
      */
-    private int maxHealthPoints;
+    protected int maxHealthPoints;
 
     /**
      * Indicates the current number of health points that this Hero has.
      */
-    private int currentHealthPoints;
+    protected int currentHealthPoints;
 
     /**
      * Indicates the number of armor points that this Hero has.
      */
-    private int armorPoints;
+    protected int armorPoints;
 
     /**
      * Reference the list of actions or behaviors of this card.

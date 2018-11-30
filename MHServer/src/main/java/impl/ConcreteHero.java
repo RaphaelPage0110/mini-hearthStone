@@ -18,7 +18,7 @@ public class ConcreteHero extends Hero {
         this.setHeroName(heroName);
         //this.setHeroType(heroType);
         this.setArmorPoints(armorPoints);
-        this.setHealthPoints(healthPoints);
+        this.setMaxHealthPoints(healthPoints);
         this.setAbilityKeyWord(abilityKeyWord);
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
@@ -50,5 +50,20 @@ public class ConcreteHero extends Hero {
 
     public void setAbilityKeyWord(Map<String,String> abilityKeyWord) {
         this.abilityKeyWord = abilityKeyWord;
+    }
+
+    @Override
+    protected void setMaxHealthPoints(int healthPoints) {
+
+    }
+
+    @Override
+    public void addDamagePoints(int bonusDamage) {
+
+    }
+
+    @Override
+    public void addMaxHealthPoints(int bonusHealtPoints) {
+
     }
 }

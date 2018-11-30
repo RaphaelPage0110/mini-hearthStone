@@ -21,7 +21,7 @@ public class ConcreteMinion extends Minion {
         this.setName(name);
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
-        this.healthPoints = healthPoints;
+        this.maxHealthPoints = healthPoints;
         this.type = type;
         this.myEffects = myActions;
     }
@@ -43,4 +43,13 @@ public class ConcreteMinion extends Minion {
 
     }
 
+    @Override
+    public void heal(int healthPoints) {
+        this.setHealthPoints(Math.max(this.currentHealthPoints+healthPoints,this.maxHealthPoints));
+    }
+
+    @Override
+    public void addMaxHealthPoints(int bonusHealtPoints) {
+
+    }
 }

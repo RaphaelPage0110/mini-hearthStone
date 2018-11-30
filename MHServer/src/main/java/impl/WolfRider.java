@@ -13,26 +13,35 @@ public class WolfRider extends Minion {
         myEffects.add(new Charge(this));
         requiredMana = 3;
         damagePoints = 3;
-        healthPoints = 1;
+        maxHealthPoints = 1;
         type = CardType.COMMON;
     }
 
-    public WolfRider(int requiredMana, int damagePoints, int healthPoints, CardType type) {
+    public WolfRider(int requiredMana, int damagePoints, int maxHealthPoints, CardType type) {
         super();
         myEffects.add(new Charge(this));
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
-        this.healthPoints = healthPoints;
+        this.maxHealthPoints = maxHealthPoints;
         this.type = type;
     }
 
-    public WolfRider(ArrayList<Effect> myActions, int requiredMana, int damagePoints, int healthPoints, CardType type) {
+    public WolfRider(ArrayList<Effect> myActions, int requiredMana, int damagePoints, int maxHealthPoints, CardType type) {
         super();
         this.myEffects = myActions;
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
-        this.healthPoints = healthPoints;
+        this.maxHealthPoints = maxHealthPoints;
         this.type = type;
     }
 
+    @Override
+    public void heal(int healthPoints) {
+
+    }
+
+    @Override
+    public void addMaxHealthPoints(int bonusHealtPoints) {
+
+    }
 }

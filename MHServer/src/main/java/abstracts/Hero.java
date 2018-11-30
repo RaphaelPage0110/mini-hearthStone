@@ -31,9 +31,14 @@ public abstract class Hero implements Target {
     private String heroName;
 
     /**
-     * Indicates the number of health points that this Hero has.
+     * Indicates the maximum number of health points that this Hero has.
      */
-    private int healthPoints;
+    private int maxHealthPoints;
+
+    /**
+     * Indicates the current number of health points that this Hero has.
+     */
+    private int currentHealthPoints;
 
     /**
      * Indicates the number of armor points that this Hero has.
@@ -56,31 +61,31 @@ public abstract class Hero implements Target {
     }
 
     /**
-     * Returns value of healthPoints
+     * Returns value of currentHealthPoints
      * @return healthPoints the current health points of the hero
      */
-    public int getHealthPoints() {
-        return healthPoints;
+    public int getCurrentHealthPoints() {
+        return currentHealthPoints;
     }
 
     /**
-     * Sets new value of healthPoints
-     * @param hp the health points of the hero
+     * Sets new value of currentHealthPoints
+     * @param hp the current health points of the hero
      */
-    public void setHealthPoints(int hp) {
-        this.healthPoints = hp;
+    public void setCurrentHealthPoints(int hp) {
+        this.currentHealthPoints = hp;
     }
 
     /**
-     * Returns value of healthPoints
-     * @return healthPoints the current health points of the hero
+     * Returns value of armorPoints
+     * @return armorPoints the current armor points of the hero
      */
     public int getArmorPoints() {
         return armorPoints;
     }
 
     /**
-     * Sets new value of armorpoints
+     * Sets new value of armorPoints
      * @param armor the armor points of the hero
      */
     public void setArmorPoints(int armor) {
@@ -136,7 +141,7 @@ public abstract class Hero implements Target {
         if (damageTaken < this.armorPoints) {
             this.armorPoints -= damageTaken;
         } else {
-            this.healthPoints = this.healthPoints + this.armorPoints - damageTaken;
+            this.currentHealthPoints = this.currentHealthPoints + this.armorPoints - damageTaken;
             this.armorPoints = 0;
         }
         return damageTaken;
@@ -147,7 +152,7 @@ public abstract class Hero implements Target {
      * @param healingPoints the number of health points to be returned.
      */
     public void heal(int healingPoints) {
-        this.healthPoints = Math.max(30,this.healthPoints + healingPoints);
+        this.currentHealthPoints = Math.max(maxHealthPoints,this.currentHealthPoints + healingPoints);
     }
 
     public void addArmor(int armor) {
@@ -160,7 +165,7 @@ public abstract class Hero implements Target {
      */
     public boolean isDead() {
 
-        return healthPoints <= 0;
+        return currentHealthPoints <= 0;
 
     }
 
@@ -185,7 +190,8 @@ public abstract class Hero implements Target {
     public String toString() {
         return String.format(
                 "Hero[id=%s, heroName='%s', healthPoints='%s', armorPoints='%s']",
-                id, heroName, healthPoints, armorPoints);
+                id, heroName, maxHealthPoints, armorPoints);
     }
 
+    protected abstract void setMaxHealthPoints(int healthPoints);
 }

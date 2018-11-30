@@ -15,7 +15,7 @@ public class Champion extends Minion {
         myEffects.add(new LifeSteal(this));
         requiredMana = 4;
         damagePoints = 3;
-        healthPoints = 2;
+        maxHealthPoints = 2;
         type = CardType.PALADIN;
     }
 
@@ -25,7 +25,7 @@ public class Champion extends Minion {
         myEffects.add(new LifeSteal(this));
         requiredMana = _requiredMana;
         damagePoints = _damagePoints;
-        healthPoints = _healthPoints;
+        maxHealthPoints = _healthPoints;
         type = _type;
     }
 
@@ -34,7 +34,17 @@ public class Champion extends Minion {
         this.myEffects = myActions;
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
-        this.healthPoints = healthPoints;
+        this.maxHealthPoints = healthPoints;
         this.type = type;
+    }
+
+    @Override
+    public void heal(int healthPoints) {
+
+    }
+
+    @Override
+    public void addMaxHealthPoints(int bonusHealtPoints) {
+
     }
 }

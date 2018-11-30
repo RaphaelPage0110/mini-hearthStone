@@ -21,9 +21,14 @@ public abstract class Minion extends Card implements Target {
     private Integer id;
 
     /**
-     * Indicates the number of health points that this Minion has.
+     * Indicates the maximum number of health points that this Minion has.
      */
-    protected int healthPoints;
+    protected int maxHealthPoints;
+
+    /**
+     * Indicates the current number of healt points this minion has.
+     */
+    protected int currentHealthPoints;
 
     /**
      * Indicates if the Minion can attack. Set to false by default, Charge behavior set it to true, and is also set to true at the next turn;
@@ -52,7 +57,7 @@ public abstract class Minion extends Card implements Target {
      * {@inheritDoc}
      */
     public int takeDamage(int damageTaken) {
-        this.healthPoints = this.healthPoints - damageTaken;
+        this.currentHealthPoints = this.currentHealthPoints - damageTaken;
         return damageTaken;
     }
 
@@ -60,8 +65,8 @@ public abstract class Minion extends Card implements Target {
      * Returns the value of healthPoints.
      * @return this.healthPoints.
      */
-    public int getHealthPoints() {
-        return this.healthPoints;
+    public int getCurrentHealthPoints() {
+        return this.currentHealthPoints;
     }
 
     /**
@@ -69,7 +74,7 @@ public abstract class Minion extends Card implements Target {
      * @param healthPoints the new value.
      */
     public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
+        this.currentHealthPoints = healthPoints;
     }
 
     /**
@@ -201,7 +206,7 @@ public abstract class Minion extends Card implements Target {
     @Override
     public boolean isDead() {
 
-        return healthPoints <= 0;
+        return currentHealthPoints <= 0;
 
     }
 

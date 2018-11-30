@@ -3,6 +3,7 @@ package abstracts;
 import identifiers.IdMinion;
 import impl.Player;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -44,15 +45,15 @@ public abstract class Minion extends Card implements Target {
      */
     public Minion() {
         this.id = new IdMinion(this);
-        this.myEffects = new ArrayList<Effect>();
+        this.myEffects = new ArrayList<>();
     }
 
     /**
      * {@inheritDoc}
      */
-    public int takeDamage(int damagePoints) {
-        this.healthPoints = this.healthPoints - damagePoints;
-        return damagePoints;
+    public int takeDamage(int damageTaken) {
+        this.healthPoints = this.healthPoints - damageTaken;
+        return damageTaken;
     }
 
     /**
@@ -134,7 +135,7 @@ public abstract class Minion extends Card implements Target {
 
         //we go through all the minion's death rattles
         for(Effect effect : myDeathRattles){
-            effect.effect(this);
+            effect.effect();
         }
 
         //we then remove it from the game
@@ -191,8 +192,7 @@ public abstract class Minion extends Card implements Target {
      */
     public boolean isDead() {
 
-        boolean alive = healthPoints > 0;
-        return alive;
+        return healthPoints <= 0;
 
     }
 

@@ -1,6 +1,7 @@
 package inter;
 
-public interface Effect {
+public abstract class Effect {
 
-    void effect(Target myTarget);
+    public abstract void effect(Target myTarget);
+    public abstract void effect();
 }

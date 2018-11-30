@@ -4,6 +4,7 @@ import abstracts.Hero;
 import abstracts.Spell;
 import inter.Effect;
 import inter.Target;
+import inter.TargetedEffect;
 
 /**
  * Class representing the special action "ModifyArmor" used for the "Shield Block" (fr:Maîtrise du blocage) spell.
@@ -11,7 +12,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class ModifyArmor implements Effect {
+public class ModifyArmor extends TargetedEffect {
 
 
     private Spell mySpell;
@@ -27,6 +28,7 @@ public class ModifyArmor implements Effect {
         this.bonus = bonus;
     }
 
+    @Override
     public void effect(Target myTarget) {
 
         Hero hero;

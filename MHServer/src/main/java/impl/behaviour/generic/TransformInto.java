@@ -4,6 +4,7 @@ import abstracts.Minion;
 import abstracts.Spell;
 import inter.Effect;
 import inter.Target;
+import inter.TargetedEffect;
 
 /**
  * Class representing the special action "TransformInto" used for the "Polymorph" (fr:Métamorphose) spell.
@@ -11,7 +12,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class TransformInto implements Effect {
+public class TransformInto extends TargetedEffect {
 
     private Spell mySpell;
     private Minion myMinion;
@@ -21,6 +22,7 @@ public class TransformInto implements Effect {
         this.myMinion = newMinion;
     }
 
+    @Override
     public void effect(Target myTarget) {
         Minion oldMinion = (Minion)myTarget;
         oldMinion.setName(myMinion.getName());

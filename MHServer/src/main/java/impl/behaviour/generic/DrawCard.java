@@ -2,6 +2,7 @@ package impl.behaviour.generic;
 
 import abstracts.Spell;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 /**
@@ -10,7 +11,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DrawCard implements Effect {
+public class DrawCard extends NotTargetedEffect {
 
     private Spell mySpell;
 
@@ -18,7 +19,8 @@ public class DrawCard implements Effect {
         this.mySpell = newSpell;
     }
 
-    public void effect(Target myTarget) {
+    @Override
+    public void effect() {
         mySpell.getPlayer().draw();
     }
 }

@@ -2,6 +2,7 @@ package impl.behaviour.minion;
 
 import abstracts.Minion;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 /**
@@ -9,7 +10,7 @@ import inter.Target;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class Taunt implements Effect {
+public class Taunt extends NotTargetedEffect {
 
     private Minion myMinion;
 
@@ -18,7 +19,7 @@ public class Taunt implements Effect {
     }
 
     @Override
-    public void effect(Target myTarget) {
+    public void effect() {
         myMinion.setHasTaunt(true);
     }
 }

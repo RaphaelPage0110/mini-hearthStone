@@ -8,6 +8,7 @@ import impl.ConcreteMinion;
 import impl.Player;
 import impl.behaviour.minion.Taunt;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class Summon implements Effect {
+public class Summon extends NotTargetedEffect {
 
     private Spell mySpell;
     private Hero myHero;
@@ -28,6 +29,7 @@ public class Summon implements Effect {
         this.mySpell = newSpell;
         this.myMinionKeyword = minionKeyword;
     }
+
 
     public Summon(Hero myHero, String minionKeyword) {
         this.myHero = myHero;

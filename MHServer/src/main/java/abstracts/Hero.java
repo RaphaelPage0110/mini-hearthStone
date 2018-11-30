@@ -126,11 +126,15 @@ public abstract class Hero implements Target {
     /**
      * {@inheritDoc}
      */
-    public int takeDamage(int damagePoints) {
+    public int takeDamage(int damageTaken) {
         //Add armor behavior
-        int damages = damagePoints;
-        this.healthPoints = this.healthPoints - damages;
-        return damages;
+        if (damageTaken < this.armorPoints) {
+            this.armorPoints -= damageTaken;
+        } else {
+            this.healthPoints = this.healthPoints + this.armorPoints - damageTaken;
+            this.armorPoints = 0;
+        }
+        return damageTaken;
     }
 
     /**
@@ -138,7 +142,7 @@ public abstract class Hero implements Target {
      * @param healingPoints the number of health points to be returned.
      */
     public void heal(int healingPoints) {
-        this.healthPoints = this.healthPoints + healingPoints;
+        this.healthPoints = Math.max(30,this.healthPoints + healingPoints);
     }
 
     public void addArmor(int armor) {
@@ -151,8 +155,7 @@ public abstract class Hero implements Target {
      */
     public boolean isDead() {
 
-        boolean alive = healthPoints > 0;
-        return alive;
+        return healthPoints <= 0;
 
     }
 

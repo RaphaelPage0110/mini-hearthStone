@@ -4,6 +4,7 @@ import abstracts.Minion;
 import abstracts.Spell;
 import impl.Player;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageEnemyMinions implements Effect {
+public class DamageEnemyMinions extends NotTargetedEffect {
 
     private Spell mySpell;
 
@@ -23,7 +24,7 @@ public class DamageEnemyMinions implements Effect {
     }
 
     @Override
-    public void effect(Target myTarget) {
+    public void effect() {
         Player myOpponent = mySpell.getPlayer().getOpponent();
         ArrayList<Minion> hisMinions = myOpponent.getMyMinions();
         int damages = mySpell.getDamagePoints();

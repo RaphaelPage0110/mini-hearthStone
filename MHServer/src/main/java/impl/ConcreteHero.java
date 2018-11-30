@@ -1,43 +1,40 @@
 package impl;
 
-import abstracts.CardType;
 import abstracts.Hero;
 import impl.behaviour.generic.DamageTarget;
 import impl.behaviour.generic.ModifyArmor;
 import impl.behaviour.generic.Summon;
-
+import java.util.HashMap;
 import java.util.Map;
 
 public class ConcreteHero extends Hero {
 
-    private Map<String,String> abilityKeyWord;
+    private Map<String,String> abilityKeyWord = new HashMap<String, String>();
 
 
-    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String, String> abilityKeyWord, Player player) {
+    public ConcreteHero(String heroName, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
         super();
 
-        this.heroType = heroType;
+        this.heroName = heroName;
         this.armorPoints = armorPoints;
         this.maxHealthPoints = maxHealthPoints;
-        this.currentHealthPoints = maxHealthPoints;
         this.abilityKeyWord = abilityKeyWord;
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
         //ability keyword and value is it's modifier
-
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
 
             switch(entry.getKey()) {
 
-                case "damageTarget":
+                case "DamageTarget":
                     DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityDamage);
                     break;
-                case "modifyArmor" :
+                case "ModifyArmor" :
                     ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityArmor);
                     break;
-                case "summon" :
+                case "Summon" :
                     Summon abilitySummon = new Summon(this, entry.getValue());
                     this.setMyEffect(abilitySummon);
                     break;
@@ -56,7 +53,7 @@ public class ConcreteHero extends Hero {
 
     @Override
     protected void setMaxHealthPoints(int healthPoints) {
-        this.maxHealthPoints = healthPoints;
+
     }
 
     @Override
@@ -66,8 +63,7 @@ public class ConcreteHero extends Hero {
 
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
-        this.maxHealthPoints += bonusHealtPoints;
-        this.currentHealthPoints += bonusHealtPoints;
+
     }
 
     @Override

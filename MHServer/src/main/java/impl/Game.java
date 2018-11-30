@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private IdGame id;
+    private Integer id;
     private ArrayList<Minion> minionsInPlay;
     private Player player1;
     private Player player2;
@@ -15,7 +15,7 @@ public class Game {
     private boolean gameOver;
 
     public Game() {
-      this.id = new IdGame(this);
+      this.id = new IdGame(this).getId();
       this.minionsInPlay = new ArrayList<Minion>();
     }
 
@@ -23,7 +23,7 @@ public class Game {
   	* Returns value of id
   	* @return
   	*/
-  	public IdGame getId() {
+  	public Integer getId() {
   		return id;
   	}
 
@@ -31,7 +31,7 @@ public class Game {
   	* Sets new value of id
   	* @param
   	*/
-  	public void setId(IdGame id) {
+  	public void setId(Integer id) {
   		this.id = id;
   	}
 

@@ -18,7 +18,7 @@ public abstract class Hero implements Target {
      * The ID of this Hero.
      */
     @Id
-    private String id;
+    private Integer id;
 
     /**
      *  The name of the hero
@@ -46,7 +46,7 @@ public abstract class Hero implements Target {
      * Returns value of id
      * @return id the id of the hero
      */
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 

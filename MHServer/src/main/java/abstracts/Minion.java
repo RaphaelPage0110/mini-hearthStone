@@ -18,7 +18,7 @@ public abstract class Minion extends Card implements Target {
     /**
      * The ID of this Minion.
      */
-    private IdMinion id;
+    private Integer id;
 
     /**
      * Indicates the number of health points that this Minion has.
@@ -44,7 +44,7 @@ public abstract class Minion extends Card implements Target {
      * Default empty constructor which initializes the ID and the list of actions.
      */
     public Minion() {
-        this.id = new IdMinion(this);
+        this.id = new IdMinion(this).getId();
         this.myEffects = new ArrayList<>();
     }
 
@@ -76,7 +76,7 @@ public abstract class Minion extends Card implements Target {
      * Returns the value of id.
      * @return this.id.
      */
-    public IdMinion getId() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -88,6 +88,7 @@ public abstract class Minion extends Card implements Target {
         return this.canAttack;
     }
 
+
     /**
      * Sets the new value of canAttack.
      * @param canAttack the new value.
@@ -95,6 +96,7 @@ public abstract class Minion extends Card implements Target {
     public void setCanAttack(boolean canAttack) {
         this.canAttack = canAttack;
     }
+
 
     /**
      * Returns the value of hasTaunt.
@@ -104,6 +106,7 @@ public abstract class Minion extends Card implements Target {
         return this.hasTaunt;
     }
 
+
     /**
      * Sets the new value of hasTaunt.
      * @param hasTaunt the new value.
@@ -112,25 +115,30 @@ public abstract class Minion extends Card implements Target {
         this.hasTaunt = hasTaunt;
     }
 
+
     /**
-     * Add a bonus to the damage points.
-     * @param bonus the number of points to add.
+     * @{@inheritDoc}
      */
-    public void addDamagePoints(int bonus) {
-        this.damagePoints += bonus;
+    @Override
+    public void addDamagePoints(int bonusDamage) {
+        this.damagePoints += bonusDamage;
     }
+
 
     public ArrayList<Effect> getMyDeathRattles() {
         return myDeathRattles;
     }
 
+
     public void setMyDeathRattles(ArrayList<Effect> myDeathRattles) {
         this.myDeathRattles = myDeathRattles;
     }
 
+
     /**
      * what happens when the minion dies
      */
+    @Override
     public void dies() {
 
         //we go through all the minion's death rattles
@@ -143,6 +151,7 @@ public abstract class Minion extends Card implements Target {
         player.removeMinionFromPlay(this);
 
     }
+
 
     /**
      * allows a minion to attack a target
@@ -187,9 +196,9 @@ public abstract class Minion extends Card implements Target {
     }
 
     /**
-     * check if the minion is dead
-     * @return true if the minion is dead
+     * {@inheritDoc}
      */
+    @Override
     public boolean isDead() {
 
         return healthPoints <= 0;

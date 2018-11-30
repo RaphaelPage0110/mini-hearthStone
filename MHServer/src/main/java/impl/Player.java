@@ -4,12 +4,13 @@ import abstracts.Card;
 import abstracts.Minion;
 import abstracts.Hero;
 import identifiers.IdPlayer;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 
 import java.util.ArrayList;
 
 public class Player {
 
-    private IdPlayer id;
+    private Integer id;
     private Game myGame;
     private Hero myHero;
     private Player opponent;
@@ -66,7 +67,7 @@ public class Player {
   	* Returns value of id
   	* @return id the id of the player
   	*/
-  	public IdPlayer getId() {
+  	public Integer getId() {
   	    return id;
   	}
 
@@ -74,7 +75,7 @@ public class Player {
   	* Sets new value of id
   	* @param id the id of the player
   	*/
-  	public void setId(IdPlayer id) {
+  	public void setId(Integer id) {
   	    this.id = id;
   	}
 
@@ -147,7 +148,7 @@ public class Player {
   	* Default empty Player constructor
   	*/
   	public Player() {
-  	    this.id = new IdPlayer(this);
+  	    this.id = new IdPlayer(this).getId();
   	    this.myDamageAura = 0;
   	}
 
@@ -155,7 +156,7 @@ public class Player {
   	* Default Player constructor
   	*/
   	public Player( Hero myHero) {
-		this.id = new IdPlayer(this);
+		this.id = new IdPlayer(this).getId();
   		this.myHero = myHero;
   		this.myMana = 0;
         this.myDamageAura = 0;

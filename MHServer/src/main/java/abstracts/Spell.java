@@ -7,13 +7,13 @@ import inter.Effect;
 
 public abstract class Spell extends Card {
 
-	 private IdSpell id;
+	 private Integer id;
 
 	 /**
 		* Returns the value of id.
 		* @return this.id.
 		*/
-	 public IdSpell getId() {
+	 public Integer getId() {
 			 return this.id;
 	 }
 
@@ -21,7 +21,7 @@ public abstract class Spell extends Card {
 		* Default empty constructor which initializes the ID and the list of actions.
 		*/
 	 public Spell() {
-			 this.id = new IdSpell(this);
-			 this.myEffects = new ArrayList<Effect>();
+			 this.id = new IdSpell(this).getId();
+			 this.myEffects = new ArrayList<>();
 	 }
 }

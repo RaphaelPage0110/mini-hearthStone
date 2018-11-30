@@ -24,4 +24,20 @@ public interface Target {
      * what happens when a target dies
      */
     void dies();
+
+    /**
+     * Add a bonus to the damage points.
+     * @param bonusDamage the number of points to add.
+     */
+    void addDamagePoints(int bonusDamage);
+
+    /**
+     *
+     */
+    void heal(int healthPoints);
+
+    /**
+     *
+     */
+    void addMaxHealthPoints(int bonusHealtPoints);
 }

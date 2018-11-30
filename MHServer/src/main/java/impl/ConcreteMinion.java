@@ -33,7 +33,7 @@ public class ConcreteMinion extends Minion {
      */
     public ConcreteMinion summon(String minionKeyword) {
 
-        ConcreteMinion newMinion = minionRepository.findByMinionName("Recrue de la main d'argent");
+        ConcreteMinion newMinion = minionRepository.findByName("Recrue de la main d'argent");
 
         CardType type = CardType.PALADIN;
 

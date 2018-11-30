@@ -16,29 +16,33 @@ public class ConcreteHero extends Hero {
         super();
 
         this.setHeroName(heroName);
+        //this.setHeroType(heroType);
         this.setArmorPoints(armorPoints);
         this.setHealthPoints(healthPoints);
         this.setAbilityKeyWord(abilityKeyWord);
 
-    //the abilities of the heroes are stored using a Map in the database
-        for (Map.Entry<String, String> entry : abilityKeyWord.entrySet())
-    {
-        switch(entry.getKey()) {
-            case "DamageTarget":
-                DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
-                this.setMyEffect(abilityDamage);
-                break;
-            case "ModifyArmor" :
-                ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
-                this.setMyEffect(abilityArmor);
-                break;
-            case "Summon" :
-                Summon abilitySummon = new Summon(this, entry.getValue());
-                this.setMyEffect(abilitySummon);
-                break;
+        //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
+        //ability keyword and value is it's modifier
+        for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
+
+            switch(entry.getKey()) {
+
+                case "DamageTarget":
+                    DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
+                    this.setMyEffect(abilityDamage);
+                    break;
+                case "ModifyArmor" :
+                    ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
+                    this.setMyEffect(abilityArmor);
+                    break;
+                case "Summon" :
+                    Summon abilitySummon = new Summon(this, entry.getValue());
+                    this.setMyEffect(abilitySummon);
+                    break;
+
+            }
         }
     }
-}
 
     public Map<String,String> getAbilityKeyWord() {
         return abilityKeyWord;

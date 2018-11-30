@@ -4,6 +4,7 @@ import impl.Player;
 import inter.Effect;
 import inter.Target;
 
+
 import java.util.ArrayList;
 
 /**
@@ -12,16 +13,6 @@ import java.util.ArrayList;
  * @version 0.1
  */
 public abstract class Card {
-
-    /**
-     * A basic enumeration that represents the type of a card.
-     */
-    public enum CardType {
-        COMMON,
-        PALADIN,
-        MAGE,
-        WARRIOR;
-    }
 
     /**
      * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.

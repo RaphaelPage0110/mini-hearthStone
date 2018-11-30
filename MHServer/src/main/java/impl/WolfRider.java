@@ -1,5 +1,6 @@
 package impl;
 
+import abstracts.CardType;
 import abstracts.Minion;
 import impl.behaviour.minion.Charge;
 import inter.Effect;
@@ -14,7 +15,7 @@ public class WolfRider extends Minion {
         requiredMana = 3;
         damagePoints = 3;
         maxHealthPoints = 1;
-        type = CardType.COMMON;
+        type = abstracts.CardType.COMMON;
     }
 
     public WolfRider(int requiredMana, int damagePoints, int maxHealthPoints, CardType type) {

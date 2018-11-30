@@ -1,5 +1,6 @@
 package impl;
 
+import abstracts.CardType;
 import abstracts.Hero;
 import impl.behaviour.generic.DamageTarget;
 import impl.behaviour.generic.ModifyArmor;
@@ -12,10 +13,10 @@ public class ConcreteHero extends Hero {
     private Map<String,String> abilityKeyWord;
 
 
-    public ConcreteHero(String heroName, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
+    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
         super();
 
-        this.heroName = heroName;
+        this.heroType = heroType;
         this.armorPoints = armorPoints;
         this.maxHealthPoints = maxHealthPoints;
         this.currentHealthPoints = maxHealthPoints;
@@ -23,6 +24,7 @@ public class ConcreteHero extends Hero {
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
         //ability keyword and value is it's modifier
+
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
 
             switch(entry.getKey()) {

@@ -1,6 +1,5 @@
 package abstracts;
 
-import identifiers.IdHero;
 import impl.Player;
 import inter.Effect;
 import inter.Target;
@@ -23,7 +22,7 @@ public abstract class Hero implements Target {
     /**
      * The type of the hero (mage, warrior or paladin)
      */
-    protected String heroType;
+    protected CardType heroType;
 
     /**
      *  The name of the hero
@@ -178,11 +177,11 @@ public abstract class Hero implements Target {
 
     }
 
-    public String getHeroType() {
+    public CardType getHeroType() {
         return heroType;
     }
 
-    public void setHeroType(String heroType) {
+    public void setHeroType(CardType heroType) {
         this.heroType = heroType;
     }
 

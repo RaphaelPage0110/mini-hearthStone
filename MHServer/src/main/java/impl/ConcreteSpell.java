@@ -1,5 +1,6 @@
 package impl;
 
+import abstracts.CardType;
 import abstracts.Spell;
 import inter.Effect;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package impl;
 
+import abstracts.CardType;
 import abstracts.Minion;
 import impl.behaviour.minion.Charge;
 import impl.behaviour.minion.LifeSteal;
@@ -16,7 +17,7 @@ public class Champion extends Minion {
         requiredMana = 4;
         damagePoints = 3;
         maxHealthPoints = 2;
-        type = CardType.PALADIN;
+        type = abstracts.CardType.PALADIN;
     }
 
     public Champion(int _requiredMana, int _damagePoints, int _healthPoints, CardType _type) {

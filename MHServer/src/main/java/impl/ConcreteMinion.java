@@ -1,5 +1,6 @@
 package impl;
 
+import abstracts.CardType;
 import abstracts.Minion;
 import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class ConcreteMinion extends Minion {
 
         ConcreteMinion newMinion = minionRepository.findByName("Recrue de la main d'argent");
 
-        CardType type = CardType.PALADIN;
+        CardType type = abstracts.CardType.PALADIN;
 
 
 

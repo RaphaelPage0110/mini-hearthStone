@@ -18,7 +18,7 @@ public abstract class Hero implements Target {
      * The ID of this Hero.
      */
     @Id
-    private Integer id;
+    private String id;
 
     /**
      * The type of the hero (mage, warrior or paladin)
@@ -56,7 +56,7 @@ public abstract class Hero implements Target {
      * Returns value of id
      * @return id the id of the hero
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -189,7 +189,7 @@ public abstract class Hero implements Target {
     @Override
     public String toString() {
         return String.format(
-                "Hero[id=%s, heroName='%s', healthPoints='%s', armorPoints='%s']",
+                "Hero[id=%s, heroName='%s', maxHealthPoints='%s', armorPoints='%s']",
                 id, heroName, maxHealthPoints, armorPoints);
     }
 

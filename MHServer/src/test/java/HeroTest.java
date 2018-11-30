@@ -1,12 +1,8 @@
 import abstracts.Hero;
 import com.sun.javaws.exceptions.InvalidArgumentException;
-import impl.ConcreteHero;
 import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static abstracts.CardType.MAGE;
 import static abstracts.CardType.PALADIN;

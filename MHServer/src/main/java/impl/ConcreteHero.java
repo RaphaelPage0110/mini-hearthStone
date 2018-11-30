@@ -20,25 +20,25 @@ public class ConcreteHero extends Hero {
         this.setHealthPoints(healthPoints);
         this.setAbilityKeyWord(abilityKeyWord);
 
-        //the abilities of the heroes are stored using a Map in the database
+    //the abilities of the heroes are stored using a Map in the database
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet())
-        {
-            switch(entry.getKey()) {
-                case "DamageTarget":
-                    DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
-                    this.setMyEffect(abilityDamage);
-                    break;
-                case "ModifyArmor" :
-                    ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
-                    this.setMyEffect(abilityArmor);
-                    break;
-                case "Summon" :
-                    Summon abilitySummon = new Summon(this, entry.getValue());
-                    this.setMyEffect(abilitySummon);
-                    break;
-            }
+    {
+        switch(entry.getKey()) {
+            case "DamageTarget":
+                DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
+                this.setMyEffect(abilityDamage);
+                break;
+            case "ModifyArmor" :
+                ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
+                this.setMyEffect(abilityArmor);
+                break;
+            case "Summon" :
+                Summon abilitySummon = new Summon(this, entry.getValue());
+                this.setMyEffect(abilitySummon);
+                break;
         }
     }
+}
 
     public Map<String,String> getAbilityKeyWord() {
         return abilityKeyWord;

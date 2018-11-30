@@ -36,9 +36,10 @@ public class ConcreteMinion extends Minion {
         ConcreteMinion newMinion = minionRepository.findByMinionName("Recrue de la main d'argent");
 
         CardType type = CardType.PALADIN;
-        ConcreteMinion minion = new ConcreteMinion("serviteur main argent", 2, 1,1, type, null ) ;
 
-        return minion;
+
+
+        return newMinion;
 
     }
 

@@ -37,7 +37,7 @@ public class Summon extends NotTargetedEffect {
 
     }
 
-    public void effect(Target myTarget) {
+    public void effect() {
         Player player = mySpell.getPlayer();
 
         ConcreteMinion minion = new ConcreteMinion();

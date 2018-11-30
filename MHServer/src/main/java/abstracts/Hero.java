@@ -18,32 +18,32 @@ public abstract class Hero implements Target {
      * The ID of this Hero.
      */
     @Id
-    protected Integer id;
+    private String id;
 
     /**
      * The type of the hero (mage, warrior or paladin)
      */
-    protected String heroType;
+    private String heroType;
 
     /**
      *  The name of the hero
      */
-    protected String heroName;
+    private String heroName;
 
     /**
      * Indicates the maximum number of health points that this Hero has.
      */
-    protected int maxHealthPoints;
+    private int maxHealthPoints;
 
     /**
      * Indicates the current number of health points that this Hero has.
      */
-    protected int currentHealthPoints;
+    private int currentHealthPoints;
 
     /**
      * Indicates the number of armor points that this Hero has.
      */
-    protected int armorPoints;
+    private int armorPoints;
 
     /**
      * Reference the list of actions or behaviors of this card.
@@ -56,7 +56,7 @@ public abstract class Hero implements Target {
      * Returns value of id
      * @return id the id of the hero
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -189,7 +189,7 @@ public abstract class Hero implements Target {
     @Override
     public String toString() {
         return String.format(
-                "Hero[id=%s, heroName='%s', healthPoints='%s', armorPoints='%s']",
+                "Hero[id=%s, heroName='%s', maxHealthPoints='%s', armorPoints='%s']",
                 id, heroName, maxHealthPoints, armorPoints);
     }
 

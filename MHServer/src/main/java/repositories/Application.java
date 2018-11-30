@@ -21,12 +21,14 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+
+        /*
         repository.deleteAll();
 
         // save a couple of heroes
         Map<String, String> abilityMage = new HashMap<String, String>();
         abilityMage.put("DamageTarget","1");
-        repository.save(new ConcreteHero("mage", 30, 0 , abilityMage));
+        repository.save(new ConcreteHero("mage", 30, 0, abilityMage));
 
         Map<String, String> abilityWarrior = new HashMap<String, String>();
         abilityWarrior.put("ModifyArmor","2");
@@ -37,11 +39,18 @@ public class Application implements CommandLineRunner {
         repository.save(new ConcreteHero("paladin", 30, 0, abilityPaladin));
 
         // fetch all heroes
+        */
+        ConcreteHero heroMage = repository.findByHeroName("mage");
+        System.out.println(heroMage);
         System.out.println("Heroes found with findAll():");
         System.out.println("-------------------------------");
         for (ConcreteHero hero : repository.findAll()) {
             System.out.println(hero);
         }
+
+
+
+
 
 
     }

@@ -24,38 +24,29 @@ public class Summon extends NotTargetedEffect {
     private Spell mySpell;
     private Hero myHero;
     private String myMinionKeyword;
+    private Player myPlayer;
 
     public Summon(Spell newSpell, String minionKeyword) {
         this.mySpell = newSpell;
         this.myMinionKeyword = minionKeyword;
+        this.myPlayer = mySpell.getPlayer();
     }
 
 
     public Summon(Hero myHero, String minionKeyword) {
         this.myHero = myHero;
         this.myMinionKeyword = minionKeyword;
-
+        this.myPlayer = myHero.getMyPlayer();
     }
 
     public void effect() {
-        Player player = mySpell.getPlayer();
 
         ConcreteMinion minion = new ConcreteMinion();
-        Minion minionToSummon;
+        ConcreteMinion minionToSummon;
 
         minionToSummon = minion.summon(myMinionKeyword);
 
-        player.addMinion(minionToSummon);
+        myPlayer.addMinion(minionToSummon);
 
-        /*ArrayList<Effect> uselessMinionAction = new ArrayList<>();
-        Minion uselessMinion = new ConcreteMinion("Useless Minion", 0, 0, 2, Card.CardType.MAGE, uselessMinionAction);
-        uselessMinionAction.add(new Taunt(uselessMinion));
-
-        Minion uselessMinion2 = uselessMinion.copy();
-
-        Player player = mySpell.getPlayer();
-
-        player.addMinion(uselessMinion);
-        player.addMinion(uselessMinion2);*/
     }
 }

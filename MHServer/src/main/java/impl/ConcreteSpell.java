@@ -10,7 +10,7 @@ public class ConcreteSpell extends Spell {
         this.setName(name);
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
-        this.bonus = bonus;
+        this.setBonus(bonus);
         this.type = type;
         this.myEffects = myActions;
     }

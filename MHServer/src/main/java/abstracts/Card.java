@@ -56,7 +56,7 @@ public abstract class Card {
     /**
      * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
      */
-    protected int bonus;
+    private int bonus;
 
 
     /**

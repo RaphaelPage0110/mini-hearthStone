@@ -47,9 +47,13 @@ public class Game {
   	* Sets new value of minionsInPlay
   	* @param
   	*/
-  	public void setMinionsInPlay(ArrayList<Minion> _newMinion) {
-  		this.minionsInPlay = _newMinion;
+  	public void setMinionsInPlay(ArrayList<Minion> newMinion) {
+  		this.minionsInPlay = newMinion;
   	}
+
+  	public void addMinionInPlay(Minion minion) {
+  		minionsInPlay.add(minion);
+	}
 
   	/**
   	* Returns value of player1

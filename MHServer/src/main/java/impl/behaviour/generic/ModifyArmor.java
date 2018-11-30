@@ -16,9 +16,16 @@ public class ModifyArmor extends TargetedEffect {
 
 
     private Spell mySpell;
+    private Hero myHero;
+    private int bonus;
 
     public ModifyArmor(Spell mySpell) {
         this.mySpell = mySpell;
+        this.bonus = mySpell.getBonus();
+    }
+    public ModifyArmor(Hero myHero, int bonus) {
+        this.myHero = myHero;
+        this.bonus = bonus;
     }
 
     @Override
@@ -26,7 +33,7 @@ public class ModifyArmor extends TargetedEffect {
 
         Hero hero;
         hero = (Hero)myTarget;
-        hero.addArmor(mySpell.getBonus());
+        hero.addArmor(bonus);
 
     }
 }

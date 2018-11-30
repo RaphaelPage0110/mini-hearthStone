@@ -55,6 +55,7 @@ public class Player {
     */
     public void addMinion(Minion minion) {
         myMinions.add(minion);
+        myGame.addMinionInPlay(minion);
     }
 
     public ArrayList<Minion> getMyMinions() {

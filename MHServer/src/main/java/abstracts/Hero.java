@@ -4,8 +4,8 @@ import identifiers.IdHero;
 import impl.Player;
 import inter.Effect;
 import inter.Target;
+import org.springframework.data.annotation.Id;
 
-import java.util.ArrayList;
 
 /**
  * Abstract representation of a Hero.
@@ -17,7 +17,8 @@ public abstract class Hero implements Target {
     /**
      * The ID of this Hero.
      */
-    private IdHero id;
+    @Id
+    private String id;
 
     /**
      *  The name of the hero
@@ -45,7 +46,7 @@ public abstract class Hero implements Target {
      * Returns value of id
      * @return id the id of the hero
      */
-    public IdHero getId() {
+    public String getId() {
         return id;
     }
 
@@ -167,5 +168,11 @@ public abstract class Hero implements Target {
 
     }
 
-    
+    @Override
+    public String toString() {
+        return String.format(
+                "Hero[id=%s, heroName='%s', healthPoints='%s', armorPoints='%s']",
+                id, heroName, healthPoints, armorPoints);
+    }
+
 }

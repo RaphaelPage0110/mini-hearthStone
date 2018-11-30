@@ -137,7 +137,7 @@ public abstract class Hero implements Target {
      * {@inheritDoc}
      */
     public int takeDamage(int damageTaken) {
-        //Add armor behavior
+
         if (damageTaken < this.armorPoints) {
             this.armorPoints -= damageTaken;
         } else {
@@ -152,7 +152,7 @@ public abstract class Hero implements Target {
      * @param healingPoints the number of health points to be returned.
      */
     public void heal(int healingPoints) {
-        this.currentHealthPoints = Math.max(maxHealthPoints,this.currentHealthPoints + healingPoints);
+        this.currentHealthPoints = Math.min(maxHealthPoints,this.currentHealthPoints + healingPoints);
     }
 
     public void addArmor(int armor) {
@@ -194,4 +194,8 @@ public abstract class Hero implements Target {
     }
 
     protected abstract void setMaxHealthPoints(int healthPoints);
+
+    public void heroPower() {
+        myEffect.effect();
+    }
 }

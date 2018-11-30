@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ConcreteHero extends Hero {
 
-    private Map<String,String> abilityKeyWord = new HashMap<String, String>();
+    private Map<String,String> abilityKeyWord;
 
 
     public ConcreteHero(String heroName, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
@@ -18,6 +18,7 @@ public class ConcreteHero extends Hero {
         this.heroName = heroName;
         this.armorPoints = armorPoints;
         this.maxHealthPoints = maxHealthPoints;
+        this.currentHealthPoints = maxHealthPoints;
         this.abilityKeyWord = abilityKeyWord;
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
@@ -53,7 +54,7 @@ public class ConcreteHero extends Hero {
 
     @Override
     protected void setMaxHealthPoints(int healthPoints) {
-
+        this.maxHealthPoints = healthPoints;
     }
 
     @Override
@@ -63,7 +64,8 @@ public class ConcreteHero extends Hero {
 
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
-
+        this.maxHealthPoints += bonusHealtPoints;
+        this.currentHealthPoints += bonusHealtPoints;
     }
 
     @Override

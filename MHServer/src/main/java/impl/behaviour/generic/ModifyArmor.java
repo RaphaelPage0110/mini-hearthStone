@@ -3,6 +3,7 @@ package impl.behaviour.generic;
 import abstracts.Hero;
 import abstracts.Spell;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 import inter.TargetedEffect;
 
@@ -12,7 +13,7 @@ import inter.TargetedEffect;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class ModifyArmor extends TargetedEffect {
+public class ModifyArmor extends NotTargetedEffect {
 
 
     private Spell mySpell;
@@ -29,11 +30,9 @@ public class ModifyArmor extends TargetedEffect {
     }
 
     @Override
-    public void effect(Target myTarget) {
+    public void effect() {
 
-        Hero hero;
-        hero = (Hero)myTarget;
-        hero.addArmor(bonus);
+        myHero.addArmor(bonus);
 
     }
 }

@@ -28,7 +28,7 @@ public class TransformInto extends TargetedEffect {
         oldMinion.setName(myMinion.getName());
         oldMinion.setRequiredMana(myMinion.getRequiredMana());
         oldMinion.setDamagePoints(myMinion.getDamagePoints());
-        oldMinion.setHealthPoints(myMinion.getHealthPoints());
+        oldMinion.setHealthPoints(myMinion.getMaxHealthPoints());
         oldMinion.setType(myMinion.getType());
         oldMinion.setMyEffects(myMinion.getMyEffects());
     }

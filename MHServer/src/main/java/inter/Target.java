@@ -40,4 +40,6 @@ public interface Target {
      *
      */
     void addMaxHealthPoints(int bonusHealtPoints);
+
+    int getMaxHealthPoints();
 }

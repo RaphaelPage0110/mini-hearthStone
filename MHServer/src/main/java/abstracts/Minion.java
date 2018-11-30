@@ -210,5 +210,4 @@ public abstract class Minion extends Card implements Target {
 
     }
 
-
 }

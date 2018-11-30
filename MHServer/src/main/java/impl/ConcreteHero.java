@@ -66,4 +66,9 @@ public class ConcreteHero extends Hero {
     public void addMaxHealthPoints(int bonusHealtPoints) {
 
     }
+
+    @Override
+    public int getMaxHealthPoints() {
+        return 0;
+    }
 }

@@ -52,4 +52,9 @@ public class ConcreteMinion extends Minion {
     public void addMaxHealthPoints(int bonusHealtPoints) {
 
     }
+
+    @Override
+    public int getMaxHealthPoints() {
+        return 0;
+    }
 }

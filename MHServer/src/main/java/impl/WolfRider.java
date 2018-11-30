@@ -44,4 +44,9 @@ public class WolfRider extends Minion {
     public void addMaxHealthPoints(int bonusHealtPoints) {
 
     }
+
+    @Override
+    public int getMaxHealthPoints() {
+        return 0;
+    }
 }

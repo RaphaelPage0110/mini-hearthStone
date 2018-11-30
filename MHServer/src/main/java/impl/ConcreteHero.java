@@ -15,11 +15,10 @@ public class ConcreteHero extends Hero {
     public ConcreteHero(String heroName, int healthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
         super();
 
-        this.setHeroName(heroName);
-        //this.setHeroType(heroType);
-        this.setArmorPoints(armorPoints);
-        this.setMaxHealthPoints(healthPoints);
-        this.setAbilityKeyWord(abilityKeyWord);
+        this.heroName = heroName;
+        this.armorPoints = armorPoints;
+        this.maxHealthPoints = healthPoints;
+        this.abilityKeyWord = abilityKeyWord;
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
         //ability keyword and value is it's modifier
@@ -69,6 +68,6 @@ public class ConcreteHero extends Hero {
 
     @Override
     public int getMaxHealthPoints() {
-        return 0;
+        return getMaxHealthPoints();
     }
 }

@@ -46,7 +46,7 @@ public abstract class Card {
     /**
      * The name of the card
      */
-    private String name;
+    protected String name;
 
     /**
      * Reference the list of actions or behaviors of this card.
@@ -56,7 +56,7 @@ public abstract class Card {
     /**
      * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
      */
-    private int bonus;
+    protected int bonus;
 
 
     /**

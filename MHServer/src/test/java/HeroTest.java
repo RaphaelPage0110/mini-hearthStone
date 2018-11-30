@@ -1,5 +1,7 @@
 import abstracts.Hero;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import impl.ConcreteHero;
+import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,19 +17,17 @@ import static org.junit.Assert.assertEquals;
 class HeroTest {
 
     private Hero warrior, paladin, mage;
+    Player player1 = new Player(), player2 = new Player();
 
 
     @BeforeEach
-    void setup() {
-        Map<String, String> map =  new HashMap<>();
-        map.put("ModifyArmor", "2");
-        warrior = new ConcreteHero(WARRIOR, 30, 0, map);
-        map = new HashMap<>();
-        map.put("Summon", "Recrue de la main d'argent");
-        paladin = new ConcreteHero(PALADIN, 30, 0, map);
-        map = new HashMap<>();
-        map.put("DamageTarget", "1");
-        mage = new ConcreteHero(MAGE, 30, 0, map);
+    void setup() throws InvalidArgumentException {
+
+        player1.chooseHero(WARRIOR);
+        player2.chooseHero(MAGE);
+
+        warrior = player1.getMyHero();
+        mage = player2.getMyHero();
     }
 
     @Test
@@ -66,7 +66,6 @@ class HeroTest {
     @Test
     void heroTypeTest() {
         assertEquals(WARRIOR, warrior.getHeroType());
-        assertEquals(PALADIN, paladin.getHeroType());
         assertEquals(MAGE, mage.getHeroType());
     }
 }

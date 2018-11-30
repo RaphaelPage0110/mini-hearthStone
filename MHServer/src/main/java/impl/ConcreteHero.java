@@ -5,7 +5,7 @@ import abstracts.Hero;
 import impl.behaviour.generic.DamageTarget;
 import impl.behaviour.generic.ModifyArmor;
 import impl.behaviour.generic.Summon;
-import java.util.HashMap;
+
 import java.util.Map;
 
 public class ConcreteHero extends Hero {
@@ -13,7 +13,7 @@ public class ConcreteHero extends Hero {
     private Map<String,String> abilityKeyWord;
 
 
-    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
+    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String, String> abilityKeyWord, Player player) {
         super();
 
         this.heroType = heroType;
@@ -29,15 +29,15 @@ public class ConcreteHero extends Hero {
 
             switch(entry.getKey()) {
 
-                case "DamageTarget":
+                case "damageTarget":
                     DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityDamage);
                     break;
-                case "ModifyArmor" :
+                case "modifyArmor" :
                     ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityArmor);
                     break;
-                case "Summon" :
+                case "summon" :
                     Summon abilitySummon = new Summon(this, entry.getValue());
                     this.setMyEffect(abilitySummon);
                     break;

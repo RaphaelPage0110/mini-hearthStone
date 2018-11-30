@@ -1,12 +1,16 @@
 package impl;
 
 import abstracts.Card;
+import abstracts.CardType;
 import abstracts.Minion;
 import abstracts.Hero;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import identifiers.IdPlayer;
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Player {
 
@@ -186,6 +190,21 @@ public class Player {
         }
 
     }
+
+    public void chooseHero(CardType type) throws InvalidArgumentException {
+    	Map<String, String> heroPower = new HashMap<>();
+    	switch(type) {
+            case WARRIOR: heroPower.put("modifyArmor", "2");
+            break;
+            case PALADIN: heroPower.put("summon", "recrue de la main d'argent");
+            break;
+            case MAGE: heroPower.put("damageTarget", "1");
+            break;
+            default: throw new InvalidArgumentException(new String[]{"Hero must be warrior, paladin or mage."});
+        }
+        this.myHero = new ConcreteHero(type,30,0,heroPower,this);
+	}
+
 
     /**
      * Returns the value of the opponent.

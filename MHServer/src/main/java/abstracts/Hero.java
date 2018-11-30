@@ -21,6 +21,11 @@ public abstract class Hero implements Target {
     private Integer id;
 
     /**
+     * The type of the hero (mage, warrior or paladin)
+     */
+    private String heroType;
+
+    /**
      *  The name of the hero
      */
     private String heroName;
@@ -166,6 +171,14 @@ public abstract class Hero implements Target {
 
         myPlayer.lost();
 
+    }
+
+    public String getHeroType() {
+        return heroType;
+    }
+
+    public void setHeroType(String heroType) {
+        this.heroType = heroType;
     }
 
     @Override

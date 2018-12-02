@@ -5,15 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static abstracts.CardType.MAGE;
-import static abstracts.CardType.PALADIN;
 import static abstracts.CardType.WARRIOR;
 import static org.junit.Assert.assertEquals;
 
 
 class HeroTest {
 
-    private Hero warrior, paladin, mage;
-    Player player1 = new Player(), player2 = new Player();
+    private Hero warrior, mage;
+    private Player player1 = new Player(), player2 = new Player();
 
 
     @BeforeEach

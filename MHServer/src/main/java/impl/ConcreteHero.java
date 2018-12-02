@@ -1,5 +1,6 @@
 package impl;
 
+import abstracts.CardType;
 import abstracts.Hero;
 import impl.behaviour.generic.DamageTarget;
 import impl.behaviour.generic.ModifyArmor;
@@ -9,32 +10,42 @@ import java.util.Map;
 
 public class ConcreteHero extends Hero {
 
-    private Map<String,String> abilityKeyWord = new HashMap<String, String>();
+    private Map<String,String> abilityKeyWord;
 
 
-    public ConcreteHero(String heroName, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord) {
+    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord, Player player) {
         super();
 
-        this.heroName = heroName;
+        this.heroType = heroType;
         this.armorPoints = armorPoints;
         this.maxHealthPoints = maxHealthPoints;
+        this.currentHealthPoints = maxHealthPoints;
         this.abilityKeyWord = abilityKeyWord;
+        this.myPlayer = player;
 
+        switch (heroType) {
+            case MAGE: this.heroName = "Jaina";
+            break;
+            case PALADIN: this.heroName = "Uther";
+            break;
+            case WARRIOR: this.heroName = "Garrosh";
+            break;
+        }
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
         //ability keyword and value is it's modifier
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
 
             switch(entry.getKey()) {
 
-                case "DamageTarget":
+                case "damageTarget":
                     DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityDamage);
                     break;
-                case "ModifyArmor" :
+                case "modifyArmor" :
                     ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityArmor);
                     break;
-                case "Summon" :
+                case "summon" :
                     Summon abilitySummon = new Summon(this, entry.getValue());
                     this.setMyEffect(abilitySummon);
                     break;
@@ -63,7 +74,8 @@ public class ConcreteHero extends Hero {
 
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
-
+        this.maxHealthPoints += bonusHealtPoints;
+        this.currentHealthPoints += bonusHealtPoints;
     }
 
     @Override

@@ -192,6 +192,7 @@ public class Player {
     }
 
     public void chooseHero(CardType type) throws InvalidArgumentException {
+    	this.myMinions = new ArrayList<>();
     	Map<String, String> heroPower = new HashMap<>();
     	switch(type) {
             case WARRIOR: heroPower.put("modifyArmor", "2");

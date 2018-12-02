@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ConcreteMinion extends Minion {
 
     @Autowired
-    private MinionRepository minionRepository ;
+    private MinionRepository minionRepository;
 
     public ConcreteMinion() {
 

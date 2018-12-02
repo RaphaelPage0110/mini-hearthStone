@@ -197,4 +197,8 @@ public abstract class Hero implements Target {
     public void heroPower() {
         myEffect.effect();
     }
+
+    public void heroPower(Target target) {
+        myEffect.effect(target);
+    }
 }

@@ -18,8 +18,8 @@ class HeroTest {
     @BeforeEach
     void setup() throws InvalidArgumentException {
 
-        player1.chooseHero(WARRIOR);
-        player2.chooseHero(MAGE);
+        player1.chooseHero("Garrosh");
+        player2.chooseHero("Jaina");
 
         warrior = player1.getMyHero();
         mage = player2.getMyHero();

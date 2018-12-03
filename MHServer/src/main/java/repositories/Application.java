@@ -1,4 +1,5 @@
 package repositories;
+import abstracts.CardType;
 import impl.ConcreteHero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -40,7 +41,10 @@ public class Application implements CommandLineRunner {
 
         // fetch all heroes
         */
-        ConcreteHero heroMage = repository.findByHeroName("mage");
+        ConcreteHero heroJaina = repository.findByHeroName("Jaina");
+        System.out.println(heroJaina);
+        CardType type = CardType.MAGE;
+        ConcreteHero heroMage = repository.findByHeroType(type);
         System.out.println(heroMage);
         System.out.println("Heroes found with findAll():");
         System.out.println("-------------------------------");

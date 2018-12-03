@@ -6,7 +6,9 @@ import abstracts.Minion;
 import abstracts.Hero;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import identifiers.IdPlayer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
+import repositories.HeroRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,13 +18,16 @@ public class Player {
 
     private Integer id;
     private Game myGame;
-    private Hero myHero;
+    private ConcreteHero myHero;
     private Player opponent;
     private ArrayList<Minion> myMinions;
     private ArrayList<Card> myCards;
     private int myMana;
     private ArrayList<Card> myStock;
     private int myDamageAura; //used for spells that modifies the damage power of the minions
+
+	@Autowired
+	private HeroRepository heroRepository;
 
     /**
      * Returns value of myDamageAura
@@ -95,7 +100,7 @@ public class Player {
   	* Sets new value of myHero
   	* @param myHero the hero of the player
   	*/
-  	public void setMyHero(Hero myHero) {
+  	public void setMyHero(ConcreteHero myHero) {
   	    this.myHero = myHero;
   	}
 
@@ -153,17 +158,8 @@ public class Player {
   	*/
   	public Player() {
   	    this.id = new IdPlayer(this).getId();
+		this.myMana = 0;
   	    this.myDamageAura = 0;
-  	}
-
-  	/**
-  	* Default Player constructor
-  	*/
-  	public Player( Hero myHero) {
-		this.id = new IdPlayer(this).getId();
-  		this.myHero = myHero;
-  		this.myMana = 0;
-        this.myDamageAura = 0;
   	}
 
     /**
@@ -191,18 +187,18 @@ public class Player {
 
     }
 
-    public void chooseHero(CardType type) throws InvalidArgumentException {
-    	Map<String, String> heroPower = new HashMap<>();
-    	switch(type) {
-            case WARRIOR: heroPower.put("modifyArmor", "2");
+    public void chooseHero(String heroName) throws InvalidArgumentException {
+
+    	switch(heroName) {
+            case "Jaina": myHero = heroRepository.findByHeroName("Jaina");
             break;
-            case PALADIN: heroPower.put("summon", "recrue de la main d'argent");
+            case "Garrosh": myHero = heroRepository.findByHeroName("Garrosh");
             break;
-            case MAGE: heroPower.put("damageTarget", "1");
+            case "Uther": myHero = heroRepository.findByHeroName("Uther");
             break;
-            default: throw new InvalidArgumentException(new String[]{"Hero must be warrior, paladin or mage."});
+            default: throw new InvalidArgumentException(new String[]{"Hero must be Jaina, Uther or Garrosh."});
         }
-        this.myHero = new ConcreteHero(type,30,0,heroPower,this);
+        this.myHero.setMyPlayer(this);
 	}
 
 

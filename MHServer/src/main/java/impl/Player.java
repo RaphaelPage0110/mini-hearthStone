@@ -4,7 +4,6 @@ import abstracts.Card;
 import abstracts.CardType;
 import abstracts.Minion;
 import abstracts.Hero;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import identifiers.IdPlayer;
 
 import java.util.ArrayList;
@@ -328,4 +327,20 @@ public class Player {
 	public void setCanUseHeroAbility(boolean canUseHeroAbility) {
 		this.canUseHeroAbility = canUseHeroAbility;
 	}
+
+	/**
+	 * check if the player has minions that can attack
+	 * @return true if the player has minions that can attack
+	 */
+    public boolean hasMinionsAwake() {
+		return true;
+    }
+
+    /**
+     * check if the player has minions with taunt
+     * @return true if the player has minions with taunt
+     */
+    public boolean hasTauntMinions() {
+        return true;
+    }
 }

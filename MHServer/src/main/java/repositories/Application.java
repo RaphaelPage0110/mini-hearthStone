@@ -1,5 +1,8 @@
 package repositories;
+import abstracts.Minion;
+import impl.ConcreteMinion;
 import impl.Player;
+import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -87,7 +90,7 @@ public class Application implements CommandLineRunner {
                     playCard(activePlayer, opponent);
                     break;
                 case "attack":
-                    attack(activePlayer, opponent);
+                    prepareAttack(activePlayer, opponent);
                     break;
                 case "useHeroAbility":
                     useHeroPower(activePlayer, opponent);
@@ -115,11 +118,72 @@ public class Application implements CommandLineRunner {
     }
 
     /**
-     * allows a player to attack a target
+     * this method send to the client the list of the targets he can attack
      * @param activePlayer
      * @param opponent
      */
-    private void attack(Player activePlayer, Player opponent) {
+    private void prepareAttack(Player activePlayer, Player opponent) {
+
+        //we check if the player has minions that can attack
+        if(activePlayer.hasMinionsAwake()) {
+
+            //if the opponent has minions with taunt, then he has to attack them first
+            if(opponent.hasTauntMinions()) {
+
+                attack(activePlayer, opponent);
+
+            }
+
+            else {
+                //this var will contain the choice of the player concerning his choice of target
+                String attackType = "";
+
+                //then the player can either attack the hero or a minion
+                switch (attackType) {
+                    case "hero" :
+                        attack(activePlayer, opponent.getMyHero() );
+                        break;
+                    case "minion" :
+                        attack(activePlayer, opponent.getMyMinions() );
+                        break;
+                    default :
+                        break;
+                }
+            }
+        }
+        else {
+            //attaque impossible pour le moment
+        }
+
+    }
+
+    /**
+     * allows to attack a minion
+     * @param activePlayer
+     * @param opponent
+     */
+    private void attack(Player activePlayer, Target opponent) {
+
+        //this var will contain the choice of the player concerning which minion he will attack
+        ConcreteMinion minionToAttack = new ConcreteMinion();
+
+        //this var will contain the choice of the player concerning which minion will attack
+        ConcreteMinion minionThatAttacks = new ConcreteMinion();
+
+        minionThatAttacks.attack(minionToAttack);
+
+
+    }
+
+
+    /**
+     * allows to attack a hero
+     * @param activePlayer
+     * @param opponent
+     */
+    private void attackHero(Player activePlayer, Player opponent) {
+
+
 
     }
 

@@ -6,28 +6,24 @@ import abstracts.Minion;
 import abstracts.Hero;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import identifiers.IdPlayer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
-import repositories.HeroRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Player {
 
     private Integer id;
     private Game myGame;
     private ConcreteHero myHero;
+    private boolean canUseHeroAbility;
     private Player opponent;
     private ArrayList<Minion> myMinions;
     private ArrayList<Card> myCards;
-    private int myMana;
-    private ArrayList<Card> myStock;
+    private int myManaMax;
+	private int myMana;
+    private ArrayList<Card> myStock = new ArrayList<>();
     private int myDamageAura; //used for spells that modifies the damage power of the minions
 
-	@Autowired
-	private HeroRepository heroRepository;
+	private int playOrder; //used to know if the player is playing first or second
 
     /**
      * Returns value of myDamageAura
@@ -105,21 +101,36 @@ public class Player {
   	}
 
   	/**
-  	* Returns value of myMana
-  	* @return myMana the current mana of a player
+  	* Returns value of myManaMax
+  	* @return myManaMax the current mana of a player
   	*/
-  	public int getMyMana() {
-  	    return myMana;
+  	public int getMyManaMax() {
+  	    return myManaMax;
   	}
 
   	/**
-  	* Sets new value of myMana
-  	* @param myMana the current mana of a player
+  	* add a value to the current mana count
+  	* @param moreMana how much we want to increase the players mana
   	*/
-
-  	public void setMyMana(int myMana) {
-  	    this.myMana = myMana;
+  	public void addManaMax(int moreMana) {
+  	    this.myManaMax += moreMana;
   	}
+
+	/**
+	 * Sets new value of myManaMax
+	 * @param myManaMax the current mana of a player
+	 */
+	public void setMyManaMax(int myManaMax) {
+		this.myManaMax = myManaMax;
+	}
+
+	public int getMyMana() {
+		return myMana;
+	}
+
+	public void setMyMana(int myMana) {
+		this.myMana = myMana;
+	}
 
     /**
   	* Returns value of myGame
@@ -153,12 +164,20 @@ public class Player {
 		myStock.add(newCard);
 	}
 
+	public int getPlayOrder() {
+		return playOrder;
+	}
+
+	public void setPlayOrder(int playOrder) {
+		this.playOrder = playOrder;
+	}
+
   	/**
   	* Default empty Player constructor
   	*/
   	public Player() {
   	    this.id = new IdPlayer(this).getId();
-		this.myMana = 0;
+		this.myManaMax = 0;
   	    this.myDamageAura = 0;
   	}
 
@@ -175,32 +194,78 @@ public class Player {
         refillStock();
     }
 
+
     /**
-     * refill the draw pile stock after it goes below 2 cards
+     * refill randomly the draw pile stock after it goes below 5 cards
      * @ TODO: 26/11/18  write this method
      */
-    private void refillStock() {
 
-        if(myStock.size()< 3) {
-            //...
-        }
+    public void refillStock() {
 
+
+		//CardType typeCommon = CardType.COMMON;
+		//ConcreteMinion ok = minionRepository.findByName("Sanglier Brocheroc");
+
+
+        /*if(myStock.size()< 5) {
+
+			CardType typeCommon = CardType.COMMON;
+			CardType cardType;
+
+			switch (myHero.getHeroType()){
+				case MAGE:
+					cardType = CardType.MAGE;
+				case PALADIN:
+					cardType = CardType.PALADIN;
+				case WARRIOR:
+					cardType =CardType.WARRIOR;
+				default:
+					cardType = null;
+			}
+
+			ArrayList<ConcreteMinion> listMinionsCommon =  minionRepository.findByType(typeCommon);/*
+
+			System.out.println("testFonction");
+			for(ConcreteMinion minion : listMinionsCommon ) {
+				System.out.println(minion);
+			}
+
+			ArrayList<ConcreteMinion> listMinionsLimited = minionRepository.findByType(cardType);
+			//this arraylist contains all the minions this player can have
+			ArrayList<ConcreteMinion> listMinions = new ArrayList<>(listMinionsCommon);
+			listMinions.addAll(listMinionsLimited);
+
+			List<ConcreteSpell> listSpellsCommon =  spellRepository.findByType(typeCommon);
+			List<ConcreteSpell> listSpellsLimited =  spellRepository.findByType(cardType);
+			//this arraylist contains all the spells this player can have
+			ArrayList<ConcreteSpell> listSpells = new ArrayList<>(listSpellsCommon);
+			listSpells.addAll(listSpellsLimited);
+
+			//we first have to randomly decide if we have to pick a spell or a minion.
+
+
+			while(myStock.size()< 5) {
+
+			int randomNum = ThreadLocalRandom.current().nextInt(0, 2);
+				switch (randomNum){
+					//if randomNum is 0 we will pick a spell
+					case 0:
+						//we then randomly pick a spell from all the spells the player can pick from
+						randomNum = ThreadLocalRandom.current().nextInt(0, listSpells.size());
+						ConcreteSpell spellPicked = listSpells.get(randomNum);
+						myStock.addCardToStock(spellPicked);
+
+						//if it's 1 we will pick a minion
+					case 1:
+
+						randomNum = ThreadLocalRandom.current().nextInt(0, listMinions.size());
+						ConcreteMinion minionPicked = listMinions.get(randomNum);
+						myStock.addCardToStock(minionPicked);
+
+				}
+			}
+        }*/
     }
-
-    public void chooseHero(String heroName) throws InvalidArgumentException {
-
-    	switch(heroName) {
-            case "Jaina": myHero = heroRepository.findByHeroName("Jaina");
-            break;
-            case "Garrosh": myHero = heroRepository.findByHeroName("Garrosh");
-            break;
-            case "Uther": myHero = heroRepository.findByHeroName("Uther");
-            break;
-            default: throw new InvalidArgumentException(new String[]{"Hero must be Jaina, Uther or Garrosh."});
-        }
-        this.myHero.setMyPlayer(this);
-	}
-
 
     /**
      * Returns the value of the opponent.
@@ -243,7 +308,24 @@ public class Player {
 	public void lost(){
 
 		myGame.setGameOver(true);
-		myGame.setWinner(this);
+		myGame.setLoser(this);
 
+	}
+
+	/**
+	 * what happens when this player wins
+	 * TODO : write this method
+	 */
+	public void won(){
+
+
+	}
+
+	public boolean canUseHeroAbility() {
+		return canUseHeroAbility;
+	}
+
+	public void setCanUseHeroAbility(boolean canUseHeroAbility) {
+		this.canUseHeroAbility = canUseHeroAbility;
 	}
 }

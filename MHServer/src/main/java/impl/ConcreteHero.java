@@ -59,6 +59,15 @@ public class ConcreteHero extends Hero {
 
     }
 
+    /**
+     * TODO : write this method
+     *
+     */
+    @Override
+    public void activateEffect() {
+
+    }
+
     @Override
     public void addDamagePoints(int bonusDamage) {
 

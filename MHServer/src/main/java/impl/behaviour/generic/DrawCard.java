@@ -20,7 +20,10 @@ public class DrawCard extends NotTargetedEffect {
     }
 
     @Override
+    /**
+     * TODO : write thi method
+     */
     public void effect() {
-        mySpell.getPlayer().draw();
+        ;
     }
 }

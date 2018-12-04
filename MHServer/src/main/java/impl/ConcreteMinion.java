@@ -6,8 +6,10 @@ import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
 import repositories.MinionRepository;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
+@Entity
 public class ConcreteMinion extends Minion {
 
     @Autowired
@@ -17,28 +19,24 @@ public class ConcreteMinion extends Minion {
 
     }
 
-    public ConcreteMinion(String name, int requiredMana, int damagePoints, int healthPoints, CardType type, ArrayList<Effect> myActions) {
+    public ConcreteMinion(String minionName, int requiredMana, int damagePoints, int healthPoints, CardType type, ArrayList<Effect> abilityKeyWord) {
         super();
-        this.setName(name);
+
+        this.setName(minionName);
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
         this.maxHealthPoints = healthPoints;
         this.type = type;
-        this.myEffects = myActions;
+        this.myEffects = abilityKeyWord;
     }
 
     /**
-     * TODO construct a minion using a keyword
      * @param minionKeyword
      * @return
      */
     public ConcreteMinion summon(String minionKeyword) {
 
-        ConcreteMinion newMinion = minionRepository.findByName("Recrue de la main d'argent");
-
-        CardType type = CardType.PALADIN;
-
-
+        ConcreteMinion newMinion = minionRepository.findByName(minionKeyword);
 
         return newMinion;
 

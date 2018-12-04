@@ -197,4 +197,9 @@ public abstract class Hero implements Target {
     public void heroPower() {
         myEffect.effect();
     }
+
+    /**
+     *  Allows a hero to activate it's effect
+     */
+    public abstract void activateEffect();
 }

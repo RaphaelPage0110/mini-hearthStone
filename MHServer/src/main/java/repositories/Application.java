@@ -1,12 +1,19 @@
 package repositories;
+import abstracts.Card;
+import abstracts.CardType;
 import abstracts.Minion;
 import impl.ConcreteMinion;
+import impl.ConcreteSpell;
 import impl.Player;
 import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -124,6 +131,7 @@ public class Application implements CommandLineRunner {
      */
     private void prepareAttack(Player activePlayer, Player opponent) {
 
+        /*
         //we check if the player has minions that can attack
         if(activePlayer.hasMinionsAwake()) {
 
@@ -153,7 +161,7 @@ public class Application implements CommandLineRunner {
         }
         else {
             //attaque impossible pour le moment
-        }
+        }*/
 
     }
 
@@ -200,6 +208,78 @@ public class Application implements CommandLineRunner {
      * @param activePlayer
      */
     private void draw(Player activePlayer) {
+
+        ArrayList<Card> playerStock = activePlayer.getMyStock();
+
+        //we first have to check if we should refill the stock
+        if(playerStock.size()< 2) {
+
+            this.refillStock(activePlayer);
+
+        }
+
+        //we add the first card that's in the players stock to its hand
+        Card cardDrawn = playerStock.get(0);
+        activePlayer.addCardToHand(cardDrawn);
+        activePlayer.removeFromStock(cardDrawn);
+
+    }
+
+    /**
+     * refills the player stock until it's at ten cards again
+     * @param activePlayer
+     */
+    private void refillStock(Player activePlayer) {
+
+        CardType cardType;
+        CardType typeCommon = CardType.COMMON;
+
+        switch (activePlayer.getMyHero().getHeroType()){
+            case MAGE:
+                cardType = CardType.MAGE;
+            case PALADIN:
+                cardType = CardType.PALADIN;
+            case WARRIOR:
+                cardType =CardType.WARRIOR;
+            default:
+                cardType = null;
+        }
+
+        ArrayList<ConcreteMinion> listMinionsCommon =  minionRepository.findByType(typeCommon);
+        ArrayList<ConcreteMinion> listMinionsLimited = minionRepository.findByType(cardType);
+
+        //this arraylist contains all the minions this player can have
+        ArrayList<ConcreteMinion> listMinions = new ArrayList<>(listMinionsCommon);
+        listMinions.addAll(listMinionsLimited);
+
+        List<ConcreteSpell> listSpellsCommon =  spellRepository.findByType(typeCommon);
+        List<ConcreteSpell> listSpellsLimited =  spellRepository.findByType(cardType);
+
+        //this arraylist contains all the spells this player can have
+        ArrayList<ConcreteSpell> listSpells = new ArrayList<>(listSpellsCommon);
+        listSpells.addAll(listSpellsLimited);
+
+        while(activePlayer.getMyStock().size()< 10) {
+
+            //we first have to randomly decide if we have to pick a spell or a minion.
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 2);
+            switch (randomNum){
+                //if randomNum is 0 we will pick a spell
+                case 0:
+                    //we then randomly pick a spell from all the spells the player can pick from
+                    randomNum = ThreadLocalRandom.current().nextInt(0, listSpells.size());
+                    ConcreteSpell spellPicked = listSpells.get(randomNum);
+                    activePlayer.addCardToStock(spellPicked);
+
+                    //if it's 1 we will pick a minion
+                case 1:
+
+                    randomNum = ThreadLocalRandom.current().nextInt(0, listMinions.size());
+                    ConcreteMinion minionPicked = listMinions.get(randomNum);
+                    activePlayer.addCardToStock(minionPicked);
+
+            }
+        }
     }
 
     /**

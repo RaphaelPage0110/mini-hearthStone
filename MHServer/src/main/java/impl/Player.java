@@ -16,7 +16,7 @@ public class Player {
     private boolean canUseHeroAbility;
     private Player opponent;
     private ArrayList<Minion> myMinions;
-    private ArrayList<Card> myCards;
+    private ArrayList<Card> myHand;
     private int myManaMax;
 	private int myMana;
     private ArrayList<Card> myStock = new ArrayList<>();
@@ -43,16 +43,24 @@ public class Player {
 	/**
      * add a new card to the Player's hand
      */
-    public void addCard(Card card) {
-        myCards.add(card);
+    public void addCardToHand(Card card) {
+        myHand.add(card);
+    }
+
+    /**
+     * remove a card from the players hand
+     * @param removedCard
+     */
+    public void removeCardFromHand(Card removedCard) {
+        myHand.remove(removedCard);
     }
 
     /**
      * Returns value of myCards
      * @return the list of the cards that are in the player's hand
      */
-    public ArrayList<Card> getMyCards() {
-    	return myCards;
+    public ArrayList<Card> getMyHand() {
+    	return myHand;
     }
 
     /**
@@ -163,6 +171,14 @@ public class Player {
 		myStock.add(newCard);
 	}
 
+    /**
+     * remove a card from the stock
+     * @param removedCard
+     */
+	public void removeFromStock(Card removedCard) {
+	    myStock.remove(removedCard);
+    }
+
 	public int getPlayOrder() {
 		return playOrder;
 	}
@@ -179,92 +195,6 @@ public class Player {
 		this.myManaMax = 0;
   	    this.myDamageAura = 0;
   	}
-
-    /**
-     * allow a player to draw a new card
-     */
-    public void draw() {
-
-        Card newCard;
-        newCard = this.myStock.get(0);
-        myCards.add(newCard);
-        myStock.remove(0);
-
-        refillStock();
-    }
-
-
-    /**
-     * refill randomly the draw pile stock after it goes below 5 cards
-     * @ TODO: 26/11/18  write this method
-     */
-
-    public void refillStock() {
-
-
-		//CardType typeCommon = CardType.COMMON;
-		//ConcreteMinion ok = minionRepository.findByName("Sanglier Brocheroc");
-
-
-        /*if(myStock.size()< 5) {
-
-			CardType typeCommon = CardType.COMMON;
-			CardType cardType;
-
-			switch (myHero.getHeroType()){
-				case MAGE:
-					cardType = CardType.MAGE;
-				case PALADIN:
-					cardType = CardType.PALADIN;
-				case WARRIOR:
-					cardType =CardType.WARRIOR;
-				default:
-					cardType = null;
-			}
-
-			ArrayList<ConcreteMinion> listMinionsCommon =  minionRepository.findByType(typeCommon);/*
-
-			System.out.println("testFonction");
-			for(ConcreteMinion minion : listMinionsCommon ) {
-				System.out.println(minion);
-			}
-
-			ArrayList<ConcreteMinion> listMinionsLimited = minionRepository.findByType(cardType);
-			//this arraylist contains all the minions this player can have
-			ArrayList<ConcreteMinion> listMinions = new ArrayList<>(listMinionsCommon);
-			listMinions.addAll(listMinionsLimited);
-
-			List<ConcreteSpell> listSpellsCommon =  spellRepository.findByType(typeCommon);
-			List<ConcreteSpell> listSpellsLimited =  spellRepository.findByType(cardType);
-			//this arraylist contains all the spells this player can have
-			ArrayList<ConcreteSpell> listSpells = new ArrayList<>(listSpellsCommon);
-			listSpells.addAll(listSpellsLimited);
-
-			//we first have to randomly decide if we have to pick a spell or a minion.
-
-
-			while(myStock.size()< 5) {
-
-			int randomNum = ThreadLocalRandom.current().nextInt(0, 2);
-				switch (randomNum){
-					//if randomNum is 0 we will pick a spell
-					case 0:
-						//we then randomly pick a spell from all the spells the player can pick from
-						randomNum = ThreadLocalRandom.current().nextInt(0, listSpells.size());
-						ConcreteSpell spellPicked = listSpells.get(randomNum);
-						myStock.addCardToStock(spellPicked);
-
-						//if it's 1 we will pick a minion
-					case 1:
-
-						randomNum = ThreadLocalRandom.current().nextInt(0, listMinions.size());
-						ConcreteMinion minionPicked = listMinions.get(randomNum);
-						myStock.addCardToStock(minionPicked);
-
-				}
-			}
-        }*/
-    }
 
     /**
      * Returns the value of the opponent.

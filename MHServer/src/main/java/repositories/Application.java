@@ -91,22 +91,26 @@ public class Application implements CommandLineRunner {
         timer.run();
         draw(activePlayer);
         while(true){
-            //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT
-            String idAction = "";
-            switch (idAction) {
-                case "playCard":
-                    playCard(activePlayer, opponent);
-                    break;
-                case "attack":
-                    prepareAttack(activePlayer, opponent);
-                    break;
-                case "useHeroAbility":
-                    useHeroPower(activePlayer, opponent);
-                    break;
-                case "endTurn":
-                    return;
-                default:
-                    break;
+            if (!(timer.endOfTurn)) {
+                //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT
+                String idAction = "";
+                switch (idAction) {
+                    case "playCard":
+                        playCard(activePlayer, opponent);
+                        break;
+                    case "attack":
+                        prepareAttack(activePlayer, opponent);
+                        break;
+                    case "useHeroAbility":
+                        useHeroPower(activePlayer, opponent);
+                        break;
+                    case "endTurn":
+                        return;
+                    default:
+                        break;
+                }
+            } else {
+                return;
             }
         }
 

@@ -17,10 +17,6 @@
     <bytecodeTargetLevel>
       <module name="gs-spring-boot (1)" target="1.8" />
       <module name="gs-spring-boot (2)" target="1.8" />
-      <module name="mini-hearthstone" target="1.8" />
-      <module name="mini-hearthstone-client" target="1.5" />
-      <module name="mini-hearthstone-database" target="1.5" />
-      <module name="mini-hearthstone-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -5,15 +5,11 @@ import abstracts.Minion;
 import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
 import repositories.MinionRepository;
-
-import javax.persistence.Entity;
 import java.util.ArrayList;
 
-@Entity
+
 public class ConcreteMinion extends Minion {
 
-    @Autowired
-    private MinionRepository minionRepository ;
 
     public ConcreteMinion() {
 
@@ -28,18 +24,6 @@ public class ConcreteMinion extends Minion {
         this.maxHealthPoints = healthPoints;
         this.type = type;
         this.myEffects = abilityKeyWord;
-    }
-
-    /**
-     * @param minionKeyword
-     * @return
-     */
-    public ConcreteMinion summon(String minionKeyword) {
-
-        ConcreteMinion newMinion = minionRepository.findByName(minionKeyword);
-
-        return newMinion;
-
     }
 
     @Override

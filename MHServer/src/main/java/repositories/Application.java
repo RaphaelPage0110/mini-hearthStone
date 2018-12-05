@@ -1,13 +1,9 @@
 package repositories;
 import abstracts.Card;
 import abstracts.CardType;
-import abstracts.Hero;
-import abstracts.Minion;
-import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
-import impl.behaviour.generic.Summon;
 import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -53,13 +49,13 @@ public class Application implements CommandLineRunner {
                 application.player2.addManaMax(1);
             }
 
-            //we allow the players to use their heros ability
-            application.player1.setCanUseHeroAbility(true);
-            application.player2.setCanUseHeroAbility(true);
-
             //we refill the players mana
             application.player1.setMyMana(player1.getMyManaMax());
             application.player2.setMyMana(player2.getMyManaMax());
+
+            //we allow the players to use their heros ability
+            application.player1.setCanUseHeroAbility(true);
+            application.player2.setCanUseHeroAbility(true);
 
             //the two players play their turn
             application.playRound();
@@ -120,25 +116,8 @@ public class Application implements CommandLineRunner {
      */
     private void useHeroPower(Player activePlayer, Player opponent) {
 
-        Hero hero = activePlayer.getMyHero();
-
         if(activePlayer.canUseHeroAbility()) {
-
-
-            if(hero.getMyEffect() instanceof Summon) {
-
-                String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
-                ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
-                activePlayer.addMinion(minionToSummon);
-
-
-            }
-            else {
-
-                activePlayer.getMyHero().activateEffect();
-
-            }
-
+            activePlayer.getMyHero().activateEffect();
             activePlayer.setCanUseHeroAbility(false);
         }
 

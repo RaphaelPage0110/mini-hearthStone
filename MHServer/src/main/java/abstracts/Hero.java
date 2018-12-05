@@ -203,4 +203,8 @@ public abstract class Hero implements Target {
      *  TODO:ecrire cette methode
      */
     public abstract void activateEffect();
+
+    public void heroPower(Target target) {
+        myEffect.effect(target);
+    }
 }

@@ -4,25 +4,25 @@ import abstracts.Card;
 import abstracts.CardType;
 import abstracts.Minion;
 import abstracts.Hero;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import identifiers.IdPlayer;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Player {
 
     private Integer id;
     private Game myGame;
-    private Hero myHero;
+    private ConcreteHero myHero;
+    private boolean canUseHeroAbility;
     private Player opponent;
     private ArrayList<Minion> myMinions;
-    private ArrayList<Card> myCards;
-    private int myMana;
-    private ArrayList<Card> myStock;
+    private ArrayList<Card> myHand;
+    private int myManaMax;
+	private int myMana;
+    private ArrayList<Card> myStock = new ArrayList<>();
     private int myDamageAura; //used for spells that modifies the damage power of the minions
+
+	private int playOrder; //used to know if the player is playing first or second
 
     /**
      * Returns value of myDamageAura
@@ -43,16 +43,24 @@ public class Player {
 	/**
      * add a new card to the Player's hand
      */
-    public void addCard(Card card) {
-        myCards.add(card);
+    public void addCardToHand(Card card) {
+        myHand.add(card);
+    }
+
+    /**
+     * remove a card from the players hand
+     * @param removedCard
+     */
+    public void removeCardFromHand(Card removedCard) {
+        myHand.remove(removedCard);
     }
 
     /**
      * Returns value of myCards
      * @return the list of the cards that are in the player's hand
      */
-    public ArrayList<Card> getMyCards() {
-    	return myCards;
+    public ArrayList<Card> getMyHand() {
+    	return myHand;
     }
 
     /**
@@ -95,26 +103,41 @@ public class Player {
   	* Sets new value of myHero
   	* @param myHero the hero of the player
   	*/
-  	public void setMyHero(Hero myHero) {
+  	public void setMyHero(ConcreteHero myHero) {
   	    this.myHero = myHero;
   	}
 
   	/**
-  	* Returns value of myMana
-  	* @return myMana the current mana of a player
+  	* Returns value of myManaMax
+  	* @return myManaMax the current mana of a player
   	*/
-  	public int getMyMana() {
-  	    return myMana;
+  	public int getMyManaMax() {
+  	    return myManaMax;
   	}
 
   	/**
-  	* Sets new value of myMana
-  	* @param myMana the current mana of a player
+  	* add a value to the current mana count
+  	* @param moreMana how much we want to increase the players mana
   	*/
-
-  	public void setMyMana(int myMana) {
-  	    this.myMana = myMana;
+  	public void addManaMax(int moreMana) {
+  	    this.myManaMax += moreMana;
   	}
+
+	/**
+	 * Sets new value of myManaMax
+	 * @param myManaMax the current mana of a player
+	 */
+	public void setMyManaMax(int myManaMax) {
+		this.myManaMax = myManaMax;
+	}
+
+	public int getMyMana() {
+		return myMana;
+	}
+
+	public void setMyMana(int myMana) {
+		this.myMana = myMana;
+	}
 
     /**
   	* Returns value of myGame
@@ -148,64 +171,30 @@ public class Player {
 		myStock.add(newCard);
 	}
 
+    /**
+     * remove a card from the stock
+     * @param removedCard
+     */
+	public void removeFromStock(Card removedCard) {
+	    myStock.remove(removedCard);
+    }
+
+	public int getPlayOrder() {
+		return playOrder;
+	}
+
+	public void setPlayOrder(int playOrder) {
+		this.playOrder = playOrder;
+	}
+
   	/**
   	* Default empty Player constructor
   	*/
   	public Player() {
   	    this.id = new IdPlayer(this).getId();
+		this.myManaMax = 0;
   	    this.myDamageAura = 0;
   	}
-
-  	/**
-  	* Default Player constructor
-  	*/
-  	public Player( Hero myHero) {
-		this.id = new IdPlayer(this).getId();
-  		this.myHero = myHero;
-  		this.myMana = 0;
-        this.myDamageAura = 0;
-  	}
-
-    /**
-     * allow a player to draw a new card
-     */
-    public void draw() {
-
-        Card newCard;
-        newCard = this.myStock.get(0);
-        myCards.add(newCard);
-        myStock.remove(0);
-
-        refillStock();
-    }
-
-    /**
-     * refill the draw pile stock after it goes below 2 cards
-     * @ TODO: 26/11/18  write this method
-     */
-    private void refillStock() {
-
-        if(myStock.size()< 3) {
-            //...
-        }
-
-    }
-
-    public void chooseHero(CardType type) throws InvalidArgumentException {
-    	this.myMinions = new ArrayList<>();
-    	Map<String, String> heroPower = new HashMap<>();
-    	switch(type) {
-            case WARRIOR: heroPower.put("modifyArmor", "2");
-            break;
-            case PALADIN: heroPower.put("summon", "recrue de la main d'argent");
-            break;
-            case MAGE: heroPower.put("damageTarget", "1");
-            break;
-            default: throw new InvalidArgumentException(new String[]{"Hero must be warrior, paladin or mage."});
-        }
-        this.myHero = new ConcreteHero(type,30,0,heroPower,this);
-	}
-
 
     /**
      * Returns the value of the opponent.
@@ -248,7 +237,40 @@ public class Player {
 	public void lost(){
 
 		myGame.setGameOver(true);
-		myGame.setWinner(this);
+		myGame.setLoser(this);
 
 	}
+
+	/**
+	 * what happens when this player wins
+	 * TODO : write this method
+	 */
+	public void won(){
+
+
+	}
+
+	public boolean canUseHeroAbility() {
+		return canUseHeroAbility;
+	}
+
+	public void setCanUseHeroAbility(boolean canUseHeroAbility) {
+		this.canUseHeroAbility = canUseHeroAbility;
+	}
+
+	/**
+	 * check if the player has minions that can attack
+	 * @return true if the player has minions that can attack
+	 */
+    public boolean hasMinionsAwake() {
+		return true;
+    }
+
+    /**
+     * check if the player has minions with taunt
+     * @return true if the player has minions with taunt
+     */
+    public boolean hasTauntMinions() {
+        return true;
+    }
 }

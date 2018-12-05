@@ -24,4 +24,11 @@ public abstract class Spell extends Card {
 			 this.id = new IdSpell(this).getId();
 			 this.myEffects = new ArrayList<>();
 	 }
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Minion[id=%s, spellName='%s', damage='%s']",
+				id, name, damagePoints);
+	}
 }

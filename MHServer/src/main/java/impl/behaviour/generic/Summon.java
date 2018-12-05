@@ -39,14 +39,18 @@ public class Summon extends NotTargetedEffect {
         this.myPlayer = myHero.getMyPlayer();
     }
 
+    /**
+     * TODO :write this method
+     */
     public void effect() {
 
+        /*
         ConcreteMinion minion = new ConcreteMinion();
         ConcreteMinion minionToSummon;
 
         minionToSummon = minion.summon(myMinionKeyword);
 
-        myPlayer.addMinion(minionToSummon);
+        myPlayer.addMinion(minionToSummon);*/
 
     }
 }

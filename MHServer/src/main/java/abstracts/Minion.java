@@ -5,6 +5,7 @@ import impl.Player;
 import inter.Effect;
 import inter.NotTargetedEffect;
 import inter.Target;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 
@@ -16,9 +17,10 @@ import java.util.ArrayList;
 public abstract class Minion extends Card implements Target {
 
     /**
-     * The ID of this Minion.
+     * The ID of this Hero.
      */
-    private Integer id;
+    @Id
+    protected String id;
 
     /**
      * Indicates the maximum number of health points that this Minion has.
@@ -44,14 +46,6 @@ public abstract class Minion extends Card implements Target {
      * Reference the list of actions or behaviors of this minions when it dies.
      */
     protected ArrayList<Effect> myDeathRattles;
-
-    /**
-     * Default empty constructor which initializes the ID and the list of actions.
-     */
-    public Minion() {
-        this.id = new IdMinion(this).getId();
-        this.myEffects = new ArrayList<>();
-    }
 
     /**
      * {@inheritDoc}
@@ -81,7 +75,7 @@ public abstract class Minion extends Card implements Target {
      * Returns the value of id.
      * @return this.id.
      */
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -208,6 +202,13 @@ public abstract class Minion extends Card implements Target {
 
         return currentHealthPoints <= 0;
 
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Minion[id=%s, minionName='%s', maxHealthPoints='%s', damage='%s']",
+                id, name, maxHealthPoints, damagePoints);
     }
 
 }

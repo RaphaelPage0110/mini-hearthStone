@@ -1,4 +1,5 @@
 package repositories;
+
 import abstracts.Card;
 import abstracts.CardType;
 import impl.ConcreteMinion;
@@ -41,6 +42,7 @@ public class Application implements CommandLineRunner {
         application.instanciatePlayers();
 
         int turn = 1;
+
         while(true) {
 
             //we increase the mana of each player during the first 10 turns

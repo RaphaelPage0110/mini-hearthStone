@@ -1,8 +1,12 @@
 import abstracts.Hero;
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import impl.ConcreteHero;
 import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static abstracts.CardType.MAGE;
 import static abstracts.CardType.PALADIN;
@@ -17,15 +21,19 @@ class HeroTest {
 
 
     @BeforeEach
-    void setup() throws InvalidArgumentException {
+    void setup() {
 
-        player1.chooseHero(WARRIOR);
-        player2.chooseHero(MAGE);
-        player3.chooseHero(PALADIN);
+        Map<String, String> map;
 
-        warrior = player1.getMyHero();
-        mage = player2.getMyHero();
-        paladin = player3.getMyHero();
+        map = new HashMap<>();
+        map.put("modifyArmor","2");
+        warrior = new ConcreteHero(WARRIOR,30,0,map,"Garrosh");
+        map = new HashMap<>();
+        map.put("damageTarget","1");
+        mage = new ConcreteHero(MAGE,30,0,map,"Jaina");
+        map = new HashMap<>();
+        map.put("summon","Recrue de la main d'argent");
+        paladin = new ConcreteHero(PALADIN,30,0,map,"Uther");
     }
 
     @Test
@@ -60,9 +68,6 @@ class HeroTest {
         mage.heroPower(mage);
         assertEquals(mage.getMaxHealthPoints()-1, mage.getCurrentHealthPoints());
 
-        assertEquals(0, player3.getMyMinions().size());
-        paladin.heroPower();
-        //assertEquals(1, player3.getMyMinions().size());
     }
 
     @Test

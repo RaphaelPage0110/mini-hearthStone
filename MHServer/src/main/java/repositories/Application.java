@@ -1,7 +1,6 @@
 package repositories;
 import abstracts.Card;
 import abstracts.CardType;
-import abstracts.Minion;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
@@ -59,7 +58,7 @@ public class Application implements CommandLineRunner {
             application.player2.setCanUseHeroAbility(true);
 
             //the two players play their turn
-            application.playRound();
+            application.managePlayOrder();
             turn++;
 
         }
@@ -69,15 +68,15 @@ public class Application implements CommandLineRunner {
     /**
      * manage the players turn
      */
-    private void playRound() {
+    private void managePlayOrder() {
         int turnPlayer1 = this.player1.getPlayOrder();
         int turnPlayer2 = this.player2.getPlayOrder();
         if (turnPlayer2 > turnPlayer1) {
-            action(this.player1, this.player2);
-            action(this.player2, this.player1);
+            playTurn(this.player1, this.player2);
+            playTurn(this.player2, this.player1);
         } else {
-            action(this.player2, this.player1);
-            action(this.player1, this.player2);
+            playTurn(this.player2, this.player1);
+            playTurn(this.player1, this.player2);
         }
     }
 
@@ -87,7 +86,9 @@ public class Application implements CommandLineRunner {
      * @param activePlayer the player whose turn it is to play
      * @param opponent its opponent
      */
-    private void action(Player activePlayer, Player opponent) {
+    private void playTurn(Player activePlayer, Player opponent) {
+        CustomTimer timer = new CustomTimer(120);
+        timer.run();
         draw(activePlayer);
         while(true){
             //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT
@@ -108,6 +109,8 @@ public class Application implements CommandLineRunner {
                     break;
             }
         }
+
+
     }
 
     /**
@@ -288,4 +291,21 @@ public class Application implements CommandLineRunner {
     private void instanciatePlayers() {
     }
 
+    private class CustomTimer implements Runnable {
+        int secondsToWait;
+        boolean endOfTurn = false;
+        public CustomTimer(int secondsToWait) {
+            this.secondsToWait = secondsToWait;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(secondsToWait*1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            endOfTurn = true;
+        }
+    }
 }

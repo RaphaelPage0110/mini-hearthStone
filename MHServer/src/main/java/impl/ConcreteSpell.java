@@ -36,7 +36,7 @@ public class ConcreteSpell extends Spell {
      * ability keyword and value is its modifier
      * @param abilityKeyWords
      */
-    public void generateEffect (Map<String,String> abilityKeyWords) {
+    private void generateEffect (Map<String,String> abilityKeyWords) {
         for (Map.Entry<String, String> entry : abilityKeyWords.entrySet()) {
 
             switch(entry.getKey()) {

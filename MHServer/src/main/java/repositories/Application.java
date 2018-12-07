@@ -7,6 +7,8 @@ import abstracts.Minion;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
+import impl.behaviour.generic.DamageAllOpponents;
+import impl.behaviour.generic.DrawCard;
 import impl.behaviour.generic.Summon;
 import impl.behaviour.generic.TransformInto;
 import inter.Effect;
@@ -257,7 +259,17 @@ public class Application implements CommandLineRunner {
                     minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
                     minionBeingTransformed.setType(minionModel.getType());
                     minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
-                    
+
+                }
+
+                if (effect instanceof DrawCard ) {
+
+                    for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
+
+                        this.draw(activePlayer);
+                        
+                    }
+
                 }
             }
         }

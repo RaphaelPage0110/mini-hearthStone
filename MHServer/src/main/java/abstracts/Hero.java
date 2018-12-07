@@ -143,6 +143,13 @@ public abstract class Hero implements Target {
             this.currentHealthPoints = this.currentHealthPoints + this.armorPoints - damageTaken;
             this.armorPoints = 0;
         }
+
+        if (this.isDead()) {
+
+            this.dies();
+
+        }
+
         return damageTaken;
     }
 

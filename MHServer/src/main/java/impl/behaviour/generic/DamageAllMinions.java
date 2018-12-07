@@ -16,19 +16,17 @@ import java.util.ArrayList;
 public class DamageAllMinions extends TargetedEffect {
 
     private Spell mySpell;
+    private int damage;
     
-    public DamageAllMinions(Spell mySpell) {
+    public DamageAllMinions(Spell mySpell, int damage) {
         this.mySpell = mySpell;
+        this.damage = damage;
     }
 
     @Override
     public void effect(Target myTarget) {
         ArrayList<Minion> myTargets;
-        int damage;
-
-        damage = mySpell.getDamagePoints();
         myTargets = mySpell.getPlayer().getMyGame().getMinionsInPlay();
-      
 
         for (Minion targeted: myTargets) {
             targeted.takeDamage(damage);

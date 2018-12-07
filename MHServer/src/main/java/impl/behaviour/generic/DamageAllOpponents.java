@@ -18,9 +18,11 @@ import java.util.ArrayList;
 public class DamageAllOpponents extends NotTargetedEffect {
 
     private Spell mySpell;
+    private int damage;
 
-    public DamageAllOpponents(Spell mySpell) {
+    public DamageAllOpponents(Spell mySpell, int damage) {
         this.mySpell = mySpell;
+        this.damage = damage;
     }
 
     @Override
@@ -35,7 +37,9 @@ public class DamageAllOpponents extends NotTargetedEffect {
         myAdversaries.add(hisHero);
 
         for (Target target : myAdversaries) {
-            target.takeDamage(mySpell.getDamagePoints());
+
+            target.takeDamage(damage);
+
         }
     }
 }

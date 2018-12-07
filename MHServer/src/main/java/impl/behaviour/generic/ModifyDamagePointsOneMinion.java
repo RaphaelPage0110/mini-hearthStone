@@ -14,15 +14,16 @@ import inter.TargetedEffect;
  */
 public class ModifyDamagePointsOneMinion extends TargetedEffect {
     private Spell mySpell;
+    private int myDamage;
 
-    public ModifyDamagePointsOneMinion(Spell newSpell) {
+    public ModifyDamagePointsOneMinion(Spell newSpell, int damage) {
         this.mySpell = newSpell;
+        this.myDamage = damage;
     }
 
     @Override
     public void effect(Target myTarget) {
         Minion targetedMinion = (Minion) myTarget;
-        int bonus = mySpell.getBonus();
-        targetedMinion.addDamagePoints(bonus);
+        targetedMinion.addDamagePoints(myDamage);
     }
 }

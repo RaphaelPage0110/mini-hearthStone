@@ -3,10 +3,12 @@ package repositories;
 import abstracts.Card;
 import abstracts.CardType;
 import abstracts.Hero;
+import abstracts.Minion;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
 import impl.behaviour.generic.Summon;
+import impl.behaviour.generic.TransformInto;
 import inter.Effect;
 import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -231,11 +233,31 @@ public class Application implements CommandLineRunner {
         if (minionToPlay instanceof ConcreteMinion ) {
 
         } else if (spellToPlay instanceof ConcreteSpell) {
+
             for (Effect effect : spellToPlay.getMyEffects() ) {
+
                 if(effect instanceof Summon) {
+
                     String minionKeyword = ((Summon)effect).getMyMinionKeyword();
                     ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
                     activePlayer.addMinion(minionToSummon);
+
+                }
+
+                if (effect instanceof TransformInto ) {
+
+                    //là il faut demander le choix du joueur
+                    ConcreteMinion minionBeingTransformed = new ConcreteMinion();
+                    String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
+                    ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
+                    minionBeingTransformed.setName(minionModel.getName());
+                    minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
+                    minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
+                    minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
+                    minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
+                    minionBeingTransformed.setType(minionModel.getType());
+                    minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
+                    
                 }
             }
         }

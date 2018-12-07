@@ -1,7 +1,9 @@
 package impl.behaviour.generic;
 
+import abstracts.Hero;
 import abstracts.Minion;
 import abstracts.Spell;
+import impl.Player;
 import inter.Target;
 import inter.TargetedEffect;
 
@@ -14,15 +16,23 @@ import inter.TargetedEffect;
 public class TransformInto extends TargetedEffect {
 
     private Spell mySpell;
-    private Minion myMinion;
+    private String myMinionKeyword;
+    private Player myPlayer;
 
-    public TransformInto(Spell newSpell, Minion newMinion) {
+    public TransformInto(Spell newSpell, String minionKeyword) {
         this.mySpell = newSpell;
-        this.myMinion = newMinion;
+        this.myMinionKeyword = minionKeyword;
+        this.myPlayer = mySpell.getPlayer();
     }
 
-    @Override
-    public void effect(Target myTarget) {
+    /**
+     * TODO :write this method
+     */
+    public void effect(Target target) {
 
+    }
+
+    public String getMyMinionKeyword() {
+        return myMinionKeyword;
     }
 }

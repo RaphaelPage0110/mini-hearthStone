@@ -1,11 +1,16 @@
 package abstracts;
 
 import impl.Player;
+import impl.behaviour.generic.DamageTarget;
+import impl.behaviour.generic.ModifyArmor;
+import impl.behaviour.generic.Summon;
+import impl.behaviour.minion.Taunt;
 import inter.Effect;
 import inter.Target;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Abstract representation of Minions and Spells.
@@ -146,6 +151,7 @@ public abstract class Card {
         this.myEffects = newActions;
     }
 
+
     /**
      * Returns the value of bonus.
      * @return this.bonus.
@@ -171,4 +177,7 @@ public abstract class Card {
             action.effect(myTarget);
         }
     }
+
+
+
 }

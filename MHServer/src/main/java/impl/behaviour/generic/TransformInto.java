@@ -2,7 +2,6 @@ package impl.behaviour.generic;
 
 import abstracts.Minion;
 import abstracts.Spell;
-import inter.Effect;
 import inter.Target;
 import inter.TargetedEffect;
 
@@ -24,12 +23,6 @@ public class TransformInto extends TargetedEffect {
 
     @Override
     public void effect(Target myTarget) {
-        Minion oldMinion = (Minion)myTarget;
-        oldMinion.setName(myMinion.getName());
-        oldMinion.setRequiredMana(myMinion.getRequiredMana());
-        oldMinion.setDamagePoints(myMinion.getDamagePoints());
-        oldMinion.setHealthPoints(myMinion.getMaxHealthPoints());
-        oldMinion.setType(myMinion.getType());
-        oldMinion.setMyEffects(myMinion.getMyEffects());
+
     }
 }

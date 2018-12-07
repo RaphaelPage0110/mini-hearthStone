@@ -192,7 +192,7 @@ public abstract class Hero implements Target {
                 id, heroName, maxHealthPoints, armorPoints);
     }
 
-    protected abstract void setMaxHealthPoints(int healthPoints);
+    public abstract void setMaxHealthPoints(int healthPoints);
 
     public void heroPower() {
         myEffect.effect();
@@ -200,6 +200,11 @@ public abstract class Hero implements Target {
 
     /**
      *  Allows a hero to activate it's effect
+     *  TODO:ecrire cette methode
      */
     public abstract void activateEffect();
+
+    public void heroPower(Target target) {
+        myEffect.effect(target);
+    }
 }

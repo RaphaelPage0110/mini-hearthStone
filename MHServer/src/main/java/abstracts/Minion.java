@@ -67,7 +67,7 @@ public abstract class Minion extends Card implements Target {
      * Sets the new value of healthPoints.
      * @param healthPoints the new value.
      */
-    public void setHealthPoints(int healthPoints) {
+    public void setCurrentHealthPoints(int healthPoints) {
         this.currentHealthPoints = healthPoints;
     }
 

@@ -39,7 +39,9 @@ public interface Target {
     /**
      *
      */
-    void addMaxHealthPoints(int bonusHealtPoints);
+    void addMaxHealthPoints(int bonusHealthPoints);
 
     int getMaxHealthPoints();
+
+    void setMaxHealthPoints(int maxHealthPoints);
 }

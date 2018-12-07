@@ -1,28 +1,39 @@
 import abstracts.Hero;
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import impl.ConcreteHero;
 import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static abstracts.CardType.MAGE;
+import static abstracts.CardType.PALADIN;
 import static abstracts.CardType.WARRIOR;
 import static org.junit.Assert.assertEquals;
 
 
 class HeroTest {
 
-    private Hero warrior, mage;
-    private Player player1 = new Player(), player2 = new Player();
+    private Hero warrior, paladin, mage;
+    private Player player1 = new Player(), player2 = new Player(), player3 = new Player();
 
 
     @BeforeEach
-    void setup() throws InvalidArgumentException {
+    void setup() {
 
-        player1.chooseHero("Garrosh");
-        player2.chooseHero("Jaina");
+        Map<String, String> map;
 
-        warrior = player1.getMyHero();
-        mage = player2.getMyHero();
+        map = new HashMap<>();
+        map.put("modifyArmor","2");
+        warrior = new ConcreteHero(WARRIOR,30,0,map,"Garrosh");
+        map = new HashMap<>();
+        map.put("damageTarget","1");
+        mage = new ConcreteHero(MAGE,30,0,map,"Jaina");
+        map = new HashMap<>();
+        map.put("summon","Recrue de la main d'argent");
+        paladin = new ConcreteHero(PALADIN,30,0,map,"Uther");
     }
 
     @Test
@@ -48,14 +59,15 @@ class HeroTest {
     }
 
     @Test
-    void armorTest() {
+    void heroPowerTest() {
         assertEquals(0,warrior.getArmorPoints());
-
         warrior.heroPower();
         assertEquals(2,warrior.getArmorPoints());
 
-        mage.heroPower();
-        assertEquals(0, mage.getArmorPoints());
+        assertEquals(mage.getMaxHealthPoints(), mage.getCurrentHealthPoints());
+        mage.heroPower(mage);
+        assertEquals(mage.getMaxHealthPoints()-1, mage.getCurrentHealthPoints());
+
     }
 
     @Test

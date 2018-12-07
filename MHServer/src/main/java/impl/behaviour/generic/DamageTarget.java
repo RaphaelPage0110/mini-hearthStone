@@ -1,5 +1,6 @@
 package impl.behaviour.generic;
 
+import abstracts.Card;
 import abstracts.Hero;
 import inter.Effect;
 import inter.Target;
@@ -14,13 +15,13 @@ import inter.TargetedEffect;
  */
 public class DamageTarget extends TargetedEffect {
 
-    private Spell mySpell;
+    private Card myCard;
     private Hero myHero;
     private int damage;
 
-    public DamageTarget(Spell mySpell) {
-        this.mySpell = mySpell;
-        this.damage = mySpell.getDamagePoints();
+    public DamageTarget(Card myCard, int damage) {
+        this.myCard = myCard;
+        this.damage = damage;
     }
 
     public DamageTarget(Hero myHero, int damage) {

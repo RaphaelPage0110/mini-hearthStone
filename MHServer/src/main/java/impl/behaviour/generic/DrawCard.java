@@ -14,16 +14,22 @@ import inter.Target;
 public class DrawCard extends NotTargetedEffect {
 
     private Spell mySpell;
+    private int numberCards;
 
-    public DrawCard(Spell newSpell) {
+    public DrawCard(Spell newSpell, int numberCards) {
         this.mySpell = newSpell;
+        this.numberCards = numberCards;
     }
 
     @Override
-    /**
-     * TODO : write thi method
-     */
     public void effect() {
-        ;
+    }
+
+    /**
+     * the drawing actions are implemented in the Application becaus ethey need to call the database
+     * @return nulberCards the number of cards the player has to draw
+     */
+    public int getNumberDraw() {
+        return numberCards;
     }
 }

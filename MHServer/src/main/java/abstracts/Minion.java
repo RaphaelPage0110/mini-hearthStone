@@ -77,6 +77,13 @@ public abstract class Minion extends Card implements Target {
      */
     public int takeDamage(int damageTaken) {
         this.currentHealthPoints = this.currentHealthPoints - damageTaken;
+
+        if(this.isDead()) {
+
+            this.dies();
+
+        }
+
         return damageTaken;
     }
 
@@ -194,26 +201,12 @@ public abstract class Minion extends Card implements Target {
                 int enemyDamagePoints = ((Minion)target).getDamagePoints();
                 this.takeDamage(enemyDamagePoints);
 
-                if(target.isDead()) {
-                    target.dies();
-                }
-
-                if(this.isDead()) {
-
-                    this.dies();
-
-                }
-
             }
 
             //else the target is a hero
             else {
 
-                if (target.isDead()) {
 
-                    target.dies();
-
-                }
 
             }
         }

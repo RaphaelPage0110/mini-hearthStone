@@ -48,6 +48,31 @@ public abstract class Minion extends Card implements Target {
     protected ArrayList<Effect> myDeathRattles;
 
     /**
+     * Default empty constructor which initializes the list of actions and death rattle (dying actions).
+     */
+    public Minion() {
+        this.myEffects = new ArrayList<>();
+        this.myDeathRattles = new ArrayList<>();
+    }
+
+    /**
+     * Add a new effect to the list of death rattle.
+     * @param deathEffect the new value to add.
+     * @return true if the effect has been added to myDeathRattle.
+     */
+    public boolean addDeathRattle(Effect deathEffect) {
+        return this.myDeathRattles.add(deathEffect);
+    }
+
+    /**
+     * Add a list of effects to the list myDeathRattle.
+     * @param deathEffects the new list to add
+     * @return true if all values has been added to myDeathRattle.
+     */
+    public boolean addAllDeathRattle(ArrayList<Effect> deathEffects) {
+        return this.myDeathRattles.addAll(deathEffects);
+    }
+    /**
      * {@inheritDoc}
      */
     public int takeDamage(int damageTaken) {

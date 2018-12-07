@@ -41,6 +41,8 @@ public class ConcreteHero extends Hero {
                     Summon abilitySummon = new Summon(this, entry.getValue());
                     this.setMyEffect(abilitySummon);
                     break;
+                default:
+                    break;
 
             }
         }

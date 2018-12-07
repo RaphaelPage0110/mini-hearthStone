@@ -151,6 +151,24 @@ public abstract class Card {
         this.myEffects = newActions;
     }
 
+    /**
+     * Add a new effect to the list myEffects.
+     * @param newEffect the new Effect to add.
+     * @return true if the value has been added to myEffects.
+     */
+    public boolean addEffect(Effect newEffect) {
+        return myEffects.add(newEffect);
+    }
+
+    /**
+     * Add a list of effects to the list myEffects.
+     * @param effectList the new list to add.
+     * @return true if all values has been added to myEffects.
+     */
+    public boolean addAllEffects(ArrayList<Effect> effectList) {
+        return myEffects.addAll(effectList);
+    }
+
 
     /**
      * Returns the value of bonus.

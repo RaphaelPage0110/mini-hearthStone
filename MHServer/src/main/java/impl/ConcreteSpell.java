@@ -5,6 +5,7 @@ import abstracts.CardType;
 import abstracts.Spell;
 import impl.behaviour.generic.DamageTarget;
 import impl.behaviour.generic.Summon;
+import impl.behaviour.generic.TransformInto;
 import impl.behaviour.minion.Taunt;
 
 import java.util.Map;
@@ -13,11 +14,14 @@ public class ConcreteSpell extends Spell {
 
     private Map<String,String> abilityKeyWords;
 
-    public ConcreteSpell(String name, int requiredMana, int damagePoints, int bonus, CardType type, Map<String,String> abilityKeyWords) {
+    public ConcreteSpell() {
+
+    }
+
+    public ConcreteSpell(String name, int requiredMana, int bonus, CardType type, Map<String,String> abilityKeyWords) {
         super();
         this.setName(name);
         this.requiredMana = requiredMana;
-        this.damagePoints = damagePoints;
         this.setBonus(bonus);
         this.type = type;
         this.abilityKeyWords = abilityKeyWords;
@@ -38,9 +42,20 @@ public class ConcreteSpell extends Spell {
             switch(entry.getKey()) {
 
                 case "damageTarget":
-                    DamageTarget abilityDamage = new DamageTarget(this);
+                    DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamage);
                     break;
+
+                case "summon":
+                    Summon abilitySummon = new Summon(this, entry.getValue());
+                    this.myEffects.add(abilitySummon);
+                    break;
+
+                case "transformInto":
+                    TransformInto abilityTransform = new TransformInto(this, entry.getValue());
+                    this.myEffects.add(abilityTransform);
+                    break;
+
 
             }
         }

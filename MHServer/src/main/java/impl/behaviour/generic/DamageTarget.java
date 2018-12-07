@@ -19,9 +19,9 @@ public class DamageTarget extends TargetedEffect {
     private Hero myHero;
     private int damage;
 
-    public DamageTarget(Card myCard) {
+    public DamageTarget(Card myCard, int damage) {
         this.myCard = myCard;
-        this.damage = myCard.getDamagePoints();
+        this.damage = damage;
     }
 
     public DamageTarget(Hero myHero, int damage) {

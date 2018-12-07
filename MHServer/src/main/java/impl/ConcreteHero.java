@@ -55,7 +55,7 @@ public class ConcreteHero extends Hero {
     }
 
     @Override
-    protected void setMaxHealthPoints(int healthPoints) {
+    public void setMaxHealthPoints(int healthPoints) {
 
     }
 

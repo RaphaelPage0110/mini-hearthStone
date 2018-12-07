@@ -2,9 +2,12 @@ package repositories;
 
 import abstracts.Card;
 import abstracts.CardType;
+import abstracts.Hero;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
+import impl.behaviour.generic.Summon;
+import inter.Effect;
 import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -118,11 +121,27 @@ public class Application implements CommandLineRunner {
      */
     private void useHeroPower(Player activePlayer, Player opponent) {
 
-        if(activePlayer.canUseHeroAbility()) {
-            activePlayer.getMyHero().activateEffect();
-            activePlayer.setCanUseHeroAbility(false);
-        }
+        Hero hero = activePlayer.getMyHero();
 
+        if (activePlayer.canUseHeroAbility()) {
+
+            activePlayer.getMyHero().activateEffect();
+
+            if (hero.getMyEffect() instanceof Summon) {
+
+                String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
+                ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+                activePlayer.addMinion(minionToSummon);
+
+            } else {
+
+                activePlayer.getMyHero().activateEffect();
+
+            }
+
+            activePlayer.setCanUseHeroAbility(false);
+
+        }
     }
 
     /**
@@ -168,6 +187,7 @@ public class Application implements CommandLineRunner {
 
     /**
      * allows to attack a minion
+     * TODO : Compléter avec le choix du joueur
      * @param activePlayer
      * @param opponent
      */
@@ -198,10 +218,27 @@ public class Application implements CommandLineRunner {
 
     /**
      * allows a player to play a card
+     * TODO : a compléter avec le choix du client
      * @param activePlayer
      * @param opponent
      */
     private void playCard(Player activePlayer, Player opponent) {
+
+        //la il y aura le choix du joueur, dans une seule variable
+        ConcreteMinion minionToPlay = new ConcreteMinion();
+        ConcreteSpell spellToPlay = new ConcreteSpell();
+
+        if (minionToPlay instanceof ConcreteMinion ) {
+
+        } else if (spellToPlay instanceof ConcreteSpell) {
+            for (Effect effect : spellToPlay.getMyEffects() ) {
+                if(effect instanceof Summon) {
+                    String minionKeyword = ((Summon)effect).getMyMinionKeyword();
+                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+                    activePlayer.addMinion(minionToSummon);
+                }
+            }
+        }
     }
 
     /**

@@ -3,8 +3,7 @@ package impl;
 import abstracts.CardType;
 import abstracts.Minion;
 import inter.Effect;
-import org.springframework.beans.factory.annotation.Autowired;
-import repositories.MinionRepository;
+
 import java.util.ArrayList;
 
 
@@ -22,18 +21,24 @@ public class ConcreteMinion extends Minion {
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
         this.maxHealthPoints = healthPoints;
+        this.currentHealthPoints = healthPoints;
         this.type = type;
         this.myEffects = abilityKeyWord;
     }
 
     @Override
     public void heal(int healthPoints) {
-        this.setHealthPoints(Math.max(this.currentHealthPoints+healthPoints,this.maxHealthPoints));
+        this.setCurrentHealthPoints(Math.max(this.currentHealthPoints+healthPoints,this.maxHealthPoints));
     }
 
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
+        this.maxHealthPoints += bonusHealtPoints;
+    }
 
+    @Override
+    public void setMaxHealthPoints(int maxHealthPoints){
+        this.maxHealthPoints = maxHealthPoints;
     }
 
     @Override

@@ -6,6 +6,7 @@ import abstracts.Hero;
 import abstracts.Minion;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
+import impl.Game;
 import impl.Player;
 import impl.behaviour.generic.DamageAllOpponents;
 import impl.behaviour.generic.DrawCard;
@@ -29,7 +30,7 @@ public class Application implements CommandLineRunner {
     private Player player2;
 
     @Autowired
-    private HeroRepository repository;
+    private HeroRepository heroRepository;
 
     @Autowired
     private MinionRepository minionRepository;
@@ -44,9 +45,12 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Application application = new Application();
+        Game game = new Game();
 
-        application.instanciatePlayers();
+        game.instanciatePlayers();
+
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
 
         int turn = 1;
 
@@ -54,20 +58,20 @@ public class Application implements CommandLineRunner {
 
             //we increase the mana of each player during the first 10 turns
             if (turn <= 10 ) {
-                application.player1.addManaMax(1);
-                application.player2.addManaMax(1);
+                player1.addManaMax(1);
+                player2.addManaMax(1);
             }
 
             //we refill the players mana
-            application.player1.setMyMana(player1.getMyManaMax());
-            application.player2.setMyMana(player2.getMyManaMax());
+            player1.setMyMana(player1.getMyManaMax());
+            player2.setMyMana(player2.getMyManaMax());
 
             //we allow the players to use their heros ability
-            application.player1.setCanUseHeroAbility(true);
-            application.player2.setCanUseHeroAbility(true);
+            player1.setCanUseHeroAbility(true);
+            player2.setCanUseHeroAbility(true);
 
             //the two players play their turn
-            application.playRound();
+            playRound(game);
             turn++;
 
         }
@@ -77,15 +81,15 @@ public class Application implements CommandLineRunner {
     /**
      * manage the players turn
      */
-    private void playRound() {
+    private void playRound(Game game) {
         int turnPlayer1 = this.player1.getPlayOrder();
         int turnPlayer2 = this.player2.getPlayOrder();
         if (turnPlayer2 > turnPlayer1) {
-            action(this.player1, this.player2);
-            action(this.player2, this.player1);
+            action(this.player1, this.player2, game);
+            action(this.player2, this.player1, game);
         } else {
-            action(this.player2, this.player1);
-            action(this.player1, this.player2);
+            action(this.player2, this.player1, game);
+            action(this.player1, this.player2, game);
         }
     }
 
@@ -95,14 +99,15 @@ public class Application implements CommandLineRunner {
      * @param activePlayer the player whose turn it is to play
      * @param opponent its opponent
      */
-    private void action(Player activePlayer, Player opponent) {
+    private void action(Player activePlayer, Player opponent, Game game) {
         draw(activePlayer);
-        while(true){
+        boolean endTurn = false;
+        while(!endTurn){
             //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT
             String idAction = "";
             switch (idAction) {
                 case "playCard":
-                    playCard(activePlayer, opponent);
+                    playCard(activePlayer, opponent, game);
                     break;
                 case "attack":
                     prepareAttack(activePlayer, opponent);
@@ -111,7 +116,7 @@ public class Application implements CommandLineRunner {
                     useHeroPower(activePlayer, opponent);
                     break;
                 case "endTurn":
-                    return;
+                    endTurn = true;
                 default:
                     break;
             }
@@ -226,53 +231,69 @@ public class Application implements CommandLineRunner {
      * @param activePlayer
      * @param opponent
      */
-    private void playCard(Player activePlayer, Player opponent) {
+    private void playCard(Player activePlayer, Player opponent, Game game) {
 
         //la il y aura le choix du joueur, dans une seule variable
         ConcreteMinion minionToPlay = new ConcreteMinion();
         ConcreteSpell spellToPlay = new ConcreteSpell();
 
-        if (minionToPlay instanceof ConcreteMinion ) {
+        //if the player has enough mana to play the card
+        if(activePlayer.canPlayCard(minionToPlay) || activePlayer.canPlayCard(spellToPlay)) {
 
-        } else if (spellToPlay instanceof ConcreteSpell) {
+            //the player pay the cost of the card
+            activePlayer.setMyMana(activePlayer.getMyMana()-minionToPlay.getRequiredMana());
 
-            for (Effect effect : spellToPlay.getMyEffects() ) {
+            //on invoque le minion
+            if (minionToPlay instanceof ConcreteMinion ) {
 
-                if(effect instanceof Summon) {
+                activePlayer.removeCardFromHand(minionToPlay);
+                activePlayer.addMinion(minionToPlay);
+                game.addMinionInPlay(minionToPlay);
 
-                    String minionKeyword = ((Summon)effect).getMyMinionKeyword();
-                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
-                    activePlayer.addMinion(minionToSummon);
+            //the player cast the spell
+            } else if (spellToPlay instanceof ConcreteSpell) {
 
-                }
+                for (Effect effect : spellToPlay.getMyEffects() ) {
 
-                if (effect instanceof TransformInto ) {
+                    if(effect instanceof Summon) {
 
-                    //là il faut demander le choix du joueur
-                    ConcreteMinion minionBeingTransformed = new ConcreteMinion();
-                    String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
-                    ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
-                    minionBeingTransformed.setName(minionModel.getName());
-                    minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
-                    minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
-                    minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
-                    minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
-                    minionBeingTransformed.setType(minionModel.getType());
-                    minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
+                        String minionKeyword = ((Summon)effect).getMyMinionKeyword();
+                        ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+                        activePlayer.addMinion(minionToSummon);
+                        game.addMinionInPlay(minionToSummon);
 
-                }
-
-                if (effect instanceof DrawCard ) {
-
-                    for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
-
-                        this.draw(activePlayer);
-                        
                     }
 
+                    if (effect instanceof TransformInto ) {
+
+                        //là il faut demander le choix du joueur
+                        ConcreteMinion minionBeingTransformed = new ConcreteMinion();
+                        String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
+                        ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
+                        minionBeingTransformed.setName(minionModel.getName());
+                        minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
+                        minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
+                        minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
+                        minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
+                        minionBeingTransformed.setType(minionModel.getType());
+                        minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
+
+                    }
+
+                    if (effect instanceof DrawCard ) {
+
+                        for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
+
+                            this.draw(activePlayer);
+
+                        }
+
+                    }
                 }
             }
+
         }
+
     }
 
     /**
@@ -353,11 +374,4 @@ public class Application implements CommandLineRunner {
             }
         }
     }
-
-    /**
-     * allows to create two players and links them to the game
-     */
-    private void instanciatePlayers() {
-    }
-
 }

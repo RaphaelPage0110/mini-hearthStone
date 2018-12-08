@@ -118,4 +118,12 @@ public class Game {
 	public void removeMinionFromGame(Minion minion){
 		minionsInPlay.remove(minion);
 	}
+
+	/**
+	 * allows to create two players and links them to the game
+	 * TODO : write this
+	 */
+	public void instanciatePlayers() {
+	}
+
 }

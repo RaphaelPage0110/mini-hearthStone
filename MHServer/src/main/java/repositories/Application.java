@@ -113,7 +113,7 @@ public class Application implements CommandLineRunner {
                     prepareAttack(activePlayer, opponent);
                     break;
                 case "useHeroAbility":
-                    useHeroPower(activePlayer, opponent);
+                    useHeroPower(activePlayer, opponent, game);
                     break;
                 case "endTurn":
                     endTurn = true;
@@ -128,7 +128,7 @@ public class Application implements CommandLineRunner {
      * @param activePlayer the player whose turn it is to play
      * @param opponent its opponent
      */
-    private void useHeroPower(Player activePlayer, Player opponent) {
+    private void useHeroPower(Player activePlayer, Player opponent, Game game) {
 
         Hero hero = activePlayer.getMyHero();
 
@@ -138,9 +138,18 @@ public class Application implements CommandLineRunner {
 
             if (hero.getMyEffect() instanceof Summon) {
 
+                //we fetch the minion to summon in the database
                 String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
                 ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+
+                //we add the minion to the player hand and to the game
                 activePlayer.addMinion(minionToSummon);
+                game.addMinionInPlay(minionToSummon);
+
+                //we apply its effects
+                for (Effect effect : minionToSummon.getMyEffects() ) {
+                    effect.effect();
+                }
 
             } else {
 
@@ -148,6 +157,7 @@ public class Application implements CommandLineRunner {
 
             }
 
+            //a hero can only use its hero ability once
             activePlayer.setCanUseHeroAbility(false);
 
         }
@@ -216,6 +226,7 @@ public class Application implements CommandLineRunner {
 
     /**
      * allows to attack a hero
+     * TODO : Ecrire cette méthode
      * @param activePlayer
      * @param opponent
      */
@@ -243,12 +254,17 @@ public class Application implements CommandLineRunner {
             //the player pay the cost of the card
             activePlayer.setMyMana(activePlayer.getMyMana()-minionToPlay.getRequiredMana());
 
-            //on invoque le minion
+            //we summon the minion
             if (minionToPlay instanceof ConcreteMinion ) {
 
                 activePlayer.removeCardFromHand(minionToPlay);
                 activePlayer.addMinion(minionToPlay);
                 game.addMinionInPlay(minionToPlay);
+
+                //we apply all the card's effect
+                for (Effect effect : minionToPlay.getMyEffects()) {
+                    effect.effect();
+                }
 
             //the player cast the spell
             } else if (spellToPlay instanceof ConcreteSpell) {

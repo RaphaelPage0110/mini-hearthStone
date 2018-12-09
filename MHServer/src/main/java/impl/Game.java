@@ -120,8 +120,8 @@ public class Game {
 	}
 
 	/**
-	 * allows to create two players and links them to the game
-	 * TODO : write this
+	 * allows two users to create their profile and links them to the game
+	 * TODO : A completer quand on saura comment communiquer avec les clients
 	 */
 	public void instanciatePlayers() {
 	}

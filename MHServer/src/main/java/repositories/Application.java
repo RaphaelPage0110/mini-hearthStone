@@ -267,7 +267,7 @@ public class Application implements CommandLineRunner {
                     for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
 
                         this.draw(activePlayer);
-                        
+
                     }
 
                 }

@@ -1,10 +1,7 @@
 package repositories;
 
 import abstracts.*;
-import impl.ConcreteMinion;
-import impl.ConcreteSpell;
-import impl.Game;
-import impl.Player;
+import impl.*;
 import impl.behaviour.generic.DamageAllOpponents;
 import impl.behaviour.generic.DrawCard;
 import impl.behaviour.generic.Summon;
@@ -170,42 +167,30 @@ public class Application implements CommandLineRunner {
 
     /**
      * this method send to the client the list of the targets he can attack
+     * TODO : COMPLETER CETTE FONCTION QUAND PN SAURA COMMUNIQUER AVEC LE CLIENT
      * @param activePlayer
      * @param opponent
      */
     private void prepareAttack(Player activePlayer, Player opponent) {
 
-        /*
         //we check if the player has minions that can attack
         if(activePlayer.hasMinionsAwake()) {
 
             //if the opponent has minions with taunt, then he has to attack them first
             if(opponent.hasTauntMinions()) {
 
-                attack(activePlayer, opponent);
+                //il faut envoyer la liste des minions avec taunt au client
 
             }
 
             else {
-                //this var will contain the choice of the player concerning his choice of target
-                String attackType = "";
+                //on envoi au client le choix d'attaquer soit le héros soit les minions de l'adversaire
 
-                //then the player can either attack the hero or a minion
-                switch (attackType) {
-                    case "hero" :
-                        attack(activePlayer, opponent.getMyHero() );
-                        break;
-                    case "minion" :
-                        attack(activePlayer, opponent.getMyMinions() );
-                        break;
-                    default :
-                        break;
-                }
             }
         }
         else {
             //attaque impossible pour le moment
-        }*/
+        }
 
     }
 
@@ -215,16 +200,15 @@ public class Application implements CommandLineRunner {
      * @param activePlayer
      * @param opponent
      */
-    private void attack(Player activePlayer, Target opponent) {
+    private void attackMinion(Player activePlayer, Target opponent) {
 
-        //this var will contain the choice of the player concerning which minion he will attack
-        ConcreteMinion minionToAttack = new ConcreteMinion();
+        //envoyer au joueur la liste des minions qu'il peut attaquer
+        //ConcreteMinion minionToAttack = choix du joueur;
 
-        //this var will contain the choice of the player concerning which minion will attack
-        ConcreteMinion minionThatAttacks = new ConcreteMinion();
+        //envoyer au joueur la liste des minions avec lesquels il peut attaquer
+        //ConcreteMinion minionThatAttacks = choix du joueur;
 
-        minionThatAttacks.attack(minionToAttack);
-
+        //minionThatAttacks.attack(minionToAttack);
 
     }
 
@@ -237,8 +221,12 @@ public class Application implements CommandLineRunner {
      */
     private void attackHero(Player activePlayer, Player opponent) {
 
+        //envoyer au joueur la liste des minions avec lesquels il peut attaquer
+        //ConcreteMinion minionThatAttacks = choix du joueur;
 
+        Hero heroToAttack = opponent.getMyHero();
 
+        //minionThatAttacks.attack(heroToAttack);
     }
 
     /**

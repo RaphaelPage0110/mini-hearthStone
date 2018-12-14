@@ -52,12 +52,11 @@ public class Application implements CommandLineRunner {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
 
-        int turn = 1;
 
         while(true) {
 
             //we increase the mana of each player during the first 10 turns
-            if (turn <= 10 ) {
+            if (game.getTurn() <= 10 ) {
                 player1.addManaMax(1);
                 player2.addManaMax(1);
             }
@@ -72,7 +71,7 @@ public class Application implements CommandLineRunner {
 
             //the two players play their turn
             playRound(game);
-            turn++;
+            game.incrementTurn();
 
         }
 
@@ -136,19 +135,28 @@ public class Application implements CommandLineRunner {
 
             activePlayer.getMyHero().activateEffect();
 
-            if (hero.getMyEffect() instanceof Summon) {
+            Effect heroPower = hero.getMyEffect();
 
-                //we fetch the minion to summon in the database
-                String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
-                ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+            if (heroPower instanceof Summon) {
 
-                //we add the minion to the player hand and to the game
-                activePlayer.addMinion(minionToSummon);
-                game.addMinionInPlay(minionToSummon);
+                //some heroPowers could summon multiple minions of the same type at the same time
+                int numberOfMinionsToSummon = ((Summon)heroPower).getNumberSummoned();
 
-                //we apply its effects
-                for (Effect effect : minionToSummon.getMyEffects() ) {
-                    effect.effect();
+                for (int i=0; i<numberOfMinionsToSummon; i++) {
+
+                    //we fetch the minion to summon in the database
+                    String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
+                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+
+                    //we add the minion to the player hand and to the game
+                    activePlayer.addMinion(minionToSummon);
+                    game.addMinionInPlay(minionToSummon);
+
+                    //we apply its effects
+                    for (Effect effect : minionToSummon.getMyEffects() ) {
+                        effect.effect();
+                    }
+
                 }
 
             } else {
@@ -273,10 +281,20 @@ public class Application implements CommandLineRunner {
 
                     if(effect instanceof Summon) {
 
-                        String minionKeyword = ((Summon)effect).getMyMinionKeyword();
-                        ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
-                        activePlayer.addMinion(minionToSummon);
-                        game.addMinionInPlay(minionToSummon);
+                        //some spells can summon multiple minions of the same type at the same time
+                        int numberOfMinionsToSummon = ((Summon)effect).getNumberSummoned();
+
+                        for (int i=0; i<numberOfMinionsToSummon; i++) {
+
+                            //we fetch the minions details from the database using it's name
+                            String minionKeyword = ((Summon)effect).getMyMinionKeyword();
+                            ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+
+                            //we add the newly created minion to the game
+                            activePlayer.addMinion(minionToSummon);
+                            game.addMinionInPlay(minionToSummon);
+
+                        }
 
                     }
 

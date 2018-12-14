@@ -1,5 +1,4 @@
 import abstracts.Hero;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import impl.ConcreteHero;
 import impl.Player;
 import org.junit.jupiter.api.BeforeEach;

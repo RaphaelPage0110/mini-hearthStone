@@ -13,10 +13,12 @@ public class Game {
     private Player winner;
     private Player loser;
     private boolean gameOver;
+    private int turn;
 
     public Game() {
       this.id = new IdGame(this).getId();
-      this.minionsInPlay = new ArrayList<Minion>();
+      this.minionsInPlay = new ArrayList<>();
+      this.turn = 1;
     }
 
   	/**
@@ -126,4 +128,15 @@ public class Game {
 	public void instanciatePlayers() {
 	}
 
+    public int getTurn() {
+        return turn;
+    }
+
+    /**
+     * used to increment the number of the turn
+     */
+    public void incrementTurn() {
+
+        ++turn;
+    }
 }

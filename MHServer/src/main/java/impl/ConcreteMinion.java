@@ -66,6 +66,10 @@ public class ConcreteMinion extends Minion {
         }
     }
 
+    public ConcreteMinion() {
+
+    }
+
     @Override
     public void heal(int healthPoints) {
         this.setCurrentHealthPoints(Math.min(this.currentHealthPoints+healthPoints,this.maxHealthPoints));

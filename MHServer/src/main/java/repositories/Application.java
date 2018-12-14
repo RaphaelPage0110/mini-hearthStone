@@ -1,9 +1,6 @@
 package repositories;
 
-import abstracts.Card;
-import abstracts.CardType;
-import abstracts.Hero;
-import abstracts.Minion;
+import abstracts.*;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Game;
@@ -265,70 +262,105 @@ public class Application implements CommandLineRunner {
             //we summon the minion
             if (minionToPlay instanceof ConcreteMinion ) {
 
-                activePlayer.removeCardFromHand(minionToPlay);
-                activePlayer.addMinion(minionToPlay);
-                game.addMinionInPlay(minionToPlay);
-
-                //we apply all the card's effect
-                for (Effect effect : minionToPlay.getMyEffects()) {
-                    effect.effect();
-                }
+                playMinionCard(minionToPlay, activePlayer, game);
 
             //the player cast the spell
             } else if (spellToPlay instanceof ConcreteSpell) {
 
-                for (Effect effect : spellToPlay.getMyEffects() ) {
-
-                    if(effect instanceof Summon) {
-
-                        //some spells can summon multiple minions of the same type at the same time
-                        int numberOfMinionsToSummon = ((Summon)effect).getNumberSummoned();
-
-                        for (int i=0; i<numberOfMinionsToSummon; i++) {
-
-                            //we fetch the minions details from the database using it's name
-                            String minionKeyword = ((Summon)effect).getMyMinionKeyword();
-                            ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
-
-                            //we add the newly created minion to the game
-                            activePlayer.addMinion(minionToSummon);
-                            game.addMinionInPlay(minionToSummon);
-
-                        }
-
-                    }
-
-                    if (effect instanceof TransformInto ) {
-
-                        //là il faut demander le choix du joueur
-                        ConcreteMinion minionBeingTransformed = new ConcreteMinion();
-                        String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
-                        ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
-                        minionBeingTransformed.setName(minionModel.getName());
-                        minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
-                        minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
-                        minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
-                        minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
-                        minionBeingTransformed.setType(minionModel.getType());
-                        minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
-
-                    }
-
-                    if (effect instanceof DrawCard ) {
-
-                        for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
-
-                            this.draw(activePlayer);
-
-                        }
-
-                    }
-                }
+                playSpellCard(spellToPlay, activePlayer, game);
             }
 
         }
 
     }
+
+    /**
+     * Allows a player to play a spell card
+     * @param spellToPlay
+     * @param activePlayer
+     * @param game
+     */
+    private void playSpellCard(Spell spellToPlay, Player activePlayer, Game game) {
+
+        for (Effect effect : spellToPlay.getMyEffects() ) {
+
+            //if the card effect is to summon a minion, then we have to treat it separately
+            if(effect instanceof Summon) {
+
+                //some spells can summon multiple minions of the same type at the same time
+                int numberOfMinionsToSummon = ((Summon)effect).getNumberSummoned();
+
+                for (int i=0; i<numberOfMinionsToSummon; i++) {
+
+                    //we fetch the minions details from the database using it's name
+                    String minionKeyword = ((Summon)effect).getMyMinionKeyword();
+                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+
+                    //we add the newly created minion to the game
+                    activePlayer.addMinion(minionToSummon);
+                    game.addMinionInPlay(minionToSummon);
+
+                }
+
+            }
+
+            //the transform effect is somewhat similar to the summon effect, except that we don't summon a new minion,
+            //we just update the targeted minions parameters
+            else if (effect instanceof TransformInto ) {
+
+                //là il faut demander le choix du joueur
+                ConcreteMinion minionBeingTransformed = new ConcreteMinion();
+                String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
+                ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
+                minionBeingTransformed.setName(minionModel.getName());
+                minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
+                minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
+                minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
+                minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
+                minionBeingTransformed.setType(minionModel.getType());
+                minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
+
+            }
+
+            else if (effect instanceof DrawCard ) {
+
+                for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
+
+                    this.draw(activePlayer);
+
+                }
+
+            }
+
+            else {
+
+                effect.effect();
+
+            }
+        }
+
+    }
+
+    /**
+     * allows a player to play a minion card
+     * @param minionToPlay
+     * @param activePlayer
+     * @param game
+     */
+    private void playMinionCard(ConcreteMinion minionToPlay, Player activePlayer, Game game) {
+
+        activePlayer.removeCardFromHand(minionToPlay);
+        activePlayer.addMinion(minionToPlay);
+        game.addMinionInPlay(minionToPlay);
+
+        //we apply all the card's effect
+        for (Effect effect : minionToPlay.getMyEffects()) {
+            effect.effect();
+        }
+
+    }
+
+
 
     /**
      * allows a player to draw a card

@@ -25,13 +25,13 @@ public class Application implements CommandLineRunner {
     private Game game = new Game();
 
     @Autowired
-    private HeroRepository heroRepository;
+    private static HeroRepository heroRepository;
 
     @Autowired
-    private MinionRepository minionRepository;
+    private static MinionRepository minionRepository;
 
     @Autowired
-    private SpellRepository spellRepository;
+    private static SpellRepository spellRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -332,10 +332,22 @@ public class Application implements CommandLineRunner {
         return game;
     }
 
-    public ConcreteMinion findMinionInDatabase(String minionKeyword) {
+    public static ConcreteMinion findMinionInDatabase(String minionKeyword) {
 
         ConcreteMinion minion = minionRepository.findByName(minionKeyword);
 
         return minion;
+    }
+
+    public static ConcreteSpell findSpellInDatabase(String spellKeyword) {
+        ConcreteSpell spell = spellRepository.findByName(spellKeyword);
+
+        return spell;
+    }
+
+    public static ConcreteHero findHeroInDatabase(String heroKeyword) {
+        ConcreteHero hero = heroRepository.findByHeroName(heroKeyword);
+
+        return hero;
     }
 }

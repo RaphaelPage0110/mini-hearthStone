@@ -22,6 +22,7 @@ public class Application implements CommandLineRunner {
 
     private Player player1;
     private Player player2;
+    private Game game = new Game();
 
     @Autowired
     private HeroRepository heroRepository;
@@ -39,12 +40,10 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Game game = new Game();
-
         game.instanciatePlayers();
 
-        Player player1 = game.getPlayer1();
-        Player player2 = game.getPlayer2();
+        player1 = game.getPlayer1();
+        player2 = game.getPlayer2();
 
 
         while(true) {
@@ -75,15 +74,13 @@ public class Application implements CommandLineRunner {
      * manage the players turn
      */
     private void playRound(Game game) {
-        int turnPlayer1 = this.player1.getPlayOrder();
-        int turnPlayer2 = this.player2.getPlayOrder();
-        if (turnPlayer2 > turnPlayer1) {
-            action(this.player1, this.player2, game);
-            action(this.player2, this.player1, game);
-        } else {
-            action(this.player2, this.player1, game);
-            action(this.player1, this.player2, game);
-        }
+
+        Player firstToPlay = getActivePlayer();
+        Player secondToPlay = getWaitingPlayer();
+
+        action(firstToPlay,secondToPlay, game);
+        action(secondToPlay,firstToPlay, game);
+
     }
 
     /**
@@ -99,99 +96,10 @@ public class Application implements CommandLineRunner {
             //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT
             String idAction = "";
             switch (idAction) {
-                case "playCard":
-                    playCard(activePlayer, opponent, game);
-                    break;
-                case "attack":
-                    prepareAttack(activePlayer, opponent);
-                    break;
-                case "useHeroAbility":
-                    useHeroPower(activePlayer, opponent, game);
-                    break;
-                case "endTurn":
-                    endTurn = true;
                 default:
                     break;
             }
         }
-    }
-
-    /**
-     * allows a player to use its hero ability
-     * @param activePlayer the player whose turn it is to play
-     * @param opponent its opponent
-     */
-    private void useHeroPower(Player activePlayer, Player opponent, Game game) {
-
-        Hero hero = activePlayer.getMyHero();
-
-        if (activePlayer.canUseHeroAbility()) {
-
-            activePlayer.getMyHero().activateEffect();
-
-            Effect heroPower = hero.getMyEffect();
-
-            if (heroPower instanceof Summon) {
-
-                //some heroPowers could summon multiple minions of the same type at the same time
-                int numberOfMinionsToSummon = ((Summon)heroPower).getNumberSummoned();
-
-                for (int i=0; i<numberOfMinionsToSummon; i++) {
-
-                    //we fetch the minion to summon in the database
-                    String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
-                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
-
-                    //we add the minion to the player hand and to the game
-                    activePlayer.addMinion(minionToSummon);
-                    game.addMinionInPlay(minionToSummon);
-
-                    //we apply its effects
-                    for (Effect effect : minionToSummon.getMyEffects() ) {
-                        effect.effect();
-                    }
-
-                }
-
-            } else {
-
-                activePlayer.getMyHero().activateEffect();
-
-            }
-
-            //a hero can only use its hero ability once
-            activePlayer.setCanUseHeroAbility(false);
-
-        }
-    }
-
-    /**
-     * this method send to the client the list of the targets he can attack
-     * TODO : COMPLETER CETTE FONCTION QUAND PN SAURA COMMUNIQUER AVEC LE CLIENT
-     * @param activePlayer
-     * @param opponent
-     */
-    private void prepareAttack(Player activePlayer, Player opponent) {
-
-        //we check if the player has minions that can attack
-        if(activePlayer.hasMinionsAwake()) {
-
-            //if the opponent has minions with taunt, then he has to attack them first
-            if(opponent.hasTauntMinions()) {
-
-                //il faut envoyer la liste des minions avec taunt au client
-
-            }
-
-            else {
-                //on envoi au client le choix d'attaquer soit le héros soit les minions de l'adversaire
-
-            }
-        }
-        else {
-            //attaque impossible pour le moment
-        }
-
     }
 
     /**
@@ -230,45 +138,12 @@ public class Application implements CommandLineRunner {
     }
 
     /**
-     * allows a player to play a card
-     * TODO : a compléter avec le choix du client
-     * @param activePlayer
-     * @param opponent
-     */
-    private void playCard(Player activePlayer, Player opponent, Game game) {
-
-        //la il y aura le choix du joueur, dans une seule variable
-        ConcreteMinion minionToPlay = new ConcreteMinion();
-        ConcreteSpell spellToPlay = new ConcreteSpell();
-
-        //if the player has enough mana to play the card
-        if(activePlayer.canPlayCard(minionToPlay) || activePlayer.canPlayCard(spellToPlay)) {
-
-            //the player pay the cost of the card
-            activePlayer.setMyMana(activePlayer.getMyMana()-minionToPlay.getRequiredMana());
-
-            //we summon the minion
-            if (minionToPlay instanceof ConcreteMinion ) {
-
-                playMinionCard(minionToPlay, activePlayer, game);
-
-            //the player cast the spell
-            } else if (spellToPlay instanceof ConcreteSpell) {
-
-                playSpellCard(spellToPlay, activePlayer, game);
-            }
-
-        }
-
-    }
-
-    /**
      * Allows a player to play a spell card
      * @param spellToPlay
      * @param activePlayer
      * @param game
      */
-    private void playSpellCard(Spell spellToPlay, Player activePlayer, Game game) {
+    public void playSpellCard(Spell spellToPlay, Player activePlayer, Game game) {
 
         for (Effect effect : spellToPlay.getMyEffects() ) {
 
@@ -335,7 +210,7 @@ public class Application implements CommandLineRunner {
      * @param activePlayer
      * @param game
      */
-    private void playMinionCard(ConcreteMinion minionToPlay, Player activePlayer, Game game) {
+    public void playMinionCard(ConcreteMinion minionToPlay, Player activePlayer, Game game) {
 
         activePlayer.removeCardFromHand(minionToPlay);
         activePlayer.addMinion(minionToPlay);
@@ -427,5 +302,40 @@ public class Application implements CommandLineRunner {
 
             }
         }
+    }
+
+    /**
+     * allows to determine who is the active player
+     * @return player
+     */
+    public Player getActivePlayer() {
+
+        int turnPlayer1 = this.player1.getPlayOrder();
+        int turnPlayer2 = this.player2.getPlayOrder();
+        if (turnPlayer2 > turnPlayer1) {
+            return player1;
+        } else {
+            return player2;
+        }
+
+    }
+
+    /**
+     * allows to determine who is the waiting player
+     * @return player
+     */
+    public Player getWaitingPlayer() {
+        return getActivePlayer().getOpponent();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public ConcreteMinion findMinionInDatabase(String minionKeyword) {
+
+        ConcreteMinion minion = minionRepository.findByName(minionKeyword);
+
+        return minion;
     }
 }

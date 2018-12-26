@@ -40,6 +40,13 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+    }
+
+    /**
+     * allows to create a new game of mini-hearthstone
+     */
+    public void createGame(){
+
         game.instanciatePlayers();
 
         player1 = game.getPlayer1();
@@ -69,7 +76,6 @@ public class Application implements CommandLineRunner {
         }
 
     }
-
     /**
      * manage the players turn
      */

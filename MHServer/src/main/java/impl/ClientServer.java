@@ -136,4 +136,17 @@ public class ClientServer implements ClientServerInterface {
     public void endTurn() {
 
     }
+
+    @Override
+    /**
+     * this method allows the player to surrender and end the game
+     * TODO : COMPLETER CETTE METHODE
+     */
+    public void surrender() {
+
+    }
+
+    public void createGame() {
+        myApplication.createGame();
+    }
 }

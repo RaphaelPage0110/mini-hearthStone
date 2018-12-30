@@ -222,11 +222,6 @@ public abstract class Minion extends Card implements Target {
 
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Minion[id=%s, minionName='%s', maxHealthPoints='%s', damage='%s']",
-                id, name, maxHealthPoints, damagePoints);
-    }
+
 
 }

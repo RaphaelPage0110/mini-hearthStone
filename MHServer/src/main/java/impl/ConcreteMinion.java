@@ -18,14 +18,14 @@ public class ConcreteMinion extends Minion {
     private Map<String,String> deathRattle;
 
 
-    public ConcreteMinion(CardType minionType, int requiredMana, int damagePoints, int maxHealthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String minionName) {
+    public ConcreteMinion(CardType minionType, int requiredMana, int damagePoints, int healthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String minionName) {
         super();
 
         this.type = minionType;
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
-        this.maxHealthPoints = maxHealthPoints;
-        this.currentHealthPoints = maxHealthPoints;
+        this.maxHealthPoints = healthPoints;
+        this.currentHealthPoints = healthPoints;
         this.abilityKeyWord = abilityKeyWord;
         this.deathRattle = deathRattle;
         this.name = minionName;
@@ -88,5 +88,12 @@ public class ConcreteMinion extends Minion {
     @Override
     public int getMaxHealthPoints() {
         return this.maxHealthPoints;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Minion[id=%s, minionName='%s', requiredMana=%s, maxHealthPoints=%s, currentHealthPoints=%s, damage=%s, type=%s]",
+                id, name, requiredMana, maxHealthPoints, currentHealthPoints, damagePoints, type);
     }
 }

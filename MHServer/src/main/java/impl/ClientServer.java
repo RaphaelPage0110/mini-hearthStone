@@ -39,7 +39,7 @@ public class ClientServer implements ClientServerInterface {
 
                     //we fetch the minion to summon in the database
                     String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
-                    ConcreteMinion minionToSummon = myApplication.findMinionInDatabase(minionKeyword);
+                    ConcreteMinion minionToSummon = myApplication.minionRepository.findByName(minionKeyword);
 
                     //we add the minion to the player hand and to the game
                     activePlayer.addMinion(minionToSummon);

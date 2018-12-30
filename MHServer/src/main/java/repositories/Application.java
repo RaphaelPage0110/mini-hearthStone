@@ -14,7 +14,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SpringBootApplication
@@ -25,13 +27,13 @@ public class Application implements CommandLineRunner {
     private Game game = new Game();
 
     @Autowired
-    private static HeroRepository heroRepository;
+    public HeroRepository heroRepository;
 
     @Autowired
-    private static MinionRepository minionRepository;
+    public MinionRepository minionRepository;
 
     @Autowired
-    private static SpellRepository spellRepository;
+    public SpellRepository spellRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -39,7 +41,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
     }
 
     /**
@@ -229,8 +230,6 @@ public class Application implements CommandLineRunner {
 
     }
 
-
-
     /**
      * allows a player to draw a card
      * @param activePlayer
@@ -336,24 +335,5 @@ public class Application implements CommandLineRunner {
 
     public Game getGame() {
         return game;
-    }
-
-    public static ConcreteMinion findMinionInDatabase(String minionKeyword) {
-
-        ConcreteMinion minion = minionRepository.findByName(minionKeyword);
-
-        return minion;
-    }
-
-    public static ConcreteSpell findSpellInDatabase(String spellKeyword) {
-        ConcreteSpell spell = spellRepository.findByName(spellKeyword);
-
-        return spell;
-    }
-
-    public static ConcreteHero findHeroInDatabase(String heroKeyword) {
-        ConcreteHero hero = heroRepository.findByHeroName(heroKeyword);
-
-        return hero;
     }
 }

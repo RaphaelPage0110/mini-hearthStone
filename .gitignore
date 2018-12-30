@@ -1,6 +1,6 @@
 /target/
 /MHServer/target/
-/.idea
+.idea/
 /.settings
 /.project
 /.classpath

@@ -4,16 +4,18 @@ import identifiers.IdSpell;
 
 import java.util.ArrayList;
 import inter.Effect;
+import org.springframework.data.annotation.Id;
 
 public abstract class Spell extends Card {
 
-	 private Integer id;
+	@Id
+	 private String id;
 
 	 /**
 		* Returns the value of id.
 		* @return this.id.
 		*/
-	 public Integer getId() {
+	 public String getId() {
 			 return this.id;
 	 }
 
@@ -21,7 +23,6 @@ public abstract class Spell extends Card {
 		* Default empty constructor which initializes the ID and the list of actions.
 		*/
 	 public Spell() {
-			 this.id = new IdSpell(this).getId();
 			 this.myEffects = new ArrayList<>();
 	 }
 

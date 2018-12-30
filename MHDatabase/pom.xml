@@ -8,5 +8,11 @@
     <artifactId>mini-hearthstone-database</artifactId>
     <version>0.0.1</version>
 
+    <parent>
+        <groupId>org.univ-nantes.shinyhunters</groupId>
+        <artifactId>mini-hearthstone</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
     
 </project>

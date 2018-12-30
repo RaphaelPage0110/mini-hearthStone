@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="gs-spring-boot (1)" />
         <module name="gs-spring-boot (2)" />
-        <module name="mini-hearthstone" />
         <module name="mini-hearthstone-client" />
         <module name="mini-hearthstone-database" />
         <module name="mini-hearthstone-server" />
@@ -21,8 +20,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="mini-hearthstone" options="-parameters" />
-      <module name="mini-hearthstone-server" options="-parameters" />
+      <module name="mini-hearthstone" options="" />
+      <module name="mini-hearthstone-server" options="" />
     </option>
   </component>
 </project>

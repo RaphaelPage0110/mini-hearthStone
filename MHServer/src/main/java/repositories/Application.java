@@ -2,25 +2,21 @@ package repositories;
 
 import abstracts.*;
 import impl.*;
-import impl.behaviour.generic.DamageAllOpponents;
 import impl.behaviour.generic.DrawCard;
 import impl.behaviour.generic.Summon;
 import impl.behaviour.generic.TransformInto;
 import inter.Effect;
 import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application{
 
     private Player player1;
     private Player player2;
@@ -34,15 +30,6 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     public SpellRepository spellRepository;
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-
-    }
 
     /**
      * allows to create a new game of mini-hearthstone
@@ -336,5 +323,9 @@ public class Application implements CommandLineRunner {
 
     public Game getGame() {
         return game;
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 }

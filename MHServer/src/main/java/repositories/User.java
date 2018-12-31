@@ -1,4 +1,4 @@
-package webSocket.model;
+package repositories;
 
 public class User {
     private String name;

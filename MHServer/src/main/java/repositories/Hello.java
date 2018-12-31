@@ -1,4 +1,4 @@
-package webSocket.model;
+package repositories;
 
 public class Hello {
     private String greeting;

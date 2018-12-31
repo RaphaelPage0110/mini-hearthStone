@@ -1,4 +1,4 @@
-package webSocket.config;
+package repositories.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -10,16 +10,16 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/gkz");
+        config.enableSimpleBroker("/topic/", "/queue/", "/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
-                .addEndpoint("/gkz-stomp-endpoint")
+                .addEndpoint("/endpoint")
                 .setAllowedOrigins("http://localhost:4200")
                 .withSockJS();
     }

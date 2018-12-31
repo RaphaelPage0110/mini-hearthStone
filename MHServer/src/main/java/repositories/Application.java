@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-@SpringBootApplication
-public class Application implements CommandLineRunner {
+public class Application{
 
     private Player player1;
     private Player player2;
@@ -34,15 +33,6 @@ public class Application implements CommandLineRunner {
 
     @Autowired
     public SpellRepository spellRepository;
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-
-    }
 
     /**
      * allows to create a new game of mini-hearthstone

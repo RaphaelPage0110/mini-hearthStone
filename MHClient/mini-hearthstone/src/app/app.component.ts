@@ -35,13 +35,11 @@ export class AppComponent {
     this.stompClient.connect({}, function (frame) {
       _this.setConnected(true);
       console.log('Connected: ' + frame);
-
-      _this.stompClient.subscribe('/topic/game', function (hello) {
-        //_this.showGreeting(JSON.parse(hello.body).greeting);
-      });
+      _this.showGreeting("Vous êtes bien connecté au serveur du mini-hearthstone");
 
       _this.stompClient.subscribe('/user/queue/reply', function (resp) {
         console.log("server answer: "+resp.body)
+        _this.showGreeting(JSON.parse(resp.body).greeting);
       });
 
     });
@@ -54,14 +52,7 @@ export class AppComponent {
 
     this.setConnected(false);
     console.log('Disconnected!');
-  }
-
-  sendName() {
-    this.stompClient.send(
-      '/hello',
-      {},
-      JSON.stringify({'name': this.name})
-    );
+    this.showGreeting("Au revoir!");
   }
 
   connectToGame() {

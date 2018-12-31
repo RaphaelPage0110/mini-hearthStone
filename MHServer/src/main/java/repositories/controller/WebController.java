@@ -43,6 +43,7 @@ public class WebController {
         LOGGER.info("Received a connection from a user");
         waitingUsers.add(sessionId);
         System.out.println(sessionId);
+        simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("En attente d'un autre joueur..."));
         if (waitingUsers.size() == 2) {
             startGame();
             waitingUsers.clear();
@@ -57,8 +58,8 @@ public class WebController {
         String player1 = (String) waitingUsers.toArray()[0];
         String player2 = (String) waitingUsers.toArray()[1];
 
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+player1, new Hello("you're player 1"));
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+player2, new Hello("you're player 2"));
+        simpMessagingTemplate.convertAndSend("/queue/reply-user"+player1, new Hello("Vous êtes le joueur 1"));
+        simpMessagingTemplate.convertAndSend("/queue/reply-user"+player2, new Hello("Vous êtes le joueur 2"));
 
 
         LOGGER.log(Level.INFO, "Messages sent");

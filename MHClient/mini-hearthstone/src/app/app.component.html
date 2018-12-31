@@ -13,32 +13,25 @@
 <body>
 <div style="color: blue; text-align: center">
   <h1>{{title}}</h1>
-  <router-outlet></router-outlet>
 </div>
 
 <div class="container" style="width: 400px; margin-top: 20px;">
 
   <form class="form-inline">
     <div class="form-group">
-      <label for="connect">Make Connection:</label>
-      <button id="connect" class="btn btn-default" type="button" [disabled]="!disabled" (click)="connect()">Connect</button>
-      <button id="disconnect" class="btn btn-default" type="submit" [disabled]="disabled" (click)="disconnect()">Disconnect</button>
+      <label for="connect">Connexion au serveur:</label>
+      <button id="connect" class="btn btn-default" type="button" [disabled]="!disabled" (click)="connect()">Connexion</button>
+      <button id="disconnect" class="btn btn-default" type="submit" [disabled]="disabled" (click)="disconnect()">Déconnexion</button>
     </div>
   </form>
 
-  <form class="form-inline" style="margin-top: 20px;">
-    <div class="form-group">
-      <label for="name">User's Name:</label>
-      <input type="text" id="name" name="name" class="form-control" [(ngModel)]="name" />
-    </div>
-    <button id="send" class="btn btn-default" type="button" (click)="sendName()">Send</button>
-    <button id="connectToGame" class="btn btn-default" type="button" (click)="connectToGame()">Connect</button>
-  </form>
-
+</div>
+<div>
+  <button id="connectToGame" class="btn btn-default" type="button" (click)="connectToGame()">Trouver une partie</button>
   <table id="conversation" class="table table-striped" style="margin-top: 20px;">
     <thead>
     <tr>
-      <th>Greetings</th>
+      <th>Messages serveur:</th>
     </tr>
     </thead>
     <tbody *ngFor="let greeting of greetings">
@@ -47,7 +40,6 @@
     </tr>
     </tbody>
   </table>
-
 </div>
 </body>
 

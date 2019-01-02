@@ -10,6 +10,7 @@ import inter.Target;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SpringBootApplication
 public class Application{
-
-    private Player player1;
-    private Player player2;
-    private Game game = new Game();
 
     @Autowired
     public HeroRepository heroRepository;
@@ -31,16 +28,19 @@ public class Application{
     @Autowired
     public SpellRepository spellRepository;
 
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
     /**
      * allows to create a new game of mini-hearthstone
      */
-    public void createGame(){
+    public void createGame(Game newGame){
 
-        game.instanciatePlayers();
+        Game game = newGame;
 
-        player1 = game.getPlayer1();
-        player2 = game.getPlayer2();
-
+        instanciatePlayers(game);
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
 
         while(true) {
 
@@ -65,13 +65,51 @@ public class Application{
         }
 
     }
+
+    private void instanciatePlayers(Game game) {
+
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
+
+        player1.setMyGame(game);
+        player2.setMyGame(game);
+
+        player1.setOpponent(player2);
+        player2.setOpponent(player1);
+
+        ArrayList<Card> stockPlayer1 = player1.getMyStock();
+        ArrayList<Card> stockPlayer2 = player2.getMyStock();
+
+        //the first player draws 3 cards
+        for(int i=0;i<4;i++){
+            draw(player1);
+        }
+
+        //the second player draws 4 cards
+        for(int i=0;i<4;i++){
+            draw(player2);
+        }
+
+    }
+
     /**
+     * TODO : Enlever les envoies de message, c'est pour un test
      * manage the players turn
      */
     private void playRound(Game game) {
 
-        Player firstToPlay = getActivePlayer();
-        Player secondToPlay = getWaitingPlayer();
+        Player firstToPlay = game.getActivePlayer();
+        Player secondToPlay = game.getWaitingPlayer();
+
+        ArrayList<Card> myHand = firstToPlay.getMyHand();
+
+        String rsp = "";
+
+        for (Card card : myHand ){
+            rsp += card.getName();
+        }
+        simpMessagingTemplate.convertAndSend("/queue/reply-user"+firstToPlay.getSessionId(), new Hello(rsp));
+        simpMessagingTemplate.convertAndSend("/queue/reply-user"+secondToPlay.getSessionId(), new Hello("C'est le tour de votre adversaire"));
 
         action(firstToPlay,secondToPlay, game);
         action(secondToPlay,firstToPlay, game);
@@ -252,12 +290,16 @@ public class Application{
         switch (activePlayer.getMyHero().getHeroType()){
             case MAGE:
                 cardType = CardType.MAGE;
+                break;
             case PALADIN:
                 cardType = CardType.PALADIN;
+                break;
             case WARRIOR:
                 cardType =CardType.WARRIOR;
+                break;
             default:
                 cardType = null;
+                break;
         }
 
         ArrayList<ConcreteMinion> listMinionsCommon =  minionRepository.findByType(typeCommon);
@@ -295,34 +337,6 @@ public class Application{
 
             }
         }
-    }
-
-    /**
-     * allows to determine who is the active player
-     * @return player
-     */
-    public Player getActivePlayer() {
-
-        int turnPlayer1 = this.player1.getPlayOrder();
-        int turnPlayer2 = this.player2.getPlayOrder();
-        if (turnPlayer2 > turnPlayer1) {
-            return player1;
-        } else {
-            return player2;
-        }
-
-    }
-
-    /**
-     * allows to determine who is the waiting player
-     * @return player
-     */
-    public Player getWaitingPlayer() {
-        return getActivePlayer().getOpponent();
-    }
-
-    public Game getGame() {
-        return game;
     }
 
     public static void main(String[] args) {

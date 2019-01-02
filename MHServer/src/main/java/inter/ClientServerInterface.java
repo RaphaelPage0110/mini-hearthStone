@@ -1,17 +1,19 @@
 package inter;
 
+import impl.Game;
+
 public interface ClientServerInterface {
 
-    public abstract void playCard();
+    public abstract void playCard(Game game);
 
-    public abstract void prepareAttack();
+    public abstract void prepareAttack(Game game);
 
-    public abstract void useHeroPower();
+    public abstract void useHeroPower(Game game);
 
-    public abstract void endTurn();
+    public abstract void endTurn(Game game);
 
-    public abstract void surrender();
+    public abstract void surrender(Game game);
 
-    public abstract void createGame();
+    public abstract void createGame(Game game);
 
 }

@@ -1,28 +1,32 @@
-package impl;
+package repositories.controller;
 
 import abstracts.Hero;
+import impl.ConcreteMinion;
+import impl.ConcreteSpell;
+import impl.Game;
+import impl.Player;
 import impl.behaviour.generic.Summon;
-import inter.ClientServerInterface;
 import inter.Effect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import repositories.Application;
 
-public class ClientServer implements ClientServerInterface {
+public class GameController {
 
+    @Autowired
     private Application myApplication;
 
-    public ClientServer(Application application) {
-        myApplication = application;
-    }
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
-    @Override
     /**
      * allows a player to use its hero ability
      */
-    public void useHeroPower() {
-        Player activePlayer = myApplication.getActivePlayer();
-        Player waitingPlayer = myApplication.getWaitingPlayer();
+    public void useHeroPower(Player player) {
+        Game game = player.getMyGame();
+        Player activePlayer = game.getActivePlayer();
+        Player waitingPlayer = game.getWaitingPlayer();
         Hero hero = activePlayer.getMyHero();
-        Game game = myApplication.getGame();
 
         if (activePlayer.canUseHeroAbility()) {
 
@@ -64,15 +68,14 @@ public class ClientServer implements ClientServerInterface {
         }
     }
 
-    @Override
     /**
      * allows a player to play a card
      * TODO : a compléter avec le choix du client
      */
-    public void playCard() {
-        Player activePlayer = myApplication.getActivePlayer();
-        Player opponent = myApplication.getWaitingPlayer();
-        Game game = myApplication.getGame();
+    public void playCard(Player player) {
+        Game game = player.getMyGame();
+        Player activePlayer = game.getActivePlayer();
+        Player waitingPlayer = game.getWaitingPlayer();
         //la il y aura le choix du joueur, dans une seule variable
         ConcreteMinion minionToPlay = new ConcreteMinion();
         ConcreteSpell spellToPlay = new ConcreteSpell();
@@ -98,20 +101,20 @@ public class ClientServer implements ClientServerInterface {
 
     }
 
-    @Override
     /**
      * this method send to the client the list of the targets he can attack
      * TODO : COMPLETER CETTE FONCTION QUAND PN SAURA COMMUNIQUER AVEC LE CLIENT
      */
-    public void prepareAttack() {
+    public void prepareAttack(Player player) {
 
-        Player activePlayer = myApplication.getActivePlayer();
-        Player opponent = myApplication.getWaitingPlayer();
+        Game game = player.getMyGame();
+        Player activePlayer = game.getActivePlayer();
+        Player waitingPlayer = game.getWaitingPlayer();
         //we check if the player has minions that can attack
         if(activePlayer.hasMinionsAwake()) {
 
             //if the opponent has minions with taunt, then he has to attack them first
-            if(opponent.hasTauntMinions()) {
+            if(waitingPlayer.hasTauntMinions()) {
 
                 //il faut envoyer la liste des minions avec taunt au client
 
@@ -128,7 +131,6 @@ public class ClientServer implements ClientServerInterface {
 
     }
 
-    @Override
     /**
      * this method allows the player to end his turn
      * TODO : COMPLETER CETTE METHODE QUAND ON SAURA COMMENT PASSER LE TOUR DU JOUEUR
@@ -137,16 +139,12 @@ public class ClientServer implements ClientServerInterface {
 
     }
 
-    @Override
+
     /**
      * this method allows the player to surrender and end the game
      * TODO : COMPLETER CETTE METHODE
      */
     public void surrender() {
 
-    }
-
-    public void createGame() {
-        myApplication.createGame();
     }
 }

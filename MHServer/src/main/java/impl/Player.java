@@ -13,16 +13,34 @@ public class Player {
     private Integer id;
     private Game myGame;
     private ConcreteHero myHero;
+    private String sessionId;
     private boolean canUseHeroAbility;
     private Player opponent;
-    private ArrayList<Minion> myMinions;
-    private ArrayList<Card> myHand;
+    private ArrayList<ConcreteMinion> myMinions  = new ArrayList<>();
+    private ArrayList<Card> myHand  = new ArrayList<>();
     private int myManaMax;
     private int myMana;
     private ArrayList<Card> myStock = new ArrayList<>();
     private int myDamageAura; //used for spells that modifies the damage power of the minions
-
     private int playOrder; //used to know if the player is playing first or second
+
+    /**
+     * Default empty Player constructor
+     */
+    public Player() {
+        this.id = new IdPlayer(this).getId();
+        this.myManaMax = 0;
+        this.myDamageAura = 0;
+        boolean canUseHeroAbility = true;
+    }
+
+    public void setSessionId(String sessionId){
+        this.sessionId = sessionId;
+    }
+
+    public String getSessionId(){
+        return sessionId;
+    }
 
     /**
      * Returns value of myDamageAura
@@ -66,12 +84,12 @@ public class Player {
     /**
      * add a new minion to the Player's minions
      */
-    public void addMinion(Minion minion) {
+    public void addMinion(ConcreteMinion minion) {
         myMinions.add(minion);
         myGame.addMinionInPlay(minion);
     }
 
-    public ArrayList<Minion> getMyMinions() {
+    public ArrayList<ConcreteMinion> getMyMinions() {
         return myMinions;
     }
 
@@ -188,15 +206,6 @@ public class Player {
     }
 
     /**
-     * Default empty Player constructor
-     */
-    public Player() {
-        this.id = new IdPlayer(this).getId();
-        this.myManaMax = 0;
-        this.myDamageAura = 0;
-    }
-
-    /**
      * Returns the value of the opponent.
      * @return this.opponent.
      */
@@ -277,4 +286,6 @@ public class Player {
     public boolean canPlayCard(Card card) {
         return this.getMyMana() > card.getRequiredMana();
     }
+
+
 }

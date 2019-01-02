@@ -2,6 +2,7 @@ package impl.behaviour.generic;
 
 import abstracts.Minion;
 import abstracts.Spell;
+import impl.ConcreteMinion;
 import impl.Player;
 import inter.Effect;
 import inter.NotTargetedEffect;
@@ -26,7 +27,7 @@ public class DamageEnemyMinions extends NotTargetedEffect {
     @Override
     public void effect() {
         Player myOpponent = mySpell.getPlayer().getOpponent();
-        ArrayList<Minion> hisMinions = myOpponent.getMyMinions();
+        ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
         int damages = mySpell.getDamagePoints();
 
         for (Minion target : hisMinions) {

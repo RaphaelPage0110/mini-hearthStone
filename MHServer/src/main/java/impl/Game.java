@@ -15,10 +15,13 @@ public class Game {
     private boolean gameOver;
     private int turn;
 
-    public Game() {
+    public Game(Player player1, Player player2) {
       this.id = new IdGame(this).getId();
       this.minionsInPlay = new ArrayList<>();
       this.turn = 1;
+      gameOver = false;
+      this.player1 = player1;
+      this.player2 = player2;
     }
 
   	/**
@@ -113,6 +116,10 @@ public class Game {
 		this.gameOver = gameOver;
 	}
 
+	public boolean getGameOver() {
+  		return this.gameOver;
+	}
+
 	/**
 	 * allows a minion from the game. i.e when it dies
 	 * @param minion the minion to remove
@@ -139,4 +146,34 @@ public class Game {
 
         ++turn;
     }
+
+
+	/**
+	 * allows to determine who is the active player
+	 * @return player
+	 */
+	public Player getActivePlayer() {
+
+		int turnPlayer1 = this.player1.getPlayOrder();
+		int turnPlayer2 = this.player2.getPlayOrder();
+		if (turnPlayer2 > turnPlayer1) {
+			return player1;
+		} else {
+			return player2;
+		}
+
+	}
+
+	/**
+	 * allows to determine who is the waiting player
+	 * @return player
+	 */
+	public Player getWaitingPlayer() {
+		return getActivePlayer().getOpponent();
+	}
+
+	public Game getGame() {
+		return this;
+	}
+
 }

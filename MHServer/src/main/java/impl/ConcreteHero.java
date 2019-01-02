@@ -76,9 +76,9 @@ public class ConcreteHero extends Hero {
     }
 
     @Override
-    public void addMaxHealthPoints(int bonusHealtPoints) {
-        this.maxHealthPoints += bonusHealtPoints;
-        this.currentHealthPoints += bonusHealtPoints;
+    public void addMaxHealthPoints(int bonusHealthPoints) {
+        this.maxHealthPoints += bonusHealthPoints;
+        this.currentHealthPoints += bonusHealthPoints;
     }
 
     @Override

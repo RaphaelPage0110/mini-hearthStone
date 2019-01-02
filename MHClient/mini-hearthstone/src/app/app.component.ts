@@ -13,7 +13,7 @@ export class AppComponent {
 
   greetings: string[] = [];
   disabled = true;
-  name: string;
+  selectedHero : string = 'Jaina';
   private stompClient = null;
 
   constructor() {
@@ -56,12 +56,37 @@ export class AppComponent {
   }
 
   connectToGame() {
+    this.closeHeroSelect();
+    document.getElementById("connectToGame").style.display = "none";
+    document.getElementById("cancelSearch").style.display = "block";
     this.stompClient.send(
-      '/connect',
-      {}
+      '/connectGame',
+      {},
+        this.selectedHero
     )
   }
   showGreeting(message) {
     this.greetings.push(message);
+  }
+
+  openHeroSelect() {
+    document.getElementById("heroSelectPop").style.display = "block";
+  }
+
+  closeHeroSelect() {
+    document.getElementById("heroSelectPop").style.display = "none";
+  }
+
+  selectHeroHandler(event: any) {
+    this.selectedHero = event.target.value;
+  }
+
+  cancelSearch(){
+    this.stompClient.send(
+        '/disconnectGame',
+        {}
+    )
+    document.getElementById("cancelSearch").style.display = "none";
+    document.getElementById("connectToGame").style.display = "block";
   }
 }

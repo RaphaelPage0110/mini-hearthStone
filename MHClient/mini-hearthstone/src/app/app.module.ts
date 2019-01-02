@@ -3,17 +3,19 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { WaitingplayerComponent } from './waitingplayer/waitingplayer.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {FormsModule} from "@angular/forms";
+import { HeroComponent } from './hero/hero.component';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WaitingplayerComponent,
     WelcomeComponent,
     PageNotFoundComponent,
+    HeroComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,

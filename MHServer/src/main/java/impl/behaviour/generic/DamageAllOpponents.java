@@ -2,6 +2,7 @@ package impl.behaviour.generic;
 import abstracts.Hero;
 import abstracts.Minion;
 import abstracts.Spell;
+import impl.ConcreteMinion;
 import impl.Player;
 import inter.Effect;
 import inter.NotTargetedEffect;
@@ -31,7 +32,7 @@ public class DamageAllOpponents extends NotTargetedEffect {
         Player myPlayer = mySpell.getPlayer();
         Player myOpponent = myPlayer.getOpponent();
         Hero hisHero = myOpponent.getMyHero();
-        ArrayList<Minion> hisMinions = myOpponent.getMyMinions();
+        ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
 
         ArrayList<Target> myAdversaries = new ArrayList<Target>(hisMinions);
         myAdversaries.add(hisHero);

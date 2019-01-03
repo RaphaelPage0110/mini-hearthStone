@@ -93,7 +93,6 @@ public class Application{
     }
 
     /**
-     * TODO : Enlever les envoies de message, c'est pour un test
      * manage the players turn
      */
     private void playRound(Game game) {
@@ -114,8 +113,9 @@ public class Application{
                 MyCardMessage cardMessage = new MyCardMessage(card);
                 myHandMessage.add(cardMessage);
             }
-
-            simpMessagingTemplate.convertAndSend("/queue/reply_game-user"+player.getSessionId(), myHandMessage);
+            HisHandMessage hisHandMessage = new HisHandMessage(playerHand.size());
+            simpMessagingTemplate.convertAndSend("/queue/reply_myHand-user"+player.getSessionId(), myHandMessage);
+            simpMessagingTemplate.convertAndSend("/queue/reply_hisHand-user"+player.getOpponent().getSessionId(), hisHandMessage);
         }
 
         action(firstToPlay,secondToPlay, game);

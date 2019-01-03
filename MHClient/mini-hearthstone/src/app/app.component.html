@@ -11,11 +11,8 @@
 </head>
 
 <body>
-<div style="color: blue; text-align: center">
+<div style="color: blue; text-align: center; height: 16vh">
     <h1>{{title}}</h1>
-</div>
-<div class="container" style="width: 400px; margin-top: 20px;">
-
     <form class="form-inline">
         <div class="form-group">
             <label for="connect">Connexion au serveur:</label>
@@ -23,7 +20,6 @@
             <button id="disconnect" class="btn btn-default" type="submit" [disabled]="disabled" (click)="disconnect()">Déconnexion</button>
         </div>
     </form>
-
 </div>
 <div id="gameSearch">
     <div>
@@ -44,32 +40,48 @@
             <button type="submit" class="btn cancel" (click)="closeHeroSelect()">Annuler</button>
         </form>
     </div>
-    <div>
-        <table id="conversation" class="table table-striped" style="margin-top: 20px;">
-            <thead>
-            <tr>
-                <th>Messages serveur:</th>
-            </tr>
-            </thead>
-            <tbody *ngFor="let greeting of greetings">
-            <tr>
-                <td>{{greeting}}</td>
-            </tr>
-            </tbody>
-        </table>
+</div>
+
+<div id="theBoard">
+    <div id="parentHisHero">
     </div>
-    <router-outlet></router-outlet>
+    <div id="parentHisHand">
+        <a class="card" *ngFor="let hisCard of hisHand" >
+            <img src= "https://bit.ly/2CMnTps" alt="Avatar" style="width:100%">
+        </a>
+    </div>
+    <div id="parentHisMinions">
+    </div>
+    <div id="parentMyMinions">
+    </div>
+    <div id="parentMyHand">
+        <a class="card" *ngFor="let myCard of myCards" >
+            <img src= {{myCard.imgurl}} alt="Avatar" style="width:100%">
+            <div class="contCard">
+                <b>{{myCard.name}}</b>
+                <p>Mana requis: {{myCard.requiredMana}}</p>
+                <p>Points de dégats: {{myCard.damagePoints}}</p>
+            </div>
+        </a>
+    </div>
+    <div id="parentMyHero">
+    </div>
 </div>
-<div id="parent">
-    <a class="card" *ngFor="let myCard of myCards" >
-        <img src= {{myCard.imgurl}} alt="Avatar" style="width:100%">
-        <div class="contCard">
-            <b>{{myCard.name}}</b>
-            <p>Mana requis: {{myCard.requiredMana}}</p>
-            <p>Points de dégats: {{myCard.damagePoints}}</p>
-        </div>
-    </a>
+<div id="messageServer">
+    <table id="conversation" class="table table-striped" style="margin-top: 20px;">
+        <thead>
+        <tr>
+            <th>Messages serveur:</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let greeting of greetings">
+        <tr>
+            <td>{{greeting}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 
 </body>
 

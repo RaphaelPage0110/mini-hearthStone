@@ -102,8 +102,8 @@ public class MatchMakingController {
 
         Game game = new Game(player1, player2);
 
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionPlayer1, new Hello("Vous êtes le joueur 1"));
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionPlayer2, new Hello("Vous êtes le joueur 2"));
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer1, new Hello("Vous êtes le joueur 1"));
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer2, new Hello("Vous êtes le joueur 2"));
 
         LOGGER.log(Level.INFO, "Messages sent");
 

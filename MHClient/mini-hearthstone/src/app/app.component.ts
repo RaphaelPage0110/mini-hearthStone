@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Stomp} from'@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import {GameComponent} from "./game/game.component";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent {
   title = 'mini Hearthstone';
   description = 'Angular-WebSocket Demo';
 
+  game : GameComponent = new GameComponent();
   greetings: string[] = [];
+  myCards: any[] = [];
   disabled = true;
   selectedHero : string = 'Jaina';
   private stompClient = null;
@@ -42,6 +45,11 @@ export class AppComponent {
         _this.showGreeting(JSON.parse(resp.body).greeting);
       });
 
+      _this.stompClient.subscribe('/user/queue/reply_game', function (resp) {
+        console.log("server answer: "+resp.body)
+        _this.showHand(resp.body);
+      });
+
     });
   }
 
@@ -67,6 +75,17 @@ export class AppComponent {
   }
   showGreeting(message) {
     this.greetings.push(message);
+  }
+
+  showHand(message) {
+
+    console.log('message brut: ' + message);
+
+    var parsed = JSON.parse(message);
+    console.log('parsed: ' + parsed);
+    this.myCards = parsed;
+    console.log("taille du tableau: " + this.myCards.length);
+
   }
 
   openHeroSelect() {

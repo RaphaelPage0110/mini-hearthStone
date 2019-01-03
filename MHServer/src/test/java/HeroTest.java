@@ -26,13 +26,13 @@ class HeroTest {
 
         map = new HashMap<>();
         map.put("modifyArmor","2");
-        warrior = new ConcreteHero(WARRIOR,30,0,map,"Garrosh");
+        warrior = new ConcreteHero(WARRIOR,30,0,map,"Garrosh", "img");
         map = new HashMap<>();
         map.put("damageTarget","1");
-        mage = new ConcreteHero(MAGE,30,0,map,"Jaina");
+        mage = new ConcreteHero(MAGE,30,0,map,"Jaina","img");
         map = new HashMap<>();
         map.put("summon","Recrue de la main d'argent");
-        paladin = new ConcreteHero(PALADIN,30,0,map,"Uther");
+        paladin = new ConcreteHero(PALADIN,30,0,map,"Uther","img");
     }
 
     @Test

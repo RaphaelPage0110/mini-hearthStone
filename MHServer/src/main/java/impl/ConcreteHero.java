@@ -13,7 +13,7 @@ public class ConcreteHero extends Hero {
     private Map<String,String> abilityKeyWord;
 
 
-    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord, String heroName) {
+    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord, String heroName, String imgurl) {
         super();
 
         this.heroType = heroType;
@@ -22,6 +22,7 @@ public class ConcreteHero extends Hero {
         this.currentHealthPoints = maxHealthPoints;
         this.abilityKeyWord = abilityKeyWord;
         this.heroName = heroName;
+        this.imgurl = imgurl;
 
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
         //ability keyword and value is its modifier

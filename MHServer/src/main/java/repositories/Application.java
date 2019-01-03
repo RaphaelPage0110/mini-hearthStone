@@ -81,7 +81,7 @@ public class Application{
         ArrayList<Card> stockPlayer2 = player2.getMyStock();
 
         //the first player draws 3 cards
-        for(int i=0;i<4;i++){
+        for(int i=0;i<3;i++){
             draw(player1);
         }
 
@@ -101,15 +101,22 @@ public class Application{
         Player firstToPlay = game.getActivePlayer();
         Player secondToPlay = game.getWaitingPlayer();
 
-        ArrayList<Card> myHand = firstToPlay.getMyHand();
+        ArrayList<Player> playerList = new ArrayList<>();
+        playerList.add(firstToPlay);
+        playerList.add(secondToPlay);
 
-        String rsp = "";
+        for (Player player : playerList){
+            ArrayList<Card> playerHand = player.getMyHand();
 
-        for (Card card : myHand ){
-            rsp += card.getName();
+            ArrayList<MyCardMessage> myHandMessage = new ArrayList<>();
+
+            for(Card card : playerHand){
+                MyCardMessage cardMessage = new MyCardMessage(card);
+                myHandMessage.add(cardMessage);
+            }
+
+            simpMessagingTemplate.convertAndSend("/queue/reply_game-user"+player.getSessionId(), myHandMessage);
         }
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+firstToPlay.getSessionId(), new Hello(rsp));
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+secondToPlay.getSessionId(), new Hello("C'est le tour de votre adversaire"));
 
         action(firstToPlay,secondToPlay, game);
         action(secondToPlay,firstToPlay, game);
@@ -323,9 +330,11 @@ public class Application{
             switch (randomNum){
                 //if randomNum is 0 we will pick a spell
                 case 0:
+
                     //we then randomly pick a spell from all the spells the player can pick from
                     randomNum = ThreadLocalRandom.current().nextInt(0, listSpells.size());
                     ConcreteSpell spellPicked = listSpells.get(randomNum);
+                    spellPicked.setPlayer(activePlayer);
                     activePlayer.addCardToStock(spellPicked);
 
                     //if it's 1 we will pick a minion
@@ -333,6 +342,7 @@ public class Application{
 
                     randomNum = ThreadLocalRandom.current().nextInt(0, listMinions.size());
                     ConcreteMinion minionPicked = listMinions.get(randomNum);
+                    minionPicked.setPlayer(activePlayer);
                     activePlayer.addCardToStock(minionPicked);
 
             }

@@ -8,6 +8,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import {FormsModule} from "@angular/forms";
 import { HeroComponent } from './hero/hero.component';
 import { PlayerComponent } from './player/player.component';
+import { GameComponent } from './game/game.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { PlayerComponent } from './player/player.component';
     WelcomeComponent,
     PageNotFoundComponent,
     HeroComponent,
-    PlayerComponent
+    PlayerComponent,
+    GameComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

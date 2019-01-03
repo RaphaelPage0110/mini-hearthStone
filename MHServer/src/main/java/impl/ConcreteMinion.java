@@ -18,9 +18,10 @@ public class ConcreteMinion extends Minion {
     private Map<String,String> deathRattle;
 
 
-    public ConcreteMinion(CardType minionType, int requiredMana, int damagePoints, int healthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String minionName) {
+    public ConcreteMinion(CardType minionType, int requiredMana, int damagePoints, int healthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String minionName, String imgurl) {
         super();
 
+        this.imgurl = imgurl;
         this.type = minionType;
         this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;

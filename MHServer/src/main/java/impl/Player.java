@@ -62,7 +62,9 @@ public class Player {
      * add a new card to the Player's hand
      */
     public void addCardToHand(Card card) {
+
         myHand.add(card);
+
     }
 
     /**

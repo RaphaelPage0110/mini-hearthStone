@@ -16,13 +16,14 @@ public class ConcreteSpell extends Spell {
 
     }
 
-    public ConcreteSpell(String name, int requiredMana, int bonus, CardType type, Map<String,String> abilityKeyWords) {
+    public ConcreteSpell(String name, int requiredMana, int bonus, CardType type, Map<String,String> abilityKeyWords, String imgurl) {
         super();
         this.setName(name);
         this.requiredMana = requiredMana;
         this.setBonus(bonus);
         this.type = type;
         this.abilityKeyWords = abilityKeyWords;
+        this.imgurl = imgurl;
 
         generateEffect(abilityKeyWords);
     }

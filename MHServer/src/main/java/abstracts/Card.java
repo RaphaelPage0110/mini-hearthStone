@@ -54,6 +54,8 @@ public abstract class Card {
      */
     protected int bonus;
 
+    protected String imgurl;
+
 
     /**
      * Returns the value of name.
@@ -196,6 +198,13 @@ public abstract class Card {
         }
     }
 
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
 
 
 }

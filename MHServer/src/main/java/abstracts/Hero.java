@@ -24,6 +24,7 @@ public abstract class Hero implements Target {
      */
     protected CardType heroType;
 
+
     /**
      *  The name of the hero
      */
@@ -214,4 +215,23 @@ public abstract class Hero implements Target {
     public void heroPower(Target target) {
         myEffect.effect(target);
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    @Override
+    public int getMaxHealthPoints() {
+        return maxHealthPoints;
+    }
+
+    protected String imgurl;
 }

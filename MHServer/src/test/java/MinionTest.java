@@ -22,7 +22,7 @@ public class MinionTest {
 
         map = new HashMap<>();
         map.put("taunt", "");
-        soldat = new ConcreteMinion(COMMON,1,1,2,map, null, "soldat du comté de l'or");
+        soldat = new ConcreteMinion(COMMON,1,1,2,map, null, "soldat du comté de l'or", "img");
     }
     @Test
     void test() {

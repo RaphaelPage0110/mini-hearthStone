@@ -1,4 +1,4 @@
-package repositories;
+package business.repositories;
 
 import abstracts.CardType;
 import impl.ConcreteHero;

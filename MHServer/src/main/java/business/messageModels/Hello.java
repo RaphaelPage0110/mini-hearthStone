@@ -1,4 +1,4 @@
-package repositories;
+package business.messageModels;
 
 public class Hello {
     private String greeting;

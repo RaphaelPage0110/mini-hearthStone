@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Stomp} from'@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {GameComponent} from "./game/game.component";
+import {Mana} from "./mana.model";
 
 @Component({
     selector: 'app-root',
@@ -15,6 +16,8 @@ export class AppComponent {
     game : GameComponent = new GameComponent();
     greetings: string[] = [];
     myCards: any[] = [];
+    myMana: Mana;
+    hisMana: Mana;
     hisHand : any[] = [];
     myHero : any[] = [];
     hisHero : any[] = [];
@@ -74,6 +77,15 @@ export class AppComponent {
                 _this.showHisHero(resp.body);
             });
 
+            _this.stompClient.subscribe('/user/queue/reply_myMana', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.showMyMana(resp.body);
+            });
+
+            _this.stompClient.subscribe('/user/queue/reply_hisMana', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.showHisMana(resp.body);
+            });
 
         });
     }
@@ -126,6 +138,19 @@ export class AppComponent {
         this.myCards = parsed;
         console.log("taille du tableau: " + this.myCards.length);
 
+    }
+
+    showMyMana(message){
+
+        console.log('message brut: ' + message);
+        var parsed = JSON.parse(message);
+        this.myMana = parsed;
+    }
+
+    showHisMana(message){
+        console.log('message brut: ' + message);
+        var parsed = JSON.parse(message);
+        this.hisMana = parsed;
     }
 
     showHisHand(nbrCards){

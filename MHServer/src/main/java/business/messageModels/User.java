@@ -1,4 +1,4 @@
-package repositories;
+package business.messageModels;
 
 public class User {
     private String name;

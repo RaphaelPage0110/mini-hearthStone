@@ -1,6 +1,13 @@
-package repositories;
+package business;
 
 import abstracts.*;
+import business.messageModels.HisHandMessage;
+import business.messageModels.ManaMessage;
+import business.messageModels.MyCardMessage;
+import business.messageModels.MyHeroMessage;
+import business.repositories.HeroRepository;
+import business.repositories.MinionRepository;
+import business.repositories.SpellRepository;
 import impl.*;
 import impl.behaviour.generic.DrawCard;
 import impl.behaviour.generic.Summon;
@@ -37,26 +44,9 @@ public class Application{
     public void createGame(Game newGame){
 
         Game game = newGame;
-
         instanciatePlayers(game);
-        Player player1 = game.getPlayer1();
-        Player player2 = game.getPlayer2();
 
-        while(true) {
-
-            //we increase the mana of each player during the first 10 turns
-            if (game.getTurn() <= 10 ) {
-                player1.addManaMax(1);
-                player2.addManaMax(1);
-            }
-
-            //we refill the players mana
-            player1.setMyMana(player1.getMyManaMax());
-            player2.setMyMana(player2.getMyManaMax());
-
-            //we allow the players to use their heros ability
-            player1.setCanUseHeroAbility(true);
-            player2.setCanUseHeroAbility(true);
+        while(!game.isGameOver()) {
 
             //the two players play their turn
             playRound(game);
@@ -90,20 +80,33 @@ public class Application{
             draw(player2);
         }
 
-        //on envoie aux joueurs leur héro
+        //we send to the players their hero and mana
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(player1);
         playerList.add(player2);
 
         for(Player player : playerList) {
-            MyHeroMessage  myHeroMessage = new MyHeroMessage(player.getMyHero());
+            MyHeroMessage myHeroMessage = new MyHeroMessage(player.getMyHero());
             simpMessagingTemplate.convertAndSend("/queue/reply_myHero-user"+player.getSessionId(), myHeroMessage);
             myHeroMessage = new MyHeroMessage(player.getOpponent().getMyHero());
             simpMessagingTemplate.convertAndSend("/queue/reply_hisHero-user"+player.getSessionId(), myHeroMessage);
+
+            sendManaMessage(player);
         }
+
 
     }
 
+    /**
+     * Send the mana of the player to himself and his opponent
+     * @param player
+     */
+    private void sendManaMessage(Player player){
+        //we send their mana to the user and his opponent
+        ManaMessage manaMessage = new ManaMessage(player);
+        simpMessagingTemplate.convertAndSend("/queue/reply_myMana-user"+player.getSessionId(), manaMessage);
+        simpMessagingTemplate.convertAndSend("/queue/reply_hisMana-user"+player.getOpponent().getSessionId(), manaMessage);
+    }
     /**
      * manage the players turn
      */
@@ -116,6 +119,7 @@ public class Application{
         playerList.add(firstToPlay);
         playerList.add(secondToPlay);
 
+        //on envoie aux joueurs la liste de leurs cartes
         for (Player player : playerList){
             ArrayList<Card> playerHand = player.getMyHand();
 
@@ -142,7 +146,22 @@ public class Application{
      * @param opponent its opponent
      */
     private void action(Player activePlayer, Player opponent, Game game) {
+
+        //we increase the mana of each player during the first 10 turns
+        if (game.getTurn() <= 10 ) {
+            activePlayer.addManaMax(1);
+        }
+        //we refill the players mana
+        activePlayer.setMyMana(activePlayer.getMyManaMax());
+
+        //we allow the players to use their heros ability
+        activePlayer.setCanUseHeroAbility(true);
+
+        //we send their mana to the user and his opponent
+        sendManaMessage(activePlayer);
+
         draw(activePlayer);
+
         boolean endTurn = false;
         while(!endTurn){
             //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT

@@ -1,8 +1,6 @@
-package repositories.controller;
+package business.controller;
 
-import abstracts.Card;
 import impl.ConcreteHero;
-import impl.ConcreteMinion;
 import impl.Game;
 import impl.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +11,10 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import repositories.Application;
-import repositories.Hello;
-import repositories.HeroRepository;
-import repositories.MinionRepository;
+import business.Application;
+import business.messageModels.Hello;
+import business.repositories.HeroRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.logging.Level;

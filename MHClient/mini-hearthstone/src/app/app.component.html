@@ -46,7 +46,7 @@
 
     <div id="parentHisHero" class="row">
         <div *ngFor="let hero of hisHero">
-            <b style="display: inline-block"> t'as deux pts de mana gros </b>
+            <p style="display: inline-block" >Mana: </p> <b > {{hisMana?.currentMana}} / {{hisMana?.manaMax}} </b>
             <a class="card" >
                 <img src= {{hero.imgurl}} alt="Avatar">
             </a>
@@ -95,7 +95,7 @@
     </div>
     <div id="parentMyHero" class="row">
         <div *ngFor="let hero of myHero">
-            <b style="display: inline-block"> t'as deux pts de mana gros </b>
+            <p style="display: inline-block" >Mana: </p> <b > {{myMana?.currentMana}} / {{myMana?.manaMax}} </b>
             <a class="card"  >
                 <img src= {{hero.imgurl}} alt="Avatar">
             </a>

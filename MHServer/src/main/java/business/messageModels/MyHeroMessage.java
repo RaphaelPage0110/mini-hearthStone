@@ -1,4 +1,4 @@
-package repositories;
+package business.messageModels;
 
 import impl.ConcreteHero;
 

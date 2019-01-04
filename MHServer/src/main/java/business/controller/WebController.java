@@ -1,19 +1,13 @@
-package repositories.controller;
+package business.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import repositories.Hello;
-import repositories.User;
+import business.messageModels.Hello;
+import business.messageModels.User;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

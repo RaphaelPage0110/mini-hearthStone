@@ -1,13 +1,7 @@
-package repositories;
+package business.messageModels;
 
 import abstracts.Card;
-import abstracts.CardType;
 import impl.ConcreteMinion;
-import impl.Player;
-import inter.Effect;
-import inter.Target;
-
-import java.util.ArrayList;
 
 public class MyCardMessage {
 

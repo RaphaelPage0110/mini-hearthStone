@@ -1,4 +1,4 @@
-package repositories.controller;
+package business.controller;
 
 import abstracts.Hero;
 import impl.ConcreteMinion;
@@ -9,7 +9,7 @@ import impl.behaviour.generic.Summon;
 import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import repositories.Application;
+import business.Application;
 
 public class GameController {
 

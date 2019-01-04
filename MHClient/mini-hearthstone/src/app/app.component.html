@@ -43,6 +43,7 @@
 </div>
 
 <div id="theBoard">
+
     <div id="parentHisHero" class="row">
         <div *ngFor="let hero of hisHero">
             <b style="display: inline-block"> t'as deux pts de mana gros </b>
@@ -55,25 +56,42 @@
             </ul>
         </div>
     </div>
+
     <div id="parentHisHand" class="row">
         <a class="card" *ngFor="let hisCard of hisHand" >
             <img src= "https://bit.ly/2CMnTps" alt="Avatar">
         </a>
     </div>
+
     <div id="parentHisMinions" class="row">
-        <a class="card" *ngFor="let hisCard of hisHand" >
-            <img src= "https://bit.ly/2CMnTps" alt="Avatar">
-        </a>
     </div>
+
     <div id="parentMyMinions" class="row">
-        <a class="card" *ngFor="let hisCard of hisHand" >
-            <img src= "https://bit.ly/2CMnTps" alt="Avatar">
-        </a>
+
     </div>
+
     <div id="parentMyHand" class="row">
-        <a class="card" *ngFor="let myCard of myCards" >
-            <img src= {{myCard.imgurl}} alt="Avatar">
-        </a>
+        <div class="card" *ngFor="let myCard of myCards">
+            <a (click)="openCardPopup(myCard.id)" >
+                <img src= {{myCard.imgurl}} alt="Avatar">
+            </a >
+
+            <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
+                <form class="form-container">
+                    <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
+                    <div class="containerCardDetails">
+                        <h4><b>{{myCard.name}}</b></h4>
+                        <p>Cout: {{myCard.requiredMana}}</p>
+                        <div *ngIf="myCard.cardType === 'minion' ">
+                            <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
+                            <p>Vie: <b>{{myCard.damagePoints}}</b></p>
+                        </div>
+                        <p>{{myCard.text}}</p>
+                    </div>
+                    <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
+                </form>
+            </div>
+        </div>
     </div>
     <div id="parentMyHero" class="row">
         <div *ngFor="let hero of myHero">
@@ -87,6 +105,7 @@
             </ul>
         </div>
     </div>
+
 </div>
 <div id="messageServer">
     <table id="conversation" class="table table-striped" style="margin-top: 20px;">

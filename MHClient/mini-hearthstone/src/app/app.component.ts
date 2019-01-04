@@ -154,4 +154,12 @@ export class AppComponent {
         document.getElementById("cancelSearch").style.display = "none";
         document.getElementById("connectToGame").style.display = "block";
     }
+
+    openCardPopup(id) {
+        document.getElementById("cardPopup"+id).style.display = "block";
+    }
+
+    closeCardPopup(id){
+        document.getElementById("cardPopup"+id).style.display = "none";
+    }
 }

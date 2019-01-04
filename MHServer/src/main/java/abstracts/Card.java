@@ -27,6 +27,9 @@ public abstract class Card {
     @Id
     protected String id;
 
+    protected String text;
+
+
     /**
      * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
      */
@@ -203,6 +206,26 @@ public abstract class Card {
         this.bonus = bonus;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
     /**
      * Affects the effect that this card wil have, on one or more targets.
      * @param myTarget the affected target.
@@ -213,13 +236,7 @@ public abstract class Card {
         }
     }
 
-    public String getImgurl() {
-        return imgurl;
-    }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
 
 
 }

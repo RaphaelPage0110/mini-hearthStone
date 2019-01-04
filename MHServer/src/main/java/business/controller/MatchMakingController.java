@@ -107,4 +107,12 @@ public class MatchMakingController {
 
     }
 
+    @MessageMapping("/passTurn")
+    @SendTo("user/queue/reply_passTurn")
+    public Object passTurn(@Header("simpSessionId") String sessionId) {
+        this.myApplication.getGame().setPassTurn(true);
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionId, new Hello("Le Joueur a passé son tour"));
+        return null;
+    }
+
 }

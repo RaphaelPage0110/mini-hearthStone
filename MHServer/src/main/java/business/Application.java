@@ -26,6 +26,16 @@ import java.util.concurrent.ThreadLocalRandom;
 @SpringBootApplication
 public class Application{
 
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    private Game game;
+
     @Autowired
     public HeroRepository heroRepository;
 
@@ -43,7 +53,7 @@ public class Application{
      */
     public void createGame(Game newGame){
 
-        Game game = newGame;
+        this.game = newGame;
         instanciatePlayers(game);
 
         while(!game.isGameOver()) {
@@ -74,11 +84,13 @@ public class Application{
         for(int i=0;i<3;i++){
             draw(player1);
         }
+        sendHands(player1);
 
         //the second player draws 4 cards
         for(int i=0;i<4;i++){
             draw(player2);
         }
+        sendHands(player2);
 
         //we send to the players their hero and mana
         ArrayList<Player> playerList = new ArrayList<>();
@@ -107,6 +119,7 @@ public class Application{
         simpMessagingTemplate.convertAndSend("/queue/reply_myMana-user"+player.getSessionId(), manaMessage);
         simpMessagingTemplate.convertAndSend("/queue/reply_hisMana-user"+player.getOpponent().getSessionId(), manaMessage);
     }
+
     /**
      * manage the players turn
      */
@@ -119,24 +132,23 @@ public class Application{
         playerList.add(firstToPlay);
         playerList.add(secondToPlay);
 
-        //on envoie aux joueurs la liste de leurs cartes
         for (Player player : playerList){
-            ArrayList<Card> playerHand = player.getMyHand();
-
-            ArrayList<MyCardMessage> myHandMessage = new ArrayList<>();
-
-            for(Card card : playerHand){
-                MyCardMessage cardMessage = new MyCardMessage(card);
-                myHandMessage.add(cardMessage);
-            }
-            HisHandMessage hisHandMessage = new HisHandMessage(playerHand.size());
-            simpMessagingTemplate.convertAndSend("/queue/reply_myHand-user"+player.getSessionId(), myHandMessage);
-            simpMessagingTemplate.convertAndSend("/queue/reply_hisHand-user"+player.getOpponent().getSessionId(), hisHandMessage);
+            action(player,player.getOpponent(), game);
         }
+    }
 
-        action(firstToPlay,secondToPlay, game);
-        action(secondToPlay,firstToPlay, game);
+    private void sendHands(Player player){
+        ArrayList<Card> playerHand = player.getMyHand();
 
+        ArrayList<MyCardMessage> myHandMessage = new ArrayList<>();
+
+        for(Card card : playerHand){
+            MyCardMessage cardMessage = new MyCardMessage(card);
+            myHandMessage.add(cardMessage);
+        }
+        HisHandMessage hisHandMessage = new HisHandMessage(playerHand.size());
+        simpMessagingTemplate.convertAndSend("/queue/reply_myHand-user"+player.getSessionId(), myHandMessage);
+        simpMessagingTemplate.convertAndSend("/queue/reply_hisHand-user"+player.getOpponent().getSessionId(), hisHandMessage);
     }
 
     /**
@@ -147,6 +159,7 @@ public class Application{
      */
     private void action(Player activePlayer, Player opponent, Game game) {
 
+        game.setPassTurn(false);
         //we increase the mana of each player during the first 10 turns
         if (game.getTurn() <= 10 ) {
             activePlayer.addManaMax(1);
@@ -161,15 +174,10 @@ public class Application{
         sendManaMessage(activePlayer);
 
         draw(activePlayer);
+        sendHands(activePlayer);
 
-        boolean endTurn = false;
-        while(!endTurn){
-            //IL FAUDRA TROUVER UN MOYEN DE RECUPERER LA DECISION DU JOUEUR COTE CLIENT
-            String idAction = "";
-            switch (idAction) {
-                default:
-                    break;
-            }
+        while(!game.isPassTurn()){
+
         }
     }
 

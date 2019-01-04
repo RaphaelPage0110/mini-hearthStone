@@ -32,6 +32,7 @@ public class Player {
         this.myManaMax = 0;
         this.myDamageAura = 0;
         boolean canUseHeroAbility = true;
+        boolean passTurn = true;
     }
 
     public void setSessionId(String sessionId){

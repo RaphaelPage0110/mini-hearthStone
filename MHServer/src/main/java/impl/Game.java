@@ -15,6 +15,20 @@ public class Game {
     private boolean gameOver;
     private int turn;
 
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+
+	public boolean isPassTurn() {
+		return passTurn;
+	}
+
+	public void setPassTurn(boolean passTurn) {
+		this.passTurn = passTurn;
+	}
+
+	private boolean passTurn; //used to know if the player has passed his turn
+
     public Game(Player player1, Player player2) {
       this.id = new IdGame(this).getId();
       this.minionsInPlay = new ArrayList<>();
@@ -22,6 +36,7 @@ public class Game {
       gameOver = false;
       this.player1 = player1;
       this.player2 = player2;
+      passTurn = true;
     }
 
   	/**

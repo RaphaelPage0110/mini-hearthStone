@@ -78,6 +78,7 @@
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
                 <form class="form-container">
+                    <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
@@ -88,12 +89,16 @@
                         </div>
                         <p>{{myCard.text}}</p>
                     </div>
-                    <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
+
                 </form>
             </div>
         </div>
     </div>
     <div id="parentMyHero" class="row">
+        <div>
+            <button class="btn btn-default" type="button" style="display: inline-block">Abandonner</button>
+            <button class="btn cancel" style="display: inline-block" (click)="passTurn()">Passer son tour</button>
+        </div>
         <div *ngFor="let hero of myHero">
             <p style="display: inline-block" >Mana: </p> <b > {{myMana?.currentMana}} / {{myMana?.manaMax}} </b>
             <a class="card"  >

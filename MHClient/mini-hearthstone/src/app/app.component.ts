@@ -95,6 +95,16 @@ export class AppComponent {
         document.getElementById("theBoard").style.display = "block";
     }
 
+    passTurn(){
+        this.stompClient.send(
+            '/passTurn',
+            {}
+        )
+    }
+
+
+
+
     disconnect() {
         if (this.stompClient != null) {
             this.stompClient.disconnect();

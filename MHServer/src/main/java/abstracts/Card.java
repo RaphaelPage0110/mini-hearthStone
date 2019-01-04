@@ -7,6 +7,7 @@ import impl.behaviour.generic.Summon;
 import impl.behaviour.minion.Taunt;
 import inter.Effect;
 import inter.Target;
+import org.springframework.data.annotation.Id;
 
 
 import java.util.ArrayList;
@@ -18,6 +19,13 @@ import java.util.Map;
  * @version 0.1
  */
 public abstract class Card {
+
+
+    /**
+     * The ID of this Hero.
+     */
+    @Id
+    protected String id;
 
     /**
      * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
@@ -56,6 +64,13 @@ public abstract class Card {
 
     protected String imgurl;
 
+    /**
+     * Returns the value of id.
+     * @return this.id.
+     */
+    public String getId() {
+        return this.id;
+    }
 
     /**
      * Returns the value of name.

@@ -115,7 +115,7 @@ public class Player {
      * Returns value of myHero
      * @return myHero the hero of the player
      */
-    public Hero getMyHero() {
+    public ConcreteHero getMyHero() {
         return myHero;
     }
 

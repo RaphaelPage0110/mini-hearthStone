@@ -43,28 +43,49 @@
 </div>
 
 <div id="theBoard">
-    <div id="parentHisHero">
+    <div id="parentHisHero" class="row">
+        <div *ngFor="let hero of hisHero">
+            <b style="display: inline-block"> t'as deux pts de mana gros </b>
+            <a class="card" >
+                <img src= {{hero.imgurl}} alt="Avatar">
+            </a>
+            <ul style="display: inline-block">
+                <li>Points de vie:  <b> {{hero.currentHealthPoints}} </b> </li>
+                <li *ngIf="hero.armorPoints>0">Armure: <b>{{hero.armorPoints}}</b></li>
+            </ul>
+        </div>
     </div>
-    <div id="parentHisHand">
+    <div id="parentHisHand" class="row">
         <a class="card" *ngFor="let hisCard of hisHand" >
-            <img src= "https://bit.ly/2CMnTps" alt="Avatar" style="width:100%">
+            <img src= "https://bit.ly/2CMnTps" alt="Avatar">
         </a>
     </div>
-    <div id="parentHisMinions">
+    <div id="parentHisMinions" class="row">
+        <a class="card" *ngFor="let hisCard of hisHand" >
+            <img src= "https://bit.ly/2CMnTps" alt="Avatar">
+        </a>
     </div>
-    <div id="parentMyMinions">
+    <div id="parentMyMinions" class="row">
+        <a class="card" *ngFor="let hisCard of hisHand" >
+            <img src= "https://bit.ly/2CMnTps" alt="Avatar">
+        </a>
     </div>
-    <div id="parentMyHand">
+    <div id="parentMyHand" class="row">
         <a class="card" *ngFor="let myCard of myCards" >
-            <img src= {{myCard.imgurl}} alt="Avatar" style="width:100%">
-            <div class="contCard">
-                <b>{{myCard.name}}</b>
-                <p>Mana requis: {{myCard.requiredMana}}</p>
-                <p>Points de dégats: {{myCard.damagePoints}}</p>
-            </div>
+            <img src= {{myCard.imgurl}} alt="Avatar">
         </a>
     </div>
-    <div id="parentMyHero">
+    <div id="parentMyHero" class="row">
+        <div *ngFor="let hero of myHero">
+            <b style="display: inline-block"> t'as deux pts de mana gros </b>
+            <a class="card"  >
+                <img src= {{hero.imgurl}} alt="Avatar">
+            </a>
+            <ul style="display: inline-block">
+                <li>Points de vie:  <b> {{hero.currentHealthPoints}} </b> </li>
+                <li *ngIf="hero.armorPoints>0">Armure: <b>{{hero.armorPoints}}</b></li>
+            </ul>
+        </div>
     </div>
 </div>
 <div id="messageServer">

@@ -10,23 +10,23 @@ import java.util.ArrayList;
 
 public class MyCardMessage {
 
-    public String getImgurl() {
-        return imgurl;
-    }
+    protected String id;
+    /**
+     * Indicates the points of damage that this card can inflict.
+     */
+    protected int damagePoints;
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
+    /**
+     * The name of the card
+     */
+    protected String name;
 
     protected String imgurl;
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+    /**
+     * Indicates the mana cost of this card.
+     */
+    protected int requiredMana;
 
     /**
      * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
@@ -40,11 +40,6 @@ public class MyCardMessage {
     public void setRequiredMana(int requiredMana) {
         this.requiredMana = requiredMana;
     }
-
-    /**
-     * Indicates the mana cost of this card.
-     */
-    protected int requiredMana;
 
     public int getDamagePoints() {
         return damagePoints;
@@ -62,21 +57,29 @@ public class MyCardMessage {
         this.name = name;
     }
 
-    /**
-     * Indicates the points of damage that this card can inflict.
-     */
-    protected int damagePoints;
+    public String getImgurl() {
+        return imgurl;
+    }
 
-    /**
-     * The name of the card
-     */
-    protected String name;
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public MyCardMessage(Card card) {
+        id = card.getId();
         type = card.getType().toString();
         requiredMana = card.getRequiredMana();
         damagePoints = card.getDamagePoints();
         name = card.getName();
         imgurl = card.getImgurl();
+
     }
 }

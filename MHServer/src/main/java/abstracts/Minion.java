@@ -16,11 +16,6 @@ import java.util.ArrayList;
  */
 public abstract class Minion extends Card implements Target {
 
-    /**
-     * The ID of this Hero.
-     */
-    @Id
-    protected String id;
 
     /**
      * Indicates the maximum number of health points that this Minion has.
@@ -101,14 +96,6 @@ public abstract class Minion extends Card implements Target {
      */
     public void setCurrentHealthPoints(int healthPoints) {
         this.currentHealthPoints = healthPoints;
-    }
-
-    /**
-     * Returns the value of id.
-     * @return this.id.
-     */
-    public String getId() {
-        return this.id;
     }
 
     /**

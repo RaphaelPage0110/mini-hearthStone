@@ -8,17 +8,6 @@ import org.springframework.data.annotation.Id;
 
 public abstract class Spell extends Card {
 
-	@Id
-	 private String id;
-
-	 /**
-		* Returns the value of id.
-		* @return this.id.
-		*/
-	 public String getId() {
-			 return this.id;
-	 }
-
 	 /**
 		* Default empty constructor which initializes the ID and the list of actions.
 		*/

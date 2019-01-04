@@ -90,6 +90,18 @@ public class Application{
             draw(player2);
         }
 
+        //on envoie aux joueurs leur héro
+        ArrayList<Player> playerList = new ArrayList<>();
+        playerList.add(player1);
+        playerList.add(player2);
+
+        for(Player player : playerList) {
+            MyHeroMessage  myHeroMessage = new MyHeroMessage(player.getMyHero());
+            simpMessagingTemplate.convertAndSend("/queue/reply_myHero-user"+player.getSessionId(), myHeroMessage);
+            myHeroMessage = new MyHeroMessage(player.getOpponent().getMyHero());
+            simpMessagingTemplate.convertAndSend("/queue/reply_hisHero-user"+player.getSessionId(), myHeroMessage);
+        }
+
     }
 
     /**

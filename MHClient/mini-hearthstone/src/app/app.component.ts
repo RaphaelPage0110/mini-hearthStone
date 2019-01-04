@@ -16,6 +16,8 @@ export class AppComponent {
     greetings: string[] = [];
     myCards: any[] = [];
     hisHand : any[] = [];
+    myHero : any[] = [];
+    hisHero : any[] = [];
     disabled = true;
     selectedHero : string = 'Jaina';
     private stompClient = null;
@@ -62,6 +64,16 @@ export class AppComponent {
                 _this.showHisHand(JSON.parse(resp.body).nbrCards);
             });
 
+            _this.stompClient.subscribe('/user/queue/reply_myHero', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.showMyHero(resp.body);
+            });
+
+            _this.stompClient.subscribe('/user/queue/reply_hisHero', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.showHisHero(resp.body);
+            });
+
 
         });
     }
@@ -93,6 +105,16 @@ export class AppComponent {
     }
     showGreeting(message) {
         this.greetings.push(message);
+    }
+
+    showMyHero(message) {
+        console.log('message brut: ' + message);
+        this.myHero.push(JSON.parse(message));
+    }
+
+    showHisHero(message) {
+        console.log('message brut: ' + message);
+        this.hisHero.push(JSON.parse(message));
     }
 
     showHand(message) {

@@ -64,6 +64,9 @@ public class Application{
 
         }
 
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameOver-user"+game.getWinner().getSessionId(), "Vous avez gagné!!");
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameOver-user"+game.getLoser().getSessionId(), "Vous avez perdu.");
+
     }
 
     private void instanciatePlayers(Game game) {
@@ -133,7 +136,10 @@ public class Application{
         playerList.add(secondToPlay);
 
         for (Player player : playerList){
-            action(player,player.getOpponent(), game);
+            if (!game.isGameOver()){
+                action(player,player.getOpponent(), game);
+            }
+
         }
     }
 

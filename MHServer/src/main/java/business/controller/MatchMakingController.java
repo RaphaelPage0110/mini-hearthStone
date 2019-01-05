@@ -114,4 +114,17 @@ public class MatchMakingController {
         return null;
     }
 
+    @MessageMapping("/gameOver")
+    @SendTo("user/queue/reply_gameOver")
+    public Object gameOver(@Header("simpSessionId") String sessionId) {
+
+        Game game = this.myApplication.getGame();
+        Player loser = this.myApplication.getGame().getPlayerByID(sessionId);
+        game.setLoser(loser);
+        game.setWinner(loser.getOpponent());
+        game.setGameOver(true);
+
+        return null;
+    }
+
 }

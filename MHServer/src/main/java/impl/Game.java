@@ -191,4 +191,14 @@ public class Game {
 		return this;
 	}
 
+	public Player getPlayerByID(String id){
+		if (player1.getSessionId().equals(id)){
+			return player1;
+		}
+		else if (player2.getSessionId().equals(id)){
+			return player2;
+		}
+		else return null;
+	}
+
 }

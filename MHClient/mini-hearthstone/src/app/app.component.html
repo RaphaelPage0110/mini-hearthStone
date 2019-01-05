@@ -96,7 +96,7 @@
     </div>
     <div id="parentMyHero" class="row">
         <div>
-            <button class="btn btn-default" type="button" style="display: inline-block">Abandonner</button>
+            <button class="btn btn-default" type="button" (click)="giveUp()" style="display: inline-block">Abandonner</button>
             <button id="passTurnBtn" class="btn cancel" style="display: none" (click)="passTurn()">Passer son tour</button>
         </div>
         <div *ngFor="let hero of myHero">
@@ -115,8 +115,7 @@
 <div class="form-popup" id="yourTurnPop" style="display: none">
     <form class="form-container">
         <button type="submit" class="btn cancel" (click)="closeYourTurnPopup()">Fermer</button>
-        <div class="containerCardDetails">
-            <h4><b>C'est à vous!</b></h4>
+        <div class="containerCardDetails" id="yourTurnPopMessage">
         </div>
     </form>
 </div>

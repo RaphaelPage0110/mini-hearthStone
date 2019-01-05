@@ -97,6 +97,12 @@ export class AppComponent {
                 _this.passedTurn();
             });
 
+            _this.stompClient.subscribe('/user/queue/reply_gameOver', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.gameOver(resp.body);
+            });
+
+
 
 
         });
@@ -114,8 +120,29 @@ export class AppComponent {
         )
     }
 
+    giveUp(){
+        this.stompClient.send(
+            '/gameOver',
+            {}
+        )
+        this.passTurn();
+    }
+
+    gameOver(resp) {
+        document.getElementById("yourTurnPop").style.display = "block";
+        document.getElementById("yourTurnPopMessage").innerHTML = "<h4><b>"+resp+"</b></h4>";
+        document.getElementById("theBoard").style.display = "none";
+        document.getElementById("connectToGame").style.display = "block";
+        this.myCards = [];
+        this.hisHand = [];
+        this.myHero = [];
+        this.hisHero = [];
+        this.selectedHero = 'Jaina';
+    }
+
     openYourTurnPopup() {
         document.getElementById("yourTurnPop").style.display = "block";
+        document.getElementById("yourTurnPopMessage").innerHTML = "<h4><b>C'est à vous!</b></h4>";
     }
 
     passedTurn(){

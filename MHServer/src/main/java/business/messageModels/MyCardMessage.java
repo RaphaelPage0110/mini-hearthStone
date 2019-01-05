@@ -33,6 +33,7 @@ public class MyCardMessage {
     private String cardType;
 
     private String text;
+    public boolean taunt;
 
     public int getRequiredMana() {
         return requiredMana;
@@ -118,6 +119,7 @@ public class MyCardMessage {
             cardType = "minion";
             healthPoints = ((ConcreteMinion) card).getCurrentHealthPoints();
             damagePoints = card.getDamagePoints();
+            taunt = ((ConcreteMinion) card).isHasTaunt();
         }
 
     }

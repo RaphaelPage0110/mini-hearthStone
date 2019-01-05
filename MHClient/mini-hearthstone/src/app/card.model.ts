@@ -10,5 +10,6 @@ export class Card {
     text: string;
     cardType: string;
     healthPoints: number;
+    taunt: boolean;
 
 }

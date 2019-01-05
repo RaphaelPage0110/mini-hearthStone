@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div style="color: blue; text-align: center; height: 16vh">
+<div style="color: #000a6a; text-align: center; height: 16vh">
     <h1>{{title}}</h1>
     <form class="form-inline">
         <div class="form-group">
@@ -66,7 +66,7 @@
     <div id="parentHisMinions" class="row">
         <div class="card" *ngFor="let myCard of hisMinions">
             <a (click)="openCardPopup(myCard.id)" >
-                <img src= {{myCard.imgurl}} alt="Avatar">
+                <img [ngClass]="{'taunt': myCard.taunt}" src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -89,7 +89,7 @@
     <div id="parentMyMinions" class="row">
         <div class="card" *ngFor="let myCard of myMinions">
             <a (click)="openCardPopup(myCard.id)" >
-                <img src= {{myCard.imgurl}} alt="Avatar">
+                <img [ngClass]="{'taunt': myCard.taunt}" src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">

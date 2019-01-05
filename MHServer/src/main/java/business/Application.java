@@ -158,7 +158,7 @@ public class Application{
      * @param opponent its opponent
      */
     private void action(Player activePlayer, Player opponent, Game game) {
-
+        simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "yourTurn");
         game.setPassTurn(false);
         //we increase the mana of each player during the first 10 turns
         if (game.getTurn() <= 10 ) {
@@ -179,6 +179,7 @@ public class Application{
         while(!game.isPassTurn()){
 
         }
+        simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user"+activePlayer.getSessionId(),"Passed turn");
     }
 
     /**

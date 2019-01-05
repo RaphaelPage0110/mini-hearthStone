@@ -87,6 +87,18 @@ export class AppComponent {
                 _this.showHisMana(resp.body);
             });
 
+            _this.stompClient.subscribe('/user/queue/reply_yourTurn', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.openYourTurnPopup();
+            });
+
+            _this.stompClient.subscribe('/user/queue/reply_passedTurn', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.passedTurn();
+            });
+
+
+
         });
     }
 
@@ -102,7 +114,18 @@ export class AppComponent {
         )
     }
 
+    openYourTurnPopup() {
+        document.getElementById("yourTurnPop").style.display = "block";
+    }
 
+    passedTurn(){
+        document.getElementById("passTurnBtn").style.display = "none";
+    }
+
+    closeYourTurnPopup() {
+        document.getElementById("yourTurnPop").style.display = "none";
+        document.getElementById("passTurnBtn").style.display = "inline-block";
+    }
 
 
     disconnect() {

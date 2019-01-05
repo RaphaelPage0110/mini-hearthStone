@@ -97,7 +97,7 @@
     <div id="parentMyHero" class="row">
         <div>
             <button class="btn btn-default" type="button" style="display: inline-block">Abandonner</button>
-            <button class="btn cancel" style="display: inline-block" (click)="passTurn()">Passer son tour</button>
+            <button id="passTurnBtn" class="btn cancel" style="display: none" (click)="passTurn()">Passer son tour</button>
         </div>
         <div *ngFor="let hero of myHero">
             <p style="display: inline-block" >Mana: </p> <b > {{myMana?.currentMana}} / {{myMana?.manaMax}} </b>
@@ -111,6 +111,14 @@
         </div>
     </div>
 
+</div>
+<div class="form-popup" id="yourTurnPop" style="display: none">
+    <form class="form-container">
+        <button type="submit" class="btn cancel" (click)="closeYourTurnPopup()">Fermer</button>
+        <div class="containerCardDetails">
+            <h4><b>C'est à vous!</b></h4>
+        </div>
+    </form>
 </div>
 <div id="messageServer">
     <table id="conversation" class="table table-striped" style="margin-top: 20px;">

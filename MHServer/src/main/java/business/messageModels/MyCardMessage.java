@@ -35,6 +35,10 @@ public class MyCardMessage {
     private String text;
     public boolean taunt;
 
+    public boolean canAttack;
+
+    public boolean lifeSteal;
+
     public int getRequiredMana() {
         return requiredMana;
     }
@@ -120,6 +124,7 @@ public class MyCardMessage {
             healthPoints = ((ConcreteMinion) card).getCurrentHealthPoints();
             damagePoints = card.getDamagePoints();
             taunt = ((ConcreteMinion) card).isHasTaunt();
+            canAttack = ((ConcreteMinion) card).isCanAttack();
         }
 
     }

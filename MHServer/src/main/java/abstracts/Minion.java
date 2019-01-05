@@ -38,6 +38,11 @@ public abstract class Minion extends Card implements Target {
     protected boolean hasTaunt;
 
     /**
+     * Indicates if the Minion has lifesteal
+     */
+    protected boolean hasLifesteal;
+
+    /**
      * Reference the list of actions or behaviors of this minions when it dies.
      */
     protected ArrayList<Effect> myDeathRattles;

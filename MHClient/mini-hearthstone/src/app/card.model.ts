@@ -11,5 +11,6 @@ export class Card {
     cardType: string;
     healthPoints: number;
     taunt: boolean;
-
+    canAttack: boolean;
+    lifeSteal: boolean;
 }

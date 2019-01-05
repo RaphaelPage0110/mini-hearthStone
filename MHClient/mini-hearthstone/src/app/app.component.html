@@ -66,7 +66,10 @@
     <div id="parentHisMinions" class="row">
         <div class="card" *ngFor="let myCard of hisMinions">
             <a (click)="openCardPopup(myCard.id)" >
-                <img [ngClass]="{'taunt': myCard.taunt}" src= {{myCard.imgurl}} alt="Avatar">
+                <img [ngClass]="{
+                'taunt': myCard.taunt,
+                'canAttack': myCard.canAttack}"
+                     src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -89,7 +92,10 @@
     <div id="parentMyMinions" class="row">
         <div class="card" *ngFor="let myCard of myMinions">
             <a (click)="openCardPopup(myCard.id)" >
-                <img [ngClass]="{'taunt': myCard.taunt}" src= {{myCard.imgurl}} alt="Avatar">
+                <img [ngClass]="{
+                'taunt': myCard.taunt,
+                'canAttack': myCard.canAttack}"
+                     src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -99,7 +105,7 @@
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
                         {{myCard.id}}
-                        <p>Cout: {{myCard.requiredMana}}</p>
+                        <p>Coût: {{myCard.requiredMana}}</p>
                         <p>Dégats: <b>{{myCard.damagePoints + myMana?.aura}}</b></p>
                         <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         <p>{{myCard.text}}</p>

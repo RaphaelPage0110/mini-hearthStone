@@ -112,10 +112,17 @@ public class MatchMakingController {
 
     }
 
+    /**
+     * Used when a player passes his turn
+     * @param sessionId
+     * @return
+     */
     @MessageMapping("/passTurn")
     @SendTo("user/queue/reply_passTurn")
     public Object passTurn(@Header("simpSessionId") String sessionId) {
         this.myApplication.getGame().setPassTurn(true);
+        Player player = this.myApplication.getGame().getActivePlayer();
+
         return null;
     }
 
@@ -144,24 +151,9 @@ public class MatchMakingController {
         myApplication.sendManaMessage(player);
 
         myApplication.sendHand(player);
-        sendMinionsInPlay(player);
+        myApplication.sendMinionsInPlay(player);
 
         return null;
-    }
-
-    private void sendMinionsInPlay(Player player){
-
-        ArrayList<ConcreteMinion> playerMinions = player.getMyMinions();
-
-        ArrayList<MyCardMessage> myMinionsMessage = new ArrayList<>();
-
-        for(ConcreteMinion minion : playerMinions){
-            MyCardMessage cardMessage = new MyCardMessage(minion);
-            myMinionsMessage.add(cardMessage);
-        }
-        simpMessagingTemplate.convertAndSend("/queue/reply_playMinion-user"+player.getSessionId(), myMinionsMessage);
-        simpMessagingTemplate.convertAndSend("/queue/reply_playedMinion-user"+player.getOpponent().getSessionId(), myMinionsMessage);
-
     }
 
 }

@@ -115,7 +115,11 @@ img {
 }
 
 .taunt {
-    border: solid coral;
+    border-top: solid coral;
+}
+
+.canAttack {
+    border-right: solid #ff0000;
 }
 
 

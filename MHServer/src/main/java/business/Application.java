@@ -139,6 +139,12 @@ public class Application{
 
         for (Player player : playerList){
             if (!game.isGameOver()){
+
+                //the players minions can attack again
+                for(ConcreteMinion minion : player.getMyMinions()){
+                    minion.setCanAttack(true);
+                }
+                sendMinionsInPlay(player);
                 action(player,player.getOpponent(), game);
             }
 
@@ -406,6 +412,21 @@ public class Application{
 
             }
         }
+    }
+
+    public void sendMinionsInPlay(Player player){
+
+        ArrayList<ConcreteMinion> playerMinions = player.getMyMinions();
+
+        ArrayList<MyCardMessage> myMinionsMessage = new ArrayList<>();
+
+        for(ConcreteMinion minion : playerMinions){
+            MyCardMessage cardMessage = new MyCardMessage(minion);
+            myMinionsMessage.add(cardMessage);
+        }
+        simpMessagingTemplate.convertAndSend("/queue/reply_playMinion-user"+player.getSessionId(), myMinionsMessage);
+        simpMessagingTemplate.convertAndSend("/queue/reply_playedMinion-user"+player.getOpponent().getSessionId(), myMinionsMessage);
+
     }
 
     public static void main(String[] args) {

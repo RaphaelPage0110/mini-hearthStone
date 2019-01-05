@@ -1,16 +1,15 @@
 package impl;
 
-import abstracts.Card;
 import abstracts.CardType;
 import abstracts.Spell;
-import impl.behaviour.generic.*;
-import impl.behaviour.minion.Taunt;
+import impl.behaviour.generic.notTargetedEffect.*;
+import impl.behaviour.generic.targetedEffect.DamageTarget;
+import impl.behaviour.generic.targetedEffect.ModifyDamagePointsOneMinion;
+import impl.behaviour.generic.targetedEffect.TransformInto;
 
 import java.util.Map;
 
 public class ConcreteSpell extends Spell  implements Cloneable {
-
-    private Map<String,String> abilityKeyWords;
 
     public ConcreteSpell() {
 
@@ -40,7 +39,7 @@ public class ConcreteSpell extends Spell  implements Cloneable {
         this.requiredMana = requiredMana;
         this.setBonus(bonus);
         this.type = type;
-        this.abilityKeyWords = abilityKeyWords;
+        this.setAbilityKeyWord(abilityKeyWords);
         this.imgurl = imgurl;
 
         generateEffect(abilityKeyWords);
@@ -53,7 +52,7 @@ public class ConcreteSpell extends Spell  implements Cloneable {
      * ability keyword and value is its modifier
      * @param abilityKeyWords
      */
-    private void generateEffect (Map<String,String> abilityKeyWords) {
+    public void generateEffect (Map<String,String> abilityKeyWords) {
         for (Map.Entry<String, String> entry : abilityKeyWords.entrySet()) {
 
             switch(entry.getKey()) {
@@ -99,13 +98,5 @@ public class ConcreteSpell extends Spell  implements Cloneable {
 
             }
         }
-    }
-
-    public Map<String, String> getAbilityKeyWords() {
-        return abilityKeyWords;
-    }
-
-    public void setAbilityKeyWords(Map<String, String> abilityKeyWords) {
-        this.abilityKeyWords = abilityKeyWords;
     }
 }

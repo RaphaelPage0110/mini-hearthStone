@@ -2,21 +2,18 @@ package impl;
 
 import abstracts.CardType;
 import abstracts.Minion;
-import impl.behaviour.generic.BuffAlliedMinions;
-import impl.behaviour.generic.RemoveAura;
+import impl.behaviour.generic.notTargetedEffect.BuffAlliedMinions;
+import impl.behaviour.generic.notTargetedEffect.RemoveAura;
 import impl.behaviour.minion.Charge;
 import impl.behaviour.minion.LifeSteal;
 import impl.behaviour.minion.Taunt;
-import inter.Effect;
 
 import java.util.Map;
 
 
 public class ConcreteMinion extends Minion implements Cloneable {
 
-    private Map<String,String> abilityKeyWord;
-    private Map<String,String> deathRattle;
-
+    private Map<String,String> deathRattleKeyWords;
 
     public ConcreteMinion(CardType minionType, int requiredMana, int damagePoints, int healthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String minionName, String imgurl, String text) {
         super();
@@ -28,10 +25,20 @@ public class ConcreteMinion extends Minion implements Cloneable {
         this.damagePoints = damagePoints;
         this.maxHealthPoints = healthPoints;
         this.currentHealthPoints = healthPoints;
-        this.abilityKeyWord = abilityKeyWord;
-        this.deathRattle = deathRattle;
+        this.setAbilityKeyWord(abilityKeyWord);
+        this.deathRattleKeyWords = deathRattle;
         this.name = minionName;
 
+        generateMinionEffect(abilityKeyWord);
+        generateMinionDeathRattle(deathRattle);
+
+    }
+
+    /**
+     * Set the minions effect
+     * @param abilityKeyWord
+     */
+    public void generateMinionEffect(Map<String,String> abilityKeyWord){
         for (Map.Entry<String,String> abilityEntry: abilityKeyWord.entrySet()) {
 
             switch(abilityEntry.getKey()) {
@@ -50,12 +57,19 @@ public class ConcreteMinion extends Minion implements Cloneable {
                 case "buffAlliedMinions":
                     BuffAlliedMinions buffAbility = new BuffAlliedMinions(this);
                     this.addEffect(buffAbility);
+                    this.setBonus(Integer.parseInt(abilityEntry.getValue()));
                     break;
                 default:
                     break;
             }
         }
+    }
 
+    /**
+     * set the minions deathRattle
+     * @param deathRattle
+     */
+    public void generateMinionDeathRattle(Map<String,String> deathRattle){
         for (Map.Entry<String, String> deathEntry: deathRattle.entrySet()) {
             switch(deathEntry.getKey()) {
                 case "removeAura":
@@ -66,6 +80,14 @@ public class ConcreteMinion extends Minion implements Cloneable {
                     break;
             }
         }
+    }
+
+    public Map<String, String> getDeathRattleKeyWords() {
+        return deathRattleKeyWords;
+    }
+
+    public void setDeathRattleKeyWords(Map<String, String> deathRattle) {
+        this.deathRattleKeyWords = deathRattle;
     }
 
     public ConcreteMinion clone() {

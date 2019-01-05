@@ -5,7 +5,7 @@ import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Game;
 import impl.Player;
-import impl.behaviour.generic.Summon;
+import impl.behaviour.generic.notTargetedEffect.Summon;
 import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

@@ -1,4 +1,4 @@
-package impl.behaviour.generic;
+package impl.behaviour.generic.targetedEffect;
 
 import abstracts.Minion;
 import abstracts.Spell;

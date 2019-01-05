@@ -2,10 +2,10 @@ package impl;
 
 import abstracts.CardType;
 import abstracts.Hero;
-import impl.behaviour.generic.DamageTarget;
-import impl.behaviour.generic.ModifyArmor;
-import impl.behaviour.generic.Summon;
-import java.util.HashMap;
+import impl.behaviour.generic.targetedEffect.DamageTarget;
+import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
+import impl.behaviour.generic.notTargetedEffect.Summon;
+
 import java.util.Map;
 
 public class ConcreteHero extends Hero {
@@ -24,6 +24,11 @@ public class ConcreteHero extends Hero {
         this.heroName = heroName;
         this.imgurl = imgurl;
 
+        generateEffect(abilityKeyWord);
+
+    }
+
+    public void generateEffect(Map<String,String> abilityKeyWord){
         //the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
         //ability keyword and value is its modifier
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {

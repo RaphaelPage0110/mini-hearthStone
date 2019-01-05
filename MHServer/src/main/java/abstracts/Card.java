@@ -1,10 +1,6 @@
 package abstracts;
 
 import impl.Player;
-import impl.behaviour.generic.DamageTarget;
-import impl.behaviour.generic.ModifyArmor;
-import impl.behaviour.generic.Summon;
-import impl.behaviour.minion.Taunt;
 import inter.Effect;
 import inter.Target;
 import org.springframework.data.annotation.Id;
@@ -27,6 +23,16 @@ public abstract class Card {
      */
     @Id
     protected String id;
+
+    private Map<String,String> abilityKeyWord;
+
+    public Map<String, String> getAbilityKeyWord() {
+        return abilityKeyWord;
+    }
+
+    public void setAbilityKeyWord(Map<String, String> abilityKeyWord) {
+        this.abilityKeyWord = abilityKeyWord;
+    }
 
     /**
      * the unique identifier of this card

@@ -1,5 +1,6 @@
-package impl.behaviour.generic;
+package impl.behaviour.generic.notTargetedEffect;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
 import abstracts.Minion;
 import abstracts.Spell;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class DamageAllMinions extends TargetedEffect {
+public class DamageAllMinions extends NotTargetedEffect {
 
     private Spell mySpell;
     private int damage;
@@ -24,7 +25,7 @@ public class DamageAllMinions extends TargetedEffect {
     }
 
     @Override
-    public void effect(Target myTarget) {
+    public void effect() {
         ArrayList<Minion> myTargets;
         myTargets = mySpell.getPlayer().getMyGame().getMinionsInPlay();
 

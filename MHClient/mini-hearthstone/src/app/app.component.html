@@ -77,8 +77,8 @@
                         <h4><b>{{myCard.name}}</b></h4>
                         {{myCard.id}}
                         <p>Cout: {{myCard.requiredMana}}</p>
-                        <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
-                        <p>Vie: <b>{{myCard.damagePoints}}</b></p>
+                        <p>Dégats: <b>{{myCard.damagePoints + hisMana?.aura}}</b></p>
+                        <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         <p>{{myCard.text}}</p>
                     </div>
                 </form>
@@ -100,8 +100,8 @@
                         <h4><b>{{myCard.name}}</b></h4>
                         {{myCard.id}}
                         <p>Cout: {{myCard.requiredMana}}</p>
-                        <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
-                        <p>Vie: <b>{{myCard.damagePoints}}</b></p>
+                        <p>Dégats: <b>{{myCard.damagePoints + myMana?.aura}}</b></p>
+                        <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         <p>{{myCard.text}}</p>
                     </div>
                 </form>
@@ -131,7 +131,7 @@
                         <p>Cout: {{myCard.requiredMana}}</p>
                         <div *ngIf="myCard.cardType === 'minion' ">
                             <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
-                            <p>Vie: <b>{{myCard.damagePoints}}</b></p>
+                            <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         </div>
                         <p>{{myCard.text}}</p>
                     </div>
@@ -153,6 +153,7 @@
             <ul style="display: inline-block">
                 <li>Points de vie:  <b> {{hero.currentHealthPoints}} </b> </li>
                 <li *ngIf="hero.armorPoints>0">Armure: <b>{{hero.armorPoints}}</b></li>
+                <li>Aura : {{myMana?.aura}}</li>
             </ul>
         </div>
     </div>

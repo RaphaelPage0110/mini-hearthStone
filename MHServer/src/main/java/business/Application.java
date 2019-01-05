@@ -9,11 +9,13 @@ import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
 import impl.*;
-import impl.behaviour.generic.DrawCard;
-import impl.behaviour.generic.Summon;
-import impl.behaviour.generic.TransformInto;
+import impl.behaviour.generic.notTargetedEffect.DrawCard;
+import impl.behaviour.generic.notTargetedEffect.Summon;
+import impl.behaviour.generic.targetedEffect.TransformInto;
 import inter.Effect;
+import inter.NotTargetedEffect;
 import inter.Target;
+import inter.TargetedEffect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -306,7 +308,9 @@ public class Application{
 
         //we apply all the card's effect
         for (Effect effect : minionToPlay.getMyEffects()) {
-            effect.effect();
+            if (effect instanceof NotTargetedEffect) {
+                effect.effect();
+            }
         }
 
     }
@@ -385,6 +389,7 @@ public class Application{
                     ConcreteSpell spellToAdd = spellPicked.clone();
                     spellToAdd.setPlayer(activePlayer);
                     spellToAdd.setUniqueID();
+                    spellToAdd.generateEffect(spellToAdd.getAbilityKeyWord());
                     activePlayer.addCardToStock(spellToAdd);
 
                     //if it's 1 we will pick a minion
@@ -395,6 +400,8 @@ public class Application{
                     ConcreteMinion minionToAdd = minionPicked.clone();
                     minionToAdd.setPlayer(activePlayer);
                     minionToAdd.setUniqueID();
+                    minionToAdd.generateMinionEffect(minionToAdd.getAbilityKeyWord());
+                    minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
                     activePlayer.addCardToStock(minionToAdd);
 
             }

@@ -1,9 +1,9 @@
-package impl.behaviour.generic;
+package impl.behaviour.generic.notTargetedEffect;
 
 import abstracts.Minion;
 import impl.Player;
 import inter.Effect;
-import inter.Target;
+import inter.NotTargetedEffect;
 import inter.TargetedEffect;
 
 
@@ -13,7 +13,7 @@ import inter.TargetedEffect;
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class BuffAlliedMinions extends TargetedEffect {
+public class BuffAlliedMinions extends NotTargetedEffect {
 
     private Minion myMinion;
 
@@ -22,7 +22,7 @@ public class BuffAlliedMinions extends TargetedEffect {
     }
 
     @Override
-    public void effect(Target myTarget) {
+    public void effect() {
         Player myPlayer = myMinion.getPlayer();
         int aura = myMinion.getBonus();
         int damagePoints = myMinion.getDamagePoints();

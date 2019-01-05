@@ -1,4 +1,4 @@
-package impl.behaviour.generic;
+package impl.behaviour.generic.notTargetedEffect;
 
 import abstracts.Minion;
 import impl.Player;

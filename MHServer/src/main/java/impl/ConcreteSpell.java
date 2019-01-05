@@ -8,12 +8,28 @@ import impl.behaviour.minion.Taunt;
 
 import java.util.Map;
 
-public class ConcreteSpell extends Spell {
+public class ConcreteSpell extends Spell  implements Cloneable {
 
     private Map<String,String> abilityKeyWords;
 
     public ConcreteSpell() {
 
+    }
+
+    public ConcreteSpell clone() {
+        ConcreteSpell spell = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la
+            // méthode super.clone()
+            spell = (ConcreteSpell) super.clone();
+        } catch(CloneNotSupportedException cnse) {
+            // Ne devrait jamais arriver car nous implémentons
+            // l'interface Cloneable
+            cnse.printStackTrace(System.err);
+        }
+
+        // on renvoie le clone
+        return spell;
     }
 
     public ConcreteSpell(String name, int requiredMana, int bonus, CardType type, Map<String,String> abilityKeyWords, String imgurl, String text) {

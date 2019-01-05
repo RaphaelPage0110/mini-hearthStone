@@ -64,9 +64,49 @@
     </div>
 
     <div id="parentHisMinions" class="row">
+        <div class="card" *ngFor="let myCard of hisMinions">
+            <a (click)="openCardPopup(myCard.id)" >
+                <img src= {{myCard.imgurl}} alt="Avatar">
+            </a >
+
+            <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
+                <form class="form-container">
+                    <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
+                    <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
+                    <div class="containerCardDetails">
+                        <h4><b>{{myCard.name}}</b></h4>
+                        {{myCard.id}}
+                        <p>Cout: {{myCard.requiredMana}}</p>
+                        <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
+                        <p>Vie: <b>{{myCard.damagePoints}}</b></p>
+                        <p>{{myCard.text}}</p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div id="parentMyMinions" class="row">
+        <div class="card" *ngFor="let myCard of myMinions">
+            <a (click)="openCardPopup(myCard.id)" >
+                <img src= {{myCard.imgurl}} alt="Avatar">
+            </a >
+
+            <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
+                <form class="form-container">
+                    <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
+                    <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
+                    <div class="containerCardDetails">
+                        <h4><b>{{myCard.name}}</b></h4>
+                        {{myCard.id}}
+                        <p>Cout: {{myCard.requiredMana}}</p>
+                        <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
+                        <p>Vie: <b>{{myCard.damagePoints}}</b></p>
+                        <p>{{myCard.text}}</p>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </div>
 
@@ -79,9 +119,15 @@
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
                 <form class="form-container">
                     <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
+                    <div *ngIf="myCard.requiredMana <= myMana?.currentMana">
+                        <div *ngIf="myCard.cardType==='minion'">
+                            <button class="btn btn-default" type="button" (click)="playMinion(myCard.id)">Invoquer</button>
+                        </div>
+                    </div>
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
+                        {{myCard.id}}
                         <p>Cout: {{myCard.requiredMana}}</p>
                         <div *ngIf="myCard.cardType === 'minion' ">
                             <p>Dégats: <b>{{myCard.damagePoints}}</b></p>

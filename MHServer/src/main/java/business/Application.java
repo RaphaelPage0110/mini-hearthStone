@@ -87,13 +87,13 @@ public class Application{
         for(int i=0;i<3;i++){
             draw(player1);
         }
-        sendHands(player1);
+        sendHand(player1);
 
         //the second player draws 4 cards
         for(int i=0;i<4;i++){
             draw(player2);
         }
-        sendHands(player2);
+        sendHand(player2);
 
         //we send to the players their hero and mana
         ArrayList<Player> playerList = new ArrayList<>();
@@ -116,7 +116,7 @@ public class Application{
      * Send the mana of the player to himself and his opponent
      * @param player
      */
-    private void sendManaMessage(Player player){
+    public void sendManaMessage(Player player){
         //we send their mana to the user and his opponent
         ManaMessage manaMessage = new ManaMessage(player);
         simpMessagingTemplate.convertAndSend("/queue/reply_myMana-user"+player.getSessionId(), manaMessage);
@@ -143,7 +143,7 @@ public class Application{
         }
     }
 
-    private void sendHands(Player player){
+    public void sendHand(Player player){
         ArrayList<Card> playerHand = player.getMyHand();
 
         ArrayList<MyCardMessage> myHandMessage = new ArrayList<>();
@@ -180,7 +180,7 @@ public class Application{
         sendManaMessage(activePlayer);
 
         draw(activePlayer);
-        sendHands(activePlayer);
+        sendHand(activePlayer);
 
         while(!game.isPassTurn()){
 
@@ -244,6 +244,7 @@ public class Application{
                     //we fetch the minions details from the database using it's name
                     String minionKeyword = ((Summon)effect).getMyMinionKeyword();
                     ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+                    minionToSummon.setUniqueID();
 
                     //we add the newly created minion to the game
                     activePlayer.addMinion(minionToSummon);
@@ -298,6 +299,7 @@ public class Application{
      */
     public void playMinionCard(ConcreteMinion minionToPlay, Player activePlayer, Game game) {
 
+        activePlayer.changeMana(-minionToPlay.getRequiredMana());
         activePlayer.removeCardFromHand(minionToPlay);
         activePlayer.addMinion(minionToPlay);
         game.addMinionInPlay(minionToPlay);
@@ -380,16 +382,20 @@ public class Application{
                     //we then randomly pick a spell from all the spells the player can pick from
                     randomNum = ThreadLocalRandom.current().nextInt(0, listSpells.size());
                     ConcreteSpell spellPicked = listSpells.get(randomNum);
-                    spellPicked.setPlayer(activePlayer);
-                    activePlayer.addCardToStock(spellPicked);
+                    ConcreteSpell spellToAdd = spellPicked.clone();
+                    spellToAdd.setPlayer(activePlayer);
+                    spellToAdd.setUniqueID();
+                    activePlayer.addCardToStock(spellToAdd);
 
                     //if it's 1 we will pick a minion
                 case 1:
 
                     randomNum = ThreadLocalRandom.current().nextInt(0, listMinions.size());
                     ConcreteMinion minionPicked = listMinions.get(randomNum);
-                    minionPicked.setPlayer(activePlayer);
-                    activePlayer.addCardToStock(minionPicked);
+                    ConcreteMinion minionToAdd = minionPicked.clone();
+                    minionToAdd.setPlayer(activePlayer);
+                    minionToAdd.setUniqueID();
+                    activePlayer.addCardToStock(minionToAdd);
 
             }
         }

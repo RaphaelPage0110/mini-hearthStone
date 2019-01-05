@@ -15,6 +15,8 @@ export class AppComponent {
 
     game : GameComponent = new GameComponent();
     greetings: string[] = [];
+    myMinions: any[] = [];
+    hisMinions: any[] = [];
     myCards: any[] = [];
     myMana: Mana;
     hisMana: Mana;
@@ -102,6 +104,15 @@ export class AppComponent {
                 _this.gameOver(resp.body);
             });
 
+            _this.stompClient.subscribe('/user/queue/reply_playMinion', function (resp) {
+                console.log("server answer: "+resp.body)
+                _this.showMinions(resp.body);
+            });
+
+            _this.stompClient.subscribe('/user/queue/reply_playedMinion', function (resp) {
+                console.log("Votre adversaire a joué: "+resp.body)
+                _this.showHisMinions(resp.body);
+            });
 
 
 
@@ -137,7 +148,8 @@ export class AppComponent {
         this.hisHand = [];
         this.myHero = [];
         this.hisHero = [];
-        this.selectedHero = 'Jaina';
+        this.myMinions = [];
+        this.hisMinions = [];
     }
 
     openYourTurnPopup() {
@@ -200,6 +212,26 @@ export class AppComponent {
 
     }
 
+    showMinions(message) {
+
+        console.log('message brut de mes minions: ' + message);
+
+        var parsed = JSON.parse(message);
+        console.log('parsed mes minions: ' + parsed);
+        this.myMinions = parsed;
+
+    }
+
+    showHisMinions(message) {
+
+        console.log('message brut de ses minions: ' + message);
+
+        var parsed = JSON.parse(message);
+        console.log('parsed ses minions: ' + parsed);
+        this.hisMinions = parsed;
+
+    }
+
     showMyMana(message){
 
         console.log('message brut: ' + message);
@@ -246,5 +278,14 @@ export class AppComponent {
 
     closeCardPopup(id){
         document.getElementById("cardPopup"+id).style.display = "none";
+    }
+
+    playMinion(id){
+        this.stompClient.send(
+            '/playMinion',
+            {},
+            id
+        )
+        this.closeCardPopup(id);
     }
 }

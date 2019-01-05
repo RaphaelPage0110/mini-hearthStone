@@ -1,6 +1,10 @@
 package business.controller;
 
+import abstracts.Card;
+import business.messageModels.HisHandMessage;
+import business.messageModels.MyCardMessage;
 import impl.ConcreteHero;
+import impl.ConcreteMinion;
 import impl.Game;
 import impl.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import business.Application;
 import business.messageModels.Hello;
 import business.repositories.HeroRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -125,6 +130,38 @@ public class MatchMakingController {
         game.setGameOver(true);
 
         return null;
+    }
+
+    @MessageMapping("/playMinion")
+    @SendTo({"user/queue/reply_playMinion", "user/queue/reply_hePlayedMinion"})
+    public Object playMinion(@Header("simpSessionId") String sessionId, String idMinion) {
+
+        Game game = this.myApplication.getGame();
+        Player player = game.getPlayerByID(sessionId);
+        ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById(idMinion);
+
+        myApplication.playMinionCard(minionToPlay, player, game);
+        myApplication.sendManaMessage(player);
+
+        myApplication.sendHand(player);
+        sendMinionsInPlay(player);
+
+        return null;
+    }
+
+    private void sendMinionsInPlay(Player player){
+
+        ArrayList<ConcreteMinion> playerMinions = player.getMyMinions();
+
+        ArrayList<MyCardMessage> myMinionsMessage = new ArrayList<>();
+
+        for(ConcreteMinion minion : playerMinions){
+            MyCardMessage cardMessage = new MyCardMessage(minion);
+            myMinionsMessage.add(cardMessage);
+        }
+        simpMessagingTemplate.convertAndSend("/queue/reply_playMinion-user"+player.getSessionId(), myMinionsMessage);
+        simpMessagingTemplate.convertAndSend("/queue/reply_playedMinion-user"+player.getOpponent().getSessionId(), myMinionsMessage);
+
     }
 
 }

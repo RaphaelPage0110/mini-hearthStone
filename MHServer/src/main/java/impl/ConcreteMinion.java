@@ -12,7 +12,7 @@ import inter.Effect;
 import java.util.Map;
 
 
-public class ConcreteMinion extends Minion {
+public class ConcreteMinion extends Minion implements Cloneable {
 
     private Map<String,String> abilityKeyWord;
     private Map<String,String> deathRattle;
@@ -68,6 +68,22 @@ public class ConcreteMinion extends Minion {
         }
     }
 
+    public ConcreteMinion clone() {
+        ConcreteMinion minion = null;
+        try {
+            // On récupère l'instance à renvoyer par l'appel de la
+            // méthode super.clone()
+            minion = (ConcreteMinion) super.clone();
+        } catch(CloneNotSupportedException cnse) {
+            // Ne devrait jamais arriver car nous implémentons
+            // l'interface Cloneable
+            cnse.printStackTrace(System.err);
+        }
+
+        // on renvoie le clone
+        return minion;
+    }
+
     public ConcreteMinion() {
 
     }
@@ -98,4 +114,5 @@ public class ConcreteMinion extends Minion {
                 "Minion[id=%s, minionName='%s', requiredMana=%s, maxHealthPoints=%s, currentHealthPoints=%s, damage=%s, type=%s]",
                 id, name, requiredMana, maxHealthPoints, currentHealthPoints, damagePoints, type);
     }
+
 }

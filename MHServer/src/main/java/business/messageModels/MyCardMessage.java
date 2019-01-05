@@ -108,7 +108,7 @@ public class MyCardMessage {
 
 
     public MyCardMessage(Card card) {
-        id = card.getId();
+        id = card.getUniqueID();
         type = card.getType().toString();
         requiredMana = card.getRequiredMana();
         name = card.getName();

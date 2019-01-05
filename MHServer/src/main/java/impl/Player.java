@@ -290,5 +290,28 @@ public class Player {
         return this.getMyMana() > card.getRequiredMana();
     }
 
+    /**
+     * Return a card present in the players hand or that is on the board whose uniqueID matches the param
+     * @param id
+     * @return
+     */
+    public Card findCardById(String id){
+        for (Card card : myHand){
+            if(card.getUniqueID().equals(id)){
+                return card;
+            }
+        }
+
+        for (Card card : myMinions){
+            if (card.getUniqueID().equals(id)){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public void changeMana(int value){
+        myMana+=value;
+    }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Abstract representation of Minions and Spells.
@@ -22,10 +23,15 @@ public abstract class Card {
 
 
     /**
-     * The ID of this Hero.
+     * The ID of this type of Card.
      */
     @Id
     protected String id;
+
+    /**
+     * the unique identifier of this card
+     */
+    protected String uniqueID;
 
     protected String text;
 
@@ -236,7 +242,16 @@ public abstract class Card {
         }
     }
 
+    public Card(){
+        String uniqueID = UUID.randomUUID().toString();
+    }
 
+    public String getUniqueID() {
+        return uniqueID;
+    }
 
+    public void setUniqueID() {
+        uniqueID = UUID.randomUUID().toString();
+    }
 
 }

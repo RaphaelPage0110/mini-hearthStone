@@ -16,6 +16,7 @@ public class LifeSteal extends TargetedEffect {
 
     public LifeSteal(Minion myMinion) {
         this.myMinion = myMinion;
+        myMinion.setHasLifesteal(true);
     }
 
     @Override

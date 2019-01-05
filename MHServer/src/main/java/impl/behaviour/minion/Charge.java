@@ -16,10 +16,11 @@ public class Charge extends NotTargetedEffect {
 
     public Charge(Minion myMinion) {
         this.myMinion = myMinion;
+        myMinion.setCanAttack(true);
     }
 
     @Override
     public void effect() {
-        myMinion.setCanAttack(true);
+
     }
 }

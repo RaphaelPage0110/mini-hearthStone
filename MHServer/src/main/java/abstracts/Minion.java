@@ -30,17 +30,17 @@ public abstract class Minion extends Card implements Target {
     /**
      * Indicates if the Minion can attack. Set to false by default, Charge behavior set it to true, and is also set to true at the next turn;
      */
-    protected boolean canAttack;
+    protected boolean canAttack = false;
 
     /**
      * Indicates if the Minion has Taunt behavior, which will be attacked as a priority.
      */
-    protected boolean hasTaunt;
+    protected boolean hasTaunt = false;
 
     /**
      * Indicates if the Minion has lifesteal
      */
-    protected boolean hasLifesteal;
+    protected boolean hasLifesteal = false;
 
     /**
      * Reference the list of actions or behaviors of this minions when it dies.
@@ -214,6 +214,12 @@ public abstract class Minion extends Card implements Target {
 
     }
 
+    public boolean isHasLifesteal() {
+        return hasLifesteal;
+    }
 
+    public void setHasLifesteal(boolean hasLifesteal) {
+        this.hasLifesteal = hasLifesteal;
+    }
 
 }

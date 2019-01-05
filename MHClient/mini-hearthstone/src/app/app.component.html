@@ -68,7 +68,8 @@
             <a (click)="openCardPopup(myCard.id)" >
                 <img [ngClass]="{
                 'taunt': myCard.taunt,
-                'canAttack': myCard.canAttack}"
+                'canAttack': myCard.canAttack,
+                'lifeSteal': myCard.lifeSteal}"
                      src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
@@ -78,7 +79,6 @@
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
-                        {{myCard.id}}
                         <p>Cout: {{myCard.requiredMana}}</p>
                         <p>Dégats: <b>{{myCard.damagePoints + hisMana?.aura}}</b></p>
                         <p>Vie: <b>{{myCard.healthPoints}}</b></p>
@@ -94,7 +94,8 @@
             <a (click)="openCardPopup(myCard.id)" >
                 <img [ngClass]="{
                 'taunt': myCard.taunt,
-                'canAttack': myCard.canAttack}"
+                'canAttack': myCard.canAttack,
+                'lifeSteal': myCard.lifeSteal}"
                      src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
@@ -104,7 +105,6 @@
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
-                        {{myCard.id}}
                         <p>Coût: {{myCard.requiredMana}}</p>
                         <p>Dégats: <b>{{myCard.damagePoints + myMana?.aura}}</b></p>
                         <p>Vie: <b>{{myCard.healthPoints}}</b></p>

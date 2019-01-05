@@ -115,11 +115,15 @@ img {
 }
 
 .taunt {
-    border-top: solid coral;
+    border-top: solid #000000;
 }
 
 .canAttack {
     border-right: solid #ff0000;
+}
+
+.lifeSteal {
+    border-left: solid #00fff8;
 }
 
 

@@ -16,10 +16,10 @@ public class Taunt extends NotTargetedEffect {
 
     public Taunt(Minion myMinion) {
         this.myMinion = myMinion;
+        myMinion.setHasTaunt(true);
     }
 
     @Override
     public void effect() {
-        myMinion.setHasTaunt(true);
     }
 }

@@ -125,6 +125,7 @@ public class MyCardMessage {
             damagePoints = card.getDamagePoints();
             taunt = ((ConcreteMinion) card).isHasTaunt();
             canAttack = ((ConcreteMinion) card).isCanAttack();
+            lifeSteal = ((ConcreteMinion) card).isHasLifesteal();
         }
 
     }

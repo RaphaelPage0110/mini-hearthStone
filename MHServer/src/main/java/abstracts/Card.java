@@ -186,10 +186,9 @@ public abstract class Card {
     /**
      * Add a new effect to the list myEffects.
      * @param newEffect the new Effect to add.
-     * @return true if the value has been added to myEffects.
      */
-    public boolean addEffect(Effect newEffect) {
-        return myEffects.add(newEffect);
+    public void addEffect(Effect newEffect) {
+        myEffects.add(newEffect);
     }
 
     /**

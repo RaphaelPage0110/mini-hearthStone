@@ -27,7 +27,7 @@
 .form-container {
     max-width: 300px;
     padding: 10px;
-    background-color: white;
+    background-color: #d5d5d5;
 }
 
 /* Full-width input fields */
@@ -36,12 +36,12 @@
     padding: 15px;
     margin: 5px 0 22px 0;
     border: none;
-    background: #f1f1f1;
+    background: #ffffff;
 }
 
 /* When the inputs get focus, do something */
 .form-container input[type=text]:focus, .form-container input[type=password]:focus {
-    background-color: #ddd;
+    background-color: #ffffff;
     outline: none;
 }
 

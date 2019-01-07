@@ -79,8 +79,9 @@
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
+                        {{myCard.id}}
                         <p>Cout: {{myCard.requiredMana}}</p>
-                        <p>Dégats: <b>{{myCard.damagePoints + hisMana?.aura}}</b></p>
+                        <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
                         <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         <p>{{myCard.text}}</p>
                     </div>
@@ -106,8 +107,9 @@
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
+                        {{myCard.id}}
                         <p>Coût: {{myCard.requiredMana}}</p>
-                        <p>Dégats: <b>{{myCard.damagePoints + myMana?.aura}}</b></p>
+                        <p>Dégats: <b>{{myCard.damagePoints }}</b></p>
                         <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         <p>{{myCard.text}}</p>
                     </div>
@@ -165,6 +167,45 @@
     </div>
 
 </div>
+<div class="form-popup"  id="cardPopupShowTarget" style="display: none; z-index: 50">
+
+    <form class="form-container">
+        <button type="submit" class="btn cancel" (click)="closeTargetPopup()">Fermer</button>
+        <button class="btn btn-default" type="button" (click)="openTargetPopup()">Attaquer un serviteur</button>
+
+        <div id="targetDetails" class="row" style="display: none">
+            <div class="targetDetails" *ngFor="let myTarget of myTargets">
+                <div id="targetImage">
+                    <a (click)="openTargetDetails(myTarget.id)" >
+                        <img [ngClass]="{
+                                        'taunt': myTarget.taunt,
+                                        'canAttack': myTarget.canAttack,
+                                        'lifeSteal': myTarget.lifeSteal}"
+                             src= {{myTarget.imgurl}} alt="Avatar">
+                    </a >
+                </div>
+
+                <div [attr.id]="'targetDetailsPopup' + myTarget.id" style="position: relative; z-index: 100; display: none">
+                    <div class="form-popup" style="display: block">
+                        <form class="form-container">
+                            <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
+                            <button class="btn btn-default" type="button" (click)="attackThisTarget( myTarget.id)">Attaquer ce serviteur</button>
+                            <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
+                            <div class="containerCardDetails">
+                                <h4><b>{{myTarget.name}}</b></h4>
+                                {{myTarget.id}}
+                                <p>Coût: {{myTarget.requiredMana}}</p>
+                                <p>Dégats: <b>{{myTarget.damagePoints}}</b></p>
+                                <p>Vie: <b>{{myTarget.healthPoints}}</b></p>
+                                <p>{{myTarget.text}}</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="form-popup" id="yourTurnPop" style="display: none">
     <form class="form-container">
         <button type="submit" class="btn cancel" (click)="closeYourTurnPopup()">Fermer</button>
@@ -185,44 +226,6 @@
         </tr>
         </tbody>
     </table>
-</div>
-
-<div class="form-popup"  id="cardPopupShowTarget" style="display: none; z-index: 50">
-
-    <form class="form-container">
-        <button type="submit" class="btn cancel" (click)="closeTargetPopup()">Fermer</button>
-        <button class="btn btn-default" type="button" (click)="openTargetPopup()">Attaquer un serviteur</button>
-
-        <div id="targetDetails" class="row" style="display: none">
-            <div class="targetDetails" *ngFor="let myCard of myTargets">
-                <div id="targetImage">
-                    <a (click)="openTargetDetails(myCard.id)" >
-                        <img [ngClass]="{
-                    'taunt': myCard.taunt,
-                    'canAttack': myCard.canAttack,
-                    'lifeSteal': myCard.lifeSteal}"
-                             src= {{myCard.imgurl}} alt="Avatar">
-                    </a >
-                </div>
-
-                <div [attr.id]="'targetDetailsPopup' + myCard.id" style="position: relative; z-index: 100; display: none">
-                    <div class="form-popup" style="display: block">
-                        <form class="form-container">
-                            <button type="submit" class="btn cancel" (click)="closeTargetDetails(myCard.id)">Fermer</button>
-                            <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
-                            <div class="containerCardDetails">
-                                <h4><b>{{myCard.name}}</b></h4>
-                                <p>Coût: {{myCard.requiredMana}}</p>
-                                <p>Dégats: <b>{{myCard.damagePoints + myMana?.aura}}</b></p>
-                                <p>Vie: <b>{{myCard.healthPoints}}</b></p>
-                                <p>{{myCard.text}}</p>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 </div>
 
 </body>

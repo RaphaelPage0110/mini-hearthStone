@@ -3,6 +3,9 @@ package business.controller;
 import abstracts.Card;
 import business.messageModels.HisHandMessage;
 import business.messageModels.MyCardMessage;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.Game;
@@ -22,6 +25,7 @@ import business.repositories.HeroRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -142,7 +146,7 @@ public class MatchMakingController {
 
         Game game = this.myApplication.getGame();
         Player player = game.getPlayerByID(sessionId);
-        ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById(idMinion);
+        ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById (idMinion);
 
         myApplication.playMinionCard(minionToPlay, player, game);
         myApplication.sendManaMessage(player);
@@ -161,5 +165,19 @@ public class MatchMakingController {
         return null;
     }
 
+
+
+    @MessageMapping("/attackThisMinion")
+    public Object attackThisMinion(@Header("simpSessionId") String sessionId, String message) {
+
+        JsonElement jelement = new JsonParser().parse(message);
+        JsonObject  jobject = jelement.getAsJsonObject();
+        JsonElement attackerIDJson = jobject.get("attackerID");
+        JsonElement targetIDJson = jobject.get("targetID");
+        String attackerID = attackerIDJson.getAsString();
+        String targetID = targetIDJson.getAsString();
+        myApplication.attackMinion(attackerID, targetID);
+        return null;
+    }
 
 }

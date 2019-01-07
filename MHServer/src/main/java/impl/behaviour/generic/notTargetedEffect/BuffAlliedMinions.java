@@ -25,7 +25,6 @@ public class BuffAlliedMinions extends NotTargetedEffect {
     public void effect() {
         Player myPlayer = myMinion.getPlayer();
         int aura = myMinion.getBonus();
-        int damagePoints = myMinion.getDamagePoints();
 
         //the minion buffs all allies
         myPlayer.addAura(aura);

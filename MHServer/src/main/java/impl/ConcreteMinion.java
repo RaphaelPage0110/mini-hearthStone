@@ -28,10 +28,6 @@ public class ConcreteMinion extends Minion implements Cloneable {
         this.setAbilityKeyWord(abilityKeyWord);
         this.deathRattleKeyWords = deathRattle;
         this.name = minionName;
-
-        generateMinionEffect(abilityKeyWord);
-        generateMinionDeathRattle(deathRattle);
-
     }
 
     /**

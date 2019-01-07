@@ -1,6 +1,8 @@
 package abstracts;
 
 import identifiers.IdMinion;
+import impl.ConcreteHero;
+import impl.ConcreteMinion;
 import impl.Player;
 import inter.Effect;
 import inter.NotTargetedEffect;
@@ -181,26 +183,23 @@ public abstract class Minion extends Card implements Target {
      * @param target the target of the minion's attack
      */
     public void attack(Target target) {
-        int totalDamage;
+
         if(this.canAttack) {
-
-            totalDamage = this.damagePoints + this.getPlayer().getMyDamageAura();
-            target.takeDamage(totalDamage);
-
-            if(target instanceof Minion) {
-
+            int totalDamageDealt = this.damagePoints + this.getPlayer().getMyDamageAura();
+            if(target instanceof ConcreteMinion) {
+                int totalDamageReceived = ((Minion) target).getDamagePoints() + ((Minion) target).getPlayer().getMyDamageAura();
+                target.takeDamage(totalDamageDealt);
                 //the enemy retaliates
-                int enemyDamagePoints = ((Minion)target).getDamagePoints();
-                this.takeDamage(enemyDamagePoints);
-
+                this.takeDamage(totalDamageReceived);
             }
 
             //else the target is a hero
             else {
 
-
+                //target.takeDamage(totalDamageDealt);
 
             }
+            this.setCanAttack(false);
         }
     }
 

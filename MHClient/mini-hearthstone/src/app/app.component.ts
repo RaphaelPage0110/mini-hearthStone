@@ -26,6 +26,7 @@ export class AppComponent {
     hisHero : any[] = [];
     disabled = true;
     selectedHero : string = 'Jaina';
+    minionThatAttackId : string;
     private stompClient = null;
 
     constructor() {
@@ -298,6 +299,7 @@ export class AppComponent {
     }
 
     showTargetForMinion(id){
+        this.minionThatAttackId = id;
         this.stompClient.send(
             '/showTargetForMinion',
             {},
@@ -328,6 +330,19 @@ export class AppComponent {
 
     closeTargetDetails(targetID){
         document.getElementById("targetDetailsPopup"+targetID).style.display = "none";
+    }
+
+    attackThisTarget(targetID){
+        console.log("Id de la carte qui attaque  "+this.minionThatAttackId);
+        console.log("Id de la carte qui est attaquée  "+targetID);
+        var message = {attackerID: this.minionThatAttackId, targetID: targetID};
+        this.stompClient.send(
+            '/attackThisMinion',
+            {},
+            JSON.stringify(message)
+        );
+        this.closeTargetDetails(targetID);
+        this.closeTargetPopup();
     }
 
 }

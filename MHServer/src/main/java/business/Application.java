@@ -215,18 +215,17 @@ public class Application{
     /**
      * allows to attack a minion
      * TODO : Compléter avec le choix du joueur
-     * @param activePlayer
-     * @param opponent
+     * @param attackerID
+     * @param targetID
      */
-    private void attackMinion(Player activePlayer, Target opponent) {
+    public void attackMinion(String attackerID, String targetID) {
 
-        //envoyer au joueur la liste des minions qu'il peut attaquer
-        //ConcreteMinion minionToAttack = choix du joueur;
 
-        //envoyer au joueur la liste des minions avec lesquels il peut attaquer
-        //ConcreteMinion minionThatAttacks = choix du joueur;
+        ConcreteMinion minionThatAttacks = (ConcreteMinion)game.getActivePlayer().findCardById(attackerID);
+        ConcreteMinion minionToAttack = (ConcreteMinion)game.getWaitingPlayer().findCardById(targetID);
 
-        //minionThatAttacks.attack(minionToAttack);
+        minionThatAttacks.attack(minionToAttack);
+        sendBothPlayersMinion();
 
     }
 
@@ -397,39 +396,68 @@ public class Application{
         ArrayList<ConcreteSpell> listSpells = new ArrayList<>(listSpellsCommon);
         listSpells.addAll(listSpellsLimited);
 
+        ConcreteSpell spellPicked;
+        ConcreteMinion minionPicked;
+        ConcreteSpell spellToAdd;
+        ConcreteMinion minionToAdd;
+
+
         while(activePlayer.getMyStock().size()< 10) {
 
             //we first have to randomly decide if we have to pick a spell or a minion.
             int randomNum = ThreadLocalRandom.current().nextInt(0, 2);
-            switch (randomNum){
-                //if randomNum is 0 we will pick a spell
-                case 0:
 
-                    //we then randomly pick a spell from all the spells the player can pick from
-                    randomNum = ThreadLocalRandom.current().nextInt(0, listSpells.size());
-                    ConcreteSpell spellPicked = listSpells.get(randomNum);
-                    ConcreteSpell spellToAdd = spellPicked.clone();
-                    spellToAdd.setPlayer(activePlayer);
-                    spellToAdd.setUniqueID();
-                    spellToAdd.generateEffect(spellToAdd.getAbilityKeyWord());
-                    activePlayer.addCardToStock(spellToAdd);
+            //if randomNum is 0 we will pick a spell
+            if(randomNum == 0){
+                //we then randomly pick a spell from all the spells the player can pick from
+                int randomNumber = ThreadLocalRandom.current().nextInt(0, listSpells.size());
 
-                    //if it's 1 we will pick a minion
-                case 1:
+                spellPicked = listSpells.get(randomNumber);
+                spellToAdd = spellPicked.clone();
+                spellToAdd.setPlayer(activePlayer);
+                spellToAdd.setUniqueID();
 
-                    randomNum = ThreadLocalRandom.current().nextInt(0, listMinions.size());
-                    ConcreteMinion minionPicked = listMinions.get(randomNum);
-                    ConcreteMinion minionToAdd = minionPicked.clone();
-                    minionToAdd.setPlayer(activePlayer);
-                    minionToAdd.setUniqueID();
-                    minionToAdd.generateMinionEffect(minionToAdd.getAbilityKeyWord());
-                    minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
-                    activePlayer.addCardToStock(minionToAdd);
+                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
+                //to fix it, I set the effect of a new minion to null. But that could be better.
+                ArrayList<Effect> nullEffect = new ArrayList<>();
+                spellToAdd.setMyEffects(nullEffect);
 
+                spellToAdd.generateEffect(spellToAdd.getAbilityKeyWord());
+                activePlayer.addCardToStock(spellToAdd);
+            }
+            if (randomNum == 1 ){
+
+                int randomNumber = ThreadLocalRandom.current().nextInt(0, listMinions.size());
+                minionPicked = listMinions.get(randomNumber);
+
+                minionToAdd = minionPicked.clone();
+
+                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
+                //to fix it, I set the effect of a new minion to null. But that could be better.
+                ArrayList<Effect> nullEffect = new ArrayList<>();
+                minionToAdd.setMyEffects(nullEffect);
+                minionToAdd.generateMinionEffect(minionToAdd.getAbilityKeyWord());
+
+                minionToAdd.setPlayer(activePlayer);
+                minionToAdd.setUniqueID();
+
+
+                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
+                //to fix it, I set the effect of a new minion to null. But that could be better.
+                nullEffect = new ArrayList<>();
+                minionToAdd.setMyDeathRattles(nullEffect);
+                minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
+
+                activePlayer.addCardToStock(minionToAdd);
             }
         }
+
     }
 
+    /**
+     * send the minions of one player in play to both of the players
+     * @param player
+     */
     public void sendMinionsInPlay(Player player){
 
         ArrayList<ConcreteMinion> playerMinions = player.getMyMinions();
@@ -443,6 +471,14 @@ public class Application{
         simpMessagingTemplate.convertAndSend("/queue/reply_playMinion-user"+player.getSessionId(), myMinionsMessage);
         simpMessagingTemplate.convertAndSend("/queue/reply_playedMinion-user"+player.getOpponent().getSessionId(), myMinionsMessage);
 
+    }
+
+    /**
+     * send the minions of both players in play to both of the players
+     */
+    public void sendBothPlayersMinion(){
+        sendMinionsInPlay(game.getActivePlayer());
+        sendMinionsInPlay(game.getWaitingPlayer());
     }
 
     public static void main(String[] args) {

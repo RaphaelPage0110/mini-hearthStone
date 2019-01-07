@@ -98,9 +98,6 @@ public class MatchMakingController {
         String sessionPlayer1 = player1.getSessionId();
         String sessionPlayer2 = player2.getSessionId();
 
-        player1.setPlayOrder(1);
-        player2.setPlayOrder(2);
-
         Game game = new Game(player1, player2);
 
         simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer1, new Hello("Vous êtes le joueur 1"));
@@ -155,5 +152,14 @@ public class MatchMakingController {
 
         return null;
     }
+
+    @MessageMapping("/showTargetForMinion")
+    @SendTo("user/queue/reply_showTargets")
+    public Object showPossibleTargetsForMinion(@Header("simpSessionId") String sessionId) {
+
+        myApplication.showPossibleTargetsForMinion();
+        return null;
+    }
+
 
 }

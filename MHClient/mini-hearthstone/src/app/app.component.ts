@@ -16,6 +16,7 @@ export class AppComponent {
     game : GameComponent = new GameComponent();
     greetings: string[] = [];
     myMinions: any[] = [];
+    myTargets: any[] = [];
     hisMinions: any[] = [];
     myCards: any[] = [];
     myMana: Mana;
@@ -113,6 +114,13 @@ export class AppComponent {
                 console.log("Votre adversaire a joué: "+resp.body)
                 _this.showHisMinions(resp.body);
             });
+
+            _this.stompClient.subscribe('/user/queue/reply_targetsMinions', function (resp) {
+                console.log("La liste de vos cibles: "+resp.body)
+                _this.showTargets(resp.body);
+            });
+
+
 
 
 
@@ -288,4 +296,38 @@ export class AppComponent {
         )
         this.closeCardPopup(id);
     }
+
+    showTargetForMinion(id){
+        this.stompClient.send(
+            '/showTargetForMinion',
+            {},
+            id
+        )
+        this.closeCardPopup(id);
+    }
+
+    showTargets(message) {
+        var parsed = JSON.parse(message);
+        this.myTargets = parsed;
+        document.getElementById("cardPopupShowTarget").style.display = "block";
+    }
+
+    closeTargetPopup(){
+        document.getElementById("cardPopupShowTarget").style.display = "none";
+        document.getElementById("targetDetails").style.display = "none";
+    }
+
+    openTargetPopup() {
+        document.getElementById("targetDetails").style.display = "block";
+    }
+
+
+    openTargetDetails(targetID){
+        document.getElementById("targetDetailsPopup"+targetID).style.display = "";
+    }
+
+    closeTargetDetails(targetID){
+        document.getElementById("targetDetailsPopup"+targetID).style.display = "none";
+    }
+
 }

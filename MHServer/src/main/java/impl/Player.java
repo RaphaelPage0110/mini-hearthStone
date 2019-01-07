@@ -271,19 +271,16 @@ public class Player {
     }
 
     /**
-     * check if the player has minions that can attack
-     * @return true if the player has minions that can attack
+     * return an arrayList containing the list of the players minion that have taunt
      */
-    public boolean hasMinionsAwake() {
-        return true;
-    }
-
-    /**
-     * check if the player has minions with taunt
-     * @return true if the player has minions with taunt
-     */
-    public boolean hasTauntMinions() {
-        return true;
+    public ArrayList<ConcreteMinion> findTauntMinions() {
+        ArrayList<ConcreteMinion> tauntMinions = new ArrayList<>();
+        for (ConcreteMinion minion : myMinions) {
+            if(minion.isHasTaunt()){
+                tauntMinions.add(minion);
+            }
+        }
+        return tauntMinions;
     }
 
     public boolean canPlayCard(Card card) {

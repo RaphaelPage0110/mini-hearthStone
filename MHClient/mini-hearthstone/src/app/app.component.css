@@ -74,13 +74,24 @@
 }
 
 .card {
+     margin-left: 10px;
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     display:inline-block;
+     width: 5%;
+     padding: 5px;
+     vertical-align: top;
+ }
+
+.targetDetails {
     margin-left: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     display:inline-block;
-    width: 5%;
+    width: 20%;
     padding: 5px;
     vertical-align: top;
+    position: relative;
 }
 
 .card:hover {
@@ -115,7 +126,7 @@ img {
 }
 
 .taunt {
-    border-top: solid #000000;
+    border-top: solid #00ff24;
 }
 
 .canAttack {
@@ -123,7 +134,7 @@ img {
 }
 
 .lifeSteal {
-    border-left: solid #00fff8;
+    border-left: solid #ffef00;
 }
 
 

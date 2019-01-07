@@ -82,9 +82,6 @@ public class Application{
         player1.setOpponent(player2);
         player2.setOpponent(player1);
 
-        ArrayList<Card> stockPlayer1 = player1.getMyStock();
-        ArrayList<Card> stockPlayer2 = player2.getMyStock();
-
         //the first player draws 3 cards
         for(int i=0;i<3;i++){
             draw(player1);
@@ -130,8 +127,8 @@ public class Application{
      */
     private void playRound(Game game) {
 
-        Player firstToPlay = game.getActivePlayer();
-        Player secondToPlay = game.getWaitingPlayer();
+        Player firstToPlay = game.getPlayer1();
+        Player secondToPlay = game.getPlayer2();
 
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(firstToPlay);
@@ -173,6 +170,7 @@ public class Application{
      */
     private void action(Player activePlayer, Player opponent, Game game) {
         simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "yourTurn");
+        activePlayer.setPlayOrder(activePlayer.getPlayOrder()+1);
         game.setPassTurn(false);
         //we increase the mana of each player during the first 10 turns
         if (game.getTurn() <= 10 ) {
@@ -194,6 +192,24 @@ public class Application{
 
         }
         simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user"+activePlayer.getSessionId(),"Passed turn");
+    }
+
+    public void showPossibleTargetsForMinion(){
+        Player waitingPlayer = game.getWaitingPlayer();
+        ArrayList<ConcreteMinion> targetMinions = waitingPlayer.findTauntMinions();
+
+        if(targetMinions.size()==0){
+            targetMinions = waitingPlayer.getMyMinions();
+        }
+
+        ArrayList<MyCardMessage> myMinionsMessage = new ArrayList<>();
+
+        for(ConcreteMinion minion : targetMinions){
+            MyCardMessage cardMessage = new MyCardMessage(minion);
+            myMinionsMessage.add(cardMessage);
+        }
+
+        simpMessagingTemplate.convertAndSend("/queue/reply_targetsMinions-user"+waitingPlayer.getOpponent().getSessionId(), myMinionsMessage);
     }
 
     /**

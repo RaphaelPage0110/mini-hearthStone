@@ -102,36 +102,6 @@ public class GameController {
     }
 
     /**
-     * this method send to the client the list of the targets he can attack
-     * TODO : COMPLETER CETTE FONCTION QUAND PN SAURA COMMUNIQUER AVEC LE CLIENT
-     */
-    public void prepareAttack(Player player) {
-
-        Game game = player.getMyGame();
-        Player activePlayer = game.getActivePlayer();
-        Player waitingPlayer = game.getWaitingPlayer();
-        //we check if the player has minions that can attack
-        if(activePlayer.hasMinionsAwake()) {
-
-            //if the opponent has minions with taunt, then he has to attack them first
-            if(waitingPlayer.hasTauntMinions()) {
-
-                //il faut envoyer la liste des minions avec taunt au client
-
-            }
-
-            else {
-                //on envoi au client le choix d'attaquer soit le héros soit les minions de l'adversaire
-
-            }
-        }
-        else {
-            //attaque impossible pour le moment
-        }
-
-    }
-
-    /**
      * this method allows the player to end his turn
      * TODO : COMPLETER CETTE METHODE QUAND ON SAURA COMMENT PASSER LE TOUR DU JOUEUR
      */

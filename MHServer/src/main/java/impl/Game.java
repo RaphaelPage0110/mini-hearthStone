@@ -36,6 +36,8 @@ public class Game {
       gameOver = false;
       this.player1 = player1;
       this.player2 = player2;
+      this.player1.setPlayOrder(0);
+      this.player2.setPlayOrder(0);
       passTurn = true;
     }
 
@@ -171,10 +173,10 @@ public class Game {
 
 		int turnPlayer1 = this.player1.getPlayOrder();
 		int turnPlayer2 = this.player2.getPlayOrder();
-		if (turnPlayer2 > turnPlayer1) {
-			return player1;
-		} else {
+		if (turnPlayer1 == turnPlayer2) {
 			return player2;
+		} else {
+			return player1;
 		}
 
 	}

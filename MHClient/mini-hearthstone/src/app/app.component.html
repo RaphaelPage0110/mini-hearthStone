@@ -45,14 +45,14 @@
 <div id="theBoard">
 
     <div id="parentHisHero" class="row">
-        <div *ngFor="let hero of hisHero">
+        <div >
             <p style="display: inline-block" >Mana: </p> <b > {{hisMana?.currentMana}} / {{hisMana?.manaMax}} </b>
             <a class="card" >
-                <img src= {{hero.imgurl}} alt="Avatar">
+                <img src= {{hisHero?.imgurl}} alt="Avatar">
             </a>
             <ul style="display: inline-block">
-                <li>Points de vie:  <b> {{hero.currentHealthPoints}} </b> </li>
-                <li *ngIf="hero.armorPoints>0">Armure: <b>{{hero.armorPoints}}</b></li>
+                <li>Points de vie:  <b> {{hisHero?.currentHealthPoints}} </b> </li>
+                <li *ngIf="hisHero?.armorPoints>0">Armure: <b>{{hisHero?.armorPoints}}</b></li>
             </ul>
         </div>
     </div>
@@ -153,14 +153,14 @@
             <button class="btn btn-default" type="button" (click)="giveUp()" style="display: inline-block">Abandonner</button>
             <button id="passTurnBtn" class="btn cancel" style="display: none" (click)="passTurn()">Passer son tour</button>
         </div>
-        <div *ngFor="let hero of myHero">
+        <div >
             <p style="display: inline-block" >Mana: </p> <b > {{myMana?.currentMana}} / {{myMana?.manaMax}} </b>
             <a class="card"  >
-                <img src= {{hero.imgurl}} alt="Avatar">
+                <img src= {{myHero?.imgurl}} alt="Avatar">
             </a>
             <ul style="display: inline-block">
-                <li>Points de vie:  <b> {{hero.currentHealthPoints}} </b> </li>
-                <li *ngIf="hero.armorPoints>0">Armure: <b>{{hero.armorPoints}}</b></li>
+                <li>Points de vie:  <b> {{myHero?.currentHealthPoints}} </b> </li>
+                <li *ngIf="myHero?.armorPoints>0">Armure: <b>{{myHero?.armorPoints}}</b></li>
                 <li>Aura : {{myMana?.aura}}</li>
             </ul>
         </div>
@@ -172,6 +172,7 @@
     <form class="form-container">
         <button type="submit" class="btn cancel" (click)="closeTargetPopup()">Fermer</button>
         <button class="btn btn-default" type="button" (click)="openTargetPopup()">Attaquer un serviteur</button>
+        <button *ngIf="canAttackHero" class="btn btn-default" type="button" (click)="attackHero()">Attaquer le héros</button>
 
         <div id="targetDetails" class="row" style="display: none">
             <div class="targetDetails" *ngFor="let myTarget of myTargets">
@@ -189,7 +190,7 @@
                     <div class="form-popup" style="display: block">
                         <form class="form-container">
                             <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
-                            <button class="btn btn-default" type="button" (click)="attackThisTarget( myTarget.id)">Attaquer ce serviteur</button>
+                            <button class="btn btn-default" type="button" (click)="attackThisMinion( myTarget.id)">Attaquer ce serviteur</button>
                             <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>

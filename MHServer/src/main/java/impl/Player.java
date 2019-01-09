@@ -248,6 +248,7 @@ public class Player {
 
         myGame.setGameOver(true);
         myGame.setLoser(this);
+        myGame.setWinner(this.getOpponent());
 
     }
 

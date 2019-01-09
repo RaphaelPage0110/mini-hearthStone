@@ -2,7 +2,6 @@ package business;
 
 import abstracts.Card;
 import abstracts.CardType;
-import abstracts.Hero;
 import abstracts.Spell;
 import business.messageModels.HisHandMessage;
 import business.messageModels.ManaMessage;
@@ -104,15 +103,31 @@ public class Application{
         playerList.add(player2);
 
         for(Player player : playerList) {
-            MyHeroMessage myHeroMessage = new MyHeroMessage(player.getMyHero());
-            simpMessagingTemplate.convertAndSend("/queue/reply_myHero-user"+player.getSessionId(), myHeroMessage);
-            myHeroMessage = new MyHeroMessage(player.getOpponent().getMyHero());
-            simpMessagingTemplate.convertAndSend("/queue/reply_hisHero-user"+player.getSessionId(), myHeroMessage);
 
+            sendPlayerHeroMessage(player);
+            sendOpponentPlayerHeroMessage(player);
             sendManaMessage(player);
         }
 
 
+    }
+
+    /**
+     * send the opponent player's hero status to the a player
+     * @param player
+     */
+    public void sendOpponentPlayerHeroMessage(Player player){
+        MyHeroMessage myHeroMessage = new MyHeroMessage(player.getOpponent().getMyHero());
+        simpMessagingTemplate.convertAndSend("/queue/reply_hisHero-user"+player.getSessionId(), myHeroMessage);
+    }
+
+    /**
+     * send his hero status to a player
+     * @param player
+     */
+    public void sendPlayerHeroMessage(Player player){
+        MyHeroMessage myHeroMessage = new MyHeroMessage(player.getMyHero());
+        simpMessagingTemplate.convertAndSend("/queue/reply_myHero-user"+player.getSessionId(), myHeroMessage);
     }
 
     /**
@@ -237,17 +252,24 @@ public class Application{
     /**
      * allows to attack a hero
      * TODO : Ecrire cette méthode
-     * @param activePlayer
-     * @param opponent
+     * @param attackerID : id of the attacker
      */
-    private void attackHero(Player activePlayer, Player opponent) {
+    public void attackHero(String attackerID) {
 
-        //envoyer au joueur la liste des minions avec lesquels il peut attaquer
-        //ConcreteMinion minionThatAttacks = choix du joueur;
+        Player activePlayer = game.getActivePlayer();
+        Player waitingPlayer = activePlayer.getOpponent();
+        ConcreteMinion minionThatAttacks = (ConcreteMinion)activePlayer.findCardById(attackerID);
 
-        Hero heroToAttack = opponent.getMyHero();
+        //the minion attack the waiting player's hero
+        minionThatAttacks.attack(waitingPlayer.getMyHero());
 
-        //minionThatAttacks.attack(heroToAttack);
+        //the status of the attacked hero is sent to both players
+        sendOpponentPlayerHeroMessage(activePlayer);
+        sendPlayerHeroMessage(waitingPlayer);
+
+        //the status of the active player's minions is sent to both players
+        sendMinionsInPlay(activePlayer);
+
     }
 
     /**

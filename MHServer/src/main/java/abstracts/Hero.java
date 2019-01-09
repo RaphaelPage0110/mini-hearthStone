@@ -24,7 +24,6 @@ public abstract class Hero implements Target {
      */
     protected CardType heroType;
 
-
     /**
      *  The name of the hero
      */
@@ -182,6 +181,7 @@ public abstract class Hero implements Target {
     public void dies() {
 
         myPlayer.lost();
+
 
     }
 

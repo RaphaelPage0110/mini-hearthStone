@@ -1,13 +1,9 @@
 package abstracts;
 
-import identifiers.IdMinion;
-import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.Player;
 import inter.Effect;
-import inter.NotTargetedEffect;
 import inter.Target;
-import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 
@@ -196,7 +192,7 @@ public abstract class Minion extends Card implements Target {
             //else the target is a hero
             else {
 
-                //target.takeDamage(totalDamageDealt);
+                target.takeDamage(totalDamageDealt);
 
             }
             this.setCanAttack(false);

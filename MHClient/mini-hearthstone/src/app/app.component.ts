@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import {Stomp} from'@stomp/stompjs';
+import {Component} from '@angular/core';
+import {Stomp} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {GameComponent} from "./game/game.component";
 import {Mana} from "./mana.model";
+import {Hero} from "./hero.model";
 
 @Component({
     selector: 'app-root',
@@ -22,9 +23,10 @@ export class AppComponent {
     myMana: Mana;
     hisMana: Mana;
     hisHand : any[] = [];
-    myHero : any[] = [];
-    hisHero : any[] = [];
+    myHero : Hero;
+    hisHero : Hero;
     disabled = true;
+    canAttackHero : boolean = true;
     selectedHero : string = 'Jaina';
     minionThatAttackId : string;
     private stompClient = null;
@@ -114,6 +116,17 @@ export class AppComponent {
             _this.stompClient.subscribe('/user/queue/reply_playedMinion', function (resp) {
                 console.log("Votre adversaire a joué: "+resp.body)
                 _this.showHisMinions(resp.body);
+                let hasTaunt = false;
+                for (let minion of _this.hisMinions) {
+                    if(minion.taunt){
+                        hasTaunt = true;
+                    }
+                }
+                if(hasTaunt){
+                    _this.canAttackHero = false;
+                } else {
+                    _this.canAttackHero = true;
+                }
             });
 
             _this.stompClient.subscribe('/user/queue/reply_targetsMinions', function (resp) {
@@ -155,8 +168,8 @@ export class AppComponent {
         document.getElementById("connectToGame").style.display = "block";
         this.myCards = [];
         this.hisHand = [];
-        this.myHero = [];
-        this.hisHero = [];
+        this.myHero = null;
+        this.hisHero = null;
         this.myMinions = [];
         this.hisMinions = [];
     }
@@ -202,12 +215,12 @@ export class AppComponent {
 
     showMyHero(message) {
         console.log('message brut: ' + message);
-        this.myHero.push(JSON.parse(message));
+        this.myHero = JSON.parse(message);
     }
 
     showHisHero(message) {
         console.log('message brut: ' + message);
-        this.hisHero.push(JSON.parse(message));
+        this.hisHero = JSON.parse(message);
     }
 
     showHand(message) {
@@ -299,7 +312,7 @@ export class AppComponent {
     }
 
     showTargetForMinion(id){
-        this.minionThatAttackId = id;
+        this.minionThatAttackId = id
         this.stompClient.send(
             '/showTargetForMinion',
             {},
@@ -332,7 +345,7 @@ export class AppComponent {
         document.getElementById("targetDetailsPopup"+targetID).style.display = "none";
     }
 
-    attackThisTarget(targetID){
+    attackThisMinion(targetID){
         console.log("Id de la carte qui attaque  "+this.minionThatAttackId);
         console.log("Id de la carte qui est attaquée  "+targetID);
         var message = {attackerID: this.minionThatAttackId, targetID: targetID};
@@ -342,6 +355,15 @@ export class AppComponent {
             JSON.stringify(message)
         );
         this.closeTargetDetails(targetID);
+        this.closeTargetPopup();
+    }
+
+    attackHero(){
+        this.stompClient.send(
+            '/attackHero',
+            {},
+            this.minionThatAttackId
+        );
         this.closeTargetPopup();
     }
 

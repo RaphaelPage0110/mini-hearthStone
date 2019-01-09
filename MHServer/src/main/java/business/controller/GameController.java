@@ -7,10 +7,7 @@ import business.repositories.HeroRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import impl.ConcreteHero;
-import impl.ConcreteMinion;
-import impl.Game;
-import impl.Player;
+import impl.*;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,6 +150,18 @@ public class GameController {
         myApplication.sendHand(player);
         myApplication.sendMinionsInPlay(player);
 
+        return null;
+    }
+
+    @MessageMapping("/playSpell")
+    @SendTo("user/queue/reply_playSpell")
+    public Object playSpell(@Header("simpSessionId") String sessionId, String idSpell){
+
+        Game game = this.myApplication.getGame();
+        Player player = game.getPlayerByID(sessionId);
+        ConcreteSpell spellToPlay = (ConcreteSpell)player.findCardById(idSpell);
+
+        myApplication.playSpellCard(spellToPlay, player, game);
         return null;
     }
 

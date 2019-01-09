@@ -20,6 +20,7 @@ public class ModifyArmor extends NotTargetedEffect {
 
     public ModifyArmor(Spell mySpell, int bonus) {
         this.mySpell = mySpell;
+        this.myHero = mySpell.getPlayer().getMyHero();
         this.bonus = bonus;
     }
     public ModifyArmor(Hero myHero, int bonus) {

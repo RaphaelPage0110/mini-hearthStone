@@ -311,6 +311,15 @@ export class AppComponent {
         this.closeCardPopup(id);
     }
 
+    playSpell(id) {
+        this.stompClient.send(
+            '/playSpell',
+            {},
+            id
+        )
+        this.closeCardPopup(id);
+    }
+
     showTargetForMinion(id){
         this.minionThatAttackId = id
         this.stompClient.send(

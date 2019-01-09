@@ -2,6 +2,7 @@ package business.messageModels;
 
 import abstracts.Card;
 import impl.ConcreteMinion;
+import impl.ConcreteSpell;
 
 public class MyCardMessage {
 
@@ -126,6 +127,9 @@ public class MyCardMessage {
             taunt = ((ConcreteMinion) card).isHasTaunt();
             canAttack = ((ConcreteMinion) card).isCanAttack();
             lifeSteal = ((ConcreteMinion) card).isHasLifesteal();
+        }
+        if (card instanceof ConcreteSpell) {
+            cardType = "spell";
         }
 
     }

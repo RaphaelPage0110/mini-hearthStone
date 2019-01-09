@@ -7,7 +7,9 @@ import impl.behaviour.generic.notTargetedEffect.RemoveAura;
 import impl.behaviour.minion.Charge;
 import impl.behaviour.minion.LifeSteal;
 import impl.behaviour.minion.Taunt;
+import inter.Effect;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -35,6 +37,12 @@ public class ConcreteMinion extends Minion implements Cloneable {
      * @param abilityKeyWord
      */
     public void generateMinionEffect(Map<String,String> abilityKeyWord){
+
+        //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
+        //to fix it, I set the effect of a new minion to null. But that could be better.
+        ArrayList<Effect> nullEffect = new ArrayList<>();
+        this.setMyEffects(nullEffect);
+
         for (Map.Entry<String,String> abilityEntry: abilityKeyWord.entrySet()) {
 
             switch(abilityEntry.getKey()) {
@@ -66,6 +74,11 @@ public class ConcreteMinion extends Minion implements Cloneable {
      * @param deathRattle
      */
     public void generateMinionDeathRattle(Map<String,String> deathRattle){
+        //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
+        //to fix it, I set the effect of a new minion to null. But that could be better.
+        ArrayList<Effect> nullEffect = new ArrayList<>();
+        this.setMyDeathRattles(nullEffect);
+
         for (Map.Entry<String, String> deathEntry: deathRattle.entrySet()) {
             switch(deathEntry.getKey()) {
                 case "removeAura":

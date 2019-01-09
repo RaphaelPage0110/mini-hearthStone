@@ -33,7 +33,7 @@
             <h1>Choix du héro</h1>
             <select name="heroName" (change)="selectHeroHandler($event)">
                 <option value="Jaina">Jaina (mage)</option>
-                <option value="Garosh">Garosh (guerrier)</option>
+                <option value="Garrosh">Garrosh (guerrier)</option>
                 <option value="Uther">Uther (paladin)</option>
             </select>
             <button id="findGame" class="btn btn-default" type="button" (click)="connectToGame()">Trouver une partie</button>
@@ -132,13 +132,16 @@
                         <div *ngIf="myCard.cardType==='minion'">
                             <button class="btn btn-default" type="button" (click)="playMinion(myCard.id)">Invoquer</button>
                         </div>
+                        <div *ngIf="myCard.cardType==='spell'">
+                            <button class="btn btn-default" type="button" (click)="playSpell(myCard.id)">Lancer le sort</button>
+                        </div>
                     </div>
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
-                        <p>Cout: {{myCard.requiredMana}}</p>
+                        <p>Coût: {{myCard.requiredMana}}</p>
                         <div *ngIf="myCard.cardType === 'minion' ">
-                            <p>Dégats: <b>{{myCard.damagePoints}}</b></p>
+                            <p>Dégat: <b>{{myCard.damagePoints}}</b></p>
                             <p>Vie: <b>{{myCard.healthPoints}}</b></p>
                         </div>
                         <p>{{myCard.text}}</p>

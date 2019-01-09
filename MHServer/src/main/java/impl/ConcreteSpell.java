@@ -101,6 +101,8 @@ public class ConcreteSpell extends Spell  implements Cloneable {
                 case "drawCard":
 
                     DrawCard abilityDraw = new DrawCard(this, Integer.parseInt(entry.getValue()) );
+                    this.myEffects.add(abilityDraw);
+                    break;
 
             }
         }

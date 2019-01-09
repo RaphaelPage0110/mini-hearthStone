@@ -207,6 +207,7 @@ public class Application{
         draw(activePlayer);
         sendHand(activePlayer);
 
+        //when implementing the time limit, it should be added here
         while(!game.isPassTurn()){
 
         }
@@ -302,6 +303,10 @@ public class Application{
      */
     public void playSpellCard(Spell spellToPlay, Player activePlayer, Game game) {
 
+        activePlayer.changeMana(-spellToPlay.getRequiredMana());
+
+        activePlayer.removeCardFromHand(spellToPlay);
+
         for (Effect effect : spellToPlay.getMyEffects() ) {
 
             //if the card effect is to summon a minion, then we have to treat it separately
@@ -316,6 +321,10 @@ public class Application{
                     String minionKeyword = ((Summon)effect).getMyMinionKeyword();
                     ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
                     minionToSummon.setUniqueID();
+                    minionToSummon.setPlayer(activePlayer);
+
+                    minionToSummon.generateMinionEffect(minionToSummon.getAbilityKeyWord());
+                    minionToSummon.generateMinionDeathRattle(minionToSummon.getDeathRattleKeyWords());
 
                     //we add the newly created minion to the game
                     activePlayer.addMinion(minionToSummon);
@@ -359,6 +368,17 @@ public class Application{
 
             }
         }
+
+        sendManaMessage(activePlayer);
+
+        sendHand(activePlayer);
+        sendMinionsInPlay(activePlayer);
+        sendMinionsInPlay(activePlayer.getOpponent());
+
+        sendPlayerHeroMessage(activePlayer);
+        sendOpponentPlayerHeroMessage(activePlayer);
+        sendPlayerHeroMessage(activePlayer.getOpponent());
+        sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
 
     }
 
@@ -479,21 +499,11 @@ public class Application{
 
                 minionToAdd = minionPicked.clone();
 
-                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
-                //to fix it, I set the effect of a new minion to null. But that could be better.
-                ArrayList<Effect> nullEffect = new ArrayList<>();
-                minionToAdd.setMyEffects(nullEffect);
                 minionToAdd.generateMinionEffect(minionToAdd.getAbilityKeyWord());
+                minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
 
                 minionToAdd.setPlayer(activePlayer);
                 minionToAdd.setUniqueID();
-
-
-                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
-                //to fix it, I set the effect of a new minion to null. But that could be better.
-                nullEffect = new ArrayList<>();
-                minionToAdd.setMyDeathRattles(nullEffect);
-                minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
 
                 activePlayer.addCardToStock(minionToAdd);
             }

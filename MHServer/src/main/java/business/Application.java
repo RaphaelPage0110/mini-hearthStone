@@ -239,12 +239,27 @@ public class Application{
      */
     public void attackMinion(String attackerID, String targetID) {
 
+        Player activePlayer = game.getActivePlayer();
+        Player waitingPlayer = game.getWaitingPlayer();
 
-        ConcreteMinion minionThatAttacks = (ConcreteMinion)game.getActivePlayer().findCardById(attackerID);
-        ConcreteMinion minionToAttack = (ConcreteMinion)game.getWaitingPlayer().findCardById(targetID);
+        ConcreteMinion minionThatAttacks = (ConcreteMinion)activePlayer.findCardById(attackerID);
+        ConcreteMinion minionToAttack = (ConcreteMinion)waitingPlayer.findCardById(targetID);
 
         minionThatAttacks.attack(minionToAttack);
         sendBothPlayersMinion();
+
+        if(minionThatAttacks.isHasLifesteal()){
+            //we are sending the active player hero status to both players in case the minion that attacked had lifeSteal
+            sendPlayerHeroMessage(activePlayer);
+            sendOpponentPlayerHeroMessage(waitingPlayer);
+        }
+
+        if(minionToAttack.isHasLifesteal()){
+            //we are sending the waiting players status to both players if the minion targeted has lifesteal
+            sendPlayerHeroMessage(waitingPlayer);
+            sendOpponentPlayerHeroMessage(activePlayer);
+        }
+
 
     }
 
@@ -266,6 +281,13 @@ public class Application{
         //the status of the attacked hero is sent to both players
         sendOpponentPlayerHeroMessage(activePlayer);
         sendPlayerHeroMessage(waitingPlayer);
+
+        if(minionThatAttacks.isHasLifesteal()){
+            //the status of the active player's hero is sent to both players if the minion attacking has lifesteal
+            sendOpponentPlayerHeroMessage(waitingPlayer);
+            sendPlayerHeroMessage(activePlayer);
+        }
+
 
         //the status of the active player's minions is sent to both players
         sendMinionsInPlay(activePlayer);

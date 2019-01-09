@@ -1,9 +1,7 @@
 package impl;
 
 import abstracts.Card;
-import abstracts.CardType;
 import abstracts.Minion;
-import abstracts.Hero;
 import identifiers.IdPlayer;
 
 import java.util.ArrayList;
@@ -85,7 +83,7 @@ public class Player {
     }
 
     /**
-     * add a new minion to the Player's minions
+     * add a new minion to the Player's minions and add it to the list of minions in play in the game
      */
     public void addMinion(ConcreteMinion minion) {
         myMinions.add(minion);

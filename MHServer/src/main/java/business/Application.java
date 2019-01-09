@@ -1,6 +1,9 @@
 package business;
 
-import abstracts.*;
+import abstracts.Card;
+import abstracts.CardType;
+import abstracts.Hero;
+import abstracts.Spell;
 import business.messageModels.HisHandMessage;
 import business.messageModels.ManaMessage;
 import business.messageModels.MyCardMessage;
@@ -8,14 +11,15 @@ import business.messageModels.MyHeroMessage;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
-import impl.*;
+import impl.ConcreteMinion;
+import impl.ConcreteSpell;
+import impl.Game;
+import impl.Player;
 import impl.behaviour.generic.notTargetedEffect.DrawCard;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.TransformInto;
 import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
-import inter.TargetedEffect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -325,7 +329,6 @@ public class Application{
         activePlayer.changeMana(-minionToPlay.getRequiredMana());
         activePlayer.removeCardFromHand(minionToPlay);
         activePlayer.addMinion(minionToPlay);
-        game.addMinionInPlay(minionToPlay);
 
         //we apply all the card's effect
         for (Effect effect : minionToPlay.getMyEffects()) {

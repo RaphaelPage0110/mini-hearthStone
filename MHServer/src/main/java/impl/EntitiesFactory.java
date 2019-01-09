@@ -83,4 +83,46 @@ public class EntitiesFactory {
 
         return concreteMinion;
     }
+
+    public ConcreteSpell createSpell(String nameSpell) {
+
+        ConcreteSpell concreteSpell = new ConcreteSpell();
+        Map<String, String> abilityKeyword = new HashMap<>();
+
+        switch(nameSpell) {
+            case "Bénédiction de puissance":
+                abilityKeyword.put("modifyDamagePointsOneMinion", "3");
+                concreteSpell = new ConcreteSpell(CardType.PALADIN, 1, 0, 0, abilityKeyword, nameSpell, "https://bit.ly/2Qmsgev", "Rajoute 3 points de dégats à un serviteur");
+                break;
+            case "Image miroir":
+                abilityKeyword.put("summon", "Image miroir, 2");
+                concreteSpell = new ConcreteSpell(CardType.MAGE, 1, 0, 0, abilityKeyword, nameSpell, "https://bit.ly/2R7eWzF", "Invoque deux serviteurs 'Image Miroir'");
+                break;
+            case "Métamorphose":
+                abilityKeyword.put("transformInto", "Mouton");
+                concreteSpell = new ConcreteSpell(CardType.MAGE, 4, 0, 0, abilityKeyword, nameSpell, "https://bit.ly/2SBLqiu", "Transforme un serviteur en mouton");
+                break;
+            case "Explosion des arcanes":
+                abilityKeyword.put("damageEnemyMinions", "1");
+                concreteSpell = new ConcreteSpell(CardType.MAGE, 2, 1, 0, abilityKeyword, nameSpell, "https://bit.ly/2TsvhMi", "Inflige 1 points de dégats aux serviteurs ennemis");
+                break;
+            case "Consécration":
+                abilityKeyword.put("damageAllOpponents", "2");
+                concreteSpell = new ConcreteSpell(CardType.PALADIN, 4, 0, 0, abilityKeyword, nameSpell, "https://bit.ly/2SAFiqC", "Inflige 2 points de dégats à tous les adversaires");
+                break;
+            case "Tourbillon":
+                abilityKeyword.put("damageAllMinions", "1");
+                concreteSpell = new ConcreteSpell(CardType.WARRIOR, 1, 1, 0, abilityKeyword, nameSpell, "https://bit.ly/2LNnXrW", "Inflige 1 point de dégat à tous les serviteurs");
+                break;
+            case "Maîtrise du blocage":
+                abilityKeyword.put("modifyArmor", "5");
+                abilityKeyword.put("drawCard", "1");
+                concreteSpell = new ConcreteSpell(CardType.WARRIOR, 3, 0, 0, abilityKeyword, nameSpell, "https://bit.ly/2Vq7RZI", "Rajoute 5 points d'armure et pioche 1 carte");
+                break;
+            default:
+                break;
+        }
+
+        return concreteSpell;
+    }
 }

@@ -32,7 +32,7 @@ public class DamageAllOpponents extends NotTargetedEffect {
         Hero hisHero = myOpponent.getMyHero();
         ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
 
-        ArrayList<Target> myAdversaries = new ArrayList<Target>(hisMinions);
+        ArrayList<Target> myAdversaries = new ArrayList<>(hisMinions);
         myAdversaries.add(hisHero);
 
         for (Target target : myAdversaries) {

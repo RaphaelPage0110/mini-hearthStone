@@ -21,4 +21,7 @@ public class LifeSteal extends NotTargetedEffect {
     public void effect() {
     }
 
+    public Minion getMyMinion() {
+        return myMinion;
+    }
 }

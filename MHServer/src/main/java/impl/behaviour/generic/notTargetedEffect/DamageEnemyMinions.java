@@ -4,9 +4,7 @@ import abstracts.Minion;
 import abstracts.Spell;
 import impl.ConcreteMinion;
 import impl.Player;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
 
 import java.util.ArrayList;
 

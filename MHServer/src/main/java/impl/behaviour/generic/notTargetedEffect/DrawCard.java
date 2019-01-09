@@ -1,9 +1,7 @@
 package impl.behaviour.generic.notTargetedEffect;
 
 import abstracts.Spell;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
 
 /**
  * Class representing the special action "DrawCard" used for the "Shield Block" (fr:Maîtrise du blocage) spell.
@@ -31,5 +29,9 @@ public class DrawCard extends NotTargetedEffect {
      */
     public int getNumberDraw() {
         return numberCards;
+    }
+
+    public Spell getMySpell() {
+        return mySpell;
     }
 }

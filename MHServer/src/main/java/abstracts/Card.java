@@ -248,7 +248,7 @@ public abstract class Card {
     }
 
     public Card(){
-        String uniqueID = UUID.randomUUID().toString();
+         uniqueID = UUID.randomUUID().toString();
     }
 
     public String getUniqueID() {

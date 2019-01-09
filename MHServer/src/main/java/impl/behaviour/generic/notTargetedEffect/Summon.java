@@ -1,17 +1,11 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import abstracts.Card;
 import abstracts.Hero;
-import abstracts.Minion;
 import abstracts.Spell;
-import impl.ConcreteMinion;
 import impl.Player;
-import impl.behaviour.minion.Taunt;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,4 +60,12 @@ public class Summon extends NotTargetedEffect {
     }
 
     public int getNumberSummoned() {return numberSummoned; }
+
+    public Hero getMyHero() {
+        return myHero;
+    }
+
+    public Player getMyPlayer() {
+        return myPlayer;
+    }
 }

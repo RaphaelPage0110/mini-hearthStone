@@ -1,10 +1,7 @@
 package impl.behaviour.generic.notTargetedEffect;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
 import abstracts.Minion;
 import abstracts.Spell;
-import inter.TargetedEffect;
 
 import java.util.ArrayList;
 

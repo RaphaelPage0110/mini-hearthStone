@@ -2,9 +2,7 @@ package impl.behaviour.generic.targetedEffect;
 
 import abstracts.Card;
 import abstracts.Hero;
-import inter.Effect;
 import inter.Target;
-import abstracts.Spell;
 import inter.TargetedEffect;
 
 /**
@@ -32,5 +30,13 @@ public class DamageTarget extends TargetedEffect {
     @Override
     public void effect(Target myTarget) {
         myTarget.takeDamage(damage);
+    }
+
+    public Card getMyCard() {
+        return myCard;
+    }
+
+    public Hero getMyHero() {
+        return myHero;
     }
 }

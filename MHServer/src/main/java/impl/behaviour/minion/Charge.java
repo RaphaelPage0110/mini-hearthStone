@@ -1,8 +1,6 @@
 package impl.behaviour.minion;
 
 import inter.NotTargetedEffect;
-import inter.Target;
-import inter.Effect;
 import abstracts.Minion;
 
 /**
@@ -22,5 +20,9 @@ public class Charge extends NotTargetedEffect {
     @Override
     public void effect() {
 
+    }
+
+    public Minion getMyMinion() {
+        return myMinion;
     }
 }

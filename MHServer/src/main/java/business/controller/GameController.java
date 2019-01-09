@@ -184,18 +184,16 @@ public class GameController {
         return null;
     }
 
-    /**
-     * allows a player to use its hero ability
-     */
-    public void useHeroPower(Player player) {
-        Game game = player.getMyGame();
-        Player activePlayer = game.getActivePlayer();
-        Player waitingPlayer = game.getWaitingPlayer();
+    @MessageMapping("/useHeroPower")
+    @SendTo("user/queue/reply_useHeroPower")
+    public void useHeroPower(@Header("simpSessionId") String sessionId) {
+        Game game = this.myApplication.getGame();
+        Player activePlayer = game.getPlayerByID(sessionId);
+       // Player activePlayer = game.getActivePlayer();
+        //Player waitingPlayer = game.getWaitingPlayer();
         Hero hero = activePlayer.getMyHero();
 
         if (activePlayer.canUseHeroAbility()) {
-
-            activePlayer.getMyHero().activateEffect();
 
             Effect heroPower = hero.getMyEffect();
 

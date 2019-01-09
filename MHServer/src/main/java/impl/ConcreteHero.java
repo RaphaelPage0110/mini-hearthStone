@@ -74,7 +74,7 @@ public class ConcreteHero extends Hero {
      *
      */
     @Override
-    public void activateEffect() {
+    public void activateEffect() {  this.getMyEffect().effect();
 
     }
 

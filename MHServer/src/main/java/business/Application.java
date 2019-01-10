@@ -328,7 +328,6 @@ public class Application{
 
                     //we add the newly created minion to the game
                     activePlayer.addMinion(minionToSummon);
-                    game.addMinionInPlay(minionToSummon);
 
                 }
 

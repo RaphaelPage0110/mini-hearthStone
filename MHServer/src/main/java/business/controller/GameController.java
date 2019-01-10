@@ -219,7 +219,6 @@ public class GameController {
 
                     //we add the minion to the player hand and to the game
                     activePlayer.addMinion(minionToSummon);
-                    game.addMinionInPlay(minionToSummon);
 
                     //we apply its effects
                     for (Effect effect : minionToSummon.getMyEffects() ) {

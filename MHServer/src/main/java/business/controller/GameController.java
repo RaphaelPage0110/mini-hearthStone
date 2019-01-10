@@ -19,8 +19,7 @@ import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +33,7 @@ public class GameController {
     SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor
             .create(SimpMessageType.MESSAGE);
 
-    private Collection<Player> waitingUsers = new HashSet<>();
+    private List<Player> waitingUsers = new ArrayList<>();
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
@@ -92,8 +91,8 @@ public class GameController {
 
     private void startGame() {
         LOGGER.log(Level.INFO, "Starting game");
-        Player player1 = (Player)waitingUsers.toArray()[0];
-        Player player2 = (Player)waitingUsers.toArray()[1];
+        Player player1 = waitingUsers.get(0);
+        Player player2 = waitingUsers.get(1);
 
         String sessionPlayer1 = player1.getSessionId();
         String sessionPlayer2 = player2.getSessionId();
@@ -241,7 +240,6 @@ public class GameController {
 
                     //we add the minion to the player hand and to the game
                     activePlayer.addMinion(minionToSummon);
-                    game.addMinionInPlay(minionToSummon);
 
                     //we apply its effects
                     for (Effect effect : minionToSummon.getMyEffects() ) {
@@ -262,4 +260,30 @@ public class GameController {
         }
     }
 
+    public Application getApplication() {
+        return myApplication;
+    }
+
+    public GameController setHeroRepository(HeroRepository heroRepository) {
+        this.heroRepo = heroRepository;
+        return this;
+    }
+
+    public GameController setApplication(Application application) {
+        this.myApplication = application;
+        return this;
+    }
+
+    public GameController makeGC() {
+        return new GameController();
+    }
+
+    public GameController setMessagingTemplate(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        return this;
+    }
+
+    public List<Player> getWaitingUsers() {
+        return this.waitingUsers;
+    }
 }

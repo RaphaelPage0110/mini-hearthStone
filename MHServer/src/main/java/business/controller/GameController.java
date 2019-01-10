@@ -4,6 +4,7 @@ import abstracts.Hero;
 import business.Application;
 import business.messageModels.Hello;
 import business.repositories.HeroRepository;
+import business.repositories.MinionRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -286,4 +287,5 @@ public class GameController {
     public List<Player> getWaitingUsers() {
         return this.waitingUsers;
     }
+
 }

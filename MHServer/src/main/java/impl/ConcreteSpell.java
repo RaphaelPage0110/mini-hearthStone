@@ -31,6 +31,22 @@ public class ConcreteSpell extends Spell  implements Cloneable {
         return spell;
     }
 
+    public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text, Player player) {
+        super();
+        this.player = player;
+
+        this.text = text;
+        this.setName(name);
+        this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
+        this.setBonus(bonus);
+        this.type = type;
+        this.setAbilityKeyWord(abilityKeyWords);
+        this.imgurl = imgurl;
+
+        generateEffect(abilityKeyWords);
+    }
+
     public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text) {
         super();
 

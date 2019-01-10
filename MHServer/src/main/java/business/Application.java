@@ -19,6 +19,8 @@ import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.TransformInto;
 import inter.Effect;
 import inter.NotTargetedEffect;
+import inter.Target;
+import inter.TargetedEffect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -301,7 +303,7 @@ public class Application{
      * @param activePlayer
      * @param game
      */
-    public void playSpellCard(Spell spellToPlay, Player activePlayer, Game game) {
+    public void playSpellCard(Spell spellToPlay, Target target, Player activePlayer, Game game) {
 
         activePlayer.changeMana(-spellToPlay.getRequiredMana());
 
@@ -338,8 +340,7 @@ public class Application{
             //we just update the targeted minions parameters
             else if (effect instanceof TransformInto ) {
 
-                //là il faut demander le choix du joueur
-                ConcreteMinion minionBeingTransformed = new ConcreteMinion();
+                ConcreteMinion minionBeingTransformed = (ConcreteMinion)target;
                 String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
                 ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
                 minionBeingTransformed.setName(minionModel.getName());
@@ -349,6 +350,8 @@ public class Application{
                 minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
                 minionBeingTransformed.setType(minionModel.getType());
                 minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
+                minionBeingTransformed.setText(minionModel.getText());
+                minionBeingTransformed.setImgurl(minionModel.getImgurl());
 
             }
 
@@ -362,9 +365,15 @@ public class Application{
 
             }
 
-            else {
+            else if (effect instanceof NotTargetedEffect){
 
                 effect.effect();
+
+            }
+
+            else if (effect instanceof TargetedEffect ) {
+
+                effect.effect(target);
 
             }
         }
@@ -541,4 +550,5 @@ public class Application{
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+
 }

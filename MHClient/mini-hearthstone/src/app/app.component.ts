@@ -29,6 +29,8 @@ export class AppComponent {
     canAttackHero : boolean = true;
     selectedHero : string = 'Jaina';
     minionThatAttackId : string;
+    spellThatAttackId : string;
+    spellTargets : any[] = [];
     private stompClient = null;
 
     constructor() {
@@ -175,8 +177,29 @@ export class AppComponent {
     }
 
     openYourTurnPopup() {
-        document.getElementById("yourTurnPop").style.display = "block";
         document.getElementById("yourTurnPopMessage").innerHTML = "<h4><b>C'est à vous!</b></h4>";
+        document.getElementById("yourTurnPop").style.display = "block";
+    }
+
+    openPromptSpellTarget(idCard) {
+        document.getElementById("spellPopupShowTarget").style.display = "block";
+        this.spellThatAttackId = idCard;
+    }
+
+    closeTargetSpellPopup() {
+        document.getElementById("spellPopupShowTarget").style.display = "none";
+    }
+
+    showAlliedTargets() {
+        this.spellTargets = this.myMinions;
+        this.closeYourTurnPopup();
+        document.getElementById("targetSpellDetails").style.display = "block";
+    }
+
+    showEnemiesTargets() {
+        this.spellTargets = this.hisMinions;
+        this.closeYourTurnPopup();
+        document.getElementById("targetSpellDetails").style.display = "block";
     }
 
     passedTurn(){
@@ -321,7 +344,7 @@ export class AppComponent {
     }
 
     showTargetForMinion(id){
-        this.minionThatAttackId = id
+        this.minionThatAttackId = id;
         this.stompClient.send(
             '/showTargetForMinion',
             {},
@@ -365,6 +388,19 @@ export class AppComponent {
         );
         this.closeTargetDetails(targetID);
         this.closeTargetPopup();
+    }
+
+    castSpellOnTarget(targetID){
+        console.log("Id du qui attaque  "+this.spellThatAttackId);
+        console.log("Id de la carte qui est attaquée  "+targetID);
+        var message = {spellID: this.spellThatAttackId, targetID: targetID};
+        this.stompClient.send(
+            '/castSpellOnThisMinion',
+            {},
+            JSON.stringify(message)
+        );
+        this.closeTargetDetails(targetID);
+        this.closeTargetSpellPopup();
     }
 
     attackHero(){

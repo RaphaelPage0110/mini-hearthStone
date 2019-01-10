@@ -1,5 +1,3 @@
-import {stringify} from "querystring";
-
 export class Card {
     id: string;
     type: string;
@@ -13,4 +11,5 @@ export class Card {
     taunt: boolean;
     canAttack: boolean;
     lifeSteal: boolean;
+    targetSpell : boolean;
 }

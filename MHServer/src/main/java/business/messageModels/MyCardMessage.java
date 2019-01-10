@@ -3,6 +3,8 @@ package business.messageModels;
 import abstracts.Card;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
+import inter.Effect;
+import inter.TargetedEffect;
 
 public class MyCardMessage {
 
@@ -34,11 +36,14 @@ public class MyCardMessage {
     private String cardType;
 
     private String text;
+
     public boolean taunt;
 
     public boolean canAttack;
 
     public boolean lifeSteal;
+
+    public boolean targetSpell;
 
     public int getRequiredMana() {
         return requiredMana;
@@ -130,6 +135,12 @@ public class MyCardMessage {
         }
         if (card instanceof ConcreteSpell) {
             cardType = "spell";
+            targetSpell = false;
+            for (Effect effect : card.getMyEffects()){
+                if(effect instanceof TargetedEffect){
+                    targetSpell = true;
+                }
+            }
         }
 
     }

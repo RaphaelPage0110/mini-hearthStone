@@ -133,7 +133,8 @@
                             <button class="btn btn-default" type="button" (click)="playMinion(myCard.id)">Invoquer</button>
                         </div>
                         <div *ngIf="myCard.cardType==='spell'">
-                            <button class="btn btn-default" type="button" (click)="playSpell(myCard.id)">Lancer le sort</button>
+                            <button *ngIf="myCard.targetSpell==false" class="btn btn-default" type="button" (click)="playSpell(myCard.id)">Lancer le sort</button>
+                            <button *ngIf="myCard.targetSpell" class="btn btn-default" type="button" (click)="openPromptSpellTarget(myCard.id)">Choisir une cible</button>
                         </div>
                     </div>
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
@@ -232,6 +233,48 @@
     </table>
 </div>
 
+<div class="form-popup"  id="spellPopupShowTarget" style="display: none; z-index: 50">
+
+    <form class="form-container">
+        <button type="submit" class="btn cancel" (click)="closeTargetSpellPopup()">Fermer</button>
+        <button class="btn btn-default" type="button" (click)="showAlliedTargets()">Cibler un allié</button>
+        <button class="btn btn-default" type="button" (click)="showEnemiesTargets()">Cibler un ennemi</button>
+
+        <div id="targetSpellDetails" class="row" style="display: none">
+            <div class="targetDetails" *ngFor="let myTarget of spellTargets">
+                <div id="targetSpellImage">
+                    <a (click)="openTargetDetails(myTarget.id)" >
+                        <img [ngClass]="{
+                                        'taunt': myTarget.taunt,
+                                        'canAttack': myTarget.canAttack,
+                                        'lifeSteal': myTarget.lifeSteal}"
+                             src= {{myTarget.imgurl}} alt="Avatar">
+                    </a >
+                </div>
+
+                <div [attr.id]="'targetDetailsPopup' + myTarget.id" style="position: relative; z-index: 100; display: none">
+                    <div class="form-popup" style="display: block">
+                        <form class="form-container">
+                            <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
+                            <button class="btn btn-default" type="button" (click)="castSpellOnTarget( myTarget.id)">Cibler ce serviteur</button>
+                            <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
+                            <div class="containerCardDetails">
+                                <h4><b>{{myTarget.name}}</b></h4>
+                                {{myTarget.id}}
+                                <p>Coût: {{myTarget.requiredMana}}</p>
+                                <p>Dégats: <b>{{myTarget.damagePoints}}</b></p>
+                                <p>Vie: <b>{{myTarget.healthPoints}}</b></p>
+                                <p>{{myTarget.text}}</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+this.spellTargets
 </body>
 
 </html>

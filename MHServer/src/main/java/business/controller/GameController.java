@@ -161,7 +161,7 @@ public class GameController {
         Player player = game.getPlayerByID(sessionId);
         ConcreteSpell spellToPlay = (ConcreteSpell)player.findCardById(idSpell);
 
-        myApplication.playSpellCard(spellToPlay, player, game);
+        myApplication.playSpellCard(spellToPlay, null, player, game);
         return null;
     }
 
@@ -190,6 +190,28 @@ public class GameController {
     public Object attackHero(@Header("simpSessionId") String sessionId, String attackerID){
 
         myApplication.attackHero(attackerID);
+        return null;
+    }
+
+    @MessageMapping("/castSpellOnThisMinion")
+    public Object castSpellOnThisMinion(@Header("simpSessionId") String sessionId, String message) {
+
+        JsonElement jelement = new JsonParser().parse(message);
+        JsonObject  jobject = jelement.getAsJsonObject();
+        JsonElement spellIDJson = jobject.get("spellID");
+        JsonElement targetIDJson = jobject.get("targetID");
+        String idSpell = spellIDJson.getAsString();
+        String targetID = targetIDJson.getAsString();
+
+        Game game = this.myApplication.getGame();
+        Player player = game.getPlayerByID(sessionId);
+        ConcreteSpell spellToPlay = (ConcreteSpell)player.findCardById(idSpell);
+        ConcreteMinion minionTargeted = (ConcreteMinion)player.findCardById(targetID);
+        if(minionTargeted == null ){
+            minionTargeted = (ConcreteMinion)player.getOpponent().findCardById(targetID);
+        }
+
+        myApplication.playSpellCard(spellToPlay, minionTargeted, player, game);
         return null;
     }
 

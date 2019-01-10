@@ -23,9 +23,6 @@ public class TransformInto extends TargetedEffect {
         this.myPlayer = mySpell.getPlayer();
     }
 
-    /**
-     * TODO :write this method
-     */
     public void effect(Target target) {
 
     }

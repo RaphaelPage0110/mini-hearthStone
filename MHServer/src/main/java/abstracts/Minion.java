@@ -74,15 +74,19 @@ public abstract class Minion extends Card implements Target {
      * {@inheritDoc}
      */
     public int takeDamage(int damageTaken) {
-        this.currentHealthPoints = this.currentHealthPoints - damageTaken;
+        if (damageTaken >= 0) {
 
-        if(this.isDead()) {
+            this.currentHealthPoints = this.currentHealthPoints - damageTaken;
 
-            this.dies();
+            if(this.isDead())
+                this.dies();
 
+            return damageTaken;
+
+        } else {
+
+            return 0;
         }
-
-        return damageTaken;
     }
 
     /**

@@ -4,14 +4,10 @@ import impl.EntitiesFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import static abstracts.CardType.COMMON;
-import static abstracts.CardType.MAGE;
-import static abstracts.CardType.PALADIN;
-import static abstracts.CardType.WARRIOR;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class MinionTest {
 
@@ -56,7 +52,46 @@ public class MinionTest {
     }
 
     @Test
-    void maxHealthPointsTest() {
+    void takeDamageTest() {
+        assertEquals(yetiNoroit.getMaxHealthPoints(), yetiNoroit.getCurrentHealthPoints());
+        assertEquals(5, yetiNoroit.getCurrentHealthPoints());
+        assertFalse(yetiNoroit.isDead());
 
+        assertEquals(0, yetiNoroit.takeDamage(0)); //takeDamage returns the damage taken
+        assertEquals(5, yetiNoroit.getCurrentHealthPoints()); //This minion lost 0 HP
+        assertFalse(yetiNoroit.isDead());
+
+        assertEquals(1, yetiNoroit.takeDamage(1));
+        assertEquals(4, yetiNoroit.getCurrentHealthPoints()); //This minion lost 1 HP
+        assertFalse(yetiNoroit.isDead());
+
+        assertEquals(0, yetiNoroit.takeDamage(-10));
+        assertEquals(4, yetiNoroit.getCurrentHealthPoints());
+        assertFalse(yetiNoroit.isDead());
+
+        assertEquals(4, yetiNoroit.takeDamage(4)); //This minion is dead
+        assertEquals(0, yetiNoroit.getCurrentHealthPoints());
+        assertTrue(yetiNoroit.isDead());
+
+
+        assertEquals(10, yetiNoroit.takeDamage(10)); //Even more dead !
+        assertEquals(-10, yetiNoroit.getCurrentHealthPoints());
+        assertTrue(yetiNoroit.isDead());
+
+        assertEquals(0, yetiNoroit.takeDamage(-1));
+        assertEquals(-10, yetiNoroit.getCurrentHealthPoints());
+        assertTrue(yetiNoroit.isDead());
+
+        /*-----Another Minion-----*/
+
+        assertEquals(7, avocatCommisDOffice.getCurrentHealthPoints());
+        assertFalse(avocatCommisDOffice.isDead());
+
+        assertEquals(0, avocatCommisDOffice.takeDamage(Integer.MIN_VALUE));
+        assertEquals(7, avocatCommisDOffice.getCurrentHealthPoints());
+        assertFalse(avocatCommisDOffice.isDead());
+
+        assertEquals(Integer.MAX_VALUE, avocatCommisDOffice.takeDamage(Integer.MAX_VALUE)); //Well, it hurts.
+        assertEquals(Integer.MIN_VALUE + 7+1, avocatCommisDOffice.getCurrentHealthPoints());
     }
 }

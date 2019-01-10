@@ -81,6 +81,9 @@ public class EntitiesFactory {
                 break;
         }
 
+        Player myPlayer = new Player();
+        concreteMinion.setPlayer(myPlayer);
+
         return concreteMinion;
     }
 

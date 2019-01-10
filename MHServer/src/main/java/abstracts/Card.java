@@ -24,7 +24,7 @@ public abstract class Card {
     @Id
     protected String id;
 
-    private Map<String,String> abilityKeyWord;
+    protected Map<String,String> abilityKeyWord;
 
     public Map<String, String> getAbilityKeyWord() {
         return abilityKeyWord;

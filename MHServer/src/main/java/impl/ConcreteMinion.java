@@ -32,11 +32,16 @@ public class ConcreteMinion extends Minion implements Cloneable {
         this.name = minionName;
     }
 
+    public void generateEffect() {
+        generateMinionEffect(this.abilityKeyWord);
+        generateMinionDeathRattle(this.deathRattleKeyWords);
+    }
+
     /**
      * Set the minions effect
      * @param abilityKeyWord
      */
-    public void generateMinionEffect(Map<String,String> abilityKeyWord){
+    private void generateMinionEffect(Map<String, String> abilityKeyWord){
 
         //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
         //to fix it, I set the effect of a new minion to null. But that could be better.
@@ -73,7 +78,7 @@ public class ConcreteMinion extends Minion implements Cloneable {
      * set the minions deathRattle
      * @param deathRattle
      */
-    public void generateMinionDeathRattle(Map<String,String> deathRattle){
+    private void generateMinionDeathRattle(Map<String, String> deathRattle){
         //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
         //to fix it, I set the effect of a new minion to null. But that could be better.
         ArrayList<Effect> nullEffect = new ArrayList<>();

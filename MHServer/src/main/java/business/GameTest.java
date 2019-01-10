@@ -1,7 +1,6 @@
 package business;
 
-import abstracts.CardType;
-import abstracts.Hero;
+
 import business.controller.GameController;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
@@ -10,10 +9,8 @@ import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
-import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

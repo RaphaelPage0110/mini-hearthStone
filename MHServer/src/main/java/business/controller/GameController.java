@@ -6,7 +6,7 @@ import business.repositories.HeroRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import impl.*;
+import impl.*;//NOPMD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -116,7 +116,7 @@ public class GameController {
     @SendTo("user/queue/reply_passTurn")
     public Object passTurn(@Header("simpSessionId") String sessionId) {
         this.myApplication.getGame().setPassTurn(true);
-        Player player = this.myApplication.getGame().getActivePlayer();
+       //Player player = this.myApplication.getGame().getActivePlayer();
 
         return null;
     }

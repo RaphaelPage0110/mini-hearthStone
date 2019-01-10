@@ -10,7 +10,7 @@ import business.messageModels.MyHeroMessage;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
-import impl.*;
+import impl.*;//NOPMD
 import impl.behaviour.generic.notTargetedEffect.DrawCard;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.TransformInto;
@@ -187,7 +187,8 @@ public class Application{
      * @param activePlayer the player whose turn it is to play
      * @param opponent its opponent
      */
-    private void action(Player activePlayer, Player opponent, Game game) {
+    @SuppressWarnings("PMD")
+    private void action(Player activePlayer,Player opponent, Game game) {
         simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>C'est à vous!</b></h4>");
         activePlayer.setPlayOrder(activePlayer.getPlayOrder()+1);
         game.setPassTurn(false);
@@ -217,27 +218,27 @@ public class Application{
         boolean tenSecWarning = false;
         while(!game.isPassTurn()){
 
-            if(watch.getTime(TimeUnit.MINUTES) == 1){
-                if(!oneMinuteWarning){
+            if(watch.getTime(TimeUnit.MINUTES) == 1 && !oneMinuteWarning){
+
                     simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Plus qu'une minute!</b></h4>");
                     oneMinuteWarning = true;
-                }
+
 
             }
 
-            if(watch.getTime(TimeUnit.SECONDS) == 90){
-                if(!thirtySecWarning){
+            if(watch.getTime(TimeUnit.SECONDS) == 90 && !thirtySecWarning){
+
                     simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Plus que 30 secondes!</b></h4>");
                     thirtySecWarning = true;
-                }
+
 
             }
 
-            if(watch.getTime(TimeUnit.SECONDS) == 110){
-                if(!tenSecWarning){
+            if(watch.getTime(TimeUnit.SECONDS) == 110 && !tenSecWarning){
+
                     simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Plus que 10 secondes!</b></h4>");
                     tenSecWarning = true;
-                }
+
 
             }
 

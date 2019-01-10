@@ -2,7 +2,7 @@ package impl;
 
 import abstracts.CardType;
 import abstracts.Spell;
-import impl.behaviour.generic.notTargetedEffect.*;
+import impl.behaviour.generic.notTargetedEffect.*; //NOPMD
 import impl.behaviour.generic.targetedEffect.DamageTarget;
 import impl.behaviour.generic.targetedEffect.ModifyDamagePointsOneMinion;
 import impl.behaviour.generic.targetedEffect.TransformInto;

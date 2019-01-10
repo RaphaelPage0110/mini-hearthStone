@@ -1,8 +1,6 @@
 package impl;
 
-import abstracts.Minion;
 import identifiers.IdGame;
-import java.util.ArrayList;
 
 public class Game {
 

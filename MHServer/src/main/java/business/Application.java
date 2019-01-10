@@ -181,7 +181,6 @@ public class Application{
     }
 
     /**
-     * TODO : Compléter cette fonction quand on en saura plus sur comment communiquer avec le client
      * allows a player to play its turn
      * @param activePlayer the player whose turn it is to play
      * @param opponent its opponent
@@ -267,7 +266,6 @@ public class Application{
 
     /**
      * allows to attack a hero
-     * TODO : Ecrire cette méthode
      * @param attackerID : id of the attacker
      */
     public void attackHero(String attackerID) {
@@ -448,19 +446,63 @@ public class Application{
                 sendBothPlayersMinion();
             } else {
 
-                activePlayer.getMyHero().activateEffect();
+                activePlayer.getMyHero().activateEffect(null);
 
             }
 
-            //a hero can only use its hero ability once
-            activePlayer.getMyHero().setCanUseHeroAbility(false);
-            //a hero ability cost 2 mana
-            activePlayer.changeMana(-2);
-
-            sendPlayerHeroMessage(activePlayer);
-            sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
-            sendManaMessage(activePlayer);
+            afterHeroPowerUsed(activePlayer, hero);
         }
+    }
+
+    /**
+     * allows a user to use a hero power that requires a target
+     * @param sessionId
+     * @param targetID
+     */
+    public void useHeroPowerOnTarget(String sessionId, String targetID){
+        Player activePlayer = game.getPlayerByID(sessionId);
+        ConcreteHero hero = activePlayer.getMyHero();
+        Target target;
+
+        if (hero.canUseHeroAbility()){
+
+            if (targetID.equals("hero")){
+                target = activePlayer.getOpponent().getMyHero();
+            } else {
+                target = (ConcreteMinion)activePlayer.getOpponent().findCardById(targetID);
+            }
+
+            hero.activateEffect(target);
+
+            afterHeroPowerUsed(activePlayer, hero);
+
+            if (target instanceof ConcreteHero){
+                sendOpponentPlayerHeroMessage(activePlayer);
+                sendPlayerHeroMessage(activePlayer.getOpponent());
+            }
+            else {
+                sendMinionsInPlay(activePlayer.getOpponent());
+            }
+        }
+
+
+    }
+
+    /**
+     * sets what happens after a hero uses its hero ability
+     * @param player
+     * @param hero
+     */
+    private void afterHeroPowerUsed(Player player, ConcreteHero hero){
+
+        //a hero can only use its hero ability once
+        hero.setCanUseHeroAbility(false);
+        //a hero ability cost 2 mana
+        player.changeMana(-2);
+
+        sendPlayerHeroMessage(player);
+        sendOpponentPlayerHeroMessage(player.getOpponent());
+        sendManaMessage(player);
     }
 
     /**

@@ -218,6 +218,12 @@ public class GameController {
         myApplication.useHeroPower(sessionId);
     }
 
+
+    @MessageMapping("/useHeroPowerOnTarget")
+    public void useHeroPowerOnTarget(@Header("simpSessionId") String sessionId, String targetID) {
+        myApplication.useHeroPowerOnTarget(sessionId, targetID);
+    }
+
     public Application getApplication() {
         return myApplication;
     }

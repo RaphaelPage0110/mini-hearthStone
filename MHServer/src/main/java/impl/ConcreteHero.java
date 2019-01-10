@@ -5,6 +5,8 @@ import abstracts.Hero;
 import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.DamageTarget;
+import inter.NotTargetedEffect;
+import inter.Target;
 
 import java.util.Map;
 
@@ -114,11 +116,16 @@ public class ConcreteHero extends Hero {
     }
 
     /**
-     * TODO : write this method
-     *
+     * Allows a hero to activate its hero power
      */
     @Override
-    public void activateEffect() {  this.getMyEffect().effect();
+    public void activateEffect(Target target) {
+        if (this.getMyEffect() instanceof NotTargetedEffect ){
+            this.getMyEffect().effect();
+        }
+        else {
+            this.getMyEffect().effect(target);
+        }
 
     }
 

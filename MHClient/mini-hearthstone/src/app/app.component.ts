@@ -429,6 +429,11 @@ export class AppComponent {
     }
 
     castHeroPowerOnTarget( targetID ){
+        this.stompClient.send(
+            '/useHeroPowerOnTarget',
+            {},
+            targetID
+        );
         this.closeTargetHeroPowerPopup();
         this.closeHeroPowerPopup();
     }
@@ -442,6 +447,11 @@ export class AppComponent {
     }
 
     castHeroPowerOnHero(){
+        this.stompClient.send(
+            '/useHeroPowerOnTarget',
+            {},
+            "hero"
+        );
         this.closeTargetHeroPowerPopup();
         this.closeHeroPowerPopup();
     }

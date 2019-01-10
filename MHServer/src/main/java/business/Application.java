@@ -325,8 +325,7 @@ public class Application{
                     minionToSummon.setUniqueID();
                     minionToSummon.setPlayer(activePlayer);
 
-                    minionToSummon.generateMinionEffect(minionToSummon.getAbilityKeyWord());
-                    minionToSummon.generateMinionDeathRattle(minionToSummon.getDeathRattleKeyWords());
+                    minionToSummon.generateEffect();
 
                     //we add the newly created minion to the game
                     activePlayer.addMinion(minionToSummon);
@@ -507,8 +506,7 @@ public class Application{
 
                 minionToAdd = minionPicked.clone();
 
-                minionToAdd.generateMinionEffect(minionToAdd.getAbilityKeyWord());
-                minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
+                minionToAdd.generateEffect();
 
                 minionToAdd.setPlayer(activePlayer);
                 minionToAdd.setUniqueID();

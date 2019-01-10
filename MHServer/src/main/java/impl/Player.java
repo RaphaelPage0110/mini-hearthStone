@@ -88,7 +88,6 @@ public class Player {
      */
     public void addMinion(ConcreteMinion minion) {
         myMinions.add(minion);
-        myGame.addMinionInPlay(minion);
     }
 
     public ArrayList<ConcreteMinion> getMyMinions() {
@@ -238,7 +237,6 @@ public class Player {
     public void removeMinionFromPlay(Minion minion){
 
         myMinions.remove(minion);
-        myGame.removeMinionFromGame(minion);
 
     }
 

@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class Game {
 
     private Integer id;
-    private ArrayList<Minion> minionsInPlay;
-    private Player player1;
+	private Player player1;
     private Player player2;
     private Player winner;
     private Player loser;
@@ -30,8 +29,8 @@ public class Game {
 	private boolean passTurn; //used to know if the player has passed his turn
 
     public Game(Player player1, Player player2) {
+
       this.id = new IdGame(this).getId();
-      this.minionsInPlay = new ArrayList<>();
       this.turn = 1;
       gameOver = false;
       this.player1 = player1;
@@ -57,27 +56,7 @@ public class Game {
   		this.id = id;
   	}
 
-  	/**
-  	* Returns value of minionsInPlay
-  	* @return
-  	*/
-  	public ArrayList<Minion> getMinionsInPlay() {
-  		return minionsInPlay;
-  	}
-
-  	/**
-  	* Sets new value of minionsInPlay
-  	* @param
-  	*/
-  	public void setMinionsInPlay(ArrayList<Minion> newMinion) {
-  		this.minionsInPlay = newMinion;
-  	}
-
-  	public void addMinionInPlay(Minion minion) {
-  		minionsInPlay.add(minion);
-	}
-
-  	/**
+	/**
   	* Returns value of player1
   	* @return
   	*/
@@ -135,14 +114,6 @@ public class Game {
 
 	public boolean getGameOver() {
   		return this.gameOver;
-	}
-
-	/**
-	 * allows a minion from the game. i.e when it dies
-	 * @param minion the minion to remove
-	 */
-	public void removeMinionFromGame(Minion minion){
-		minionsInPlay.remove(minion);
 	}
 
 	/**

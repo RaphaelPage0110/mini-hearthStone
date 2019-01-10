@@ -541,4 +541,19 @@ public class Application{
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+
+    public Application setMinionRepository(MinionRepository minionRepository) {
+        this.minionRepository = minionRepository;
+        return this;
+    }
+
+    public Application setSpellRepository(SpellRepository spellRepository) {
+        this.spellRepository = spellRepository;
+        return this;
+    }
+
+    public Application setSimpMessagingTemplate(SimpMessagingTemplate simpMessagingTemplate) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        return this;
+    }
 }

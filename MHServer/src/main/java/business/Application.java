@@ -628,7 +628,7 @@ public class Application{
                 ArrayList<Effect> nullEffect = new ArrayList<>();
                 spellToAdd.setMyEffects(nullEffect);
 
-                spellToAdd.generateEffect(spellToAdd.getAbilityKeyWord());
+                spellToAdd.generateSpellEffect(spellToAdd.getAbilityKeyWord());
                 activePlayer.addCardToStock(spellToAdd);
             }
             if (randomNum == 1 ){

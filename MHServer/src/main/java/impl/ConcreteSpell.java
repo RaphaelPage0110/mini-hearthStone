@@ -44,7 +44,11 @@ public class ConcreteSpell extends Spell  implements Cloneable {
         this.setAbilityKeyWord(abilityKeyWords);
         this.imgurl = imgurl;
 
-        generateEffect(abilityKeyWords);
+        generateSpellEffect(abilityKeyWords);
+    }
+
+    public void generateEffect() {
+        generateSpellEffect(this.abilityKeyWord);
     }
 
     public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text) {
@@ -59,7 +63,7 @@ public class ConcreteSpell extends Spell  implements Cloneable {
         this.setAbilityKeyWord(abilityKeyWords);
         this.imgurl = imgurl;
 
-        generateEffect(abilityKeyWords);
+        generateSpellEffect(abilityKeyWords);
     }
 
     /**
@@ -69,7 +73,7 @@ public class ConcreteSpell extends Spell  implements Cloneable {
      * ability keyword and value is its modifier
      * @param abilityKeyWords
      */
-    public void generateEffect (Map<String,String> abilityKeyWords) {
+    public void generateSpellEffect(Map<String,String> abilityKeyWords) {
         for (Map.Entry<String, String> entry : abilityKeyWords.entrySet()) {
 
             switch(entry.getKey()) {

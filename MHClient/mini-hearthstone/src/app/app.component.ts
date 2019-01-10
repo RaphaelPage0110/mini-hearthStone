@@ -97,7 +97,7 @@ export class AppComponent {
 
             _this.stompClient.subscribe('/user/queue/reply_yourTurn', function (resp) {
                 console.log("server answer: "+resp.body)
-                _this.openYourTurnPopup();
+                _this.openYourTurnPopup(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_passedTurn', function (resp) {
@@ -176,8 +176,9 @@ export class AppComponent {
         this.hisMinions = [];
     }
 
-    openYourTurnPopup() {
-        document.getElementById("yourTurnPopMessage").innerHTML = "<h4><b>C'est à vous!</b></h4>";
+    openYourTurnPopup(resp) {
+        document.getElementById("yourTurnPop").style.display = "none";
+        document.getElementById("yourTurnPopMessage").innerHTML = resp;
         document.getElementById("yourTurnPop").style.display = "block";
     }
 

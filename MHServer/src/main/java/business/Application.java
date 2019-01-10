@@ -18,6 +18,7 @@ import inter.Effect;
 import inter.NotTargetedEffect;
 import inter.Target;
 import inter.TargetedEffect;
+import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +27,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 public class Application{
@@ -186,7 +188,7 @@ public class Application{
      * @param opponent its opponent
      */
     private void action(Player activePlayer, Player opponent, Game game) {
-        simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "yourTurn");
+        simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>C'est à vous!</b></h4>");
         activePlayer.setPlayOrder(activePlayer.getPlayOrder()+1);
         game.setPassTurn(false);
         //we increase the mana of each player during the first 10 turns
@@ -207,10 +209,44 @@ public class Application{
         draw(activePlayer);
         sendHand(activePlayer);
 
-        //when implementing the time limit, it should be added here
+        //a player has 2 minutes to play
+        StopWatch watch = new StopWatch();
+        watch.start();
+        boolean oneMinuteWarning = false;
+        boolean thirtySecWarning = false;
+        boolean tenSecWarning = false;
         while(!game.isPassTurn()){
 
+            if(watch.getTime(TimeUnit.MINUTES) == 1){
+                if(!oneMinuteWarning){
+                    simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Plus qu'une minute!</b></h4>");
+                    oneMinuteWarning = true;
+                }
+
+            }
+
+            if(watch.getTime(TimeUnit.SECONDS) == 90){
+                if(!thirtySecWarning){
+                    simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Plus que 30 secondes!</b></h4>");
+                    thirtySecWarning = true;
+                }
+
+            }
+
+            if(watch.getTime(TimeUnit.SECONDS) == 110){
+                if(!tenSecWarning){
+                    simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Plus que 10 secondes!</b></h4>");
+                    tenSecWarning = true;
+                }
+
+            }
+
+            if(watch.getTime(TimeUnit.MINUTES) == 2){
+                simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>Temps écoulé!</b></h4>");
+                game.setPassTurn(true);
+            }
         }
+        watch.stop();
         simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user"+activePlayer.getSessionId(),"Passed turn");
     }
 

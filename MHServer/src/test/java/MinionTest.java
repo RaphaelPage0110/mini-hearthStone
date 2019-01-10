@@ -1,6 +1,8 @@
 import abstracts.Minion;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
+import impl.Player;
+import inter.Effect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MinionTest {
 
-    private Minion chefDeRaid,
+    private ConcreteMinion chefDeRaid,
             championFrisselame,
             sanglierBrocheroc,
             soldatDuCompteDeLOr,
@@ -35,9 +37,13 @@ public class MinionTest {
             "Recrue de la main d'argent"
     };
 
+    private Player player;
+
+    private EntitiesFactory entitiesFactory;
+
     @BeforeEach
     void setup() {
-        EntitiesFactory entitiesFactory = new EntitiesFactory();
+        entitiesFactory = new EntitiesFactory();
 
         chefDeRaid = entitiesFactory.createMinion(MINION_NAME[0]);
         championFrisselame = entitiesFactory.createMinion(MINION_NAME[1]);
@@ -49,6 +55,25 @@ public class MinionTest {
         imageMiroir = entitiesFactory.createMinion(MINION_NAME[7]);
         mouton = entitiesFactory.createMinion(MINION_NAME[8]);
         recrueDeLaMainDArgent = entitiesFactory.createMinion(MINION_NAME[9]);
+
+
+        //Poorly managed bidirectional association (Player-Card)
+        player = new Player();
+        player.addMinion(chefDeRaid); chefDeRaid.setPlayer(player);
+        player.addMinion(championFrisselame); championFrisselame.setPlayer(player);
+        player.addMinion(sanglierBrocheroc); sanglierBrocheroc.setPlayer(player);
+        player.addMinion(soldatDuCompteDeLOr); soldatDuCompteDeLOr.setPlayer(player);
+        player.addMinion(yetiNoroit); yetiNoroit.setPlayer(player);
+        player.addMinion(chevaucheurDeLoup); chevaucheurDeLoup.setPlayer(player);
+        player.addMinion(avocatCommisDOffice); avocatCommisDOffice.setPlayer(player);
+        player.addMinion(imageMiroir); imageMiroir.setPlayer(player);
+        player.addMinion(mouton); mouton.setPlayer(player);
+        player.addMinion(recrueDeLaMainDArgent); recrueDeLaMainDArgent.setPlayer(player);
+
+        for (ConcreteMinion minion : player.getMyMinions()) {
+            minion.generateEffect();
+        }
+
     }
 
     @Test
@@ -93,5 +118,50 @@ public class MinionTest {
 
         assertEquals(Integer.MAX_VALUE, avocatCommisDOffice.takeDamage(Integer.MAX_VALUE)); //Well, it hurts.
         assertEquals(Integer.MIN_VALUE + 7+1, avocatCommisDOffice.getCurrentHealthPoints());
+    }
+
+    @Test
+    void diesTest() {
+        assertTrue(sanglierBrocheroc.getMyDeathRattles().isEmpty()); //This minion doesn't have a Death Rattle. i.e. an effect when he dies.
+        assertTrue(player.getMyMinions().contains(sanglierBrocheroc));
+        sanglierBrocheroc.dies();
+        assertFalse(player.getMyMinions().contains(sanglierBrocheroc));
+
+        assertTrue(recrueDeLaMainDArgent.getMyDeathRattles().isEmpty());
+        assertTrue(player.getMyMinions().contains(recrueDeLaMainDArgent));
+        recrueDeLaMainDArgent.takeDamage(recrueDeLaMainDArgent.getMaxHealthPoints());
+        assertTrue(recrueDeLaMainDArgent.isDead());
+        assertFalse(player.getMyMinions().contains(recrueDeLaMainDArgent));
+
+        /*-----Raid Leader dies without having activated his effect-----*/
+        assertFalse(chefDeRaid.getMyDeathRattles().isEmpty()); //This minion have a Death Rattle.
+        assertTrue(player.getMyMinions().contains(chefDeRaid));
+        //In this case, we don't activate the effect "+1 attack" !
+        assertEquals(0, player.getMyDamageAura());
+        assertEquals(4, yetiNoroit.getDamagePoints());
+        chefDeRaid.dies();
+        assertEquals(-1, player.getMyDamageAura()); //The bonus effect wasn't activated ! So there is an attack malus.
+        assertFalse(chefDeRaid.isDead()); //Also, this minion is not really dead.
+
+
+        /*-----Raid Leader dies without after activating the bonus-----*/
+        player.setMyDamageAura(0);
+        entitiesFactory = new EntitiesFactory();
+        chefDeRaid = entitiesFactory.createMinion(MINION_NAME[0]);
+        player.addMinion(chefDeRaid); chefDeRaid.setPlayer(player);
+
+        chefDeRaid.generateEffect();
+
+        for (Effect effect : chefDeRaid.getMyEffects()) {
+            effect.effect();
+        }
+
+        assertFalse(chefDeRaid.getMyDeathRattles().isEmpty());
+        assertTrue(player.getMyMinions().contains(chefDeRaid));
+        assertEquals(1, player.getMyDamageAura());
+        assertEquals(4, yetiNoroit.getDamagePoints()); //We don't actually boost this property, but only the Player's aura
+        chefDeRaid.dies();
+        assertEquals(0, player.getMyDamageAura()); //Removing the bonus.
+        assertFalse(chefDeRaid.isDead());
     }
 }

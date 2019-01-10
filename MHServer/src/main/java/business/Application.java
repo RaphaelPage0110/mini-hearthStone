@@ -433,8 +433,7 @@ public class Application{
                     String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
                     ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
                     minionToSummon.setUniqueID();
-                    minionToSummon.generateMinionDeathRattle(minionToSummon.getDeathRattleKeyWords());
-                    minionToSummon.generateMinionEffect(minionToSummon.getAbilityKeyWord());
+                    minionToSummon.generateEffect();
                     minionToSummon.setPlayer(activePlayer);
 
                     //we add the minion to the game

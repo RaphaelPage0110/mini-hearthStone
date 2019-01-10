@@ -133,6 +133,7 @@ public class MinionTest {
         assertTrue(recrueDeLaMainDArgent.isDead());
         assertFalse(player.getMyMinions().contains(recrueDeLaMainDArgent));
 
+
         /*-----Raid Leader dies without having activated his effect-----*/
         assertFalse(chefDeRaid.getMyDeathRattles().isEmpty()); //This minion have a Death Rattle.
         assertTrue(player.getMyMinions().contains(chefDeRaid));
@@ -145,6 +146,7 @@ public class MinionTest {
 
 
         /*-----Raid Leader dies without after activating the bonus-----*/
+        /*--Begin setup--*/
         player.setMyDamageAura(0);
         entitiesFactory = new EntitiesFactory();
         chefDeRaid = entitiesFactory.createMinion(MINION_NAME[0]);
@@ -155,6 +157,7 @@ public class MinionTest {
         for (Effect effect : chefDeRaid.getMyEffects()) {
             effect.effect();
         }
+        /*--End setup--*/
 
         assertFalse(chefDeRaid.getMyDeathRattles().isEmpty());
         assertTrue(player.getMyMinions().contains(chefDeRaid));
@@ -163,5 +166,65 @@ public class MinionTest {
         chefDeRaid.dies();
         assertEquals(0, player.getMyDamageAura()); //Removing the bonus.
         assertFalse(chefDeRaid.isDead());
+    }
+
+    @Test
+    void healTest() {
+        soldatDuCompteDeLOr.setCurrentHealthPoints(1);
+        soldatDuCompteDeLOr.heal(10);
+        assertEquals(2, soldatDuCompteDeLOr.getCurrentHealthPoints());
+
+
+        mouton.setCurrentHealthPoints(0);
+        mouton.heal(2);
+        assertEquals(1, mouton.getCurrentHealthPoints());
+        mouton.setMaxHealthPoints(10);
+        assertEquals(1, mouton.getCurrentHealthPoints());
+        mouton.heal(4);
+        assertEquals(5, mouton.getCurrentHealthPoints());
+        mouton.heal(-5);
+        assertEquals(5, mouton.getCurrentHealthPoints());
+        mouton.heal(6);
+        assertEquals(10, mouton.getCurrentHealthPoints());
+
+        mouton.heal(Integer.MAX_VALUE);
+        assertEquals(10, mouton.getCurrentHealthPoints());
+        mouton.heal(Integer.MIN_VALUE);
+        assertEquals(10, mouton.getCurrentHealthPoints());
+
+        mouton.setCurrentHealthPoints(Integer.MAX_VALUE);
+        mouton.setMaxHealthPoints(Integer.MAX_VALUE);
+        mouton.heal(Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, mouton.getCurrentHealthPoints());
+
+        mouton.setCurrentHealthPoints(Integer.MIN_VALUE);
+        mouton.heal(2);
+        assertEquals(Integer.MIN_VALUE+2, mouton.getCurrentHealthPoints());
+        mouton.setCurrentHealthPoints(Integer.MIN_VALUE);
+        mouton.heal(Integer.MAX_VALUE);
+        assertEquals(-1, mouton.getCurrentHealthPoints());
+    }
+
+    @Test
+    void isDeadTest() {
+        assertFalse(championFrisselame.isDead());
+        championFrisselame.setCurrentHealthPoints(0);
+        assertTrue(championFrisselame.isDead());
+        championFrisselame.heal(1);
+        assertFalse(championFrisselame.isDead());
+
+        championFrisselame.setCurrentHealthPoints(Integer.MIN_VALUE);
+        assertTrue(championFrisselame.isDead());
+        championFrisselame.setCurrentHealthPoints(Integer.MIN_VALUE-1);
+        assertFalse(championFrisselame.isDead());
+        championFrisselame.setCurrentHealthPoints(Integer.MAX_VALUE);
+        assertFalse(championFrisselame.isDead());
+        championFrisselame.setCurrentHealthPoints(Integer.MAX_VALUE+1);
+        assertTrue(championFrisselame.isDead());
+    }
+
+    @Test
+    void attackTest() {
+
     }
 }

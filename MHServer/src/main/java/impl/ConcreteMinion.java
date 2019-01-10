@@ -132,7 +132,16 @@ public class ConcreteMinion extends Minion implements Cloneable {
      */
     @Override
     public void heal(int healthPoints) {
-        this.setCurrentHealthPoints(Math.min(this.currentHealthPoints+healthPoints,this.maxHealthPoints));
+        if (healthPoints >= 0) {
+            long sum = (long)this.currentHealthPoints + (long)healthPoints;
+            int hp;
+            if (sum >= Integer.MAX_VALUE) {
+                hp = Math.min(Integer.MAX_VALUE, this.maxHealthPoints);
+            } else {
+                hp  = (int)Math.min(sum, (long) this.maxHealthPoints);
+            }
+            this.currentHealthPoints = hp;
+        }
     }
 
     /**

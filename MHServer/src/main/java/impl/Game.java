@@ -86,33 +86,54 @@ public class Game {
   		this.player2 = player2;
   	}
 
+	/**
+	 * get the winner of the game
+	 * @return
+	 */
 	public Player getWinner() {
 		return winner;
 	}
 
+	/**
+	 * set the winner of the game
+	 * @param winner
+	 */
 	public void setWinner(Player winner) {
 		this.winner = winner;
 	}
 
+	/**
+	 * get the loser of the game
+	 * @return
+	 */
 	public Player getLoser() {
 		return loser;
 	}
 
+	/**
+	 * set the loser of the game
+	 * @param loser
+	 */
 	public void setLoser(Player loser) {
 		this.loser = loser;
 	}
 
+	/**
+	 *	return if the game is over
+	 * @return
+	 */
 	public boolean isGameOver() {
 		return gameOver;
 	}
 
+	/**
+	 * set the statue of the game (game over or not)
+	 * @param gameOver
+	 */
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
-	public boolean getGameOver() {
-  		return this.gameOver;
-	}
 
 	/**
 	 * allows two users to create their profile and links them to the game
@@ -121,6 +142,10 @@ public class Game {
 	public void instanciatePlayers() {
 	}
 
+	/**
+	 * get the number of turn since the begining of the game
+	 * @return
+	 */
     public int getTurn() {
         return turn;
     }
@@ -162,6 +187,11 @@ public class Game {
 		return this;
 	}
 
+	/**
+	 * retunr the player corresponding of the id (player1 or player2)
+	 * @param id
+	 * @return
+	 */
 	public Player getPlayerByID(String id){
 		if (player1.getSessionId().equals(id)){
 			return player1;

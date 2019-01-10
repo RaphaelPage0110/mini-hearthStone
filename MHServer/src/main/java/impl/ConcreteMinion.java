@@ -38,7 +38,9 @@ public class ConcreteMinion extends Minion implements Cloneable {
     }
 
     /**
-     * Set the minions effect
+     *  allows to generate the effect of a minion
+     *  the abilities of the minions are stored using a Map in the database in the form <key:value> where key is the
+     *  ability keyword and value is its modifier
      * @param abilityKeyWord
      */
     private void generateMinionEffect(Map<String, String> abilityKeyWord){
@@ -124,11 +126,19 @@ public class ConcreteMinion extends Minion implements Cloneable {
 
     }
 
+    /**
+     * add to the current health the number of health to be restor
+     * @param healthPoints
+     */
     @Override
     public void heal(int healthPoints) {
         this.setCurrentHealthPoints(Math.min(this.currentHealthPoints+healthPoints,this.maxHealthPoints));
     }
 
+    /**
+     * add a bonus to the max health point of the minion
+     * @param bonusHealtPoints
+     */
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
         this.maxHealthPoints += bonusHealtPoints;

@@ -33,10 +33,18 @@ public class Player {
         passTurn = true;
     }
 
+    /**
+     * set the id of the game session of the player
+     * @param sessionId
+     */
     public void setSessionId(String sessionId){
         this.sessionId = sessionId;
     }
 
+    /**
+     * get the id of the game session of the player
+     * @return
+     */
     public String getSessionId(){
         return sessionId;
     }
@@ -149,10 +157,18 @@ public class Player {
         this.myManaMax = myManaMax;
     }
 
+    /**
+     * get the mana of the player
+     * @return
+     */
     public int getMyMana() {
         return myMana;
     }
 
+    /**
+     * set the mana of te player
+     * @param myMana
+     */
     public void setMyMana(int myMana) {
         this.myMana = myMana;
     }
@@ -197,10 +213,18 @@ public class Player {
         myStock.remove(removedCard);
     }
 
+    /**
+     * return if the player play firdt or second
+     * @return
+     */
     public int getPlayOrder() {
         return playOrder;
     }
 
+    /**
+     * set the order of the player to play(first or second)
+     * @param playOrder
+     */
     public void setPlayOrder(int playOrder) {
         this.playOrder = playOrder;
     }
@@ -296,6 +320,10 @@ public class Player {
         return null;
     }
 
+    /**
+     * add the mana by the value in parameter
+     * @param value
+     */
     public void changeMana(int value){
         myMana+=value;
     }

@@ -4,9 +4,7 @@ import abstracts.Minion;
 import abstracts.Spell;
 import impl.ConcreteMinion;
 import impl.Player;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
 
 import java.util.ArrayList;
 
@@ -19,19 +17,20 @@ import java.util.ArrayList;
 public class DamageEnemyMinions extends NotTargetedEffect {
 
     private Spell mySpell;
+    private int damage;
 
-    public DamageEnemyMinions(Spell newSpell) {
+    public DamageEnemyMinions(Spell newSpell, int damage) {
         this.mySpell = newSpell;
+        this.damage = damage;
     }
 
     @Override
     public void effect() {
         Player myOpponent = mySpell.getPlayer().getOpponent();
         ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
-        int damages = mySpell.getDamagePoints();
 
         for (Minion target : hisMinions) {
-            target.takeDamage(damages);
+            target.takeDamage(damage);
         }
     }
 }

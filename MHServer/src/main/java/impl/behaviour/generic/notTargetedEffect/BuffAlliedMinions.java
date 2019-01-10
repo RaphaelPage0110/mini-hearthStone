@@ -2,9 +2,7 @@ package impl.behaviour.generic.notTargetedEffect;
 
 import abstracts.Minion;
 import impl.Player;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.TargetedEffect;
 
 
 /**

@@ -1,10 +1,9 @@
 package abstracts;
 
-import identifiers.IdSpell;
+
 
 import java.util.ArrayList;
-import inter.Effect;
-import org.springframework.data.annotation.Id;
+
 
 public abstract class Spell extends Card {
 

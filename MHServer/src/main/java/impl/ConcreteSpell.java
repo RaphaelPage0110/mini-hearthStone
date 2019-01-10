@@ -31,12 +31,13 @@ public class ConcreteSpell extends Spell  implements Cloneable {
         return spell;
     }
 
-    public ConcreteSpell(String name, int requiredMana, int bonus, CardType type, Map<String,String> abilityKeyWords, String imgurl, String text) {
+    public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text) {
         super();
 
         this.text = text;
         this.setName(name);
         this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
         this.setBonus(bonus);
         this.type = type;
         this.setAbilityKeyWord(abilityKeyWords);
@@ -77,6 +78,11 @@ public class ConcreteSpell extends Spell  implements Cloneable {
                     this.myEffects.add(abilityDamageAllOpponents);
                     break;
 
+                case "damageEnemyMinions":
+                    DamageEnemyMinions abilityDamageEnemyMinions = new DamageEnemyMinions(this, Integer.parseInt(entry.getValue()));
+                    this.myEffects.add(abilityDamageEnemyMinions);
+                    break;
+
                 case "modifyDamagePointsOneMinion":
                     ModifyDamagePointsOneMinion abilityBuffOneMinion = new ModifyDamagePointsOneMinion(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityBuffOneMinion);
@@ -95,6 +101,8 @@ public class ConcreteSpell extends Spell  implements Cloneable {
                 case "drawCard":
 
                     DrawCard abilityDraw = new DrawCard(this, Integer.parseInt(entry.getValue()) );
+                    this.myEffects.add(abilityDraw);
+                    break;
 
             }
         }

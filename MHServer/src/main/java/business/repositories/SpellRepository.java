@@ -8,6 +8,6 @@ import java.util.ArrayList;
 
 
 public interface SpellRepository extends MongoRepository<ConcreteSpell, String> {
-    public ConcreteSpell findByName(String spellName);
+     ConcreteSpell findByName(String spellName);
     ArrayList<ConcreteSpell> findByType(CardType cardType);
 }

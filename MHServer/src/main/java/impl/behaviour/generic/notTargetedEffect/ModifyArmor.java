@@ -2,10 +2,8 @@ package impl.behaviour.generic.notTargetedEffect;
 
 import abstracts.Hero;
 import abstracts.Spell;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
-import inter.TargetedEffect;
+
 
 /**
  * Class representing the special action "ModifyArmor" used for the "Shield Block" (fr:Maîtrise du blocage) spell.
@@ -22,6 +20,7 @@ public class ModifyArmor extends NotTargetedEffect {
 
     public ModifyArmor(Spell mySpell, int bonus) {
         this.mySpell = mySpell;
+        this.myHero = mySpell.getPlayer().getMyHero();
         this.bonus = bonus;
     }
     public ModifyArmor(Hero myHero, int bonus) {
@@ -34,5 +33,9 @@ public class ModifyArmor extends NotTargetedEffect {
 
         myHero.addArmor(bonus);
 
+    }
+
+    public Spell getMySpell() {
+        return mySpell;
     }
 }

@@ -1,16 +1,14 @@
 package impl.behaviour.minion;
 
-import inter.Effect;
-import inter.Target;
 import abstracts.Minion;
-import inter.TargetedEffect;
+import inter.NotTargetedEffect;
 
 /**
  * Class representing the special action "life steal" used for the "Chillblade Champion" (fr:Champion frisselame) minion.
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
-public class LifeSteal extends TargetedEffect {
+public class LifeSteal extends NotTargetedEffect {
 
     private Minion myMinion;
 
@@ -20,9 +18,10 @@ public class LifeSteal extends TargetedEffect {
     }
 
     @Override
-    public void effect(Target myTarget) {
-        myMinion.getPlayer().getMyHero().heal(
-                myTarget.takeDamage( myMinion.getDamagePoints()) );
+    public void effect() {
     }
 
+    public Minion getMyMinion() {
+        return myMinion;
+    }
 }

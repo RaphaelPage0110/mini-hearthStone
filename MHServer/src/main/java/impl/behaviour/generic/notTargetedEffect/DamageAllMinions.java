@@ -1,10 +1,10 @@
 package impl.behaviour.generic.notTargetedEffect;
-import inter.Effect;
+
+import abstracts.Spell;
+import impl.ConcreteMinion;
+import impl.Player;
 import inter.NotTargetedEffect;
 import inter.Target;
-import abstracts.Minion;
-import abstracts.Spell;
-import inter.TargetedEffect;
 
 import java.util.ArrayList;
 
@@ -26,12 +26,19 @@ public class DamageAllMinions extends NotTargetedEffect {
 
     @Override
     public void effect() {
-        ArrayList<Minion> myTargets;
-        myTargets = mySpell.getPlayer().getMyGame().getMinionsInPlay();
 
-        for (Minion targeted: myTargets) {
-            targeted.takeDamage(damage);
+        Player myPlayer = mySpell.getPlayer();
+        Player myOpponent = myPlayer.getOpponent();
+        ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
+        ArrayList<ConcreteMinion> myMinions = myPlayer.getMyMinions();
+
+        ArrayList<Target> myAdversaries = new ArrayList<Target>(hisMinions);
+        myAdversaries.addAll(myMinions);
+
+        for (Target target : myAdversaries) {
+
+            target.takeDamage(damage);
+
         }
-      
     }
 }

@@ -1,7 +1,5 @@
 package impl.behaviour.generic.targetedEffect;
 
-import abstracts.Hero;
-import abstracts.Minion;
 import abstracts.Spell;
 import impl.Player;
 import inter.Target;
@@ -34,5 +32,9 @@ public class TransformInto extends TargetedEffect {
 
     public String getMyMinionKeyword() {
         return myMinionKeyword;
+    }
+
+    public Player getMyPlayer() {
+        return myPlayer;
     }
 }

@@ -12,6 +12,8 @@ public class ConcreteHero extends Hero {
 
     private Map<String,String> abilityKeyWord;
 
+    public ConcreteHero() {}
+
 
     public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord, String heroName, String imgurl) {
         super();
@@ -72,7 +74,7 @@ public class ConcreteHero extends Hero {
      *
      */
     @Override
-    public void activateEffect() {
+    public void activateEffect() {  this.getMyEffect().effect();
 
     }
 

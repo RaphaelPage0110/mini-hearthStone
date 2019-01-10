@@ -187,6 +187,11 @@ public abstract class Minion extends Card implements Target {
                 target.takeDamage(totalDamageDealt);
                 //the enemy retaliates
                 this.takeDamage(totalDamageReceived);
+
+                //if the target has lifeSteal, then its hero is healed
+                if(((ConcreteMinion) target).isHasLifesteal()){
+                    ((ConcreteMinion) target).getPlayer().getMyHero().heal(totalDamageReceived);
+                }
             }
 
             //else the target is a hero
@@ -194,6 +199,11 @@ public abstract class Minion extends Card implements Target {
 
                 target.takeDamage(totalDamageDealt);
 
+            }
+
+            //if the minion has lifesteal, then his player's hero is healed
+            if (this.isHasLifesteal()){
+                player.getMyHero().heal(totalDamageDealt);
             }
             this.setCanAttack(false);
         }

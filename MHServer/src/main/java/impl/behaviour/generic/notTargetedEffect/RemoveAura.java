@@ -2,9 +2,7 @@ package impl.behaviour.generic.notTargetedEffect;
 
 import abstracts.Minion;
 import impl.Player;
-import inter.Effect;
 import inter.NotTargetedEffect;
-import inter.Target;
 
 /**
  * Class representing the special action "RemoveAura" used for the death rattles of the "Raid Leader" (fr:Chef de raid) minion.

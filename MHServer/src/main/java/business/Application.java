@@ -207,6 +207,7 @@ public class Application{
         draw(activePlayer);
         sendHand(activePlayer);
 
+        //when implementing the time limit, it should be added here
         while(!game.isPassTurn()){
 
         }
@@ -239,12 +240,27 @@ public class Application{
      */
     public void attackMinion(String attackerID, String targetID) {
 
+        Player activePlayer = game.getActivePlayer();
+        Player waitingPlayer = game.getWaitingPlayer();
 
-        ConcreteMinion minionThatAttacks = (ConcreteMinion)game.getActivePlayer().findCardById(attackerID);
-        ConcreteMinion minionToAttack = (ConcreteMinion)game.getWaitingPlayer().findCardById(targetID);
+        ConcreteMinion minionThatAttacks = (ConcreteMinion)activePlayer.findCardById(attackerID);
+        ConcreteMinion minionToAttack = (ConcreteMinion)waitingPlayer.findCardById(targetID);
 
         minionThatAttacks.attack(minionToAttack);
         sendBothPlayersMinion();
+
+        if(minionThatAttacks.isHasLifesteal()){
+            //we are sending the active player hero status to both players in case the minion that attacked had lifeSteal
+            sendPlayerHeroMessage(activePlayer);
+            sendOpponentPlayerHeroMessage(waitingPlayer);
+        }
+
+        if(minionToAttack.isHasLifesteal()){
+            //we are sending the waiting players status to both players if the minion targeted has lifesteal
+            sendPlayerHeroMessage(waitingPlayer);
+            sendOpponentPlayerHeroMessage(activePlayer);
+        }
+
 
     }
 
@@ -267,6 +283,13 @@ public class Application{
         sendOpponentPlayerHeroMessage(activePlayer);
         sendPlayerHeroMessage(waitingPlayer);
 
+        if(minionThatAttacks.isHasLifesteal()){
+            //the status of the active player's hero is sent to both players if the minion attacking has lifesteal
+            sendOpponentPlayerHeroMessage(waitingPlayer);
+            sendPlayerHeroMessage(activePlayer);
+        }
+
+
         //the status of the active player's minions is sent to both players
         sendMinionsInPlay(activePlayer);
 
@@ -279,6 +302,10 @@ public class Application{
      * @param game
      */
     public void playSpellCard(Spell spellToPlay, Player activePlayer, Game game) {
+
+        activePlayer.changeMana(-spellToPlay.getRequiredMana());
+
+        activePlayer.removeCardFromHand(spellToPlay);
 
         for (Effect effect : spellToPlay.getMyEffects() ) {
 
@@ -294,6 +321,10 @@ public class Application{
                     String minionKeyword = ((Summon)effect).getMyMinionKeyword();
                     ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
                     minionToSummon.setUniqueID();
+                    minionToSummon.setPlayer(activePlayer);
+
+                    minionToSummon.generateMinionEffect(minionToSummon.getAbilityKeyWord());
+                    minionToSummon.generateMinionDeathRattle(minionToSummon.getDeathRattleKeyWords());
 
                     //we add the newly created minion to the game
                     activePlayer.addMinion(minionToSummon);
@@ -337,6 +368,17 @@ public class Application{
 
             }
         }
+
+        sendManaMessage(activePlayer);
+
+        sendHand(activePlayer);
+        sendMinionsInPlay(activePlayer);
+        sendMinionsInPlay(activePlayer.getOpponent());
+
+        sendPlayerHeroMessage(activePlayer);
+        sendOpponentPlayerHeroMessage(activePlayer);
+        sendPlayerHeroMessage(activePlayer.getOpponent());
+        sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
 
     }
 
@@ -457,21 +499,11 @@ public class Application{
 
                 minionToAdd = minionPicked.clone();
 
-                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
-                //to fix it, I set the effect of a new minion to null. But that could be better.
-                ArrayList<Effect> nullEffect = new ArrayList<>();
-                minionToAdd.setMyEffects(nullEffect);
                 minionToAdd.generateMinionEffect(minionToAdd.getAbilityKeyWord());
+                minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
 
                 minionToAdd.setPlayer(activePlayer);
                 minionToAdd.setUniqueID();
-
-
-                //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
-                //to fix it, I set the effect of a new minion to null. But that could be better.
-                nullEffect = new ArrayList<>();
-                minionToAdd.setMyDeathRattles(nullEffect);
-                minionToAdd.generateMinionDeathRattle(minionToAdd.getDeathRattleKeyWords());
 
                 activePlayer.addCardToStock(minionToAdd);
             }

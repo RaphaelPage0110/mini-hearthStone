@@ -13,6 +13,7 @@ public class Player {
     private ConcreteHero myHero;
     private String sessionId;
     private boolean canUseHeroAbility;
+    private boolean passTurn;
     private Player opponent;
     private ArrayList<ConcreteMinion> myMinions  = new ArrayList<>();
     private ArrayList<Card> myHand  = new ArrayList<>();
@@ -29,8 +30,8 @@ public class Player {
         this.id = new IdPlayer(this).getId();
         this.myManaMax = 0;
         this.myDamageAura = 0;
-        boolean canUseHeroAbility = true;
-        boolean passTurn = true;
+        canUseHeroAbility = true;
+        passTurn = true;
     }
 
     public void setSessionId(String sessionId){
@@ -310,4 +311,11 @@ public class Player {
         myMana+=value;
     }
 
+    public boolean isPassTurn() {
+        return passTurn;
+    }
+
+    public void setPassTurn(boolean passTurn) {
+        this.passTurn = passTurn;
+    }
 }

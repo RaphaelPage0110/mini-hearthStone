@@ -29,6 +29,7 @@ public class Game {
 	private boolean passTurn; //used to know if the player has passed his turn
 
     public Game(Player player1, Player player2) {
+
       this.id = new IdGame(this).getId();
       this.turn = 1;
       gameOver = false;

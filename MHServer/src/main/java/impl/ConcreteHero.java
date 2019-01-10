@@ -2,15 +2,19 @@ package impl;
 
 import abstracts.CardType;
 import abstracts.Hero;
-import impl.behaviour.generic.targetedEffect.DamageTarget;
 import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 import impl.behaviour.generic.notTargetedEffect.Summon;
+import impl.behaviour.generic.targetedEffect.DamageTarget;
 
 import java.util.Map;
 
 public class ConcreteHero extends Hero {
 
     private Map<String,String> abilityKeyWord;
+    private String powerImgName;
+    private String powerImgText;
+    private String powerImgUrl;
+    private boolean canUseHeroAbility;
 
     public ConcreteHero() {}
 
@@ -25,9 +29,50 @@ public class ConcreteHero extends Hero {
         this.abilityKeyWord = abilityKeyWord;
         this.heroName = heroName;
         this.imgurl = imgurl;
+        this.canUseHeroAbility = true;
 
         generateEffect(abilityKeyWord);
 
+    }
+
+    public boolean canUseHeroAbility() {
+        if(myPlayer.getMyMana()>=2){
+            return canUseHeroAbility;
+        }else{
+            return false;
+        }
+    }
+
+    public void setCanUseHeroAbility(boolean canUseHeroAbility) {
+        this.canUseHeroAbility = canUseHeroAbility;
+    }
+
+    public String getPowerImgUrl() {
+        return powerImgUrl;
+    }
+
+    public void setPowerImgUrl(String powerImgUrl) {
+        this.powerImgUrl = powerImgUrl;
+    }
+
+    public String getPowerImgName() {
+        return powerImgName;
+    }
+
+    public void setPowerImgName(String powerImgName) {
+        this.powerImgName = powerImgName;
+    }
+
+    public String getPowerImgText() {
+        return powerImgText;
+    }
+
+    public void setPowerImgText(String powerImgText) {
+        this.powerImgText = powerImgText;
+    }
+
+    public boolean isCanUseHeroAbility() {
+        return canUseHeroAbility;
     }
 
     public void generateEffect(Map<String,String> abilityKeyWord){
@@ -51,7 +96,6 @@ public class ConcreteHero extends Hero {
                     break;
                 default:
                     break;
-
             }
         }
     }

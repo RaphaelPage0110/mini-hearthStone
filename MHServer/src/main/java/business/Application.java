@@ -10,10 +10,7 @@ import business.messageModels.MyHeroMessage;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
-import impl.ConcreteMinion;
-import impl.ConcreteSpell;
-import impl.Game;
-import impl.Player;
+import impl.*;
 import impl.behaviour.generic.notTargetedEffect.DrawCard;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.TransformInto;
@@ -201,7 +198,9 @@ public class Application{
         activePlayer.setMyMana(activePlayer.getMyManaMax());
 
         //we allow the players to use their heros ability
-        activePlayer.setCanUseHeroAbility(true);
+        activePlayer.getMyHero().setCanUseHeroAbility(true);
+        sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
+        sendPlayerHeroMessage(activePlayer);
 
         //we send their mana to the user and his opponent
         sendManaMessage(activePlayer);
@@ -236,7 +235,6 @@ public class Application{
 
     /**
      * allows to attack a minion
-     * TODO : Compléter avec le choix du joueur
      * @param attackerID
      * @param targetID
      */
@@ -409,6 +407,62 @@ public class Application{
             }
         }
 
+    }
+
+    /**
+     * allows a user to use a hero power that doesnt require a target
+     * @param sessionId
+     */
+    public void useHeroPower(String sessionId){
+        Player activePlayer = game.getPlayerByID(sessionId);
+        // Player activePlayer = game.getActivePlayer();
+        //Player waitingPlayer = game.getWaitingPlayer();
+        ConcreteHero hero = activePlayer.getMyHero();
+
+        if (hero.canUseHeroAbility()) {
+
+            Effect heroPower = hero.getMyEffect();
+
+            if (heroPower instanceof Summon) {
+
+                //some heroPowers could summon multiple minions of the same type at the same time
+                int numberOfMinionsToSummon = ((Summon)heroPower).getNumberSummoned();
+
+                for (int i=0; i<numberOfMinionsToSummon; i++) {
+
+                    //we fetch the minion to summon in the database
+                    String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
+                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+                    minionToSummon.setUniqueID();
+                    minionToSummon.generateMinionDeathRattle(minionToSummon.getDeathRattleKeyWords());
+                    minionToSummon.generateMinionEffect(minionToSummon.getAbilityKeyWord());
+                    minionToSummon.setPlayer(activePlayer);
+
+                    //we add the minion to the game
+                    activePlayer.addMinion(minionToSummon);
+
+                    //we apply its effects
+                    for (Effect effect : minionToSummon.getMyEffects() ) {
+                        effect.effect();
+                    }
+
+                }
+                sendBothPlayersMinion();
+            } else {
+
+                activePlayer.getMyHero().activateEffect();
+
+            }
+
+            //a hero can only use its hero ability once
+            activePlayer.getMyHero().setCanUseHeroAbility(false);
+            //a hero ability cost 2 mana
+            activePlayer.changeMana(-2);
+
+            sendPlayerHeroMessage(activePlayer);
+            sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
+            sendManaMessage(activePlayer);
+        }
     }
 
     /**

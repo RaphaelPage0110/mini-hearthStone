@@ -1,16 +1,12 @@
 package business.controller;
 
-import abstracts.Hero;
 import business.Application;
 import business.messageModels.Hello;
 import business.repositories.HeroRepository;
-import business.repositories.MinionRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import impl.*;
-import impl.behaviour.generic.notTargetedEffect.Summon;
-import inter.Effect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,7 +16,8 @@ import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,6 +46,7 @@ public class GameController {
         Player player = new Player();
         player.setSessionId(sessionId);
         ConcreteHero hero = heroRepo.findByHeroName(heroname);
+        hero.generateEffect(hero.getAbilityKeyWord());
         player.setMyHero(hero);
         hero.setMyPlayer(player);
 
@@ -216,49 +214,8 @@ public class GameController {
     }
 
     @MessageMapping("/useHeroPower")
-    @SendTo("user/queue/reply_useHeroPower")
     public void useHeroPower(@Header("simpSessionId") String sessionId) {
-        Game game = this.myApplication.getGame();
-        Player activePlayer = game.getPlayerByID(sessionId);
-       // Player activePlayer = game.getActivePlayer();
-        //Player waitingPlayer = game.getWaitingPlayer();
-        Hero hero = activePlayer.getMyHero();
-
-        if (activePlayer.canUseHeroAbility()) {
-
-            Effect heroPower = hero.getMyEffect();
-
-            if (heroPower instanceof Summon) {
-
-                //some heroPowers could summon multiple minions of the same type at the same time
-                int numberOfMinionsToSummon = ((Summon)heroPower).getNumberSummoned();
-
-                for (int i=0; i<numberOfMinionsToSummon; i++) {
-
-                    //we fetch the minion to summon in the database
-                    String minionKeyword = ((Summon) hero.getMyEffect()).getMyMinionKeyword();
-                    ConcreteMinion minionToSummon = myApplication.minionRepository.findByName(minionKeyword);
-
-                    //we add the minion to the player hand and to the game
-                    activePlayer.addMinion(minionToSummon);
-
-                    //we apply its effects
-                    for (Effect effect : minionToSummon.getMyEffects() ) {
-                        effect.effect();
-                    }
-
-                }
-
-            } else {
-
-                activePlayer.getMyHero().activateEffect();
-
-            }
-
-            //a hero can only use its hero ability once
-            activePlayer.setCanUseHeroAbility(false);
-
-        }
+        myApplication.useHeroPower(sessionId);
     }
 
     public Application getApplication() {

@@ -412,4 +412,42 @@ export class AppComponent {
         this.closeTargetPopup();
     }
 
+    openHeroPowerPopup(){
+        document.getElementById("heroPowerPopup").style.display = "block";
+    }
+
+    closeHeroPowerPopup(){
+        document.getElementById("heroPowerPopup").style.display = "none";
+    }
+
+    closeTargetHeroPowerPopup(){
+        document.getElementById("heroPowerPopupShowTarget").style.display = "none";
+    }
+
+    openPromptHeroPowerTarget(){
+        document.getElementById("heroPowerPopupShowTarget").style.display = "block";
+    }
+
+    castHeroPowerOnTarget( targetID ){
+        this.closeTargetHeroPowerPopup();
+        this.closeHeroPowerPopup();
+    }
+
+    useHeroPower(){
+        this.stompClient.send(
+            '/useHeroPower',
+            {}
+        );
+        this.closeHeroPowerPopup();
+    }
+
+    castHeroPowerOnHero(){
+        this.closeTargetHeroPowerPopup();
+        this.closeHeroPowerPopup();
+    }
+
+    openHeroPowerTargetList(){
+        document.getElementById("targetHeroPowerDetails").style.display = "block";
+    }
+
 }

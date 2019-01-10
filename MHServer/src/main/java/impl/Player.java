@@ -12,7 +12,7 @@ public class Player {
     private Game myGame;
     private ConcreteHero myHero;
     private String sessionId;
-    private boolean canUseHeroAbility;
+
     private boolean passTurn;
     private Player opponent;
     private ArrayList<ConcreteMinion> myMinions  = new ArrayList<>();
@@ -30,7 +30,6 @@ public class Player {
         this.id = new IdPlayer(this).getId();
         this.myManaMax = 0;
         this.myDamageAura = 0;
-        canUseHeroAbility = true;
         passTurn = true;
     }
 
@@ -258,14 +257,6 @@ public class Player {
     public void won(){
 
 
-    }
-
-    public boolean canUseHeroAbility() {
-        return canUseHeroAbility;
-    }
-
-    public void setCanUseHeroAbility(boolean canUseHeroAbility) {
-        this.canUseHeroAbility = canUseHeroAbility;
     }
 
     /**

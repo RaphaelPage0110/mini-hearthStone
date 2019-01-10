@@ -157,16 +157,44 @@
             <button class="btn btn-default" type="button" (click)="giveUp()" style="display: inline-block">Abandonner</button>
             <button id="passTurnBtn" class="btn cancel" style="display: none" (click)="passTurn()">Passer son tour</button>
         </div>
-        <div >
-            <p style="display: inline-block" >Mana: </p> <b > {{myMana?.currentMana}} / {{myMana?.manaMax}} </b>
-            <a class="card"  >
-                <img src= {{myHero?.imgurl}} alt="Avatar">
-            </a>
+        <div>
             <ul style="display: inline-block">
+                <li>Mana: <b > {{myMana?.currentMana}} / {{myMana?.manaMax}} </b> </li>
                 <li>Points de vie:  <b> {{myHero?.currentHealthPoints}} </b> </li>
                 <li *ngIf="myHero?.armorPoints>0">Armure: <b>{{myHero?.armorPoints}}</b></li>
                 <li>Aura : {{myMana?.aura}}</li>
             </ul>
+            <a class="card"  >
+                <img src= {{myHero?.imgurl}} alt="Avatar">
+            </a>
+            <a *ngIf="myHero?.canUseHeroPower" class="card"  style="display: inline-block" (click)="openHeroPowerPopup()">
+                <img  src= {{myHero?.powerImgUrl}} alt="Avatar">
+            </a>
+            <div *ngIf="myHero?.canUseHeroPower == false" class = "card">
+                <img  src= "https://bit.ly/2FmMVy7" alt="Avatar">
+            </div>
+
+            <div class="form-popup" id="heroPowerPopup" style="display: none">
+                <form class="form-container">
+                    <button type="submit" class="btn cancel" (click)="closeHeroPowerPopup()">Fermer</button>
+                    <div>
+                        <div *ngIf="myHero?.targetedHeroPower">
+                            <button class="btn btn-default" type="button" (click)="openPromptHeroPowerTarget()">Choisir une cible</button>
+                        </div>
+                        <div *ngIf="myHero?.targetedHeroPower == false">
+                            <button class="btn btn-default" type="button" (click)="useHeroPower()">Lancer le pouvoir héroïque</button>
+                        </div>
+                    </div>
+                    <img src={{myHero?.powerImgUrl}} alt="Avatar" style="width:100%">
+                    <div class="containerCardDetails">
+                        <h4><b>{{myHero.powerImgName}}</b></h4>
+                        <p>Coût: <b>2</b></p>
+                        <p>{{myHero.powerImgText}}</p>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
     </div>
 
@@ -257,6 +285,46 @@
                         <form class="form-container">
                             <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
                             <button class="btn btn-default" type="button" (click)="castSpellOnTarget( myTarget.id)">Cibler ce serviteur</button>
+                            <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
+                            <div class="containerCardDetails">
+                                <h4><b>{{myTarget.name}}</b></h4>
+                                {{myTarget.id}}
+                                <p>Coût: {{myTarget.requiredMana}}</p>
+                                <p>Dégats: <b>{{myTarget.damagePoints}}</b></p>
+                                <p>Vie: <b>{{myTarget.healthPoints}}</b></p>
+                                <p>{{myTarget.text}}</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="form-popup"  id="heroPowerPopupShowTarget" style="display: none; z-index: 50">
+
+    <form class="form-container">
+        <button type="submit" class="btn cancel" (click)="closeTargetHeroPowerPopup()">Fermer</button>
+        <button class="btn btn-default" type="button" (click)="castHeroPowerOnHero()">Cibler le héros ennemi</button>
+        <button class="btn btn-default" type="button" (click)="openHeroPowerTargetList()">Cibler un serviteur ennemi</button>
+        <div id="targetHeroPowerDetails" class="row" style="display: none">
+            <div class="targetDetails" *ngFor="let myTarget of hisMinions">
+                <div id="targetHeroPowerImage">
+                    <a (click)="openTargetDetails(myTarget.id)" >
+                        <img [ngClass]="{
+                                        'taunt': myTarget.taunt,
+                                        'canAttack': myTarget.canAttack,
+                                        'lifeSteal': myTarget.lifeSteal}"
+                             src= {{myTarget.imgurl}} alt="Avatar">
+                    </a >
+                </div>
+
+                <div [attr.id]="'targetDetailsPopup' + myTarget.id" style="position: relative; z-index: 100; display: none">
+                    <div class="form-popup" style="display: block">
+                        <form class="form-container">
+                            <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
+                            <button class="btn btn-default" type="button" (click)="castHeroPowerOnTarget( myTarget.id)">Cibler ce serviteur</button>
                             <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>

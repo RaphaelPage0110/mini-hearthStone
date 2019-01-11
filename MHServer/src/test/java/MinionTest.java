@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
 
-public class MinionTest {
+class MinionTest {
 
     private ConcreteMinion chefDeRaid,
             championFrisselame,
@@ -34,15 +34,13 @@ public class MinionTest {
             "Recrue de la main d'argent"
     };
 
-    private Player player, opponent;
+    private Player player;
 
     private ConcreteHero jaina;
 
-    private EntitiesFactory entitiesFactory;
-
     @BeforeEach
     void setup() {
-        entitiesFactory = new EntitiesFactory();
+        EntitiesFactory entitiesFactory = new EntitiesFactory();
 
         chefDeRaid = entitiesFactory.createMinion(MINION_NAME[0]);
         championFrisselame = entitiesFactory.createMinion(MINION_NAME[1]);
@@ -331,12 +329,23 @@ public class MinionTest {
         assertEquals(20, jaina.getCurrentHealthPoints());
         championFrisselame.attack(yetiNoroit);
         assertEquals(3, championFrisselame.getDamagePoints());
-        assertEquals(23, jaina.getCurrentHealthPoints());
+        assertEquals(23, jaina.getCurrentHealthPoints()); //Normal case
         assertEquals(2, yetiNoroit.getCurrentHealthPoints());
         assertFalse(championFrisselame.isCanAttack());
         assertTrue(championFrisselame.isHasLifesteal());
 
+    }
 
+    @Test
+    void attackingTargetLowHPWithLifeStealTest() {
+
+        /*--Begin setup--*/
+        for (Effect effect : championFrisselame.getMyEffects()) {
+            effect.effect();
+        }
+        /*--End setup--*/
+
+        /*-----Attacking a target with low HP-----*/
         assertTrue(championFrisselame.isHasLifesteal());
         jaina.setCurrentHealthPoints(20);
         championFrisselame.setCanAttack(true);
@@ -346,12 +355,23 @@ public class MinionTest {
         assertEquals(9, championFrisselame.getDamagePoints());
         assertEquals(1, mouton.getCurrentHealthPoints());
         championFrisselame.attack(mouton);
-        assertEquals(29, jaina.getCurrentHealthPoints());
+        assertEquals(29, jaina.getCurrentHealthPoints()); //Hero is healed depending on the number of Damage Point of his ally
         assertEquals(-8, mouton.getCurrentHealthPoints());
         assertTrue(mouton.isDead());
         assertFalse(championFrisselame.isCanAttack());
         assertTrue(championFrisselame.isHasLifesteal());
+    }
 
+    @Test
+    void attackingWithLifeStealAndHeroFullHPTest() {
+
+        /*--Begin setup--*/
+        for (Effect effect : championFrisselame.getMyEffects()) {
+            effect.effect();
+        }
+        /*--End setup--*/
+
+        /*-----Attacking with hero full HP-----*/
         assertTrue(championFrisselame.isHasLifesteal());
         jaina.setCurrentHealthPoints(30);
         assertEquals(jaina.getMaxHealthPoints(), jaina.getCurrentHealthPoints());
@@ -363,11 +383,21 @@ public class MinionTest {
         assertEquals(5, championFrisselame.getDamagePoints());
         assertEquals(1, mouton.getCurrentHealthPoints());
         championFrisselame.attack(mouton);
-        assertEquals(30, jaina.getCurrentHealthPoints());
+        assertEquals(30, jaina.getCurrentHealthPoints()); //Hero don't get more HP
         assertEquals(-4, mouton.getCurrentHealthPoints());
         assertTrue(mouton.isDead());
         assertFalse(championFrisselame.isCanAttack());
         assertTrue(championFrisselame.isHasLifesteal());
+    }
+
+    @Test
+    void attackingHisOwnHeroWithLifeStealTest() {
+
+        /*--Begin setup--*/
+        for (Effect effect : championFrisselame.getMyEffects()) {
+            effect.effect();
+        }
+        /*--End setup--*/
 
         /*-----Attacking his own hero-----*/
         assertTrue(championFrisselame.isHasLifesteal());
@@ -379,7 +409,7 @@ public class MinionTest {
         assertEquals(30, jaina.getCurrentHealthPoints());
         assertEquals(5, championFrisselame.getDamagePoints());
         championFrisselame.attack(jaina);
-        assertEquals(30, jaina.getCurrentHealthPoints());
+        assertEquals(30, jaina.getCurrentHealthPoints()); //Hero is injured and then healed with the same number of HP
         assertFalse(championFrisselame.isCanAttack());
         assertTrue(championFrisselame.isHasLifesteal());
     }

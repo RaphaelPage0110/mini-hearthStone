@@ -1,13 +1,12 @@
 import abstracts.Card;
-import abstracts.Spell;
-import impl.*;
-import org.junit.jupiter.api.BeforeEach;
+import impl.ConcreteMinion;
+import impl.ConcreteSpell;
 import impl.EntitiesFactory;
+import impl.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 public class SpellTest {
 
     private ConcreteSpell benedictionDePuissance,
@@ -67,7 +66,7 @@ public class SpellTest {
         player.addCardToStock(maitriseDuBlocage); maitriseDuBlocage.setPlayer(player);
 
         for (Card  spell : player.getMyStock()) {
-             spell.generateEffect();
+            ((ConcreteSpell)spell).generateEffect();
         }
         //Minion
         player.addMinion(sanglierBrocheroc); sanglierBrocheroc.setPlayer(player);

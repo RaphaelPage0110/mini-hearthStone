@@ -10,7 +10,6 @@
 
     <modules>
         <module>MHClient</module>
-        <module>MHDatabase</module>
         <module>MHServer</module>
     </modules>
 

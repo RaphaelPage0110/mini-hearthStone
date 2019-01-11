@@ -1,7 +1,6 @@
 package impl.behaviour.generic.targetedEffect;
 
-import abstracts.Spell;
-import impl.Player;
+import impl.ConcreteSpell;
 import inter.Target;
 import inter.TargetedEffect;
 
@@ -13,14 +12,12 @@ import inter.TargetedEffect;
  */
 public class TransformInto extends TargetedEffect {
 
-    private Spell mySpell;
+    private ConcreteSpell mySpell;
     private String myMinionKeyword;
-    private Player myPlayer;
 
-    public TransformInto(Spell newSpell, String minionKeyword) {
+    public TransformInto(ConcreteSpell newSpell, String minionKeyword) {
         this.mySpell = newSpell;
         this.myMinionKeyword = minionKeyword;
-        this.myPlayer = mySpell.getPlayer();
     }
 
     public void effect(Target target) {
@@ -29,9 +26,5 @@ public class TransformInto extends TargetedEffect {
 
     public String getMyMinionKeyword() {
         return myMinionKeyword;
-    }
-
-    public Player getMyPlayer() {
-        return myPlayer;
     }
 }

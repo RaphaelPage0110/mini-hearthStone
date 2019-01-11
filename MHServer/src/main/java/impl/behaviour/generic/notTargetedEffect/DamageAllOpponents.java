@@ -1,7 +1,8 @@
 package impl.behaviour.generic.notTargetedEffect;
-import abstracts.Hero;
-import abstracts.Spell;
+
+import impl.ConcreteHero;
 import impl.ConcreteMinion;
+import impl.ConcreteSpell;
 import impl.Player;
 import inter.NotTargetedEffect;
 import inter.Target;
@@ -16,10 +17,10 @@ import java.util.ArrayList;
  */
 public class DamageAllOpponents extends NotTargetedEffect {
 
-    private Spell mySpell;
+    private ConcreteSpell mySpell;
     private int damage;
 
-    public DamageAllOpponents(Spell mySpell, int damage) {
+    public DamageAllOpponents(ConcreteSpell mySpell, int damage) {
         this.mySpell = mySpell;
         this.damage = damage;
     }
@@ -29,7 +30,7 @@ public class DamageAllOpponents extends NotTargetedEffect {
 
         Player myPlayer = mySpell.getPlayer();
         Player myOpponent = myPlayer.getOpponent();
-        Hero hisHero = myOpponent.getMyHero();
+        ConcreteHero hisHero = myOpponent.getMyHero();
         ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
 
         ArrayList<Target> myAdversaries = new ArrayList<Target>(hisMinions);

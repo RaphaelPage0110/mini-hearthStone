@@ -1,4 +1,3 @@
-import abstracts.Hero;
 import impl.ConcreteHero;
 import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,15 +6,13 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static abstracts.CardType.MAGE;
-import static abstracts.CardType.PALADIN;
-import static abstracts.CardType.WARRIOR;
+import static abstracts.CardType.*;
 import static org.junit.Assert.assertEquals;
 
 
 class HeroTest {
 
-    private Hero warrior, paladin, mage;
+    private ConcreteHero warrior, paladin, mage;
     private Player player1 = new Player(), player2 = new Player(), player3 = new Player();
 
 

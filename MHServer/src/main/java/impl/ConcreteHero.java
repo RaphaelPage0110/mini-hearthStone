@@ -1,17 +1,60 @@
 package impl;
 
 import abstracts.CardType;
-import abstracts.Hero;
 import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.DamageTarget;
+import inter.Effect;
 import inter.NotTargetedEffect;
 import inter.Target;
+import org.springframework.data.annotation.Id;
 
 import java.util.Map;
 
-public class ConcreteHero extends Hero {
+public class ConcreteHero implements Target {
 
+    /**
+     * The ID of this ConcreteHero.
+     */
+    @Id
+    private String id;
+
+    /**
+     * the url of the heros picture
+     */
+    private String imgurl;
+
+    /**
+     * The type of the hero (mage, warrior or paladin)
+     */
+    private CardType heroType;
+
+    /**
+     * The name of the hero
+     */
+    private String heroName;
+
+    /**
+     * Indicates the maximum number of health points that this Hero has.
+     */
+    private int maxHealthPoints;
+
+    /**
+     * Indicates the current number of health points that this Hero has.
+     */
+    private int currentHealthPoints;
+
+    /**
+     * Indicates the number of armor points that this Hero has.
+     */
+    private int armorPoints;
+
+    /**
+     * Reference the list of actions or behaviors of this card.
+     */
+    private Effect myEffect;
+
+    private Player myPlayer;
     private Map<String,String> abilityKeyWord;
     private String powerImgName;
     private String powerImgText;
@@ -37,16 +80,114 @@ public class ConcreteHero extends Hero {
 
     }
 
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+
+    public CardType getHeroType() {
+        return heroType;
+    }
+
+    public void setHeroType(CardType heroType) {
+        this.heroType = heroType;
+    }
+
     /**
-     * return a boolean which said if the hero ability can be used
-     * @return
+     * Returns value of id
+     *
+     * @return id the id of the hero
      */
-    public boolean canUseHeroAbility() {
-        if(myPlayer.getMyMana()>=2){
-            return canUseHeroAbility;
-        }else{
-            return false;
-        }
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Returns value of currentHealthPoints
+     *
+     * @return healthPoints the current health points of the hero
+     */
+    public int getCurrentHealthPoints() {
+        return currentHealthPoints;
+    }
+
+    /**
+     * Sets new value of currentHealthPoints
+     *
+     * @param hp the current health points of the hero
+     */
+    public void setCurrentHealthPoints(int hp) {
+        this.currentHealthPoints = hp;
+    }
+
+    /**
+     * Returns value of armorPoints
+     *
+     * @return armorPoints the current armor points of the hero
+     */
+    public int getArmorPoints() {
+        return armorPoints;
+    }
+
+    /**
+     * Sets new value of armorPoints
+     *
+     * @param armor the armor points of the hero
+     */
+    public void setArmorPoints(int armor) {
+        this.armorPoints = armor;
+    }
+
+    /**
+     * Returns value of heroName
+     *
+     * @return heroName the name of the hero
+     */
+    public String getHeroName() {
+        return heroName;
+    }
+
+    /**
+     * Sets new value of heroName
+     * @param heroName the name of the hero
+     */
+    public void setHeroName(String heroName) {
+        this.heroName = heroName;
+    }
+
+    /**
+     * Returns the special ability of a hero
+     *
+     * @return myEffect the ability of a hero
+     */
+    public Effect getMyEffect() {
+        return myEffect;
+    }
+
+    /**
+     * Sets the new value of myEffects
+     *
+     * @param myEffect the special ability of a hero
+     */
+    public void setMyEffect(Effect myEffect) {
+        this.myEffect = myEffect;
+    }
+
+    public Player getMyPlayer() {
+        return myPlayer;
+    }
+
+    public void setMyPlayer(Player myPlayer) {
+        this.myPlayer = myPlayer;
     }
 
     /**
@@ -110,15 +251,15 @@ public class ConcreteHero extends Hero {
             switch(entry.getKey()) {
 
                 case "damageTarget":
-                    DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
+                    DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityDamage);
                     break;
                 case "modifyArmor" :
                     ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityArmor);
                     break;
-                case "summon" :
-                    Summon abilitySummon = new Summon(this, entry.getValue());
+                case "summon":
+                    Summon abilitySummon = new Summon(entry.getValue());
                     this.setMyEffect(abilitySummon);
                     break;
                 default:
@@ -146,13 +287,12 @@ public class ConcreteHero extends Hero {
      */
     @Override
     public void setMaxHealthPoints(int healthPoints) {
-
+        this.maxHealthPoints = healthPoints;
     }
 
     /**
      * Allows a hero to activate its hero power
      */
-    @Override
     public void activateEffect(Target target) {
         if (this.getMyEffect() instanceof NotTargetedEffect ){
             this.getMyEffect().effect();
@@ -187,4 +327,88 @@ public class ConcreteHero extends Hero {
     public int getMaxHealthPoints() {
         return this.maxHealthPoints;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int takeDamage(int damageTaken) {
+
+        if (damageTaken < this.armorPoints) {
+            this.armorPoints -= damageTaken;
+        } else {
+            this.currentHealthPoints = this.currentHealthPoints + this.armorPoints - damageTaken;
+            this.armorPoints = 0;
+        }
+
+        if (this.isDead()) {
+
+            this.dies();
+
+        }
+
+        return damageTaken;
+    }
+
+    /**
+     * Allows to give a few health points back to a living hero.
+     *
+     * @param healingPoints the number of health points to be returned.
+     */
+    public void heal(int healingPoints) {
+        this.currentHealthPoints = Math.min(maxHealthPoints, this.currentHealthPoints + healingPoints);
+    }
+
+    public void addArmor(int armor) {
+        this.armorPoints += armor;
+    }
+
+    /**
+     * check if the hero is dead
+     *
+     * @return true if the hero is dead
+     */
+    public boolean isDead() {
+
+        return currentHealthPoints <= 0;
+
+    }
+
+    /**
+     * what happens when the hero dies
+     */
+    public void dies() {
+
+        myPlayer.lost();
+
+
+    }
+
+    public void heroPower() {
+        myEffect.effect();
+    }
+
+    public void heroPower(Target target) {
+        myEffect.effect(target);
+    }
+
+    /**
+     * return a boolean which said if the hero ability can be used
+     *
+     * @return
+     */
+    public boolean canUseHeroAbility() {
+        if (myPlayer.getMyMana() >= 2) {
+            return canUseHeroAbility;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Hero[id=%s, heroName='%s', maxHealthPoints='%s', armorPoints='%s']",
+                id, heroName, maxHealthPoints, armorPoints);
+    }
+
 }

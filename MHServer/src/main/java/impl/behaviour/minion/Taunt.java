@@ -11,10 +11,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Taunt extends NotTargetedEffect {
 
-    private ConcreteMinion myMinion;
 
     public Taunt(@NotNull ConcreteMinion myMinion) {
-        this.myMinion = myMinion;
         myMinion.setHasTaunt(true);
     }
 
@@ -22,7 +20,4 @@ public class Taunt extends NotTargetedEffect {
     public void effect() {
     }
 
-    public ConcreteMinion getMyMinion() {
-        return myMinion;
-    }
 }

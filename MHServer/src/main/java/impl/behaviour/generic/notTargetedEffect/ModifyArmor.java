@@ -1,8 +1,9 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import abstracts.Hero;
-import abstracts.Spell;
+import impl.ConcreteHero;
+import impl.ConcreteSpell;
 import inter.NotTargetedEffect;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -14,16 +15,15 @@ import inter.NotTargetedEffect;
 public class ModifyArmor extends NotTargetedEffect {
 
 
-    private Spell mySpell;
-    private Hero myHero;
+    private ConcreteHero myHero;
     private int bonus;
 
-    public ModifyArmor(Spell mySpell, int bonus) {
-        this.mySpell = mySpell;
+    public ModifyArmor(@NotNull ConcreteSpell mySpell, int bonus) {
         this.myHero = mySpell.getPlayer().getMyHero();
         this.bonus = bonus;
     }
-    public ModifyArmor(Hero myHero, int bonus) {
+
+    public ModifyArmor(ConcreteHero myHero, int bonus) {
         this.myHero = myHero;
         this.bonus = bonus;
     }
@@ -33,9 +33,5 @@ public class ModifyArmor extends NotTargetedEffect {
 
         myHero.addArmor(bonus);
 
-    }
-
-    public Spell getMySpell() {
-        return mySpell;
     }
 }

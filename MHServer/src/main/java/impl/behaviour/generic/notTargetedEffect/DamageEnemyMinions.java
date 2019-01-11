@@ -1,7 +1,7 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import abstracts.Spell;
 import impl.ConcreteMinion;
+import impl.ConcreteSpell;
 import impl.Player;
 import inter.NotTargetedEffect;
 
@@ -16,10 +16,10 @@ import java.util.Iterator;
  */
 public class DamageEnemyMinions extends NotTargetedEffect {
 
-    private Spell mySpell;
+    private ConcreteSpell mySpell;
     private int damage;
 
-    public DamageEnemyMinions(Spell newSpell, int damage) {
+    public DamageEnemyMinions(ConcreteSpell newSpell, int damage) {
         this.mySpell = newSpell;
         this.damage = damage;
     }

@@ -1,7 +1,5 @@
 package impl.behaviour.generic.targetedEffect;
 
-import abstracts.Card;
-import abstracts.Hero;
 import inter.Target;
 import inter.TargetedEffect;
 
@@ -13,30 +11,14 @@ import inter.TargetedEffect;
  */
 public class DamageTarget extends TargetedEffect {
 
-    private Card myCard;
-    private Hero myHero;
     private int damage;
 
-    public DamageTarget(Card myCard, int damage) {
-        this.myCard = myCard;
-        this.damage = damage;
-    }
-
-    public DamageTarget(Hero myHero, int damage) {
-        this.myHero = myHero;
+    public DamageTarget(int damage) {
         this.damage = damage;
     }
 
     @Override
     public void effect(Target myTarget) {
         myTarget.takeDamage(damage);
-    }
-
-    public Card getMyCard() {
-        return myCard;
-    }
-
-    public Hero getMyHero() {
-        return myHero;
     }
 }

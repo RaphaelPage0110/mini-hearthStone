@@ -1,6 +1,5 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import abstracts.Spell;
 import inter.NotTargetedEffect;
 
 /**
@@ -11,11 +10,9 @@ import inter.NotTargetedEffect;
  */
 public class DrawCard extends NotTargetedEffect {
 
-    private Spell mySpell;
     private int numberCards;
 
-    public DrawCard(Spell newSpell, int numberCards) {
-        this.mySpell = newSpell;
+    public DrawCard(int numberCards) {
         this.numberCards = numberCards;
     }
 
@@ -29,9 +26,5 @@ public class DrawCard extends NotTargetedEffect {
      */
     public int getNumberDraw() {
         return numberCards;
-    }
-
-    public Spell getMySpell() {
-        return mySpell;
     }
 }

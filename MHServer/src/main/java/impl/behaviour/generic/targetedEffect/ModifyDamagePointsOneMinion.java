@@ -1,6 +1,5 @@
 package impl.behaviour.generic.targetedEffect;
 
-import abstracts.Spell;
 import impl.ConcreteMinion;
 import inter.Target;
 import inter.TargetedEffect;
@@ -12,11 +11,9 @@ import inter.TargetedEffect;
  * @version 0.1
  */
 public class ModifyDamagePointsOneMinion extends TargetedEffect {
-    private Spell mySpell;
     private int myDamage;
 
-    public ModifyDamagePointsOneMinion(Spell newSpell, int damage) {
-        this.mySpell = newSpell;
+    public ModifyDamagePointsOneMinion(int damage) {
         this.myDamage = damage;
     }
 
@@ -26,7 +23,4 @@ public class ModifyDamagePointsOneMinion extends TargetedEffect {
         targetedMinion.addDamagePoints(myDamage);
     }
 
-    public Spell getMySpell() {
-        return mySpell;
-    }
 }

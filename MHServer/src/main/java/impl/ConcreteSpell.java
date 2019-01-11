@@ -1,18 +1,33 @@
 package impl;
 
+import abstracts.Card;
 import abstracts.CardType;
-import abstracts.Spell;
-import impl.behaviour.generic.notTargetedEffect.*; //NOPMD
+import impl.behaviour.generic.notTargetedEffect.*;
 import impl.behaviour.generic.targetedEffect.DamageTarget;
 import impl.behaviour.generic.targetedEffect.ModifyDamagePointsOneMinion;
 import impl.behaviour.generic.targetedEffect.TransformInto;
 
+import java.util.ArrayList;
 import java.util.Map;
 
-public class ConcreteSpell extends Spell  implements Cloneable {
+public class ConcreteSpell extends Card implements Cloneable {
 
     public ConcreteSpell() {
+    }
 
+    public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text) {
+
+        this.myEffects = new ArrayList<>();
+        this.text = text;
+        this.setName(name);
+        this.requiredMana = requiredMana;
+        this.damagePoints = damagePoints;
+        this.setBonus(bonus);
+        this.type = type;
+        this.setAbilityKeyWord(abilityKeyWords);
+        this.imgurl = imgurl;
+
+        generateSpellEffect(abilityKeyWords);
     }
 
     public ConcreteSpell clone() {
@@ -51,23 +66,9 @@ public class ConcreteSpell extends Spell  implements Cloneable {
         generateSpellEffect(this.abilityKeyWord);
     }
 
-    public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text) {
-        super();
 
-        this.text = text;
-        this.setName(name);
-        this.requiredMana = requiredMana;
-        this.damagePoints = damagePoints;
-        this.setBonus(bonus);
-        this.type = type;
-        this.setAbilityKeyWord(abilityKeyWords);
-        this.imgurl = imgurl;
-
-        generateSpellEffect(abilityKeyWords);
-    }
 
     /**
-     * TODO : A COMPLETER
      * allows to generate the effect of a card
      * The abilities of the card are stored using a Map in the database in the form <key:value> where key is the
      * ability keyword and value is its modifier
@@ -79,12 +80,12 @@ public class ConcreteSpell extends Spell  implements Cloneable {
             switch(entry.getKey()) {
 
                 case "damageTarget":
-                    DamageTarget abilityDamage = new DamageTarget(this, Integer.parseInt(entry.getValue()));
+                    DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamage);
                     break;
 
                 case "summon":
-                    Summon abilitySummon = new Summon(this, entry.getValue());
+                    Summon abilitySummon = new Summon(entry.getValue());
                     this.myEffects.add(abilitySummon);
                     break;
 
@@ -104,7 +105,7 @@ public class ConcreteSpell extends Spell  implements Cloneable {
                     break;
 
                 case "modifyDamagePointsOneMinion":
-                    ModifyDamagePointsOneMinion abilityBuffOneMinion = new ModifyDamagePointsOneMinion(this, Integer.parseInt(entry.getValue()));
+                    ModifyDamagePointsOneMinion abilityBuffOneMinion = new ModifyDamagePointsOneMinion(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityBuffOneMinion);
                     break;
 
@@ -120,11 +121,18 @@ public class ConcreteSpell extends Spell  implements Cloneable {
 
                 case "drawCard":
 
-                    DrawCard abilityDraw = new DrawCard(this, Integer.parseInt(entry.getValue()) );
+                    DrawCard abilityDraw = new DrawCard(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDraw);
                     break;
 
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Minion[id=%s, spellName='%s', damage='%s']",
+                id, name, damagePoints);
     }
 }

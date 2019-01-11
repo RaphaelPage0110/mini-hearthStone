@@ -12,8 +12,6 @@ import {Hero} from "./hero.model";
 })
 export class AppComponent {
     title = 'mini Hearthstone';
-    description = 'Angular-WebSocket Demo';
-
     game : GameComponent = new GameComponent();
     greetings: string[] = [];
     myMinions: any[] = [];
@@ -96,13 +94,14 @@ export class AppComponent {
             });
 
             _this.stompClient.subscribe('/user/queue/reply_yourTurn', function (resp) {
+                document.getElementById("passTurnBtn").style.display = "inline-block";
                 console.log("server answer: "+resp.body)
                 _this.openYourTurnPopup(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_passedTurn', function (resp) {
+                document.getElementById("passTurnBtn").style.display = "none";
                 console.log("server answer: "+resp.body)
-                _this.passedTurn();
             });
 
             _this.stompClient.subscribe('/user/queue/reply_gameOver', function (resp) {
@@ -135,13 +134,23 @@ export class AppComponent {
                 console.log("La liste de vos cibles: "+resp.body)
                 _this.showTargets(resp.body);
             });
-
-
-
-
-
         });
+
+        document.getElementById("gameSearch").style.display = "block";
     }
+
+    disconnect() {
+        document.getElementById("gameSearch").style.display = "none";
+        document.getElementById("theBoard").style.display = "none";
+        this.cancelSearch();
+        if (this.stompClient != null) {
+            this.stompClient.disconnect();
+        }
+        this.setConnected(false);
+        console.log('Disconnected!');
+        this.showGreeting("Au revoir!");
+    }
+
 
     gameReady() {
         document.getElementById("cancelSearch").style.display = "none";
@@ -164,6 +173,7 @@ export class AppComponent {
     }
 
     gameOver(resp) {
+        document.getElementById("passTurnBtn").style.display = "none";
         document.getElementById("yourTurnPop").style.display = "block";
         document.getElementById("yourTurnPopMessage").innerHTML = "<h4><b>"+resp+"</b></h4>";
         document.getElementById("theBoard").style.display = "none";
@@ -203,25 +213,10 @@ export class AppComponent {
         document.getElementById("targetSpellDetails").style.display = "block";
     }
 
-    passedTurn(){
-        document.getElementById("passTurnBtn").style.display = "none";
-    }
-
     closeYourTurnPopup() {
         document.getElementById("yourTurnPop").style.display = "none";
-        document.getElementById("passTurnBtn").style.display = "inline-block";
     }
 
-
-    disconnect() {
-        if (this.stompClient != null) {
-            this.stompClient.disconnect();
-        }
-
-        this.setConnected(false);
-        console.log('Disconnected!');
-        this.showGreeting("Au revoir!");
-    }
 
     connectToGame() {
         this.closeHeroSelect();

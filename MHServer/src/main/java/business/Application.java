@@ -10,7 +10,7 @@ import business.messageModels.MyHeroMessage;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
-import impl.*;//NOPMD
+import impl.*;
 import impl.behaviour.generic.notTargetedEffect.DrawCard;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.TransformInto;
@@ -693,5 +693,16 @@ public class Application{
     public Application setSimpMessagingTemplate(SimpMessagingTemplate simpMessagingTemplate) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         return this;
+    }
+
+    public void gameOver(String loserID){
+
+
+        Player loser = game.getPlayerByID(loserID);
+        game.setLoser(loser);
+        game.setWinner(loser.getOpponent());
+        game.setGameOver(true);
+        game.setPassTurn(true);
+
     }
 }

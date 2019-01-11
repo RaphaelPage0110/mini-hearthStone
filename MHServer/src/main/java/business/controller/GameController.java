@@ -6,7 +6,8 @@ import business.repositories.HeroRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import impl.*;//NOPMD
+import impl.*;
+import inter.ClientServerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
-public class GameController {
+public class GameController implements ClientServerInterface {
 
     @Autowired
     private Application myApplication;
@@ -41,7 +42,7 @@ public class GameController {
 
     @MessageMapping("/connectGame")
     @SendTo("user/queue/reply")
-    public Object connectToGame(@Header("simpSessionId") String sessionId, String heroname) {
+    public void connectToGame(@Header("simpSessionId") String sessionId, String heroname) {
         LOGGER.info("Received a connection from a user");
         Player player = new Player();
         player.setSessionId(sessionId);
@@ -59,16 +60,12 @@ public class GameController {
 
         if (waitingUsers.size() == 2) {
             startGame();
-            waitingUsers.clear();
         }
-
-
-        return null;
     }
 
     @MessageMapping("/disconnectGame")
     @SendTo("user/queue/reply")
-    public Object disconnectFromGame(@Header("simpSessionId") String sessionId) {
+    public void disconnectFromGame(@Header("simpSessionId") String sessionId) {
         LOGGER.info("Received a disconnection from a user");
         boolean done = false;
         for (Player player : waitingUsers) {
@@ -82,16 +79,21 @@ public class GameController {
             simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Recherche de partie annulée."));
         }
         else {
-            simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Vous ne recherchiez pas de partie."));
+            if(myApplication.getGame() != null){
+                myApplication.gameOver(sessionId);
+            }
+            else
+            {
+                simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Vous ne recherchiez pas de partie."));
+            }
         }
-
-        return null;
     }
 
     private void startGame() {
         LOGGER.log(Level.INFO, "Starting game");
         Player player1 = waitingUsers.get(0);
         Player player2 = waitingUsers.get(1);
+        waitingUsers.clear();
 
         String sessionPlayer1 = player1.getSessionId();
         String sessionPlayer2 = player2.getSessionId();
@@ -125,11 +127,7 @@ public class GameController {
     @SendTo("user/queue/reply_gameOver")
     public Object gameOver(@Header("simpSessionId") String sessionId) {
 
-        Game game = this.myApplication.getGame();
-        Player loser = this.myApplication.getGame().getPlayerByID(sessionId);
-        game.setLoser(loser);
-        game.setWinner(loser.getOpponent());
-        game.setGameOver(true);
+        myApplication.gameOver(sessionId);
 
         return null;
     }

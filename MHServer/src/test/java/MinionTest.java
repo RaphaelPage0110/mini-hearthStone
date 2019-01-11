@@ -1,3 +1,4 @@
+import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
 import impl.Player;
@@ -33,7 +34,9 @@ public class MinionTest {
             "Recrue de la main d'argent"
     };
 
-    private Player player;
+    private Player player, opponent;
+
+    private ConcreteHero jaina;
 
     private EntitiesFactory entitiesFactory;
 
@@ -69,6 +72,9 @@ public class MinionTest {
         for (ConcreteMinion minion : player.getMyMinions()) {
             minion.generateEffect();
         }
+
+        jaina = entitiesFactory.createHero("Jaina");
+        player.setMyHero(jaina);
 
     }
 
@@ -128,8 +134,10 @@ public class MinionTest {
         recrueDeLaMainDArgent.takeDamage(recrueDeLaMainDArgent.getMaxHealthPoints());
         assertTrue(recrueDeLaMainDArgent.isDead());
         assertFalse(player.getMyMinions().contains(recrueDeLaMainDArgent));
+    }
 
-
+    @Test
+    void raidLeaderDiesWithoutEffectTest() {
         /*-----Raid Leader dies without having activated his effect-----*/
         assertFalse(chefDeRaid.getMyDeathRattles().isEmpty()); //This minion have a Death Rattle.
         assertTrue(player.getMyMinions().contains(chefDeRaid));
@@ -140,16 +148,12 @@ public class MinionTest {
         assertEquals(-1, player.getMyDamageAura()); //The bonus effect wasn't activated ! So there is an attack malus.
         assertFalse(chefDeRaid.isDead()); //Also, this minion is not really dead.
 
-
+    }
+    @Test
+    void raidLeaderDiesWithEffectTest() {
         /*-----Raid Leader dies without after activating the bonus-----*/
+
         /*--Begin setup--*/
-        player.setMyDamageAura(0);
-        entitiesFactory = new EntitiesFactory();
-        chefDeRaid = entitiesFactory.createMinion(MINION_NAME[0]);
-        player.addMinion(chefDeRaid); chefDeRaid.setPlayer(player);
-
-        chefDeRaid.generateEffect();
-
         for (Effect effect : chefDeRaid.getMyEffects()) {
             effect.effect();
         }
@@ -220,7 +224,163 @@ public class MinionTest {
     }
 
     @Test
-    void attackTest() {
+    void attackingMinionTest() {
 
+        /*-----Attacking a Minion-----*/
+
+        //By default, Minions can't attack if we don't inform them it's their turn.
+        assertFalse(sanglierBrocheroc.isCanAttack());
+        sanglierBrocheroc.attack(recrueDeLaMainDArgent);
+        assertEquals(recrueDeLaMainDArgent.getMaxHealthPoints(), recrueDeLaMainDArgent.getCurrentHealthPoints()); //This minion hasn't lost any HP
+
+        sanglierBrocheroc.setCanAttack(true); //It's his turn ! He can attack.
+        assertTrue(sanglierBrocheroc.isCanAttack());
+        assertEquals(1, sanglierBrocheroc.getDamagePoints());
+        sanglierBrocheroc.attack(recrueDeLaMainDArgent);
+        assertEquals(recrueDeLaMainDArgent.getMaxHealthPoints() - 1, recrueDeLaMainDArgent.getCurrentHealthPoints());
+        assertTrue(recrueDeLaMainDArgent.isDead()); //In this case, he is also dead.
+
+        //We can't attack twice in a row with the same Minion !
+        assertFalse(sanglierBrocheroc.isCanAttack());
+        sanglierBrocheroc.attack(imageMiroir);
+        assertEquals(imageMiroir.getMaxHealthPoints(), imageMiroir.getCurrentHealthPoints());
+        assertFalse(sanglierBrocheroc.isCanAttack());
+
+    }
+
+    @Test
+    void attackingHeroTest() {
+
+        /*-----Attacking a Hero-----*/
+
+        assertFalse(sanglierBrocheroc.isCanAttack());
+        sanglierBrocheroc.attack(jaina);
+        assertEquals(jaina.getMaxHealthPoints(), jaina.getCurrentHealthPoints());
+
+        sanglierBrocheroc.setCanAttack(true);
+        assertTrue(sanglierBrocheroc.isCanAttack());
+        sanglierBrocheroc.attack(jaina);
+        assertEquals(jaina.getMaxHealthPoints() - 1, jaina.getCurrentHealthPoints());
+        assertFalse(sanglierBrocheroc.isCanAttack());
+    }
+
+    @Test
+    void attackingHeroArmorTest() {
+
+        /*-----Attacking a Hero with armor-----*/
+
+        assertEquals(0, jaina.getArmorPoints());
+        jaina.setArmorPoints(1);
+        assertEquals(1, jaina.getArmorPoints());
+        assertEquals(1, sanglierBrocheroc.getDamagePoints());
+        sanglierBrocheroc.setCanAttack(true);
+        assertTrue(sanglierBrocheroc.isCanAttack());
+        sanglierBrocheroc.attack(jaina);
+        assertEquals(0, jaina.getArmorPoints());
+        assertEquals(jaina.getMaxHealthPoints(), jaina.getCurrentHealthPoints());
+        assertFalse(sanglierBrocheroc.isCanAttack());
+
+        jaina.setArmorPoints(5);
+        sanglierBrocheroc.setDamagePoints(10);
+        sanglierBrocheroc.setCanAttack(true);
+        assertEquals(5, jaina.getArmorPoints());
+        assertEquals(10, sanglierBrocheroc.getDamagePoints());
+        assertEquals(30, jaina.getCurrentHealthPoints()); //Note that a hero has a maximum of 30 HP
+        assertTrue(sanglierBrocheroc.isCanAttack());
+        sanglierBrocheroc.attack(jaina);
+        assertEquals(0, jaina.getArmorPoints());
+        assertEquals(25, jaina.getCurrentHealthPoints());
+        assertFalse(sanglierBrocheroc.isCanAttack());
+    }
+
+    @Test
+    void attackingWithChargeBehaviourTest() {
+
+        /*-----The "Wolf Rider" minion has the "Charge" behaviour,
+        which allows him to attack without waiting for the next turn-----*/
+
+        /*--Begin setup--*/
+        for (Effect effect : chevaucheurDeLoup.getMyEffects()) {
+            effect.effect();
+        }
+        /*--End setup--*/
+
+        assertTrue(chevaucheurDeLoup.isCanAttack());
+        chevaucheurDeLoup.attack(mouton);
+        assertTrue(mouton.isDead());
+        assertEquals(mouton.getMaxHealthPoints() - chevaucheurDeLoup.getDamagePoints(), mouton.getCurrentHealthPoints());
+        assertFalse(chevaucheurDeLoup.isCanAttack());
+    }
+
+    @Test
+    void attackingWithLifeStealBehaviourTest() {
+
+        /*-----The "Chillblade Champion" minion has the "Life Steal" behaviour,
+        which allows him to heal his hero by attacking someone.
+        He also has the "Charge" behaviour-----*/
+
+        /*--Begin setup--*/
+        for (Effect effect : championFrisselame.getMyEffects()) {
+            effect.effect();
+        }
+        /*--End setup--*/
+
+        assertTrue(championFrisselame.isHasLifesteal());
+        assertTrue(championFrisselame.isCanAttack());
+        jaina.setCurrentHealthPoints(20);
+        assertEquals(20, jaina.getCurrentHealthPoints());
+        championFrisselame.attack(yetiNoroit);
+        assertEquals(3, championFrisselame.getDamagePoints());
+        assertEquals(23, jaina.getCurrentHealthPoints());
+        assertEquals(2, yetiNoroit.getCurrentHealthPoints());
+        assertFalse(championFrisselame.isCanAttack());
+        assertTrue(championFrisselame.isHasLifesteal());
+
+
+        assertTrue(championFrisselame.isHasLifesteal());
+        jaina.setCurrentHealthPoints(20);
+        championFrisselame.setCanAttack(true);
+        championFrisselame.setDamagePoints(9);
+        assertTrue(championFrisselame.isCanAttack());
+        assertEquals(20, jaina.getCurrentHealthPoints());
+        assertEquals(9, championFrisselame.getDamagePoints());
+        assertEquals(1, mouton.getCurrentHealthPoints());
+        championFrisselame.attack(mouton);
+        assertEquals(29, jaina.getCurrentHealthPoints());
+        assertEquals(-8, mouton.getCurrentHealthPoints());
+        assertTrue(mouton.isDead());
+        assertFalse(championFrisselame.isCanAttack());
+        assertTrue(championFrisselame.isHasLifesteal());
+
+        assertTrue(championFrisselame.isHasLifesteal());
+        jaina.setCurrentHealthPoints(30);
+        assertEquals(jaina.getMaxHealthPoints(), jaina.getCurrentHealthPoints());
+        championFrisselame.setCanAttack(true);
+        championFrisselame.setDamagePoints(5);
+        mouton.setCurrentHealthPoints(1);
+        assertTrue(championFrisselame.isCanAttack());
+        assertEquals(30, jaina.getCurrentHealthPoints());
+        assertEquals(5, championFrisselame.getDamagePoints());
+        assertEquals(1, mouton.getCurrentHealthPoints());
+        championFrisselame.attack(mouton);
+        assertEquals(30, jaina.getCurrentHealthPoints());
+        assertEquals(-4, mouton.getCurrentHealthPoints());
+        assertTrue(mouton.isDead());
+        assertFalse(championFrisselame.isCanAttack());
+        assertTrue(championFrisselame.isHasLifesteal());
+
+        /*-----Attacking his own hero-----*/
+        assertTrue(championFrisselame.isHasLifesteal());
+        jaina.setCurrentHealthPoints(30);
+        assertEquals(jaina.getMaxHealthPoints(), jaina.getCurrentHealthPoints());
+        championFrisselame.setCanAttack(true);
+        championFrisselame.setDamagePoints(5);
+        assertTrue(championFrisselame.isCanAttack());
+        assertEquals(30, jaina.getCurrentHealthPoints());
+        assertEquals(5, championFrisselame.getDamagePoints());
+        championFrisselame.attack(jaina);
+        assertEquals(30, jaina.getCurrentHealthPoints());
+        assertFalse(championFrisselame.isCanAttack());
+        assertTrue(championFrisselame.isHasLifesteal());
     }
 }

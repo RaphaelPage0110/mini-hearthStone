@@ -1,6 +1,6 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import abstracts.Minion;
+import impl.ConcreteMinion;
 import impl.Player;
 import inter.NotTargetedEffect;
 
@@ -11,9 +11,9 @@ import inter.NotTargetedEffect;
  */
 public class RemoveAura extends NotTargetedEffect {
 
-    Minion myMinion;
+    ConcreteMinion myMinion;
 
-    public RemoveAura(Minion minion) {
+    public RemoveAura(ConcreteMinion minion) {
 
         this.myMinion = minion;
 

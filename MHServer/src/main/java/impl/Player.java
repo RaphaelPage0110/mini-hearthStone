@@ -1,14 +1,11 @@
 package impl;
 
 import abstracts.Card;
-import abstracts.Minion;
-import identifiers.IdPlayer;
 
 import java.util.ArrayList;
 
 public class Player {
 
-    private Integer id;
     private Game myGame;
     private ConcreteHero myHero;
     private String sessionId;
@@ -27,7 +24,6 @@ public class Player {
      * Default empty Player constructor
      */
     public Player() {
-        this.id = new IdPlayer(this).getId();
         this.myManaMax = 0;
         this.myDamageAura = 0;
         passTurn = true;
@@ -99,22 +95,6 @@ public class Player {
 
     public ArrayList<ConcreteMinion> getMyMinions() {
         return myMinions;
-    }
-
-    /**
-     * Returns value of id
-     * @return id the id of the player
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * Sets new value of id
-     * @param id the id of the player
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**
@@ -257,7 +237,7 @@ public class Player {
      * remove a minion from the game ie when it dies
      * @param minion the minion to remove
      */
-    public void removeMinionFromPlay(Minion minion){
+    public void removeMinionFromPlay(ConcreteMinion minion){
 
         myMinions.remove(minion);
 

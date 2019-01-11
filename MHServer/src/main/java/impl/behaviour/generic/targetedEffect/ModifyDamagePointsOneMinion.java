@@ -1,7 +1,7 @@
 package impl.behaviour.generic.targetedEffect;
 
-import abstracts.Minion;
 import abstracts.Spell;
+import impl.ConcreteMinion;
 import inter.Target;
 import inter.TargetedEffect;
 
@@ -22,7 +22,7 @@ public class ModifyDamagePointsOneMinion extends TargetedEffect {
 
     @Override
     public void effect(Target myTarget) {
-        Minion targetedMinion = (Minion) myTarget;
+        ConcreteMinion targetedMinion = (ConcreteMinion) myTarget;
         targetedMinion.addDamagePoints(myDamage);
     }
 

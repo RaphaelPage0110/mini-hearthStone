@@ -1,4 +1,3 @@
-import abstracts.Minion;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
 import impl.Player;
@@ -6,10 +5,7 @@ import inter.Effect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MinionTest {
 
@@ -24,7 +20,7 @@ public class MinionTest {
             mouton,
             recrueDeLaMainDArgent;
 
-    private final String MINION_NAME[] = {
+    private final String[] MINION_NAME = {
             "Chef de raid",
             "Champion frisselame",
             "Sanglier Brocheroc",

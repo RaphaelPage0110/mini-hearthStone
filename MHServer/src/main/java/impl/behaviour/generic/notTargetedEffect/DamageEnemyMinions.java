@@ -32,9 +32,6 @@ public class DamageEnemyMinions extends NotTargetedEffect {
         for(Iterator<ConcreteMinion> target = hisMinions.iterator(); target.hasNext();){
             ConcreteMinion targeted = target.next();
             targeted.takeDamage(damage);
-            if(targeted.isDead()){
-                target.remove();
-            }
         }
     }
 }

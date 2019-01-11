@@ -2,11 +2,7 @@ package business;
 
 import abstracts.Card;
 import abstracts.CardType;
-import abstracts.Spell;
-import business.messageModels.HisHandMessage;
-import business.messageModels.ManaMessage;
-import business.messageModels.MyCardMessage;
-import business.messageModels.MyHeroMessage;
+import business.messageModels.*;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
@@ -57,9 +53,9 @@ public class Application{
     /**
      * allows to create a new game of mini-hearthstone
      */
-    public void createGame(Game newGame){
+    public void createGame(Player player1, Player player2){
 
-        this.game = newGame;
+        this.game = new Game(player1, player2);
         instanciatePlayers(game);
 
         while(!game.isGameOver()) {
@@ -85,6 +81,12 @@ public class Application{
 
         player1.setOpponent(player2);
         player2.setOpponent(player1);
+
+        String sessionPlayer1 = player1.getSessionId();
+        String sessionPlayer2 = player2.getSessionId();
+
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer1, new Hello("Vous êtes le joueur 1"));
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer2, new Hello("Vous êtes le joueur 2"));
 
         //the first player draws 3 cards
         for(int i=0;i<3;i++){
@@ -332,115 +334,140 @@ public class Application{
 
     /**
      * Allows a player to play a spell card
-     * @param spellToPlay
-     * @param activePlayer
-     * @param game
+     * @param spellToPlayID
+     * @param idPlayer
+     * @param idTarget
      */
-    public void playSpellCard(Spell spellToPlay, Target target, Player activePlayer, Game game) {
+    public void playSpellCard(String spellToPlayID, String idTarget, String idPlayer) {
 
-        activePlayer.changeMana(-spellToPlay.getRequiredMana());
+        Player player = game.getPlayerByID(idPlayer);
 
-        activePlayer.removeCardFromHand(spellToPlay);
+        //only the active player can play a spell card
+        if(player == game.getActivePlayer()){
 
-        for (Effect effect : spellToPlay.getMyEffects() ) {
+            ConcreteSpell spellToPlay = (ConcreteSpell)player.findCardById(spellToPlayID);
+            player.changeMana(-spellToPlay.getRequiredMana());
 
-            //if the card effect is to summon a minion, then we have to treat it separately
-            if(effect instanceof Summon) {
+            player.removeCardFromHand(spellToPlay);
 
-                //some spells can summon multiple minions of the same type at the same time
-                int numberOfMinionsToSummon = ((Summon)effect).getNumberSummoned();
+            for (Effect effect : spellToPlay.getMyEffects() ) {
 
-                for (int i=0; i<numberOfMinionsToSummon; i++) {
+                //if the card effect is to summon a minion, then we have to treat it separately
+                if(effect instanceof Summon) {
 
-                    //we fetch the minions details from the database using it's name
-                    String minionKeyword = ((Summon)effect).getMyMinionKeyword();
-                    ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
-                    minionToSummon.setUniqueID();
-                    minionToSummon.setPlayer(activePlayer);
+                    //some spells can summon multiple minions of the same type at the same time
+                    int numberOfMinionsToSummon = ((Summon)effect).getNumberSummoned();
 
-                    minionToSummon.generateEffect();
+                    for (int i=0; i<numberOfMinionsToSummon; i++) {
 
-                    //we add the newly created minion to the game
-                    activePlayer.addMinion(minionToSummon);
+                        //we fetch the minions details from the database using it's name
+                        String minionKeyword = ((Summon)effect).getMyMinionKeyword();
+                        ConcreteMinion minionToSummon = minionRepository.findByName(minionKeyword);
+                        minionToSummon.setUniqueID();
+                        minionToSummon.setPlayer(player);
 
-                }
+                        minionToSummon.generateEffect();
 
-            }
+                        //we add the newly created minion to the game
+                        player.addMinion(minionToSummon);
 
-            //the transform effect is somewhat similar to the summon effect, except that we don't summon a new minion,
-            //we just update the targeted minions parameters
-            else if (effect instanceof TransformInto ) {
-
-                ConcreteMinion minionBeingTransformed = (ConcreteMinion)target;
-                String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
-                ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
-                minionBeingTransformed.setName(minionModel.getName());
-                minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
-                minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
-                minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
-                minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
-                minionBeingTransformed.setType(minionModel.getType());
-                minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
-                minionBeingTransformed.setText(minionModel.getText());
-                minionBeingTransformed.setImgurl(minionModel.getImgurl());
-
-            }
-
-            else if (effect instanceof DrawCard ) {
-
-                for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
-
-                    this.draw(activePlayer);
+                    }
 
                 }
 
+                //the transform effect is somewhat similar to the summon effect, except that we don't summon a new minion,
+                //we just update the targeted minions parameters
+                else if (effect instanceof TransformInto ) {
+
+                    ConcreteMinion minionBeingTransformed = (ConcreteMinion)player.getOpponent().findCardById(idTarget);
+                    if(minionBeingTransformed == null){
+                        minionBeingTransformed = (ConcreteMinion)player.findCardById(idTarget);
+                    }
+                    String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
+                    ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
+
+                    minionBeingTransformed.setName(minionModel.getName());
+                    minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
+                    minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
+                    minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
+                    minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
+                    minionBeingTransformed.setType(minionModel.getType());
+                    minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
+                    minionBeingTransformed.setText(minionModel.getText());
+                    minionBeingTransformed.setImgurl(minionModel.getImgurl());
+
+                }
+
+                else if (effect instanceof DrawCard ) {
+
+                    for (int i = 0; i < ((DrawCard) effect).getNumberDraw(); i++) {
+
+                        this.draw(player);
+
+                    }
+
+                }
+
+                else if (effect instanceof NotTargetedEffect){
+
+                    effect.effect();
+
+                }
+
+                else if (effect instanceof TargetedEffect ) {
+
+                    ConcreteMinion target = (ConcreteMinion)player.getOpponent().findCardById(idTarget);
+                    if(target == null){
+                        target = (ConcreteMinion)player.findCardById(idTarget);
+                    }
+                    effect.effect(target);
+
+                }
             }
 
-            else if (effect instanceof NotTargetedEffect){
+            sendManaMessage(player);
 
-                effect.effect();
+            sendHand(player);
+            sendMinionsInPlay(player);
+            sendMinionsInPlay(player.getOpponent());
 
-            }
-
-            else if (effect instanceof TargetedEffect ) {
-
-                effect.effect(target);
-
-            }
+            sendPlayerHeroMessage(player);
+            sendOpponentPlayerHeroMessage(player);
+            sendPlayerHeroMessage(player.getOpponent());
+            sendOpponentPlayerHeroMessage(player.getOpponent());
         }
-
-        sendManaMessage(activePlayer);
-
-        sendHand(activePlayer);
-        sendMinionsInPlay(activePlayer);
-        sendMinionsInPlay(activePlayer.getOpponent());
-
-        sendPlayerHeroMessage(activePlayer);
-        sendOpponentPlayerHeroMessage(activePlayer);
-        sendPlayerHeroMessage(activePlayer.getOpponent());
-        sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
 
     }
 
     /**
      * allows a player to play a minion card
-     * @param minionToPlay
-     * @param activePlayer
-     * @param game
+     * @param minionToPlayID
+     * @param playerID
      */
-    public void playMinionCard(ConcreteMinion minionToPlay, Player activePlayer, Game game) {
+    public void playMinionCard(String minionToPlayID, String playerID) {
 
-        activePlayer.changeMana(-minionToPlay.getRequiredMana());
-        activePlayer.removeCardFromHand(minionToPlay);
-        activePlayer.addMinion(minionToPlay);
+        Player player = game.getPlayerByID(playerID);
 
-        //we apply all the card's effect
-        for (Effect effect : minionToPlay.getMyEffects()) {
-            if (effect instanceof NotTargetedEffect) {
-                effect.effect();
+        //only the active player can play a minion card
+        if(player == game.getActivePlayer()){
+            ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById (minionToPlayID);
+
+            player.changeMana(-minionToPlay.getRequiredMana());
+            player.removeCardFromHand(minionToPlay);
+            player.addMinion(minionToPlay);
+
+            //we apply all the card's effect
+            for (Effect effect : minionToPlay.getMyEffects()) {
+                if (effect instanceof NotTargetedEffect) {
+                    effect.effect();
+                }
             }
-        }
 
+            sendManaMessage(player);
+
+            sendHand(player);
+            sendMinionsInPlay(player);
+        }
     }
 
     /**
@@ -697,12 +724,21 @@ public class Application{
 
     public void gameOver(String loserID){
 
-
         Player loser = game.getPlayerByID(loserID);
         game.setLoser(loser);
         game.setWinner(loser.getOpponent());
         game.setGameOver(true);
         game.setPassTurn(true);
+
+    }
+
+    public void passTurn(String sessionId) {
+        Player passingTurn = game.getPlayerByID(sessionId);
+
+        //only the active player can pass its turn
+        if (passingTurn == game.getActivePlayer()){
+            game.setPassTurn(true);
+        }
 
     }
 }

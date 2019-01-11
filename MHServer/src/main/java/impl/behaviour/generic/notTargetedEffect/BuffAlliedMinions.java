@@ -1,6 +1,6 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import abstracts.Minion;
+import impl.ConcreteMinion;
 import impl.Player;
 import inter.NotTargetedEffect;
 
@@ -13,9 +13,9 @@ import inter.NotTargetedEffect;
  */
 public class BuffAlliedMinions extends NotTargetedEffect {
 
-    private Minion myMinion;
+    private ConcreteMinion myMinion;
 
-    public BuffAlliedMinions(Minion newMinion) {
+    public BuffAlliedMinions(ConcreteMinion newMinion) {
         this.myMinion = newMinion;
     }
 

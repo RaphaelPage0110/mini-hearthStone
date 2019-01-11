@@ -1,7 +1,8 @@
 package impl.behaviour.minion;
 
-import abstracts.Minion;
+import impl.ConcreteMinion;
 import inter.NotTargetedEffect;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Class representing the special action "Taunt" used for the "Public Defender" (fr:Avocat commis d'office) & "Goldshire Footman" (fr:Soldat du comté-de-l'or) minions.
@@ -10,9 +11,9 @@ import inter.NotTargetedEffect;
  */
 public class Taunt extends NotTargetedEffect {
 
-    private Minion myMinion;
+    private ConcreteMinion myMinion;
 
-    public Taunt(Minion myMinion) {
+    public Taunt(@NotNull ConcreteMinion myMinion) {
         this.myMinion = myMinion;
         myMinion.setHasTaunt(true);
     }
@@ -21,7 +22,7 @@ public class Taunt extends NotTargetedEffect {
     public void effect() {
     }
 
-    public Minion getMyMinion() {
+    public ConcreteMinion getMyMinion() {
         return myMinion;
     }
 }

@@ -1,10 +1,7 @@
 package impl;
 
-import identifiers.IdGame;
-
 public class Game {
 
-    private Integer id;
 	private Player player1;
     private Player player2;
     private Player winner;
@@ -28,7 +25,6 @@ public class Game {
 
     public Game(Player player1, Player player2) {
 
-      this.id = new IdGame(this).getId();
       this.turn = 1;
       gameOver = false;
       this.player1 = player1;
@@ -37,22 +33,6 @@ public class Game {
       this.player2.setPlayOrder(0);
       passTurn = true;
     }
-
-  	/**
-  	* Returns value of id
-  	* @return
-  	*/
-  	public Integer getId() {
-  		return id;
-  	}
-
-  	/**
-  	* Sets new value of id
-  	* @param
-  	*/
-  	public void setId(Integer id) {
-  		this.id = id;
-  	}
 
 	/**
   	* Returns value of player1

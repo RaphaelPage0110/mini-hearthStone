@@ -1,7 +1,8 @@
 package impl.behaviour.minion;
 
+import impl.ConcreteMinion;
 import inter.NotTargetedEffect;
-import abstracts.Minion;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Class representing the special action "charge" used for the "Wolf Rider" (fr:Chevaucheur de loup) minion.
@@ -10,9 +11,9 @@ import abstracts.Minion;
  */
 public class Charge extends NotTargetedEffect {
 
-    private Minion myMinion;
+    private ConcreteMinion myMinion;
 
-    public Charge(Minion myMinion) {
+    public Charge(@NotNull ConcreteMinion myMinion) {
         this.myMinion = myMinion;
         myMinion.setCanAttack(true);
     }
@@ -22,7 +23,7 @@ public class Charge extends NotTargetedEffect {
 
     }
 
-    public Minion getMyMinion() {
+    public ConcreteMinion getMyMinion() {
         return myMinion;
     }
 }

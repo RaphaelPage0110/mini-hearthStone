@@ -1,7 +1,8 @@
 package impl.behaviour.minion;
 
-import abstracts.Minion;
+import impl.ConcreteMinion;
 import inter.NotTargetedEffect;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Class representing the special action "life steal" used for the "Chillblade Champion" (fr:Champion frisselame) minion.
@@ -10,9 +11,9 @@ import inter.NotTargetedEffect;
  */
 public class LifeSteal extends NotTargetedEffect {
 
-    private Minion myMinion;
+    private ConcreteMinion myMinion;
 
-    public LifeSteal(Minion myMinion) {
+    public LifeSteal(@NotNull ConcreteMinion myMinion) {
         this.myMinion = myMinion;
         myMinion.setHasLifesteal(true);
     }
@@ -21,7 +22,7 @@ public class LifeSteal extends NotTargetedEffect {
     public void effect() {
     }
 
-    public Minion getMyMinion() {
+    public ConcreteMinion getMyMinion() {
         return myMinion;
     }
 }

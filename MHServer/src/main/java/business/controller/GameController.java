@@ -6,7 +6,8 @@ import business.repositories.HeroRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import impl.*;
+import impl.ConcreteHero;
+import impl.Player;
 import inter.ClientServerInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
@@ -40,6 +41,9 @@ public class GameController implements ClientServerInterface {
     @Autowired
     private HeroRepository heroRepo;
 
+    /**
+     * {@inheritDoc}
+     */
     @MessageMapping("/connectGame")
     @SendTo("user/queue/reply")
     public void connectToGame(@Header("simpSessionId") String sessionId, String heroname) {
@@ -59,10 +63,17 @@ public class GameController implements ClientServerInterface {
         simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Vous avez choisi "+heroname+"! En attente d'un autre joueur..."));
 
         if (waitingUsers.size() == 2) {
-            startGame();
+            LOGGER.log(Level.INFO, "Starting game");
+            Player player1 = waitingUsers.get(0);
+            Player player2 = waitingUsers.get(1);
+            waitingUsers.clear();
+            myApplication.createGame(player1, player2);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @MessageMapping("/disconnectGame")
     @SendTo("user/queue/reply")
     public void disconnectFromGame(@Header("simpSessionId") String sessionId) {
@@ -89,108 +100,53 @@ public class GameController implements ClientServerInterface {
         }
     }
 
-    private void startGame() {
-        LOGGER.log(Level.INFO, "Starting game");
-        Player player1 = waitingUsers.get(0);
-        Player player2 = waitingUsers.get(1);
-        waitingUsers.clear();
+    /**
+     * {@inheritDoc}
+     */
+    @MessageMapping("/passTurn")
+    @SendTo("user/queue/reply_passTurn")
+    public void passTurn(@Header("simpSessionId") String sessionId) {
+        this.myApplication.passTurn(sessionId);
+    }
 
-        String sessionPlayer1 = player1.getSessionId();
-        String sessionPlayer2 = player2.getSessionId();
+    /**
+     * {@inheritDoc}
+     */
+    @MessageMapping("/gameOver")
+    @SendTo("user/queue/reply_gameOver")
+    public void gameOver(@Header("simpSessionId") String sessionId) {
 
-        Game game = new Game(player1, player2);
-
-        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer1, new Hello("Vous êtes le joueur 1"));
-        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer2, new Hello("Vous êtes le joueur 2"));
-
-        LOGGER.log(Level.INFO, "Messages sent");
-
-        myApplication.createGame(game);
+        myApplication.gameOver(sessionId);
 
     }
 
     /**
-     * Used when a player passes his turn
-     * @param sessionId
-     * @return
+     * {@inheritDoc}
      */
-    @MessageMapping("/passTurn")
-    @SendTo("user/queue/reply_passTurn")
-    public Object passTurn(@Header("simpSessionId") String sessionId) {
-        this.myApplication.getGame().setPassTurn(true);
-       //Player player = this.myApplication.getGame().getActivePlayer();
-
-        return null;
-    }
-
-    @MessageMapping("/gameOver")
-    @SendTo("user/queue/reply_gameOver")
-    public Object gameOver(@Header("simpSessionId") String sessionId) {
-
-        myApplication.gameOver(sessionId);
-
-        return null;
-    }
-
     @MessageMapping("/playMinion")
     @SendTo({"user/queue/reply_playMinion", "user/queue/reply_hePlayedMinion"})
-    public Object playMinion(@Header("simpSessionId") String sessionId, String idMinion) {
+    public void playMinion(@Header("simpSessionId") String sessionId, String idMinion) {
 
-        Game game = this.myApplication.getGame();
-        Player player = game.getPlayerByID(sessionId);
-        ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById (idMinion);
+        myApplication.playMinionCard(idMinion, sessionId);
 
-        myApplication.playMinionCard(minionToPlay, player, game);
-        myApplication.sendManaMessage(player);
-
-        myApplication.sendHand(player);
-        myApplication.sendMinionsInPlay(player);
-
-        return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @MessageMapping("/playSpell")
     @SendTo("user/queue/reply_playSpell")
-    public Object playSpell(@Header("simpSessionId") String sessionId, String idSpell){
+    public void playSpell(@Header("simpSessionId") String sessionId, String idSpell){
 
-        Game game = this.myApplication.getGame();
-        Player player = game.getPlayerByID(sessionId);
-        ConcreteSpell spellToPlay = (ConcreteSpell)player.findCardById(idSpell);
+        myApplication.playSpellCard(idSpell, null, sessionId);
 
-        myApplication.playSpellCard(spellToPlay, null, player, game);
-        return null;
     }
 
-    @MessageMapping("/showTargetForMinion")
-    @SendTo("user/queue/reply_showTargets")
-    public Object showPossibleTargetsForMinion(@Header("simpSessionId") String sessionId) {
-
-        myApplication.showPossibleTargetsForMinion();
-        return null;
-    }
-
-    @MessageMapping("/attackThisMinion")
-    public Object attackThisMinion(@Header("simpSessionId") String sessionId, String message) {
-
-        JsonElement jelement = new JsonParser().parse(message);
-        JsonObject  jobject = jelement.getAsJsonObject();
-        JsonElement attackerIDJson = jobject.get("attackerID");
-        JsonElement targetIDJson = jobject.get("targetID");
-        String attackerID = attackerIDJson.getAsString();
-        String targetID = targetIDJson.getAsString();
-        myApplication.attackMinion(attackerID, targetID);
-        return null;
-    }
-
-    @MessageMapping("/attackHero")
-    public Object attackHero(@Header("simpSessionId") String sessionId, String attackerID){
-
-        myApplication.attackHero(attackerID);
-        return null;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @MessageMapping("/castSpellOnThisMinion")
-    public Object castSpellOnThisMinion(@Header("simpSessionId") String sessionId, String message) {
+    public void castSpellOnThisMinion(@Header("simpSessionId") String sessionId, String message) {
 
         JsonElement jelement = new JsonParser().parse(message);
         JsonObject  jobject = jelement.getAsJsonObject();
@@ -199,24 +155,54 @@ public class GameController implements ClientServerInterface {
         String idSpell = spellIDJson.getAsString();
         String targetID = targetIDJson.getAsString();
 
-        Game game = this.myApplication.getGame();
-        Player player = game.getPlayerByID(sessionId);
-        ConcreteSpell spellToPlay = (ConcreteSpell)player.findCardById(idSpell);
-        ConcreteMinion minionTargeted = (ConcreteMinion)player.findCardById(targetID);
-        if(minionTargeted == null ){
-            minionTargeted = (ConcreteMinion)player.getOpponent().findCardById(targetID);
-        }
-
-        myApplication.playSpellCard(spellToPlay, minionTargeted, player, game);
-        return null;
+        myApplication.playSpellCard(idSpell, targetID, sessionId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @MessageMapping("/showTargetForMinion")
+    @SendTo("user/queue/reply_showTargets")
+    public void showPossibleTargetsForMinion(@Header("simpSessionId") String sessionId) {
+
+        myApplication.showPossibleTargetsForMinion();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @MessageMapping("/attackThisMinion")
+    public void attackThisMinion(@Header("simpSessionId") String sessionId, String message) {
+
+        JsonElement jelement = new JsonParser().parse(message);
+        JsonObject  jobject = jelement.getAsJsonObject();
+        JsonElement attackerIDJson = jobject.get("attackerID");
+        JsonElement targetIDJson = jobject.get("targetID");
+        String attackerID = attackerIDJson.getAsString();
+        String targetID = targetIDJson.getAsString();
+        myApplication.attackMinion(attackerID, targetID);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @MessageMapping("/attackHero")
+    public void attackHero(@Header("simpSessionId") String sessionId, String attackerID){
+
+        myApplication.attackHero(attackerID);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @MessageMapping("/useHeroPower")
     public void useHeroPower(@Header("simpSessionId") String sessionId) {
         myApplication.useHeroPower(sessionId);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @MessageMapping("/useHeroPowerOnTarget")
     public void useHeroPowerOnTarget(@Header("simpSessionId") String sessionId, String targetID) {
         myApplication.useHeroPowerOnTarget(sessionId, targetID);

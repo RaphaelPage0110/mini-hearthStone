@@ -15,23 +15,25 @@ import org.jetbrains.annotations.NotNull;
 public class ModifyArmor extends NotTargetedEffect {
 
 
-    private ConcreteHero myHero;
+    private ConcreteHero hero;
+    private ConcreteSpell spell;
     private int bonus;
 
     public ModifyArmor(@NotNull ConcreteSpell mySpell, int bonus) {
-        this.myHero = mySpell.getPlayer().getMyHero();
+        this.spell = mySpell;
         this.bonus = bonus;
     }
 
     public ModifyArmor(ConcreteHero myHero, int bonus) {
-        this.myHero = myHero;
+        this.hero = myHero;
         this.bonus = bonus;
     }
 
     @Override
     public void effect() {
 
-        myHero.addArmor(bonus);
-
+        if (hero == null)
+            hero = spell.getPlayer().getMyHero();
+        hero.addArmor(bonus);
     }
 }

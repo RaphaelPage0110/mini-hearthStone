@@ -304,9 +304,7 @@ public class ConcreteHero implements Target {
     }
 
     @Override
-    public void addDamagePoints(int bonusDamage) {
-
-    }
+    public void addDamagePoints(int bonusDamage) {}
 
     /**
      * add the value in parameter to the maxHealthPoints of the hero
@@ -332,21 +330,23 @@ public class ConcreteHero implements Target {
      * {@inheritDoc}
      */
     public int takeDamage(int damageTaken) {
+        if (damageTaken >= 0) {
+            if (damageTaken < this.armorPoints) {
+                this.armorPoints -= damageTaken;
+                damageTaken = 0;
+            } else {
+                this.currentHealthPoints = this.currentHealthPoints + this.armorPoints - damageTaken;
+                damageTaken = damageTaken - this.armorPoints;
+                this.armorPoints = 0;
+            }
 
-        if (damageTaken < this.armorPoints) {
-            this.armorPoints -= damageTaken;
+            if (this.isDead())
+                this.dies();
+
+            return damageTaken;
         } else {
-            this.currentHealthPoints = this.currentHealthPoints + this.armorPoints - damageTaken;
-            this.armorPoints = 0;
+            return 0;
         }
-
-        if (this.isDead()) {
-
-            this.dies();
-
-        }
-
-        return damageTaken;
     }
 
     /**
@@ -354,8 +354,18 @@ public class ConcreteHero implements Target {
      *
      * @param healingPoints the number of health points to be returned.
      */
+    @Override
     public void heal(int healingPoints) {
-        this.currentHealthPoints = Math.min(maxHealthPoints, this.currentHealthPoints + healingPoints);
+        if (healingPoints >= 0) {
+            long sum = (long)this.currentHealthPoints + (long)healingPoints;
+            int hp;
+            if (sum >= Integer.MAX_VALUE) {
+                hp = Math.min(Integer.MAX_VALUE, this.maxHealthPoints);
+            } else {
+                hp  = (int)Math.min(sum, (long) this.maxHealthPoints);
+            }
+            this.currentHealthPoints = hp;
+        }
     }
 
     public void addArmor(int armor) {

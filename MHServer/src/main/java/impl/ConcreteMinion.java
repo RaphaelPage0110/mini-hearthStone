@@ -62,6 +62,8 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         this.setAbilityKeyWord(abilityKeyWord);
         this.deathRattleKeyWords = deathRattle;
         this.name = minionName;
+
+        generateEffect();
     }
 
     public ConcreteMinion() {
@@ -258,6 +260,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
         this.maxHealthPoints += bonusHealtPoints;
+        this.currentHealthPoints+=bonusHealtPoints;
     }
 
     @Override
@@ -288,6 +291,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int takeDamage(int damageTaken) {
         if (damageTaken >= 0) {
 

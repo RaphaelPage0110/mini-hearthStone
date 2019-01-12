@@ -67,10 +67,6 @@ class MinionTest {
         player.addMinion(mouton); mouton.setPlayer(player);
         player.addMinion(recrueDeLaMainDArgent); recrueDeLaMainDArgent.setPlayer(player);
 
-        for (ConcreteMinion minion : player.getMyMinions()) {
-            minion.generateEffect();
-        }
-
         jaina = entitiesFactory.createHero("Jaina");
         player.setMyHero(jaina);
 
@@ -137,7 +133,7 @@ class MinionTest {
     @Test
     void raidLeaderDiesWithoutEffectTest() {
         /*-----Raid Leader dies without having activated his effect-----*/
-        assertFalse(chefDeRaid.getMyDeathRattles().isEmpty()); //This minion have a Death Rattle.
+        assertFalse(chefDeRaid.getMyDeathRattles().isEmpty()); //This minion has a Death Rattle.
         assertTrue(player.getMyMinions().contains(chefDeRaid));
         //In this case, we don't activate the effect "+1 attack" !
         assertEquals(0, player.getMyDamageAura());

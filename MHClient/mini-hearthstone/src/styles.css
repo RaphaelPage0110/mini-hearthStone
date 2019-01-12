@@ -14,7 +14,7 @@ body {
 }
 body, input[type="text"], button {
   color: #888;
-  font-family: Cambria, Georgia;
+  font-family: Cambria, Georgia, serif;
 }
 /* everywhere else */
 * {

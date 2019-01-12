@@ -89,8 +89,8 @@ public class Application{
         String sessionPlayer1 = player1.getSessionId();
         String sessionPlayer2 = player2.getSessionId();
 
-        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer1, new Hello("Vous êtes le joueur 1"));
-        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user"+sessionPlayer2, new Hello("Vous êtes le joueur 2"));
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user" + sessionPlayer1, new HelloMessage("Vous êtes le joueur 1"));
+        simpMessagingTemplate.convertAndSend("/queue/reply_gameFound-user" + sessionPlayer2, new HelloMessage("Vous êtes le joueur 2"));
 
         //the first player draws 3 cards
         for(int i=0;i<3;i++){
@@ -121,7 +121,7 @@ public class Application{
 
     /**
      * send the opponent player's hero status to the a player
-     * @param player
+     * @param player the player
      */
     public void sendOpponentPlayerHeroMessage(Player player){
         MyHeroMessage myHeroMessage = new MyHeroMessage(player.getOpponent().getMyHero());
@@ -130,7 +130,7 @@ public class Application{
 
     /**
      * send his hero status to a player
-     * @param player
+     * @param player the player
      */
     public void sendPlayerHeroMessage(Player player){
         MyHeroMessage myHeroMessage = new MyHeroMessage(player.getMyHero());
@@ -139,7 +139,7 @@ public class Application{
 
     /**
      * Send the mana of the player to himself and his opponent
-     * @param player
+     * @param player the player
      */
     public void sendManaMessage(Player player){
         //we send their mana to the user and his opponent
@@ -168,7 +168,7 @@ public class Application{
                     minion.setCanAttack(true);
                 }
                 sendMinionsInPlay(player);
-                action(player,player.getOpponent(), game);
+                action(player, game);
             }
 
         }
@@ -191,10 +191,9 @@ public class Application{
     /**
      * allows a player to play its turn
      * @param activePlayer the player whose turn it is to play
-     * @param opponent its opponent
      */
     @SuppressWarnings("PMD")
-    private void action(Player activePlayer,Player opponent, Game game) {
+    private void action(Player activePlayer, Game game) {
         simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>C'est à vous!</b></h4>");
         activePlayer.setPlayOrder(activePlayer.getPlayOrder()+1);
         game.setPassTurn(false);
@@ -277,8 +276,8 @@ public class Application{
 
     /**
      * allows to attack a minion
-     * @param attackerID
-     * @param targetID
+     * @param attackerID the minion who is attacking
+     * @param targetID the minion who is targeted
      */
     public void attackMinion(String attackerID, String targetID) {
 
@@ -338,9 +337,9 @@ public class Application{
 
     /**
      * Allows a player to play a spell card
-     * @param spellToPlayID
-     * @param idPlayer
-     * @param idTarget
+     * @param spellToPlayID the id of the spell that will be played
+     * @param idPlayer the id of the player
+     * @param idTarget the id of the minion targeted
      */
     public void playSpellCard(String spellToPlayID, String idTarget, String idPlayer) {
 
@@ -450,8 +449,8 @@ public class Application{
 
     /**
      * allows a player to play a minion card
-     * @param minionToPlayID
-     * @param playerID
+     * @param minionToPlayID the id of the minion who is being placed on the boad
+     * @param playerID the id of the player playing the card
      */
     public void playMinionCard(String minionToPlayID, String playerID) {
 
@@ -481,7 +480,7 @@ public class Application{
 
     /**
      * allows a user to use a hero power that doesnt require a target
-     * @param sessionId
+     * @param sessionId the id of the player
      */
     public void useHeroPower(String sessionId){
         Player activePlayer = game.getPlayerByID(sessionId);
@@ -523,14 +522,14 @@ public class Application{
 
             }
 
-            afterHeroPowerUsed(activePlayer, hero);
+            afterHeroPowerUsed(activePlayer);
         }
     }
 
     /**
      * allows a user to use a hero power that requires a target
-     * @param sessionId
-     * @param targetID
+     * @param sessionId the id of the player
+     * @param targetID the id of the minion targeted
      */
     public void useHeroPowerOnTarget(String sessionId, String targetID){
         Player activePlayer = game.getPlayerByID(sessionId);
@@ -547,7 +546,7 @@ public class Application{
 
             hero.activateEffect(target);
 
-            afterHeroPowerUsed(activePlayer, hero);
+            afterHeroPowerUsed(activePlayer);
 
             if (target instanceof ConcreteHero){
                 sendOpponentPlayerHeroMessage(activePlayer);
@@ -563,11 +562,11 @@ public class Application{
 
     /**
      * sets what happens after a hero uses its hero ability
-     * @param player
-     * @param hero
+     * @param player the player
      */
-    private void afterHeroPowerUsed(Player player, ConcreteHero hero){
+    private void afterHeroPowerUsed(Player player) {
 
+        ConcreteHero hero = player.getMyHero();
         //a hero can only use its hero ability once
         hero.setCanUseHeroAbility(false);
         //a hero ability cost 2 mana
@@ -580,7 +579,7 @@ public class Application{
 
     /**
      * allows a player to draw a card
-     * @param activePlayer
+     * @param activePlayer the player
      */
     private void draw(Player activePlayer) {
 
@@ -602,7 +601,7 @@ public class Application{
 
     /**
      * refills the player stock until it's at ten cards again
-     * @param activePlayer
+     * @param activePlayer the player
      */
     private void refillStock(Player activePlayer) {
 
@@ -687,7 +686,7 @@ public class Application{
 
     /**
      * send the minions of one player in play to both of the players
-     * @param player
+     * @param player the player
      */
     public void sendMinionsInPlay(Player player){
 

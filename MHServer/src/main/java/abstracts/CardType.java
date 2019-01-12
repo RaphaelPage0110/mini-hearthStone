@@ -8,6 +8,6 @@ public enum CardType {
     COMMON,
     PALADIN,
     MAGE,
-    WARRIOR;
+    WARRIOR
 }
 

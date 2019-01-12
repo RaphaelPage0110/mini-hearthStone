@@ -12,19 +12,19 @@ public class MyCardMessage {
     /**
      * Indicates the points of damage that this card can inflict.
      */
-    protected int damagePoints;
+    private int damagePoints;
 
     /**
      * The name of the card
      */
     protected String name;
 
-    protected String imgurl;
+    private String imgurl;
 
     /**
      * Indicates the mana cost of this card.
      */
-    protected int requiredMana;
+    private int requiredMana;
 
     /**
      * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
@@ -37,13 +37,72 @@ public class MyCardMessage {
 
     private String text;
 
-    public boolean taunt;
+    private boolean taunt;
 
-    public boolean canAttack;
+    private boolean canAttack;
 
-    public boolean lifeSteal;
+    private boolean lifeSteal;
 
-    public boolean targetSpell;
+    private boolean targetSpell;
+
+    public MyCardMessage(Card card) {
+        id = card.getUniqueID();
+        type = card.getType().toString();
+        requiredMana = card.getRequiredMana();
+        name = card.getName();
+        imgurl = card.getImgurl();
+        text = card.getText();
+        if (card instanceof ConcreteMinion) {
+            cardType = "minion";
+            healthPoints = ((ConcreteMinion) card).getCurrentHealthPoints();
+            damagePoints = card.getDamagePoints() + card.getPlayer().getMyDamageAura();
+            taunt = ((ConcreteMinion) card).isHasTaunt();
+            canAttack = ((ConcreteMinion) card).isCanAttack();
+            lifeSteal = ((ConcreteMinion) card).isHasLifesteal();
+        }
+        if (card instanceof ConcreteSpell) {
+            cardType = "spell";
+            targetSpell = false;
+            for (Effect effect : card.getMyEffects()) {
+                if (effect instanceof TargetedEffect) {
+                    targetSpell = true;
+                }
+            }
+        }
+
+    }
+
+    public boolean isTaunt() {
+        return taunt;
+    }
+
+    public void setTaunt(boolean taunt) {
+        this.taunt = taunt;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    public boolean isLifeSteal() {
+        return lifeSteal;
+    }
+
+    public void setLifeSteal(boolean lifeSteal) {
+        this.lifeSteal = lifeSteal;
+    }
+
+    public boolean isTargetSpell() {
+        return targetSpell;
+    }
+
+    public void setTargetSpell(boolean targetSpell) {
+        this.targetSpell = targetSpell;
+    }
 
     public int getRequiredMana() {
         return requiredMana;
@@ -115,33 +174,5 @@ public class MyCardMessage {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-
-    public MyCardMessage(Card card) {
-        id = card.getUniqueID();
-        type = card.getType().toString();
-        requiredMana = card.getRequiredMana();
-        name = card.getName();
-        imgurl = card.getImgurl();
-        text = card.getText();
-        if (card instanceof ConcreteMinion ) {
-            cardType = "minion";
-            healthPoints = ((ConcreteMinion) card).getCurrentHealthPoints();
-            damagePoints = ((ConcreteMinion)card).getDamagePoints() + card.getPlayer().getMyDamageAura();
-            taunt = ((ConcreteMinion) card).isHasTaunt();
-            canAttack = ((ConcreteMinion) card).isCanAttack();
-            lifeSteal = ((ConcreteMinion) card).isHasLifesteal();
-        }
-        if (card instanceof ConcreteSpell) {
-            cardType = "spell";
-            targetSpell = false;
-            for (Effect effect : card.getMyEffects()){
-                if(effect instanceof TargetedEffect){
-                    targetSpell = true;
-                }
-            }
-        }
-
     }
 }

@@ -29,18 +29,10 @@ public class Player {
         passTurn = true;
     }
 
-    /**
-     * set the id of the game session of the player
-     * @param sessionId
-     */
     public void setSessionId(String sessionId){
         this.sessionId = sessionId;
     }
 
-    /**
-     * get the id of the game session of the player
-     * @return
-     */
     public String getSessionId(){
         return sessionId;
     }
@@ -53,10 +45,6 @@ public class Player {
         return myDamageAura;
     }
 
-    /**
-     * Sets the new value of aura
-     * @param aura
-     */
     public void setMyDamageAura(int aura) {
         this.myDamageAura = aura;
     }
@@ -72,7 +60,7 @@ public class Player {
 
     /**
      * remove a card from the players hand
-     * @param removedCard
+     * @param removedCard the card that should be removed from the player's hand
      */
     public void removeCardFromHand(Card removedCard) {
         myHand.remove(removedCard);
@@ -97,58 +85,30 @@ public class Player {
         return myMinions;
     }
 
-    /**
-     * Returns value of myHero
-     * @return myHero the hero of the player
-     */
     public ConcreteHero getMyHero() {
         return myHero;
     }
 
-    /**
-     * Sets new value of myHero
-     * @param myHero the hero of the player
-     */
     public void setMyHero(ConcreteHero myHero) {
         this.myHero = myHero;
     }
 
-    /**
-     * Returns value of myManaMax
-     * @return myManaMax the current mana of a player
-     */
     public int getMyManaMax() {
         return myManaMax;
     }
 
-    /**
-     * add a value to the current mana count
-     * @param moreMana how much we want to increase the players mana
-     */
     public void addManaMax(int moreMana) {
         this.myManaMax += moreMana;
     }
 
-    /**
-     * Sets new value of myManaMax
-     * @param myManaMax the current mana of a player
-     */
     public void setMyManaMax(int myManaMax) {
         this.myManaMax = myManaMax;
     }
 
-    /**
-     * get the mana of the player
-     * @return
-     */
     public int getMyMana() {
         return myMana;
     }
 
-    /**
-     * set the mana of te player
-     * @param myMana
-     */
     public void setMyMana(int myMana) {
         this.myMana = myMana;
     }
@@ -187,24 +147,16 @@ public class Player {
 
     /**
      * remove a card from the stock
-     * @param removedCard
+     * @param removedCard the card that should be removed from the stock
      */
     public void removeFromStock(Card removedCard) {
         myStock.remove(removedCard);
     }
 
-    /**
-     * return if the player play firdt or second
-     * @return
-     */
     public int getPlayOrder() {
         return playOrder;
     }
 
-    /**
-     * set the order of the player to play(first or second)
-     * @param playOrder
-     */
     public void setPlayOrder(int playOrder) {
         this.playOrder = playOrder;
     }
@@ -237,7 +189,7 @@ public class Player {
      * remove a minion from the game ie when it dies
      * @param minion the minion to remove
      */
-    public void removeMinionFromPlay(ConcreteMinion minion){
+    void removeMinionFromPlay(ConcreteMinion minion) {
 
         myMinions.remove(minion);
 
@@ -246,20 +198,11 @@ public class Player {
     /**
      * what happens when this player lose
      */
-    public void lost(){
+    void lost() {
 
         myGame.setGameOver(true);
         myGame.setLoser(this);
         myGame.setWinner(this.getOpponent());
-
-    }
-
-    /**
-     * what happens when this player wins
-     * TODO : write this method
-     */
-    public void won(){
-
 
     }
 
@@ -282,8 +225,8 @@ public class Player {
 
     /**
      * Return a card present in the players hand or that is on the board whose uniqueID matches the param
-     * @param id
-     * @return
+     * @param id of the card
+     * @return a card that matches the id
      */
     public Card findCardById(String id){
         for (Card card : myHand){
@@ -302,7 +245,7 @@ public class Player {
 
     /**
      * add the mana by the value in parameter
-     * @param value
+     * @param value the amount of mana being added
      */
     public void changeMana(int value){
         myMana+=value;

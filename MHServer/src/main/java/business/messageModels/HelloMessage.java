@@ -1,12 +1,12 @@
 package business.messageModels;
 
-public class Hello {
+public class HelloMessage {
     private String greeting;
 
-    public Hello() {
+    public HelloMessage() {
     }
 
-    public Hello(String greeting) {
+    public HelloMessage(String greeting) {
         this.greeting = greeting;
     }
 

@@ -72,7 +72,7 @@ public class ConcreteSpell extends Card implements Cloneable {
      * allows to generate the effect of a card
      * The abilities of the card are stored using a Map in the database in the form <key:value> where key is the
      * ability keyword and value is its modifier
-     * @param abilityKeyWords
+     * @param abilityKeyWords a map containing the keywords of the abilities of the spell
      */
     public void generateSpellEffect(Map<String,String> abilityKeyWords) {
         for (Map.Entry<String, String> entry : abilityKeyWords.entrySet()) {
@@ -90,7 +90,7 @@ public class ConcreteSpell extends Card implements Cloneable {
                     break;
 
                 case "transformInto":
-                    TransformInto abilityTransform = new TransformInto(this, entry.getValue());
+                    TransformInto abilityTransform = new TransformInto(entry.getValue());
                     this.myEffects.add(abilityTransform);
                     break;
 

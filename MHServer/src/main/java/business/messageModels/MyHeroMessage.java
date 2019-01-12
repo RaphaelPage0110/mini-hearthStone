@@ -5,15 +5,15 @@ import inter.NotTargetedEffect;
 
 public class MyHeroMessage {
 
-    public int armorPoints;
-    public int currentHealthPoints;
-    public String heroName;
-    public String imgurl;
-    public String powerImgUrl;
-    public boolean canUseHeroPower;
-    public boolean targetedHeroPower;
-    public String powerImgName;
-    public String powerImgText;
+    private int armorPoints;
+    private int currentHealthPoints;
+    private String heroName;
+    private String imgurl;
+    private String powerImgUrl;
+    private boolean canUseHeroPower;
+    private boolean targetedHeroPower;
+    private String powerImgName;
+    private String powerImgText;
 
     public MyHeroMessage(ConcreteHero hero) {
 
@@ -26,11 +26,7 @@ public class MyHeroMessage {
         this.powerImgName = hero.getPowerImgName();
         this.powerImgText = hero.getPowerImgText();
 
-        if(hero.getMyEffect() instanceof NotTargetedEffect){
-            this.targetedHeroPower = false;
-        } else {
-            this.targetedHeroPower = true;
-        }
+        this.targetedHeroPower = !(hero.getMyEffect() instanceof NotTargetedEffect);
 
     }
     public int getArmorPoints() {
@@ -65,4 +61,43 @@ public class MyHeroMessage {
         this.imgurl = imgurl;
     }
 
+    public String getPowerImgUrl() {
+        return powerImgUrl;
+    }
+
+    public void setPowerImgUrl(String powerImgUrl) {
+        this.powerImgUrl = powerImgUrl;
+    }
+
+    public boolean isCanUseHeroPower() {
+        return canUseHeroPower;
+    }
+
+    public void setCanUseHeroPower(boolean canUseHeroPower) {
+        this.canUseHeroPower = canUseHeroPower;
+    }
+
+    public boolean isTargetedHeroPower() {
+        return targetedHeroPower;
+    }
+
+    public void setTargetedHeroPower(boolean targetedHeroPower) {
+        this.targetedHeroPower = targetedHeroPower;
+    }
+
+    public String getPowerImgName() {
+        return powerImgName;
+    }
+
+    public void setPowerImgName(String powerImgName) {
+        this.powerImgName = powerImgName;
+    }
+
+    public String getPowerImgText() {
+        return powerImgText;
+    }
+
+    public void setPowerImgText(String powerImgText) {
+        this.powerImgText = powerImgText;
+    }
 }

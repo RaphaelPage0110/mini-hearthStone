@@ -1,9 +1,9 @@
 package business.messageModels;
 
-public class User {
+public class UserMessage {
     private String name;
 
-    public User() {
+    public UserMessage() {
     }
 
     public void setName(String name) {

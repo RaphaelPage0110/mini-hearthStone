@@ -1,4 +1,5 @@
 import impl.ConcreteHero;
+import impl.ConcreteMinion;
 import impl.EntitiesFactory;
 import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,7 @@ class HeroTest {
 
     private Player player1, player2, player3;
 
+    private ConcreteMinion yetiNoroit;
 
     @BeforeEach
     void setup() {
@@ -44,6 +46,8 @@ class HeroTest {
         player1.setMyHero(jaina); jaina.setMyPlayer(player1);
         player2.setMyHero(garrosh); garrosh.setMyPlayer(player2);
         player3.setMyHero(uther); uther.setMyPlayer(player3);
+
+        yetiNoroit = entitiesFactory.createMinion("Yéti noroit");
 
     }
 
@@ -71,14 +75,19 @@ class HeroTest {
 
     @Test
     void heroPowerTest() {
+        assertFalse(jaina.canUseHeroAbility());
+        jaina.activateEffect(yetiNoroit);
+        assertEquals(yetiNoroit.getMaxHealthPoints(), yetiNoroit.getCurrentHealthPoints());
+
+        player1.setMyMana(2);
+        assertTrue(jaina.canUseHeroAbility());
+        jaina.activateEffect(yetiNoroit);
+        assertEquals(yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints());
+
+        assertFalse(garrosh.canUseHeroAbility());
         assertEquals(0, garrosh.getArmorPoints());
-        garrosh.heroPower();
-        assertEquals(2, garrosh.getArmorPoints());
-
-        assertEquals(jaina.getMaxHealthPoints(), jaina.getCurrentHealthPoints());
-        jaina.heroPower(jaina);
-        assertEquals(jaina.getMaxHealthPoints()-1, jaina.getCurrentHealthPoints());
-
+        garrosh.activateEffect(null);
+        assertEquals(0, garrosh.getArmorPoints());
     }
 
     @Test

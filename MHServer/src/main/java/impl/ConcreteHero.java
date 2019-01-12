@@ -294,13 +294,14 @@ public class ConcreteHero implements Target {
      * Allows a hero to activate its hero power
      */
     public void activateEffect(Target target) {
-        if (this.getMyEffect() instanceof NotTargetedEffect ){
-            this.getMyEffect().effect();
+        if (canUseHeroAbility()) {
+            if (this.getMyEffect() instanceof NotTargetedEffect) {
+                this.getMyEffect().effect();
+            } else {
+                this.getMyEffect().effect(target);
+            }
+            setCanUseHeroAbility(false);
         }
-        else {
-            this.getMyEffect().effect(target);
-        }
-
     }
 
     @Override
@@ -391,14 +392,6 @@ public class ConcreteHero implements Target {
         myPlayer.lost();
 
 
-    }
-
-    public void heroPower() {
-        myEffect.effect();
-    }
-
-    public void heroPower(Target target) {
-        myEffect.effect(target);
     }
 
     /**

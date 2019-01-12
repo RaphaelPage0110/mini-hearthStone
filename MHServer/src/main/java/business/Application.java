@@ -28,6 +28,10 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 public class Application{
 
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
     public Game getGame() {
         return game;
     }
@@ -386,15 +390,20 @@ public class Application{
                     String minionKeyword = ((TransformInto)effect).getMyMinionKeyword();
                     ConcreteMinion minionModel = minionRepository.findByName(minionKeyword);
 
+                    minionBeingTransformed.setHasTaunt(false);
+                    minionBeingTransformed.setHasLifesteal(false);
+                    minionBeingTransformed.setCanAttack(false);
                     minionBeingTransformed.setName(minionModel.getName());
                     minionBeingTransformed.setRequiredMana(minionModel.getRequiredMana());
                     minionBeingTransformed.setDamagePoints(minionModel.getDamagePoints());
                     minionBeingTransformed.setMaxHealthPoints(minionModel.getMaxHealthPoints());
                     minionBeingTransformed.setCurrentHealthPoints(minionModel.getCurrentHealthPoints());
                     minionBeingTransformed.setType(minionModel.getType());
-                    minionBeingTransformed.setMyEffects(minionModel.getMyEffects());
                     minionBeingTransformed.setText(minionModel.getText());
                     minionBeingTransformed.setImgurl(minionModel.getImgurl());
+                    minionBeingTransformed.setAbilityKeyWord(minionModel.getAbilityKeyWord());
+                    minionBeingTransformed.setDeathRattleKeyWords(minionModel.getDeathRattleKeyWords());
+                    minionBeingTransformed.generateEffect();
 
                 }
 
@@ -701,10 +710,6 @@ public class Application{
     public void sendBothPlayersMinion(){
         sendMinionsInPlay(game.getActivePlayer());
         sendMinionsInPlay(game.getWaitingPlayer());
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
     }
 
     public Application setMinionRepository(MinionRepository minionRepository) {

@@ -254,7 +254,7 @@ public class Application{
             }
         }
         watch.stop();
-        simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user"+activePlayer.getSessionId(),"Passed turn");
+        simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user" + activePlayer.getSessionId());
     }
 
     public void showPossibleTargetsForMinion(){

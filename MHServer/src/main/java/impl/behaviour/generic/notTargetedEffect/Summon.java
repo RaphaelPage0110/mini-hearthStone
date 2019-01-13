@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class Summon extends NotTargetedEffect {
 
+    public Summon(){}
+
     private String myMinionKeyword;
     private int numberSummoned;
 

@@ -5,13 +5,8 @@ import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static abstracts.CardType.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 class HeroTest {
@@ -142,6 +137,19 @@ class HeroTest {
 
     @Test
     void utherHeroPowerTest() {
+        uther = new HeroMock(uther);
+
+        assertFalse(uther.canUseHeroAbility());
+        assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
+        uther.activateEffect(null);
+        assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
+
+        player3.setMyMana(2);
+        assertTrue(uther.canUseHeroAbility());
+        assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
+        uther.activateEffect(null);
+        assertTrue(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
+
 
     }
 

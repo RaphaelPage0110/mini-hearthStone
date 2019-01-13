@@ -170,7 +170,7 @@ public class ConcreteHero implements Target {
         return myEffect;
     }
 
-    private void setMyEffect(Effect myEffect) {
+    public void setMyEffect(Effect myEffect) {
         this.myEffect = myEffect;
     }
 

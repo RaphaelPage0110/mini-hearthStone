@@ -262,4 +262,12 @@ public class Player {
     public void setPassTurn(boolean passTurn) {
         this.passTurn = passTurn;
     }
+
+    public boolean containsMinion(String minionName) {
+        for(ConcreteMinion minion : myMinions) {
+            if (minion.getName().equals(minionName))
+                return true;
+        }
+        return false;
+    }
 }

@@ -11,6 +11,8 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Map;
 
+import static abstracts.Consts.*;
+
 public class ConcreteHero implements Target {
 
     /**
@@ -224,15 +226,15 @@ public class ConcreteHero implements Target {
 
             switch(entry.getKey()) {
 
-                case "damageTarget":
+                case DAMAGE_TARGET_ABILITY:
                     DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityDamage);
                     break;
-                case "modifyArmor" :
+                case MODIFY_ARMOR_ABILITY :
                     ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityArmor);
                     break;
-                case "summon":
+                case SUMMON_ABILITY:
                     Summon abilitySummon = new Summon(entry.getValue());
                     this.setMyEffect(abilitySummon);
                     break;
@@ -361,7 +363,7 @@ public class ConcreteHero implements Target {
      * @return true if the ability can be used
      */
     public boolean canUseHeroAbility() {
-        if (myPlayer.getMyMana() >= 2) {
+        if (myPlayer.getMyMana() >= HERO_POWER_COST) {
             return canUseHeroAbility;
         } else {
             return false;

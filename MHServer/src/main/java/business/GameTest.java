@@ -5,10 +5,7 @@ import business.controller.GameController;
 import business.repositories.HeroRepository;
 import business.repositories.MinionRepository;
 import business.repositories.SpellRepository;
-import impl.ConcreteHero;
-import impl.ConcreteMinion;
-import impl.ConcreteSpell;
-import impl.Player;
+import impl.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -46,25 +43,28 @@ public class GameTest {
         ConcreteSpell shieldBlock;
         idPlayer1 = "sessionId1";
         idPlayer2 = "sessionId2";
-        Map<String, String> map;
+//        Map<String, String> map;
+        EntitiesFactory entitiesFactory = new EntitiesFactory();
 
 
 
         doNothing().when(simpMessagingTemplate).convertAndSend(any(String.class),any(Object.class));
 
-        map = new HashMap<>();
-        map.put("modifyArmor","2");
-        garrosh = new ConcreteHero(WARRIOR,30,0,map,"Garrosh", "img");
+//        map = new HashMap<>();
+//        map.put("modifyArmor","2");
+//        garrosh = new ConcreteHero(WARRIOR,30,0,map,"Garrosh", "img");
+        garrosh = entitiesFactory.createHero("Garrosh");
+        player1.setMyHero(garrosh); garrosh.setMyPlayer(player1);
 
-        player1.setMyHero(garrosh);
-
-        map.clear();
-        when(minionRepository.findByType(COMMON)).thenReturn(new ArrayList<>(Collections.singleton(new ConcreteMinion(COMMON, 1, 1, 1, map, map, "Sanglier Brocheroc", "img", ""))));
+//        map.clear();
+        when(minionRepository.findByType(COMMON)).thenReturn(new ArrayList<>(Collections.singleton(entitiesFactory.createMinion("Sanglier Brocheroc")/*new ConcreteMinion(COMMON, 1, 1, 1, map, map, "Sanglier Brocheroc", "img", "")*/)));
         when(minionRepository.findByType(WARRIOR)).thenReturn(new ArrayList<ConcreteMinion>());
 
-        map.put("modifyArmor","5");
-        map.put("drawCard","1");
-        shieldBlock = new ConcreteSpell(WARRIOR,3,0,0,map,"Maîtrise du blocage","img","ajoute 5 points d'armure et pioche 1 carte", player1);
+//        map.put("modifyArmor","5");
+//        map.put("drawCard","1");
+//        shieldBlock = new ConcreteSpell(WARRIOR,3,0,0,map,"Maîtrise du blocage","img","ajoute 5 points d'armure et pioche 1 carte", player1);
+        shieldBlock = entitiesFactory.createSpell("Maîtrise du blocage");
+        player1.addCardToStock(shieldBlock); shieldBlock.setPlayer(player1);
 
         when(spellRepository.findByType(COMMON)).thenReturn(new ArrayList<ConcreteSpell>());
         when(spellRepository.findByType(WARRIOR)).thenReturn(new ArrayList<>(Collections.singleton(shieldBlock)));

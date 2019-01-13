@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static abstracts.Consts.*;
+
 
 public class ConcreteMinion extends Card implements Cloneable, Target {
 
@@ -175,23 +177,24 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         for (Map.Entry<String,String> abilityEntry: abilityKeyWord.entrySet()) {
 
             switch(abilityEntry.getKey()) {
-                case "charge":
+                case CHARGE_ABILITY:
                     Charge chargeAbility = new Charge(this);
                     this.addEffect(chargeAbility);
                     break;
-                case "lifeSteal" :
+                case LIFE_STEAL_ABILITY :
                     LifeSteal stealAbility = new LifeSteal(this);
                     this.addEffect(stealAbility);
                     break;
-                case "taunt":
+                case TAUNT_ABILITY:
                     Taunt tauntAbility = new Taunt(this);
                     this.addEffect(tauntAbility);
                     break;
-                case "buffAlliedMinions":
+                case BUFF_ALLIED_MINIONS_ABILITY:
                     BuffAlliedMinions buffAbility = new BuffAlliedMinions(this);
                     this.addEffect(buffAbility);
                     this.setBonus(Integer.parseInt(abilityEntry.getValue()));
                     break;
+
                 default:
                     break;
             }
@@ -209,7 +212,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         this.setMyDeathRattles(nullEffect);
 
         for (Map.Entry<String, String> deathEntry: deathRattle.entrySet()) {
-            if ("removeAura".equals(deathEntry.getKey())) {
+            if (REMOVE_AURA_DEATH_RATTLE.equals(deathEntry.getKey())) {
                 RemoveAura auraDeath = new RemoveAura(this);
                 this.addDeathRattle(auraDeath);
             }
@@ -247,8 +250,8 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     @Override
     public String toString() {
         return String.format(
-                "Minion[minionName='%s', requiredMana=%s, maxHealthPoints=%s, currentHealthPoints=%s, damage=%s, type=%s]",
-                name, requiredMana, maxHealthPoints, currentHealthPoints, damagePoints, type);
+                "Minion[id=%s, minionName='%s', requiredMana=%s, maxHealthPoints=%s, currentHealthPoints=%s, damage=%s, type=%s, text='%s']",
+                id, name, requiredMana, maxHealthPoints, currentHealthPoints, damagePoints, type, text);
     }
 
     /**

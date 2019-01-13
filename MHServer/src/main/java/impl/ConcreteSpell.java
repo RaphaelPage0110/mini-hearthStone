@@ -9,6 +9,8 @@ import impl.behaviour.generic.targetedEffect.TransformInto;
 
 import java.util.Map;
 
+import static abstracts.Consts.*;
+
 public class ConcreteSpell extends Card implements Cloneable {
 
     /**
@@ -67,50 +69,52 @@ public class ConcreteSpell extends Card implements Cloneable {
 
             switch(entry.getKey()) {
 
-                case "damageTarget":
+                case DAMAGE_TARGET_ABILITY:
                     DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamage);
                     break;
 
-                case "summon":
+                case SUMMON_ABILITY:
                     Summon abilitySummon = new Summon(entry.getValue());
                     this.myEffects.add(abilitySummon);
                     break;
 
-                case "transformInto":
+                case TRANSFORM_INTO_ABILITY:
                     TransformInto abilityTransform = new TransformInto(entry.getValue());
                     this.myEffects.add(abilityTransform);
                     break;
 
-                case "damageAllOpponents":
+                case DAMAGE_ALL_OPPONENTS_ABILITY:
                     DamageAllOpponents abilityDamageAllOpponents = new DamageAllOpponents(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamageAllOpponents);
                     break;
 
-                case "damageEnemyMinions":
+                case DAMAGE_ENEMY_MINIONS_ABILITY:
                     DamageEnemyMinions abilityDamageEnemyMinions = new DamageEnemyMinions(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamageEnemyMinions);
                     break;
 
-                case "modifyDamagePointsOneMinion":
+                case MODIFY_DAMAGE_POINTS_ONE_MINION_ABILITY:
                     ModifyDamagePointsOneMinion abilityBuffOneMinion = new ModifyDamagePointsOneMinion(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityBuffOneMinion);
                     break;
 
-                case "damageAllMinions":
+                case DAMAGE_ALL_MINIONS_ABILITY:
                     DamageAllMinions abilityDamageAllMinions = new DamageAllMinions(this, Integer.parseInt(entry.getValue()) );
                     this.myEffects.add(abilityDamageAllMinions);
                     break;
 
-                case "modifyArmor":
+                case MODIFY_ARMOR_ABILITY:
                     ModifyArmor abilityModifyArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()) );
                     this.myEffects.add(abilityModifyArmor);
                     break;
 
-                case "drawCard":
-
+                case DRAW_CARD_ABILITY:
                     DrawCard abilityDraw = new DrawCard(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDraw);
+                    break;
+
+                default:
                     break;
 
             }
@@ -120,7 +124,7 @@ public class ConcreteSpell extends Card implements Cloneable {
     @Override
     public String toString() {
         return String.format(
-                "Spell[spellName='%s']",
-                 name);
+                "Spell[id=%s, spellName='%s', requiredMana=%s, type=%s, text='%s']",
+                 id, name, requiredMana, type, text);
     }
 }

@@ -1,3 +1,4 @@
+import static abstracts.Consts.*;
 import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
@@ -13,15 +14,7 @@ import static org.junit.Assert.*;
 
 class HeroTest {
 
-    private ConcreteHero jaina,
-            garrosh,
-            uther;
-
-    private final String[] HERO_NAME = {
-            "Jaina",
-            "Garrosh",
-            "Uther"
-    };
+    private ConcreteHero jaina, garrosh, uther;
 
     private Player player1, player2, player3;
 
@@ -31,9 +24,9 @@ class HeroTest {
     void setup() {
         EntitiesFactory entitiesFactory = new EntitiesFactory();
 
-        jaina = entitiesFactory.createHero(HERO_NAME[0]);
-        garrosh = entitiesFactory.createHero(HERO_NAME[1]);
-        uther = entitiesFactory.createHero(HERO_NAME[2]);
+        jaina = entitiesFactory.createHero(JAINA);
+        garrosh = entitiesFactory.createHero(GARROSH);
+        uther = entitiesFactory.createHero(UTHER);
 
         player1 = new Player();
         player2 = new Player();
@@ -44,7 +37,7 @@ class HeroTest {
         player2.setMyHero(garrosh); garrosh.setMyPlayer(player2);
         player3.setMyHero(uther); uther.setMyPlayer(player3);
 
-        yetiNoroit = entitiesFactory.createMinion("Yéti noroit");
+        yetiNoroit = entitiesFactory.createMinion(YETI_NOROIT);
 
     }
 

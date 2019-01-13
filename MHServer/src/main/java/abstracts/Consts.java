@@ -6,6 +6,8 @@ public final class Consts {
 
     public static final int HERO_POWER_COST = 2;
 
+    public static final int LIMIT_MANA_MAX = 10;
+
 
 
     /*----------ABILITIES----------*/

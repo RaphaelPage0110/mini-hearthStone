@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+import static abstracts.Consts.*;
+
 @SpringBootApplication
 public class Application{
 
@@ -199,7 +201,7 @@ public class Application{
         activePlayer.setPlayOrder(activePlayer.getPlayOrder()+1);
         game.setPassTurn(false);
         //we increase the mana of each player during the first 10 turns
-        if (game.getTurn() <= 10 ) {
+        if (game.getTurn() <= LIMIT_MANA_MAX ) {
             activePlayer.addManaMax(1);
         }
         //we refill the players mana

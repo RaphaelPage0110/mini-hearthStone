@@ -1,5 +1,5 @@
 export class Mana {
-    manaMax: number;
-    currentMana: number;
+    manaMax : number;
+    currentMana : number ;
     aura: number
 }

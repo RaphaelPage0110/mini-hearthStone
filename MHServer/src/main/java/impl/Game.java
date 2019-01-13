@@ -116,9 +116,9 @@ public class Game {
 	}
 
 	/**
-	 * retunr the player corresponding of the id (player1 or player2)
-	 * @param id of the player
-	 * @return a player that matches the id
+	 * return the player corresponding of the id (player1 or player2)
+	 * @param id the sessionId of the player
+	 * @return a player whose sessionId id matches the parameter
 	 */
 	public Player getPlayerByID(String id){
 		if (player1.getSessionId().equals(id)){

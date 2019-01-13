@@ -102,30 +102,64 @@ public class ConcreteHero implements Target {
         this.heroType = heroType;
     }
 
+    /**
+     * Returns value of id
+     *
+     * @return id the id of the hero
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Returns value of currentHealthPoints
+     *
+     * @return healthPoints the current health points of the hero
+     */
     public int getCurrentHealthPoints() {
         return currentHealthPoints;
     }
 
+    /**
+     * Sets new value of currentHealthPoints
+     *
+     * @param hp the current health points of the hero
+     */
     public void setCurrentHealthPoints(int hp) {
         this.currentHealthPoints = hp;
     }
 
+    /**
+     * Returns value of armorPoints
+     *
+     * @return armorPoints the current armor points of the hero
+     */
     public int getArmorPoints() {
         return armorPoints;
     }
 
+    /**
+     * Sets new value of armorPoints
+     *
+     * @param armor the armor points of the hero
+     */
     public void setArmorPoints(int armor) {
         this.armorPoints = armor;
     }
 
+    /**
+     * Returns value of heroName
+     *
+     * @return heroName the name of the hero
+     */
     public String getHeroName() {
         return heroName;
     }
 
+    /**
+     * Sets new value of heroName
+     * @param heroName the name of the hero
+     */
     public void setHeroName(String heroName) {
         this.heroName = heroName;
     }
@@ -182,7 +216,7 @@ public class ConcreteHero implements Target {
      * allows to generate the effect of a hero
      * the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
      * ability keyword and value is its modifier
-     * @param abilityKeyWord a map containing the keywords of the abilities of the hero
+     * @param abilityKeyWord a map containing the keywords of the abilities
      */
     public void generateEffect(Map<String,String> abilityKeyWord){
 
@@ -241,7 +275,7 @@ public class ConcreteHero implements Target {
     /**
      * add the value in parameter to the maxHealthPoints of the hero
      * and to the currentHealthPoints of the hero
-     * @param bonusHealthPoints the healthpoints that are added to the heros maximum healthpoints
+     * @param bonusHealthPoints the health points that should be added to the heros life
      */
     @Override
     public void addMaxHealthPoints(int bonusHealthPoints) {
@@ -249,10 +283,6 @@ public class ConcreteHero implements Target {
         this.currentHealthPoints += bonusHealthPoints;
     }
 
-    /**
-     * get the max health point of the hero
-     * @return the maximum health points the hero can have
-     */
     @Override
     public int getMaxHealthPoints() {
         return this.maxHealthPoints;
@@ -326,9 +356,9 @@ public class ConcreteHero implements Target {
     }
 
     /**
-     * return a boolean which said if the hero ability can be used
+     * return a boolean stating if the hero ability can be used
      *
-     * @return true if the player can use its hero power
+     * @return true if the ability can be used
      */
     public boolean canUseHeroAbility() {
         if (myPlayer.getMyMana() >= 2) {

@@ -15,6 +15,7 @@ import inter.NotTargetedEffect;
 import inter.Target;
 import inter.TargetedEffect;
 import org.apache.commons.lang3.time.StopWatch;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -75,7 +76,7 @@ public class Application{
 
     }
 
-    private void instanciatePlayers(Game game) {
+    private void instanciatePlayers(@NotNull Game game) {
 
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
@@ -151,7 +152,7 @@ public class Application{
     /**
      * manage the players turn
      */
-    private void playRound(Game game) {
+    private void playRound(@NotNull Game game) {
 
         Player firstToPlay = game.getPlayer1();
         Player secondToPlay = game.getPlayer2();
@@ -193,7 +194,7 @@ public class Application{
      * @param activePlayer the player whose turn it is to play
      */
     @SuppressWarnings("PMD")
-    private void action(Player activePlayer, Game game) {
+    private void action(@NotNull Player activePlayer, @NotNull Game game) {
         simpMessagingTemplate.convertAndSend("/queue/reply_yourTurn-user"+activePlayer.getSessionId(), "<h4><b>C'est à vous!</b></h4>");
         activePlayer.setPlayOrder(activePlayer.getPlayOrder()+1);
         game.setPassTurn(false);
@@ -253,7 +254,7 @@ public class Application{
             }
         }
         watch.stop();
-        simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user" + activePlayer.getSessionId());
+        simpMessagingTemplate.convertAndSend("/queue/reply_passedTurn-user"+activePlayer.getSessionId(),"Passed turn");
     }
 
     public void showPossibleTargetsForMinion(){
@@ -276,8 +277,8 @@ public class Application{
 
     /**
      * allows to attack a minion
-     * @param attackerID the minion who is attacking
-     * @param targetID the minion who is targeted
+     * @param attackerID the uniqueId of the minion that attacks
+     * @param targetID the uniqueId of the minion targeted
      */
     public void attackMinion(String attackerID, String targetID) {
 
@@ -337,9 +338,9 @@ public class Application{
 
     /**
      * Allows a player to play a spell card
-     * @param spellToPlayID the id of the spell that will be played
-     * @param idPlayer the id of the player
-     * @param idTarget the id of the minion targeted
+     * @param spellToPlayID the uniqueID of the spell
+     * @param idPlayer the sessionId of the player
+     * @param idTarget the uniqueID of the minion targeted
      */
     public void playSpellCard(String spellToPlayID, String idTarget, String idPlayer) {
 
@@ -449,8 +450,8 @@ public class Application{
 
     /**
      * allows a player to play a minion card
-     * @param minionToPlayID the id of the minion who is being placed on the boad
-     * @param playerID the id of the player playing the card
+     * @param minionToPlayID the uniqueID of the minion
+     * @param playerID the sessionId of the player
      */
     public void playMinionCard(String minionToPlayID, String playerID) {
 
@@ -480,7 +481,7 @@ public class Application{
 
     /**
      * allows a user to use a hero power that doesnt require a target
-     * @param sessionId the id of the player
+     * @param sessionId the sessionId of the player
      */
     public void useHeroPower(String sessionId){
         Player activePlayer = game.getPlayerByID(sessionId);
@@ -522,14 +523,14 @@ public class Application{
 
             }
 
-            afterHeroPowerUsed(activePlayer);
+            afterHeroPowerUsed(activePlayer, hero);
         }
     }
 
     /**
      * allows a user to use a hero power that requires a target
-     * @param sessionId the id of the player
-     * @param targetID the id of the minion targeted
+     * @param sessionId the sessionId of the player
+     * @param targetID the uniqueId of the minion targeted
      */
     public void useHeroPowerOnTarget(String sessionId, String targetID){
         Player activePlayer = game.getPlayerByID(sessionId);
@@ -546,7 +547,7 @@ public class Application{
 
             hero.activateEffect(target);
 
-            afterHeroPowerUsed(activePlayer);
+            afterHeroPowerUsed(activePlayer, hero);
 
             if (target instanceof ConcreteHero){
                 sendOpponentPlayerHeroMessage(activePlayer);
@@ -562,11 +563,11 @@ public class Application{
 
     /**
      * sets what happens after a hero uses its hero ability
-     * @param player the player
+     * @param player the sessionId of the player
+     * @param hero the hero of the player
      */
-    private void afterHeroPowerUsed(Player player) {
+    private void afterHeroPowerUsed(@NotNull Player player, @NotNull ConcreteHero hero) {
 
-        ConcreteHero hero = player.getMyHero();
         //a hero can only use its hero ability once
         hero.setCanUseHeroAbility(false);
         //a hero ability cost 2 mana

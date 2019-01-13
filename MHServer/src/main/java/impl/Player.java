@@ -37,10 +37,6 @@ public class Player {
         return sessionId;
     }
 
-    /**
-     * Returns value of myDamageAura
-     * @return the aura currently applied on the minion
-     */
     public int getMyDamageAura() {
         return myDamageAura;
     }
@@ -58,18 +54,10 @@ public class Player {
 
     }
 
-    /**
-     * remove a card from the players hand
-     * @param removedCard the card that should be removed from the player's hand
-     */
     public void removeCardFromHand(Card removedCard) {
         myHand.remove(removedCard);
     }
 
-    /**
-     * Returns value of myCards
-     * @return the list of the cards that are in the player's hand
-     */
     public ArrayList<Card> getMyHand() {
         return myHand;
     }
@@ -85,22 +73,42 @@ public class Player {
         return myMinions;
     }
 
+    /**
+     * Returns value of myHero
+     * @return myHero the hero of the player
+     */
     public ConcreteHero getMyHero() {
         return myHero;
     }
 
+    /**
+     * Sets new value of myHero
+     * @param myHero the hero of the player
+     */
     public void setMyHero(ConcreteHero myHero) {
         this.myHero = myHero;
     }
 
+    /**
+     * Returns value of myManaMax
+     * @return myManaMax the current mana of a player
+     */
     public int getMyManaMax() {
         return myManaMax;
     }
 
+    /**
+     * add a value to the current mana count
+     * @param moreMana how much we want to increase the players mana
+     */
     public void addManaMax(int moreMana) {
         this.myManaMax += moreMana;
     }
 
+    /**
+     * Sets new value of myManaMax
+     * @param myManaMax the current mana of a player
+     */
     public void setMyManaMax(int myManaMax) {
         this.myManaMax = myManaMax;
     }
@@ -145,10 +153,6 @@ public class Player {
         myStock.add(newCard);
     }
 
-    /**
-     * remove a card from the stock
-     * @param removedCard the card that should be removed from the stock
-     */
     public void removeFromStock(Card removedCard) {
         myStock.remove(removedCard);
     }
@@ -225,8 +229,8 @@ public class Player {
 
     /**
      * Return a card present in the players hand or that is on the board whose uniqueID matches the param
-     * @param id of the card
-     * @return a card that matches the id
+     * @param id the uniqueId of the card
+     * @return a card whose uniqueId matches the argument
      */
     public Card findCardById(String id){
         for (Card card : myHand){
@@ -244,8 +248,8 @@ public class Player {
     }
 
     /**
-     * add the mana by the value in parameter
-     * @param value the amount of mana being added
+     * add some mana to the player current mana
+     * @param value the number of mana that should be added
      */
     public void changeMana(int value){
         myMana+=value;

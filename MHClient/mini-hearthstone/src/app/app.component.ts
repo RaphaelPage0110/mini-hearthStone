@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Stomp} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import {GameComponent} from "./game/game.component";
 import {Mana} from "./mana/mana.model";
 import {Hero} from "./hero/hero.model";
 
@@ -11,6 +12,7 @@ import {Hero} from "./hero/hero.model";
 })
 export class AppComponent {
     title = 'mini Hearthstone';
+    game : GameComponent = new GameComponent();
     greetings: string[] = [];
     myMinions: any[] = [];
     myTargets: any[] = [];
@@ -40,69 +42,80 @@ export class AppComponent {
         }
     }
 
-    /**
-     * connect the client to the game server
-     */
     connect() {
         const socket = new SockJS('http://localhost:8080/endpoint');
         this.stompClient = Stomp.over(socket);
 
         const _this = this;
-        this.stompClient.connect({}, function () {
+        this.stompClient.connect({}, function (frame) {
             _this.setConnected(true);
+            console.log('Connected: ' + frame);
             _this.showGreeting("Vous êtes bien connecté au serveur du mini-hearthstone");
 
             _this.stompClient.subscribe('/user/queue/reply', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showGreeting(JSON.parse(resp.body).greeting);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_myHand', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showHand(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_gameFound', function (resp) {
-                AppComponent.gameReady();
+                console.log("server answer: " + resp.body);
+                _this.gameReady();
                 _this.showGreeting(JSON.parse(resp.body).greeting);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_hisHand', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showHisHand(JSON.parse(resp.body).nbrCards);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_myHero', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showMyHero(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_hisHero', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showHisHero(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_myMana', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showMyMana(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_hisMana', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showHisMana(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_yourTurn', function (resp) {
                 document.getElementById("passTurnBtn").style.display = "inline-block";
-                AppComponent.openYourTurnPopup(resp.body);
+                console.log("server answer: " + resp.body);
+                _this.openYourTurnPopup(resp.body);
             });
 
-            _this.stompClient.subscribe('/user/queue/reply_passedTurn', function () {
+            _this.stompClient.subscribe('/user/queue/reply_passedTurn', function (resp) {
                 document.getElementById("passTurnBtn").style.display = "none";
+                console.log("server answer: "+resp.body)
             });
 
             _this.stompClient.subscribe('/user/queue/reply_gameOver', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.gameOver(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_playMinion', function (resp) {
+                console.log("server answer: " + resp.body);
                 _this.showMinions(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_playedMinion', function (resp) {
+                console.log("Votre adversaire a joué: " + resp.body);
                 _this.showHisMinions(resp.body);
                 let hasTaunt = false;
                 for (let minion of _this.hisMinions) {
@@ -110,10 +123,15 @@ export class AppComponent {
                         hasTaunt = true;
                     }
                 }
-                _this.canAttackHero = !hasTaunt;
+                if(hasTaunt){
+                    _this.canAttackHero = false;
+                } else {
+                    _this.canAttackHero = true;
+                }
             });
 
             _this.stompClient.subscribe('/user/queue/reply_targetsMinions', function (resp) {
+                console.log("La liste de vos cibles: " + resp.body);
                 _this.showTargets(resp.body);
             });
         });
@@ -121,9 +139,6 @@ export class AppComponent {
         document.getElementById("gameSearch").style.display = "block";
     }
 
-    /**
-     * disconnect the client from the game server
-     */
     disconnect() {
         document.getElementById("gameSearch").style.display = "none";
         document.getElementById("theBoard").style.display = "none";
@@ -132,10 +147,12 @@ export class AppComponent {
             this.stompClient.disconnect();
         }
         this.setConnected(false);
+        console.log('Disconnected!');
         this.showGreeting("Au revoir!");
     }
 
-    static gameReady() {
+
+    gameReady() {
         document.getElementById("cancelSearch").style.display = "none";
         document.getElementById("theBoard").style.display = "block";
     }
@@ -155,10 +172,6 @@ export class AppComponent {
         this.passTurn();
     }
 
-    /**
-     * resets the board when the game is over
-     * @param resp
-     */
     gameOver(resp) {
         document.getElementById("passTurnBtn").style.display = "none";
         document.getElementById("yourTurnPop").style.display = "block";
@@ -171,17 +184,9 @@ export class AppComponent {
         this.hisHero = null;
         this.myMinions = [];
         this.hisMinions = [];
-        this.greetings = [];
-        this.myTargets = [];
-        this.myMana = null;
-        this.hisMana = null;
-        this.canAttackHero = true;
-        this.minionThatAttackId = null;
-        this.spellThatAttackId = null;
-        this.spellTargets = [];
     }
 
-    static openYourTurnPopup(resp) {
+    openYourTurnPopup(resp) {
         document.getElementById("yourTurnPop").style.display = "none";
         document.getElementById("yourTurnPopMessage").innerHTML = resp;
         document.getElementById("yourTurnPop").style.display = "block";
@@ -223,68 +228,64 @@ export class AppComponent {
             this.selectedHero
         )
     }
-
-    /**
-     * display a message on the player's screen, inside the "messages serveur" box
-     * @param message
-     */
     showGreeting(message) {
         this.greetings.push(message);
     }
 
-    /**
-     * display the hero of the player
-     * @param message
-     */
     showMyHero(message) {
+        console.log('message brut: ' + message);
         this.myHero = JSON.parse(message);
     }
 
-    /**
-     * display the opponent's hero
-     * @param message
-     */
     showHisHero(message) {
+        console.log('message brut: ' + message);
         this.hisHero = JSON.parse(message);
     }
 
-    /**
-     * Displays the hand of the player
-     * @param message
-     */
     showHand(message) {
-        this.myCards = JSON.parse(message);
+
+        console.log('message brut: ' + message);
+
+        var parsed = JSON.parse(message);
+        console.log('parsed: ' + parsed);
+        this.myCards = parsed;
+        console.log("taille du tableau: " + this.myCards.length);
+
     }
 
     showMinions(message) {
-        this.myMinions = JSON.parse(message);
+
+        console.log('message brut de mes minions: ' + message);
+
+        var parsed = JSON.parse(message);
+        console.log('parsed mes minions: ' + parsed);
+        this.myMinions = parsed;
 
     }
 
     showHisMinions(message) {
-        this.hisMinions = JSON.parse(message);
+
+        console.log('message brut de ses minions: ' + message);
+
+        var parsed = JSON.parse(message);
+        console.log('parsed ses minions: ' + parsed);
+        this.hisMinions = parsed;
+
     }
 
-    /**
-     * displays the player mana
-     * @param message
-     */
     showMyMana(message){
-        this.myMana = JSON.parse(message);
+
+        console.log('message brut: ' + message);
+        var parsed = JSON.parse(message);
+        this.myMana = parsed;
     }
 
-    /**
-     * displays the opponent's mana
-     * @param message
-     */
     showHisMana(message){
-        this.hisMana = JSON.parse(message);
+        console.log('message brut: ' + message);
+        var parsed = JSON.parse(message);
+        this.hisMana = parsed;
     }
 
-    /**
-     * displays the back of the opponents hand
-     * @param nbrCards
-     */
     showHisHand(nbrCards){
 
         this.hisHand = new Array(nbrCards);
@@ -349,7 +350,8 @@ export class AppComponent {
     }
 
     showTargets(message) {
-        this.myTargets = JSON.parse(message);
+        var parsed = JSON.parse(message);
+        this.myTargets = parsed;
         document.getElementById("cardPopupShowTarget").style.display = "block";
     }
 
@@ -372,7 +374,9 @@ export class AppComponent {
     }
 
     attackThisMinion(targetID){
-        let message = {attackerID: this.minionThatAttackId, targetID: targetID};
+        console.log("Id de la carte qui attaque  "+this.minionThatAttackId);
+        console.log("Id de la carte qui est attaquée  "+targetID);
+        var message = {attackerID: this.minionThatAttackId, targetID: targetID};
         this.stompClient.send(
             '/attackThisMinion',
             {},
@@ -383,7 +387,9 @@ export class AppComponent {
     }
 
     castSpellOnTarget(targetID){
-        let message = {spellID: this.spellThatAttackId, targetID: targetID};
+        console.log("Id du qui attaque  "+this.spellThatAttackId);
+        console.log("Id de la carte qui est attaquée  "+targetID);
+        var message = {spellID: this.spellThatAttackId, targetID: targetID};
         this.stompClient.send(
             '/castSpellOnThisMinion',
             {},

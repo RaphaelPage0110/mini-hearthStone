@@ -61,20 +61,20 @@ public class MyHeroMessage {
         this.imgurl = imgurl;
     }
 
-    public String getPowerImgUrl() {
-        return powerImgUrl;
-    }
-
-    public void setPowerImgUrl(String powerImgUrl) {
-        this.powerImgUrl = powerImgUrl;
-    }
-
     public boolean isCanUseHeroPower() {
         return canUseHeroPower;
     }
 
     public void setCanUseHeroPower(boolean canUseHeroPower) {
         this.canUseHeroPower = canUseHeroPower;
+    }
+
+    public String getPowerImgUrl() {
+        return powerImgUrl;
+    }
+
+    public void setPowerImgUrl(String powerImgUrl) {
+        this.powerImgUrl = powerImgUrl;
     }
 
     public boolean isTargetedHeroPower() {

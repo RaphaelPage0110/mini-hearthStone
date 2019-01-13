@@ -5,6 +5,7 @@ import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import inter.Effect;
 import inter.TargetedEffect;
+import org.jetbrains.annotations.NotNull;
 
 public class MyCardMessage {
 
@@ -17,7 +18,7 @@ public class MyCardMessage {
     /**
      * The name of the card
      */
-    protected String name;
+    private String name;
 
     private String imgurl;
 
@@ -29,7 +30,7 @@ public class MyCardMessage {
     /**
      * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
      */
-    protected String type;
+    private String type;
 
     private int healthPoints;
 
@@ -45,7 +46,8 @@ public class MyCardMessage {
 
     private boolean targetSpell;
 
-    public MyCardMessage(Card card) {
+
+    public MyCardMessage(@NotNull Card card) {
         id = card.getUniqueID();
         type = card.getType().toString();
         requiredMana = card.getRequiredMana();
@@ -175,4 +177,6 @@ public class MyCardMessage {
     public void setType(String type) {
         this.type = type;
     }
+
+
 }

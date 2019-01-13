@@ -178,7 +178,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
      *  allows to generate the effect of a minion
      *  the abilities of the minions are stored using a Map in the database in the form <key:value> where key is the
      *  ability keyword and value is its modifier
-     * @param abilityKeyWord a map of the abilities keywords
+     * @param abilityKeyWord a map of the ability keywords
      */
     private void generateMinionEffect(@NotNull Map<String, String> abilityKeyWord){
 
@@ -232,8 +232,8 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     }
 
     /**
-     * add to the current health the number of health to be restor
-     * @param healthPoints the number of health that is healed
+     * add to the current health the number of health to be restored
+     * @param healthPoints the number of healthPoints
      */
     @Override
     public void heal(int healthPoints) {
@@ -251,12 +251,12 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
 
     /**
      * add a bonus to the max health point of the minion
-     * @param bonusHealthPoints the healthpoints that are added to the minion max health
+     * @param bonusHealtPoints bonus health points that should be added the the minion
      */
     @Override
-    public void addMaxHealthPoints(int bonusHealthPoints) {
-        this.maxHealthPoints += bonusHealthPoints;
-        this.currentHealthPoints += bonusHealthPoints;
+    public void addMaxHealthPoints(int bonusHealtPoints) {
+        this.maxHealthPoints += bonusHealtPoints;
+        this.currentHealthPoints+=bonusHealtPoints;
     }
 
     @Override
@@ -303,6 +303,9 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addDamagePoints(int bonusDamage) {
         this.damagePoints += bonusDamage;

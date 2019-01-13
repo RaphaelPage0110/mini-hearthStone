@@ -73,6 +73,10 @@ public class Player {
         return myMinions;
     }
 
+    public void setMyMinions(ArrayList<ConcreteMinion> minionsList) {
+        myMinions = minionsList;
+    }
+
     /**
      * Returns value of myHero
      * @return myHero the hero of the player

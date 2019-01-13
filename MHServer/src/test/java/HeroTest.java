@@ -5,6 +5,8 @@ import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static abstracts.CardType.*;
 import static org.junit.Assert.*;
 
@@ -144,13 +146,34 @@ class HeroTest {
         uther.activateEffect(null);
         assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
 
-        player3.setMyMana(2);
+        player3.setMyMana(4);
         assertTrue(uther.canUseHeroAbility());
         assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
         uther.activateEffect(null);
         assertTrue(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
+        player3.setMyMinions(new ArrayList<ConcreteMinion>()); //Removing all minions
+        assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
+        assertFalse(uther.canUseHeroAbility()); //We can't use hero power twice in a row !
+        uther.activateEffect(null);
+        assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent")); //Hasn't changed
+    }
 
+    @Test
+    void iterateUtherHeroPowerTest() {
+        uther = new HeroMock(uther);
 
+        int nb = 5;
+
+        for (int i = 0; i < nb; i++) {
+            player3.setMyMana(2);
+            uther.setCanUseHeroAbility(true);
+            assertTrue(uther.canUseHeroAbility());
+            uther.activateEffect(null);
+        }
+
+        for (int i = 0; i < nb; i++) {
+            assertEquals("Recrue de la main d'argent", player3.getMyMinions().get(i).getName());
+        } //Cumulation of invocations
     }
 
     @Test

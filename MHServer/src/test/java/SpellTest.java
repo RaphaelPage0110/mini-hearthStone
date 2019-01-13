@@ -1,12 +1,12 @@
 import abstracts.Card;
-import impl.ConcreteMinion;
-import impl.ConcreteSpell;
-import impl.EntitiesFactory;
-import impl.Player;
+import business.Application;
+import impl.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 public class SpellTest {
 
     private ConcreteSpell benedictionDePuissance,
@@ -17,7 +17,7 @@ public class SpellTest {
             tourbillon,
             maitriseDuBlocage;
 
-    private ConcreteMinion sanglierBrocheroc;
+    private ConcreteMinion sanglierBrocheroc,yetiNoroit;
 
     private final String SPELL_NAME[] = {
             "Bénédiction de puissance",
@@ -30,7 +30,9 @@ public class SpellTest {
     };
 
     private final String MINION_NAME[] = {
-            "Sanglier Brocheroc"
+
+            "Sanglier Brocheroc",
+            "Yéti noroit"
     };
 
     private Player player;
@@ -52,10 +54,10 @@ public class SpellTest {
 
         //Minion
         sanglierBrocheroc = entitiesFactory.createMinion(MINION_NAME[0]);
-
-
+        yetiNoroit = entitiesFactory.createMinion(MINION_NAME[1]);
 
         player = new Player();
+
         //Spell
         player.addCardToStock(benedictionDePuissance); benedictionDePuissance.setPlayer(player);
         player.addCardToStock(imageMiroir); imageMiroir.setPlayer(player);
@@ -70,13 +72,36 @@ public class SpellTest {
         }
         //Minion
         player.addMinion(sanglierBrocheroc); sanglierBrocheroc.setPlayer(player);
+        player.addMinion(yetiNoroit); yetiNoroit.setPlayer(player);
+
+        for (ConcreteMinion minion : player.getMyMinions()){
+            minion.generateEffect();
+        }
 
     }
 
     @Test
     void giveDamageTest() {
         assertEquals(sanglierBrocheroc.getMaxHealthPoints(),sanglierBrocheroc.getCurrentHealthPoints());
+        sanglierBrocheroc.takeDamage(explosionDesArcanes.getDamagePoints());
+        assertEquals(0,sanglierBrocheroc.getCurrentHealthPoints());
+        assertTrue(sanglierBrocheroc.isDead());
 
+        yetiNoroit.takeDamage(tourbillon.getDamagePoints());
+        assertEquals(4,yetiNoroit.getCurrentHealthPoints());
+
+        assertFalse(yetiNoroit.isDead());
+
+    }
+
+    @Test
+    void useManaTest() {
+
+        assertEquals(player.getMyManaMax(),player.getMyMana());
+        assertEquals(player.getMyMana()-2,player.getMyManaMax()-explosionDesArcanes.getRequiredMana());
+
+        assertEquals(player.getMyManaMax(),player.getMyMana());
+        assertEquals(player.getMyMana()-1,player.getMyManaMax()-tourbillon.getRequiredMana());
 
     }
 }

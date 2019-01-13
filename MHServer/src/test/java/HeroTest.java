@@ -74,31 +74,87 @@ class HeroTest {
     }
 
     @Test
-    void heroPowerTest() {
-        assertFalse(jaina.canUseHeroAbility());
-        jaina.activateEffect(yetiNoroit);
+    void jainaHeroPowerTest() {
+        assertFalse(jaina.canUseHeroAbility()); //Player don't have enough mana
+        jaina.activateEffect(yetiNoroit); //Jaina has the "Fireball" power
         assertEquals(yetiNoroit.getMaxHealthPoints(), yetiNoroit.getCurrentHealthPoints());
 
-        player1.setMyMana(2);
+        player1.setMyMana(4);
         assertTrue(jaina.canUseHeroAbility());
         jaina.activateEffect(yetiNoroit);
         assertEquals(yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints());
+        assertFalse(jaina.canUseHeroAbility()); //We can't use hero power twice in a row !
+        jaina.activateEffect(yetiNoroit);
+        assertEquals(yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints()); //Hasn't changed
 
+        player1.setMyMana(0);
+        jaina.setCanUseHeroAbility(true);
+        assertFalse(jaina.canUseHeroAbility()); //Not enough mana
+        jaina.activateEffect(yetiNoroit);
+        assertEquals(yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints()); //Still OK
+
+        player1.setMyMana(2);
+        jaina.setCanUseHeroAbility(true);
+        assertTrue(jaina.canUseHeroAbility());
+        jaina.activateEffect(garrosh);
+        assertEquals(garrosh.getMaxHealthPoints() -1, garrosh.getCurrentHealthPoints());
+        assertFalse(jaina.canUseHeroAbility());
+        jaina.activateEffect(garrosh);
+        assertEquals(garrosh.getMaxHealthPoints() -1, garrosh.getCurrentHealthPoints()); //Checking no changes
+    }
+
+    @Test
+    void garroshHeroPowerTest() {
         assertFalse(garrosh.canUseHeroAbility());
         assertEquals(0, garrosh.getArmorPoints());
         garrosh.activateEffect(null);
         assertEquals(0, garrosh.getArmorPoints());
+
+        player2.setMyMana(4);
+        assertTrue(garrosh.canUseHeroAbility());
+        assertEquals(0, garrosh.getArmorPoints());
+        garrosh.activateEffect(null);
+        assertEquals(2, garrosh.getArmorPoints());
+        assertFalse(garrosh.canUseHeroAbility());
+        garrosh.activateEffect(null);
+        assertEquals(2, garrosh.getArmorPoints());
+
+        player2.setMyMana(2);
+        garrosh.setCanUseHeroAbility(true);
+        assertTrue(garrosh.canUseHeroAbility());
+        garrosh.activateEffect(null);
+        assertEquals(4, garrosh.getArmorPoints()); //Cumulation of armor points
+
+        player2.setMyMana(0);
+        garrosh.setCanUseHeroAbility(true);
+        assertFalse(garrosh.canUseHeroAbility());
+        garrosh.activateEffect(null);
+        assertEquals(4, garrosh.getArmorPoints()); //Hasn't changed
+
+
+        player2.setMyMana(2);
+        garrosh.setCanUseHeroAbility(true);
+        assertTrue(garrosh.canUseHeroAbility());
+        garrosh.activateEffect(uther); //Target is ignored for ths effect.
+        assertEquals(6, garrosh.getArmorPoints()); //Cumulation of armor points
+        assertEquals(uther.getMaxHealthPoints(), uther.getCurrentHealthPoints()); //Hasn't changed
+    }
+
+    @Test
+    void utherHeroPowerTest() {
+
     }
 
     @Test
     void heroTypeTest() {
         assertEquals(WARRIOR, garrosh.getHeroType());
         assertEquals(MAGE, jaina.getHeroType());
+        assertEquals(PALADIN, uther.getHeroType());
     }
 
     @Test
     void takeDamageTest() {
-        jaina = new HeroMock(jaina); //dies() method bug ?
+        jaina = new HeroMock(jaina); //Mock for dies() method
         assertEquals(30, jaina.getCurrentHealthPoints());
         assertEquals(10, jaina.takeDamage(10));
         assertEquals(20, jaina.getCurrentHealthPoints());
@@ -124,7 +180,7 @@ class HeroTest {
 
     @Test
     void takeDamageWithArmorTest() {
-        jaina = new HeroMock(jaina); //dies() method bug ?
+        jaina = new HeroMock(jaina); //Mock for dies() method
         jaina.setArmorPoints(10);
         assertEquals(30, jaina.getCurrentHealthPoints());
         assertEquals(10, jaina.getArmorPoints());

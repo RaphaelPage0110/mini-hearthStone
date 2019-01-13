@@ -49,23 +49,25 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
      */
     private ArrayList<Effect> myDeathRattles;
 
-    public ConcreteMinion(CardType minionType, int requiredMana, int damagePoints, int healthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String minionName, String imgurl, String text) {
-        this.myEffects = new ArrayList<>();
+    /**
+     * Indicates the points of damage that this card can inflict.
+     */
+    private int damagePoints;
+
+    public ConcreteMinion(CardType type, int requiredMana, int damagePoints, int healthPoints, Map<String,String> abilityKeyWord, Map<String,String> deathRattle, String name, String imgurl, String text) {
+        super(type, requiredMana, abilityKeyWord, name, imgurl, text);
         this.myDeathRattles = new ArrayList<>();
-        this.text = text;
-        this.imgurl = imgurl;
-        this.type = minionType;
-        this.requiredMana = requiredMana;
         this.damagePoints = damagePoints;
         this.maxHealthPoints = healthPoints;
         this.currentHealthPoints = healthPoints;
-        this.setAbilityKeyWord(abilityKeyWord);
         this.deathRattleKeyWords = deathRattle;
-        this.name = minionName;
 
         generateEffect();
     }
 
+    /**
+     * Default empty constructor of ConcreteMinion.
+     */
     public ConcreteMinion() {
 
     }
@@ -88,51 +90,26 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         return this.maxHealthPoints;
     }
 
-    /**
-     * Returns the value of healthPoints.
-     * @return this.healthPoints.
-     */
     public int getCurrentHealthPoints() {
         return this.currentHealthPoints;
     }
 
-    /**
-     * Sets the new value of healthPoints.
-     * @param healthPoints the new value.
-     */
     public void setCurrentHealthPoints(int healthPoints) {
         this.currentHealthPoints = healthPoints;
     }
 
-    /**
-     * Returns the value of canAttack.
-     * @return this.canAttack.
-     */
     public boolean isCanAttack() {
         return this.canAttack;
     }
 
-
-    /**
-     * Sets the new value of canAttack.
-     * @param canAttack the new value.
-     */
     public void setCanAttack(boolean canAttack) {
         this.canAttack = canAttack;
     }
 
-    /**
-     * Returns the value of hasTaunt.
-     * @return this.hasTaunt.
-     */
     public boolean isHasTaunt() {
         return this.hasTaunt;
     }
 
-    /**
-     * Sets the new value of hasTaunt.
-     * @param hasTaunt the new value.
-     */
     public void setHasTaunt(boolean hasTaunt) {
         this.hasTaunt = hasTaunt;
     }
@@ -151,6 +128,14 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
 
     public void setHasLifesteal(boolean hasLifesteal) {
         this.hasLifesteal = hasLifesteal;
+    }
+
+    public int getDamagePoints() {
+        return this.damagePoints;
+    }
+
+    public void setDamagePoints(int damagePoints) {
+        this.damagePoints = damagePoints;
     }
 
     public ConcreteMinion clone() {
@@ -262,8 +247,8 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     @Override
     public String toString() {
         return String.format(
-                "Minion[id=%s, minionName='%s', requiredMana=%s, maxHealthPoints=%s, currentHealthPoints=%s, damage=%s, type=%s]",
-                id, name, requiredMana, maxHealthPoints, currentHealthPoints, damagePoints, type);
+                "Minion[minionName='%s', requiredMana=%s, maxHealthPoints=%s, currentHealthPoints=%s, damage=%s, type=%s]",
+                name, requiredMana, maxHealthPoints, currentHealthPoints, damagePoints, type);
     }
 
     /**

@@ -57,7 +57,7 @@ public class MyCardMessage {
         if (card instanceof ConcreteMinion) {
             cardType = "minion";
             healthPoints = ((ConcreteMinion) card).getCurrentHealthPoints();
-            damagePoints = card.getDamagePoints() + card.getPlayer().getMyDamageAura();
+            damagePoints =((ConcreteMinion) card).getDamagePoints() + card.getPlayer().getMyDamageAura();
             taunt = ((ConcreteMinion) card).isHasTaunt();
             canAttack = ((ConcreteMinion) card).isCanAttack();
             lifeSteal = ((ConcreteMinion) card).isHasLifesteal();

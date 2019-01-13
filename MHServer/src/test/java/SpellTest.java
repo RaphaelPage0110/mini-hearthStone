@@ -37,11 +37,9 @@ public class SpellTest {
 
     private Player player;
 
-    EntitiesFactory entitiesFactory;
-
     @BeforeEach
     void setup() {
-        entitiesFactory = new EntitiesFactory();
+        EntitiesFactory entitiesFactory = new EntitiesFactory();
 
         //Spell
         benedictionDePuissance = entitiesFactory.createSpell(SPELL_NAME[0]);
@@ -80,7 +78,7 @@ public class SpellTest {
 
     }
 
-    @Test
+    /*@Test
     void giveDamageTest() {
         assertEquals(sanglierBrocheroc.getMaxHealthPoints(),sanglierBrocheroc.getCurrentHealthPoints());
         sanglierBrocheroc.takeDamage(explosionDesArcanes.getDamagePoints());
@@ -103,5 +101,5 @@ public class SpellTest {
         assertEquals(player.getMyManaMax(),player.getMyMana());
         assertEquals(player.getMyMana()-1,player.getMyManaMax()-tourbillon.getRequiredMana());
 
-    }
+    }*/
 }

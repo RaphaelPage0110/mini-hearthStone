@@ -7,27 +7,30 @@ import impl.behaviour.generic.targetedEffect.DamageTarget;
 import impl.behaviour.generic.targetedEffect.ModifyDamagePointsOneMinion;
 import impl.behaviour.generic.targetedEffect.TransformInto;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ConcreteSpell extends Card implements Cloneable {
 
-    public ConcreteSpell() {
-    }
+    /**
+     * Default empty constructor of ConcreteSpell.
+     */
+    public ConcreteSpell() {}
 
-    public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text) {
+    /**
+     * Constructor of ConcreteSpell.Initializes most of the properties of this class. Activates the creation of Effects from abilityKeyword.
+     * @param type the type of the Card.
+     * @param requiredMana the mana cost of using the Card.
+     * @param bonus the bonus of damage, armor, health, or mana.
+     * @param abilityKeyWord the list of actions or behaviors of a the Card.
+     * @param name the name of the ConcreteSpell.
+     * @param imgurl the URL of the Card image.
+     * @param text the description of the Card.
+     */
+    public ConcreteSpell(CardType type, int requiredMana, int bonus, Map<String, String> abilityKeyWord, String name, String imgurl, String text) {
+        super(type, requiredMana, abilityKeyWord, name, imgurl, text);
+        this.bonus = bonus;
 
-        this.myEffects = new ArrayList<>();
-        this.text = text;
-        this.setName(name);
-        this.requiredMana = requiredMana;
-        this.damagePoints = damagePoints;
-        this.setBonus(bonus);
-        this.type = type;
-        this.setAbilityKeyWord(abilityKeyWords);
-        this.imgurl = imgurl;
-
-        generateSpellEffect(abilityKeyWords);
+        generateEffect();
     }
 
     public ConcreteSpell clone() {
@@ -46,21 +49,6 @@ public class ConcreteSpell extends Card implements Cloneable {
         return spell;
     }
 
-    public ConcreteSpell(CardType type, int requiredMana, int damagePoints, int bonus, Map<String, String> abilityKeyWords, String name, String imgurl, String text, Player player) {
-        super();
-        this.player = player;
-
-        this.text = text;
-        this.setName(name);
-        this.requiredMana = requiredMana;
-        this.damagePoints = damagePoints;
-        this.setBonus(bonus);
-        this.type = type;
-        this.setAbilityKeyWord(abilityKeyWords);
-        this.imgurl = imgurl;
-
-        generateSpellEffect(abilityKeyWords);
-    }
 
     public void generateEffect() {
         generateSpellEffect(this.abilityKeyWord);
@@ -132,7 +120,7 @@ public class ConcreteSpell extends Card implements Cloneable {
     @Override
     public String toString() {
         return String.format(
-                "Minion[id=%s, spellName='%s', damage='%s']",
-                id, name, damagePoints);
+                "Spell[spellName='%s']",
+                 name);
     }
 }

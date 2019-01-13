@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {Stomp} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {GameComponent} from "./game/game.component";
-import {Mana} from "./mana.model";
-import {Hero} from "./hero.model";
+import {Mana} from "./mana/mana.model";
+import {Hero} from "./hero/hero.model";
 
 @Component({
     selector: 'app-root',
@@ -53,49 +53,49 @@ export class AppComponent {
             _this.showGreeting("Vous êtes bien connecté au serveur du mini-hearthstone");
 
             _this.stompClient.subscribe('/user/queue/reply', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showGreeting(JSON.parse(resp.body).greeting);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_myHand', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showHand(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_gameFound', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.gameReady();
                 _this.showGreeting(JSON.parse(resp.body).greeting);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_hisHand', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showHisHand(JSON.parse(resp.body).nbrCards);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_myHero', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showMyHero(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_hisHero', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showHisHero(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_myMana', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showMyMana(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_hisMana', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showHisMana(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_yourTurn', function (resp) {
                 document.getElementById("passTurnBtn").style.display = "inline-block";
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.openYourTurnPopup(resp.body);
             });
 
@@ -105,17 +105,17 @@ export class AppComponent {
             });
 
             _this.stompClient.subscribe('/user/queue/reply_gameOver', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.gameOver(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_playMinion', function (resp) {
-                console.log("server answer: "+resp.body)
+                console.log("server answer: " + resp.body);
                 _this.showMinions(resp.body);
             });
 
             _this.stompClient.subscribe('/user/queue/reply_playedMinion', function (resp) {
-                console.log("Votre adversaire a joué: "+resp.body)
+                console.log("Votre adversaire a joué: " + resp.body);
                 _this.showHisMinions(resp.body);
                 let hasTaunt = false;
                 for (let minion of _this.hisMinions) {
@@ -131,7 +131,7 @@ export class AppComponent {
             });
 
             _this.stompClient.subscribe('/user/queue/reply_targetsMinions', function (resp) {
-                console.log("La liste de vos cibles: "+resp.body)
+                console.log("La liste de vos cibles: " + resp.body);
                 _this.showTargets(resp.body);
             });
         });
@@ -168,7 +168,7 @@ export class AppComponent {
         this.stompClient.send(
             '/gameOver',
             {}
-        )
+        );
         this.passTurn();
     }
 
@@ -308,7 +308,7 @@ export class AppComponent {
         this.stompClient.send(
             '/disconnectGame',
             {}
-        )
+        );
         document.getElementById("cancelSearch").style.display = "none";
         document.getElementById("connectToGame").style.display = "block";
     }
@@ -326,7 +326,7 @@ export class AppComponent {
             '/playMinion',
             {},
             id
-        )
+        );
         this.closeCardPopup(id);
     }
 
@@ -335,7 +335,7 @@ export class AppComponent {
             '/playSpell',
             {},
             id
-        )
+        );
         this.closeCardPopup(id);
     }
 
@@ -345,7 +345,7 @@ export class AppComponent {
             '/showTargetForMinion',
             {},
             id
-        )
+        );
         this.closeCardPopup(id);
     }
 

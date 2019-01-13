@@ -141,7 +141,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         return myDeathRattles;
     }
 
-    public void setMyDeathRattles(ArrayList<Effect> myDeathRattles) {
+    private void setMyDeathRattles(ArrayList<Effect> myDeathRattles) {
         this.myDeathRattles = myDeathRattles;
     }
 
@@ -178,7 +178,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
      *  allows to generate the effect of a minion
      *  the abilities of the minions are stored using a Map in the database in the form <key:value> where key is the
      *  ability keyword and value is its modifier
-     * @param abilityKeyWord
+     * @param abilityKeyWord a map of the ability keywords
      */
     private void generateMinionEffect(@NotNull Map<String, String> abilityKeyWord){
 
@@ -215,7 +215,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
 
     /**
      * set the minions deathRattle
-     * @param deathRattle
+     * @param deathRattle a map of the deathrattle keywords
      */
     private void generateMinionDeathRattle(@NotNull Map<String, String> deathRattle){
         //for an unknow reason, when generating the effect of a new minion, if this effect type had already been generated then it would add it to the new minion, resultating in an additional Effect.
@@ -224,20 +224,16 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         this.setMyDeathRattles(nullEffect);
 
         for (Map.Entry<String, String> deathEntry: deathRattle.entrySet()) {
-            switch(deathEntry.getKey()) {
-                case "removeAura":
-                    RemoveAura auraDeath = new RemoveAura(this);
-                    this.addDeathRattle(auraDeath);
-                    break;
-                default:
-                    break;
+            if ("removeAura".equals(deathEntry.getKey())) {
+                RemoveAura auraDeath = new RemoveAura(this);
+                this.addDeathRattle(auraDeath);
             }
         }
     }
 
     /**
-     * add to the current health the number of health to be restor
-     * @param healthPoints
+     * add to the current health the number of health to be restored
+     * @param healthPoints the number of healthPoints
      */
     @Override
     public void heal(int healthPoints) {
@@ -255,7 +251,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
 
     /**
      * add a bonus to the max health point of the minion
-     * @param bonusHealtPoints
+     * @param bonusHealtPoints bonus health points that should be added the the minion
      */
     @Override
     public void addMaxHealthPoints(int bonusHealtPoints) {
@@ -273,10 +269,9 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     /**
      * Add a new effect to the list of death rattle.
      * @param deathEffect the new value to add.
-     * @return true if the effect has been added to myDeathRattle.
      */
-    public boolean addDeathRattle(Effect deathEffect) {
-        return this.myDeathRattles.add(deathEffect);
+    private void addDeathRattle(Effect deathEffect) {
+        this.myDeathRattles.add(deathEffect);
     }
 
     /**
@@ -309,7 +304,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
     }
 
     /**
-     * @{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void addDamagePoints(int bonusDamage) {

@@ -1,6 +1,7 @@
 package impl.behaviour.generic.notTargetedEffect;
 
 import inter.NotTargetedEffect;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Summon extends NotTargetedEffect {
     private String myMinionKeyword;
     private int numberSummoned;
 
-    public Summon(String minionKeyword) {
+    public Summon(@NotNull String minionKeyword) {
 
         //in the database, the summon action is sored as follow:
         //"summon": "nameOfTheMinion, numberOfMinion"

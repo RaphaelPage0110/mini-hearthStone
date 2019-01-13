@@ -11,7 +11,7 @@ import inter.NotTargetedEffect;
  */
 public class RemoveAura extends NotTargetedEffect {
 
-    ConcreteMinion myMinion;
+    private ConcreteMinion myMinion;
 
     public RemoveAura(ConcreteMinion minion) {
 

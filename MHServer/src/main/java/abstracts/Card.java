@@ -5,7 +5,6 @@ import inter.Effect;
 import inter.Target;
 import org.springframework.data.annotation.Id;
 
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -37,7 +36,7 @@ public abstract class Card {
     /**
      * the unique identifier of this card
      */
-    protected String uniqueID;
+    private String uniqueID;
 
     protected String text;
 
@@ -75,7 +74,7 @@ public abstract class Card {
     /**
      * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
      */
-    protected int bonus;
+    private int bonus;
 
     protected String imgurl;
 
@@ -187,7 +186,7 @@ public abstract class Card {
      * Add a new effect to the list myEffects.
      * @param newEffect the new Effect to add.
      */
-    public void addEffect(Effect newEffect) {
+    protected void addEffect(Effect newEffect) {
         myEffects.add(newEffect);
     }
 
@@ -213,7 +212,7 @@ public abstract class Card {
      * Sets the new value of bonus.
      * @param bonus the new value.
      */
-    public void setBonus(int bonus) {
+    protected void setBonus(int bonus) {
         this.bonus = bonus;
     }
 

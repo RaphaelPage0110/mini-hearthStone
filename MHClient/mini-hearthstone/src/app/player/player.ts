@@ -1,4 +1,4 @@
-import {Hero} from "./hero.model";
+import {Hero} from "../hero/hero.model";
 
 export class Player {
     hero : Hero;

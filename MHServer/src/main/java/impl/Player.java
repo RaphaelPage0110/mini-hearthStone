@@ -29,34 +29,18 @@ public class Player {
         passTurn = true;
     }
 
-    /**
-     * set the id of the game session of the player
-     * @param sessionId
-     */
     public void setSessionId(String sessionId){
         this.sessionId = sessionId;
     }
 
-    /**
-     * get the id of the game session of the player
-     * @return
-     */
     public String getSessionId(){
         return sessionId;
     }
 
-    /**
-     * Returns value of myDamageAura
-     * @return the aura currently applied on the minion
-     */
     public int getMyDamageAura() {
         return myDamageAura;
     }
 
-    /**
-     * Sets the new value of aura
-     * @param aura
-     */
     public void setMyDamageAura(int aura) {
         this.myDamageAura = aura;
     }
@@ -70,18 +54,10 @@ public class Player {
 
     }
 
-    /**
-     * remove a card from the players hand
-     * @param removedCard
-     */
     public void removeCardFromHand(Card removedCard) {
         myHand.remove(removedCard);
     }
 
-    /**
-     * Returns value of myCards
-     * @return the list of the cards that are in the player's hand
-     */
     public ArrayList<Card> getMyHand() {
         return myHand;
     }
@@ -137,18 +113,10 @@ public class Player {
         this.myManaMax = myManaMax;
     }
 
-    /**
-     * get the mana of the player
-     * @return
-     */
     public int getMyMana() {
         return myMana;
     }
 
-    /**
-     * set the mana of te player
-     * @param myMana
-     */
     public void setMyMana(int myMana) {
         this.myMana = myMana;
     }
@@ -185,26 +153,14 @@ public class Player {
         myStock.add(newCard);
     }
 
-    /**
-     * remove a card from the stock
-     * @param removedCard
-     */
     public void removeFromStock(Card removedCard) {
         myStock.remove(removedCard);
     }
 
-    /**
-     * return if the player play firdt or second
-     * @return
-     */
     public int getPlayOrder() {
         return playOrder;
     }
 
-    /**
-     * set the order of the player to play(first or second)
-     * @param playOrder
-     */
     public void setPlayOrder(int playOrder) {
         this.playOrder = playOrder;
     }
@@ -237,7 +193,7 @@ public class Player {
      * remove a minion from the game ie when it dies
      * @param minion the minion to remove
      */
-    public void removeMinionFromPlay(ConcreteMinion minion){
+    void removeMinionFromPlay(ConcreteMinion minion) {
 
         myMinions.remove(minion);
 
@@ -246,20 +202,11 @@ public class Player {
     /**
      * what happens when this player lose
      */
-    public void lost(){
+    void lost() {
 
         myGame.setGameOver(true);
         myGame.setLoser(this);
         myGame.setWinner(this.getOpponent());
-
-    }
-
-    /**
-     * what happens when this player wins
-     * TODO : write this method
-     */
-    public void won(){
-
 
     }
 
@@ -282,8 +229,8 @@ public class Player {
 
     /**
      * Return a card present in the players hand or that is on the board whose uniqueID matches the param
-     * @param id
-     * @return
+     * @param id the uniqueId of the card
+     * @return a card whose uniqueId matches the argument
      */
     public Card findCardById(String id){
         for (Card card : myHand){
@@ -301,8 +248,8 @@ public class Player {
     }
 
     /**
-     * add the mana by the value in parameter
-     * @param value
+     * add some mana to the player current mana
+     * @param value the number of mana that should be added
      */
     public void changeMana(int value){
         myMana+=value;

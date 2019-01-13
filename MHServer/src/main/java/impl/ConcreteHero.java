@@ -164,21 +164,11 @@ public class ConcreteHero implements Target {
         this.heroName = heroName;
     }
 
-    /**
-     * Returns the special ability of a hero
-     *
-     * @return myEffect the ability of a hero
-     */
     public Effect getMyEffect() {
         return myEffect;
     }
 
-    /**
-     * Sets the new value of myEffects
-     *
-     * @param myEffect the special ability of a hero
-     */
-    public void setMyEffect(Effect myEffect) {
+    private void setMyEffect(Effect myEffect) {
         this.myEffect = myEffect;
     }
 
@@ -190,18 +180,10 @@ public class ConcreteHero implements Target {
         this.myPlayer = myPlayer;
     }
 
-    /**
-     * set canUseHeroAbility to true if the hero can use is ability (false otherwise
-     * @param canUseHeroAbility
-     */
     public void setCanUseHeroAbility(boolean canUseHeroAbility) {
         this.canUseHeroAbility = canUseHeroAbility;
     }
 
-    /**
-     * get the URL image of the hero power
-     * @return
-     */
     public String getPowerImgUrl() {
         return powerImgUrl;
     }
@@ -210,10 +192,6 @@ public class ConcreteHero implements Target {
         this.powerImgUrl = powerImgUrl;
     }
 
-    /**
-     * get the image name of the hero power
-     * @return
-     */
     public String getPowerImgName() {
         return powerImgName;
     }
@@ -222,10 +200,6 @@ public class ConcreteHero implements Target {
         this.powerImgName = powerImgName;
     }
 
-    /**
-     * get the text of the hero power
-     * @return
-     */
     public String getPowerImgText() {
         return powerImgText;
     }
@@ -242,7 +216,7 @@ public class ConcreteHero implements Target {
      * allows to generate the effect of a hero
      * the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
      * ability keyword and value is its modifier
-     * @param abilityKeyWord
+     * @param abilityKeyWord a map containing the keywords of the abilities
      */
     public void generateEffect(Map<String,String> abilityKeyWord){
 
@@ -268,11 +242,6 @@ public class ConcreteHero implements Target {
         }
     }
 
-    /**
-     * get the abilityKeyWord stored for a hero using a Map in the form <key:value> where key is the
-     * ability keyword and value is its modifier
-     * @return
-     */
     public Map<String,String> getAbilityKeyWord() {
         return abilityKeyWord;
     }
@@ -281,10 +250,6 @@ public class ConcreteHero implements Target {
         this.abilityKeyWord = abilityKeyWord;
     }
 
-    /**
-     *
-     * @param healthPoints
-     */
     @Override
     public void setMaxHealthPoints(int healthPoints) {
         this.maxHealthPoints = healthPoints;
@@ -310,7 +275,7 @@ public class ConcreteHero implements Target {
     /**
      * add the value in parameter to the maxHealthPoints of the hero
      * and to the currentHealthPoints of the hero
-     * @param bonusHealthPoints
+     * @param bonusHealthPoints the health points that should be added to the heros life
      */
     @Override
     public void addMaxHealthPoints(int bonusHealthPoints) {
@@ -318,10 +283,6 @@ public class ConcreteHero implements Target {
         this.currentHealthPoints += bonusHealthPoints;
     }
 
-    /**
-     * get the max health point of the hero
-     * @return
-     */
     @Override
     public int getMaxHealthPoints() {
         return this.maxHealthPoints;
@@ -395,9 +356,9 @@ public class ConcreteHero implements Target {
     }
 
     /**
-     * return a boolean which said if the hero ability can be used
+     * return a boolean stating if the hero ability can be used
      *
-     * @return
+     * @return true if the ability can be used
      */
     public boolean canUseHeroAbility() {
         if (myPlayer.getMyMana() >= 2) {

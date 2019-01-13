@@ -1,7 +1,7 @@
 package business.controller;
 
 import business.Application;
-import business.messageModels.Hello;
+import business.messageModels.HelloMessage;
 import business.repositories.HeroRepository;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -60,7 +60,7 @@ public class GameController implements ClientServerInterface {
 
         heroname = hero.getHeroName();
 
-        simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Vous avez choisi "+heroname+"! En attente d'un autre joueur..."));
+        simpMessagingTemplate.convertAndSend("/queue/reply-user" + sessionId, new HelloMessage("Vous avez choisi " + heroname + "! En attente d'un autre joueur..."));
 
         if (waitingUsers.size() == 2) {
             LOGGER.log(Level.INFO, "Starting game");
@@ -80,14 +80,14 @@ public class GameController implements ClientServerInterface {
         LOGGER.info("Received a disconnection from a user");
         boolean done = false;
         for (Player player : waitingUsers) {
-            if (player.getSessionId() == sessionId) {
+            if (player.getSessionId().equals(sessionId)) {
                 waitingUsers.remove(player);
                 done = true;
                 break;
             }
         }
         if (done){
-            simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Recherche de partie annulée."));
+            simpMessagingTemplate.convertAndSend("/queue/reply-user" + sessionId, new HelloMessage("Recherche de partie annulée."));
         }
         else {
             if(myApplication.getGame() != null){
@@ -95,7 +95,7 @@ public class GameController implements ClientServerInterface {
             }
             else
             {
-                simpMessagingTemplate.convertAndSend("/queue/reply-user"+sessionId, new Hello("Vous ne recherchiez pas de partie."));
+                simpMessagingTemplate.convertAndSend("/queue/reply-user" + sessionId, new HelloMessage("Vous ne recherchiez pas de partie."));
             }
         }
     }

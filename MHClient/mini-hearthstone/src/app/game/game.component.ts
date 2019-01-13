@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {CardComponent} from "../card/card.component";
-import {Card} from "../card.model";
-import {Game} from "../game.model";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-game',

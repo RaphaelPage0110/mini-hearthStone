@@ -1,4 +1,4 @@
-import {Card} from "./card.model";
+import {Card} from "../card/card.model";
 
 export class Game{
     myHand : Card[];

@@ -1,12 +1,8 @@
-import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { WelcomeComponent } from "./welcome/welcome.component";
-import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
-import {GameComponent} from "./game/game.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  { path: '',   redirectTo: '/welcome', pathMatch: 'full' },
-  { path: 'game', component: GameComponent}
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -1,9 +1,9 @@
 export class Card {
     id: string;
     type: string;
-    requiredMana : number;
-    damagePoints : number;
-    name : string;
+    requiredMana: number;
+    damagePoints: number;
+    name: string;
     imgurl: string;
     text: string;
     cardType: string;
@@ -11,5 +11,5 @@ export class Card {
     taunt: boolean;
     canAttack: boolean;
     lifeSteal: boolean;
-    targetSpell : boolean;
+    targetSpell: boolean;
 }

@@ -1,15 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {WelcomeComponent} from './welcome/welcome.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {FormsModule} from "@angular/forms";
-import { HeroComponent } from './hero/hero.component';
-import { PlayerComponent } from './player/player.component';
-import { GameComponent } from './game/game.component';
-import { CardComponent } from './card/card.component';
+import {HeroComponent} from './hero/hero.component';
+import {CardComponent} from './card/card.component';
+import {ManaComponent} from './mana/mana.component';
 
 @NgModule({
   declarations: [
@@ -17,9 +16,8 @@ import { CardComponent } from './card/card.component';
     WelcomeComponent,
     PageNotFoundComponent,
     HeroComponent,
-    PlayerComponent,
-    GameComponent,
-    CardComponent
+    CardComponent,
+    ManaComponent
   ],
   imports: [
     BrowserModule,

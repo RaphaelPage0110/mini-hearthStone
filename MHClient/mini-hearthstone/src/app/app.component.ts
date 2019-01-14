@@ -395,6 +395,7 @@ export class AppComponent {
             {},
             JSON.stringify(message)
         );
+      document.getElementById("targetHeroPowerDetails").style.display = "none";
         this.closeTargetDetails(targetID);
         this.closeTargetSpellPopup();
     }
@@ -418,6 +419,7 @@ export class AppComponent {
 
     closeTargetHeroPowerPopup(){
         document.getElementById("heroPowerPopupShowTarget").style.display = "none";
+        document.getElementById("targetHeroPowerDetails").style.display = "none";
     }
 
     openPromptHeroPowerTarget(){

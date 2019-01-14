@@ -72,7 +72,7 @@ public class ConcreteSpell extends Card implements Cloneable {
 
             switch(entry.getKey()) {
 
-                case DAMAGE_TARGET_ABILITY:
+                case DAMAGE_TARGET_ABILITY: //Jaina's Fireball ? oops
                     DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamage);
                     break;

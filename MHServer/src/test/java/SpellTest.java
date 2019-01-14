@@ -1,7 +1,7 @@
 import static abstracts.Consts.*;
 import impl.*;
 
-import inter.Effect;
+import mocks.SpellMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,6 +60,8 @@ public class SpellTest {
         player2.addMinion(chefDeRaid); chefDeRaid.setPlayer(player2);
         player2.addMinion(chevaucheurDeLoup); chevaucheurDeLoup.setPlayer(player2);
 
+        player1.setOpponent(player2);
+
     }
 
     @Test
@@ -95,9 +97,23 @@ public class SpellTest {
         player1.setMyMana(10);
         assertFalse(player2.containsMinion(MOUTON));
         assertTrue(metamorphose.canCastSpell());
+
         metamorphose.activateEffect(chefDeRaid);
         assertEquals(MOUTON, chefDeRaid.getName());
+
         assertTrue(player2.containsMinion(MOUTON));
+    }
+
+    @Test
+    void explosionDesArcanesTest() {
+        player1.setMyMana(10);
+        assertEquals(chefDeRaid.getMaxHealthPoints(), chefDeRaid.getCurrentHealthPoints());
+        assertEquals(chevaucheurDeLoup.getMaxHealthPoints(), chevaucheurDeLoup.getCurrentHealthPoints());
+
+        explosionDesArcanes.activateEffect(null);
+
+        assertEquals(chefDeRaid.getMaxHealthPoints() - 1, chefDeRaid.getCurrentHealthPoints());
+        assertEquals(chevaucheurDeLoup.getMaxHealthPoints() -1, chevaucheurDeLoup.getCurrentHealthPoints());
     }
 
     /*@Test

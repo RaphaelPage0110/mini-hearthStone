@@ -1,3 +1,5 @@
+package mocks;
+
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
 import impl.behaviour.generic.targetedEffect.TransformInto;

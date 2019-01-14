@@ -1,7 +1,10 @@
+package mocks;
+
 import impl.ConcreteSpell;
 
 import java.util.Map;
 
+import static abstracts.Consts.DAMAGE_ENEMY_MINIONS_ABILITY;
 import static abstracts.Consts.SUMMON_ABILITY;
 import static abstracts.Consts.TRANSFORM_INTO_ABILITY;
 
@@ -32,6 +35,8 @@ public class SpellMock extends ConcreteSpell {
                     TransformIntoMock abilityTransform = new TransformIntoMock(entry.getValue());
                     this.getMyEffects().add(abilityTransform);
                     break;
+                case DAMAGE_ENEMY_MINIONS_ABILITY:
+
                 default:
                     break;
             }

@@ -259,6 +259,7 @@ public class ConcreteHero implements Target {
 
     /**
      * Allows a hero to activate its hero power
+     * @param target the target on which the spell is cast.
      */
     public void activateEffect(Target target) {
         if (canUseHeroAbility()) {

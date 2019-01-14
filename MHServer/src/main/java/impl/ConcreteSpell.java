@@ -6,6 +6,9 @@ import impl.behaviour.generic.notTargetedEffect.*;
 import impl.behaviour.generic.targetedEffect.DamageTarget;
 import impl.behaviour.generic.targetedEffect.ModifyDamagePointsOneMinion;
 import impl.behaviour.generic.targetedEffect.TransformInto;
+import inter.Effect;
+import inter.NotTargetedEffect;
+import inter.Target;
 
 import java.util.Map;
 
@@ -126,5 +129,31 @@ public class ConcreteSpell extends Card implements Cloneable {
         return String.format(
                 "Spell[id=%s, spellName='%s', requiredMana=%s, type=%s, text='%s']",
                  id, name, requiredMana, type, text);
+    }
+
+    /**
+     * Allows a player to cast a spell
+     * @param target the target on which the spell is cast.
+     */
+    public void activateEffect(Target target) {
+        if (canCastSpell()) {
+            for (Effect spellEffect : myEffects) {
+                if (spellEffect instanceof NotTargetedEffect){
+                    spellEffect.effect();
+                } else {
+                    spellEffect.effect(target);
+                }
+            }
+            player.changeMana( - this.requiredMana);
+            player.removeCardFromHand(this);
+        }
+    }
+
+    /**
+     * Indicates if the spell can be cast.
+     * @return true if the spell can be cast.
+     */
+    public boolean canCastSpell() {
+        return player.getMyMana() >= this.requiredMana;
     }
 }

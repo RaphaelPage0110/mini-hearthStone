@@ -23,7 +23,7 @@ public class SpellMock extends ConcreteSpell {
     }
 
     @Override
-    public void generateSpellEffect(Map<String,String> abilityKeyWord) {System.out.println("bjr");
+    public void generateSpellEffect(Map<String,String> abilityKeyWord) {
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
 
             switch (entry.getKey()) {

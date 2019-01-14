@@ -44,13 +44,13 @@ public class SpellTest {
         player2 = new Player();
 
         //Poorly managed bidirectional association (Player-Card)
-        player1.addCardToStock(benedictionDePuissance); benedictionDePuissance.setPlayer(player1);
-        player1.addCardToStock(imageMiroir); imageMiroir.setPlayer(player1);
-        player1.addCardToStock(metamorphose); metamorphose.setPlayer(player1);
-        player1.addCardToStock(explosionDesArcanes); explosionDesArcanes.setPlayer(player1);
-        player1.addCardToStock(consecration); consecration.setPlayer(player1);
-        player1.addCardToStock(tourbillon); tourbillon.setPlayer(player1);
-        player1.addCardToStock(maitriseDuBlocage); maitriseDuBlocage.setPlayer(player1);
+        player1.addCardToHand(benedictionDePuissance); benedictionDePuissance.setPlayer(player1);
+        player1.addCardToHand(imageMiroir); imageMiroir.setPlayer(player1);
+        player1.addCardToHand(metamorphose); metamorphose.setPlayer(player1);
+        player1.addCardToHand(explosionDesArcanes); explosionDesArcanes.setPlayer(player1);
+        player1.addCardToHand(consecration); consecration.setPlayer(player1);
+        player1.addCardToHand(tourbillon); tourbillon.setPlayer(player1);
+        player1.addCardToHand(maitriseDuBlocage); maitriseDuBlocage.setPlayer(player1);
 
 
         //Poorly managed bidirectional association (Player-Card)
@@ -64,16 +64,19 @@ public class SpellTest {
 
     @Test
     void benedictionDePuissanceTest() {
+        player1.setMyMana(10);
         assertEquals(1, sanglierBrocheroc.getDamagePoints());
-        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
-            spellEffect.effect(sanglierBrocheroc);
-        }
+        benedictionDePuissance.activateEffect(sanglierBrocheroc);
+//        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
+//            spellEffect.effect(sanglierBrocheroc);
+//        }
         assertEquals(4, sanglierBrocheroc.getDamagePoints());
 
         assertEquals(3, chevaucheurDeLoup.getDamagePoints());
-        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
-            spellEffect.effect(chevaucheurDeLoup);
-        }
+        benedictionDePuissance.activateEffect(chevaucheurDeLoup);
+//        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
+//            spellEffect.effect(chevaucheurDeLoup);
+//        }
         assertEquals(6, chevaucheurDeLoup.getDamagePoints());
     }
 

@@ -67,17 +67,24 @@ public class SpellTest {
         player1.setMyMana(10);
         assertEquals(1, sanglierBrocheroc.getDamagePoints());
         benedictionDePuissance.activateEffect(sanglierBrocheroc);
-//        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
-//            spellEffect.effect(sanglierBrocheroc);
-//        }
         assertEquals(4, sanglierBrocheroc.getDamagePoints());
 
         assertEquals(3, chevaucheurDeLoup.getDamagePoints());
         benedictionDePuissance.activateEffect(chevaucheurDeLoup);
-//        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
-//            spellEffect.effect(chevaucheurDeLoup);
-//        }
         assertEquals(6, chevaucheurDeLoup.getDamagePoints());
+    }
+
+    @Test
+    void imageMiroirTest() {
+        imageMiroir = new SpellMock(imageMiroir);
+        player1.setMyMana(10);
+        assertFalse(imageMiroir.getPlayer().containsMinion(IMAGE_MIROIR));
+        imageMiroir.activateEffect(null);
+        assertTrue(imageMiroir.getPlayer().containsMinion(IMAGE_MIROIR));
+
+        for (int i = 2; i < 4; i++) {
+            assertEquals(IMAGE_MIROIR, player1.getMyMinions().get(i).getName());
+        }
     }
 
     /*@Test

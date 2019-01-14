@@ -154,6 +154,7 @@ public class ConcreteSpell extends Card implements Cloneable {
      * @return true if the spell can be cast.
      */
     public boolean canCastSpell() {
-        return player.getMyMana() >= this.requiredMana;
+        return  player.getMyMana() >= this.requiredMana &&
+                player.getMyHand().contains(this);
     }
 }

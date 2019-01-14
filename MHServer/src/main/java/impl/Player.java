@@ -62,6 +62,10 @@ public class Player {
         return myHand;
     }
 
+    public void setMyHand(ArrayList<Card> newHand) {
+        myHand = newHand;
+    }
+
     /**
      * add a new minion to the Player's minions and add it to the list of minions in play in the game
      */

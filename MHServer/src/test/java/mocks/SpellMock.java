@@ -1,14 +1,14 @@
 package mocks;
 
 import impl.ConcreteSpell;
+import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 
 import java.util.Map;
 
-import static abstracts.Consts.DAMAGE_ENEMY_MINIONS_ABILITY;
-import static abstracts.Consts.SUMMON_ABILITY;
-import static abstracts.Consts.TRANSFORM_INTO_ABILITY;
+import static abstracts.Consts.*;
 
 public class SpellMock extends ConcreteSpell {
+
 
     public SpellMock(ConcreteSpell concreteSpell) {
         super(concreteSpell.getType(),
@@ -19,10 +19,11 @@ public class SpellMock extends ConcreteSpell {
                 concreteSpell.getImgurl(),
                 concreteSpell.getText());
         setPlayer(concreteSpell.getPlayer());
+        concreteSpell.getPlayer().addCardToHand(this);
     }
 
     @Override
-    public void generateSpellEffect(Map<String,String> abilityKeyWord) {
+    public void generateSpellEffect(Map<String,String> abilityKeyWord) {System.out.println("bjr");
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
 
             switch (entry.getKey()) {
@@ -35,8 +36,14 @@ public class SpellMock extends ConcreteSpell {
                     TransformIntoMock abilityTransform = new TransformIntoMock(entry.getValue());
                     this.getMyEffects().add(abilityTransform);
                     break;
-                case DAMAGE_ENEMY_MINIONS_ABILITY:
-
+                case MODIFY_ARMOR_ABILITY:
+                    ModifyArmor abilityModifyArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()) );
+                    this.getMyEffects().add(abilityModifyArmor);
+                    break;
+                case DRAW_CARD_ABILITY:
+                    DrawCardMock abilityDraw = new DrawCardMock(this.player, Integer.parseInt(entry.getValue()));
+                    this.getMyEffects().add(abilityDraw);
+                    break;
                 default:
                     break;
             }

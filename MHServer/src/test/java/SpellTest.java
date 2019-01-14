@@ -1,8 +1,11 @@
 import static abstracts.Consts.*;
-import abstracts.Card;
 import impl.*;
 
+import inter.Effect;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.*;
 
 public class SpellTest {
 
@@ -14,7 +17,7 @@ public class SpellTest {
             tourbillon,
             maitriseDuBlocage;
 
-    private ConcreteMinion sanglierBrocheroc,yetiNoroit;
+    private ConcreteMinion sanglierBrocheroc,yetiNoroit, chefDeRaid, chevaucheurDeLoup;
 
     private Player player1, player2;
 
@@ -34,8 +37,11 @@ public class SpellTest {
         //Minion
         sanglierBrocheroc = entitiesFactory.createMinion(SANGLIER_BROCHEROC);
         yetiNoroit = entitiesFactory.createMinion(YETI_NOROIT);
+        chefDeRaid = entitiesFactory.createMinion(CHEF_DE_RAID);
+        chevaucheurDeLoup = entitiesFactory.createMinion(CHEVAUCHEUR_DE_LOUP);
 
         player1 = new Player();
+        player2 = new Player();
 
         //Poorly managed bidirectional association (Player-Card)
         player1.addCardToStock(benedictionDePuissance); benedictionDePuissance.setPlayer(player1);
@@ -51,6 +57,24 @@ public class SpellTest {
         player1.addMinion(sanglierBrocheroc); sanglierBrocheroc.setPlayer(player1);
         player1.addMinion(yetiNoroit); yetiNoroit.setPlayer(player1);
 
+        player2.addMinion(chefDeRaid); chefDeRaid.setPlayer(player2);
+        player2.addMinion(chevaucheurDeLoup); chevaucheurDeLoup.setPlayer(player2);
+
+    }
+
+    @Test
+    void benedictionDePuissanceTest() {
+        assertEquals(1, sanglierBrocheroc.getDamagePoints());
+        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
+            spellEffect.effect(sanglierBrocheroc);
+        }
+        assertEquals(4, sanglierBrocheroc.getDamagePoints());
+
+        assertEquals(3, chevaucheurDeLoup.getDamagePoints());
+        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
+            spellEffect.effect(chevaucheurDeLoup);
+        }
+        assertEquals(6, chevaucheurDeLoup.getDamagePoints());
     }
 
     /*@Test

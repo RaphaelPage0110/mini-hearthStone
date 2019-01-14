@@ -15,7 +15,6 @@ public class HeroMock extends ConcreteHero {
                 concreteHero.getImgurl());
 
         setMyPlayer(concreteHero.getMyPlayer());
-        generateEffect(concreteHero.getAbilityKeyWord());
     }
 
     @Override

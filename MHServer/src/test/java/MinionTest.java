@@ -1,3 +1,4 @@
+import static abstracts.Consts.*;
 import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
@@ -21,19 +22,6 @@ class MinionTest {
             mouton,
             recrueDeLaMainDArgent;
 
-    private final String[] MINION_NAME = {
-            "Chef de raid",
-            "Champion frisselame",
-            "Sanglier Brocheroc",
-            "Soldat du comté de l'or",
-            "Yéti noroit",
-            "Chevaucheur de loup",
-            "Avocat commis d'office",
-            "Image miroir",
-            "Mouton",
-            "Recrue de la main d'argent"
-    };
-
     private Player player;
 
     private ConcreteHero jaina;
@@ -42,16 +30,16 @@ class MinionTest {
     void setup() {
         EntitiesFactory entitiesFactory = new EntitiesFactory();
 
-        chefDeRaid = entitiesFactory.createMinion(MINION_NAME[0]);
-        championFrisselame = entitiesFactory.createMinion(MINION_NAME[1]);
-        sanglierBrocheroc = entitiesFactory.createMinion(MINION_NAME[2]);
-        soldatDuCompteDeLOr = entitiesFactory.createMinion(MINION_NAME[3]);
-        yetiNoroit = entitiesFactory.createMinion(MINION_NAME[4]);
-        chevaucheurDeLoup = entitiesFactory.createMinion(MINION_NAME[5]);
-        avocatCommisDOffice = entitiesFactory.createMinion(MINION_NAME[6]);
-        imageMiroir = entitiesFactory.createMinion(MINION_NAME[7]);
-        mouton = entitiesFactory.createMinion(MINION_NAME[8]);
-        recrueDeLaMainDArgent = entitiesFactory.createMinion(MINION_NAME[9]);
+        chefDeRaid = entitiesFactory.createMinion(CHEF_DE_RAID);
+        championFrisselame = entitiesFactory.createMinion(CHAMPION_FRISSELAME);
+        sanglierBrocheroc = entitiesFactory.createMinion(SANGLIER_BROCHEROC);
+        soldatDuCompteDeLOr = entitiesFactory.createMinion(SOLDAT_DU_COMTE_DE_L_OR);
+        yetiNoroit = entitiesFactory.createMinion(YETI_NOROIT);
+        chevaucheurDeLoup = entitiesFactory.createMinion(CHEVAUCHEUR_DE_LOUP);
+        avocatCommisDOffice = entitiesFactory.createMinion(AVOCAT_COMMIS_D_OFFICE);
+        imageMiroir = entitiesFactory.createMinion(IMAGE_MIROIR);
+        mouton = entitiesFactory.createMinion(MOUTON);
+        recrueDeLaMainDArgent = entitiesFactory.createMinion(RECRUE_DE_LA_MAIN_D_ARGENT);
 
 
         //Poorly managed bidirectional association (Player-Card)
@@ -209,12 +197,8 @@ class MinionTest {
 
         championFrisselame.setCurrentHealthPoints(Integer.MIN_VALUE);
         assertTrue(championFrisselame.isDead());
-        championFrisselame.setCurrentHealthPoints(Integer.MIN_VALUE-1);
-        assertFalse(championFrisselame.isDead());
         championFrisselame.setCurrentHealthPoints(Integer.MAX_VALUE);
         assertFalse(championFrisselame.isDead());
-        championFrisselame.setCurrentHealthPoints(Integer.MAX_VALUE+1);
-        assertTrue(championFrisselame.isDead());
     }
 
     @Test

@@ -13,13 +13,13 @@ public class TransformInto extends TargetedEffect {
 
     private String myMinionKeyword;
 
+    public TransformInto() {}
+
     public TransformInto(String minionKeyword) {
         this.myMinionKeyword = minionKeyword;
     }
 
-    public void effect(Target target) {
-
-    }
+    public void effect(Target target) {}
 
     public String getMyMinionKeyword() {
         return myMinionKeyword;

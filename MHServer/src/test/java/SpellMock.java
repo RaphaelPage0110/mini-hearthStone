@@ -3,6 +3,7 @@ import impl.ConcreteSpell;
 import java.util.Map;
 
 import static abstracts.Consts.SUMMON_ABILITY;
+import static abstracts.Consts.TRANSFORM_INTO_ABILITY;
 
 public class SpellMock extends ConcreteSpell {
 
@@ -26,6 +27,10 @@ public class SpellMock extends ConcreteSpell {
                 case SUMMON_ABILITY:
                     SummonMock abilitySummon = new SummonMock(entry.getValue(), this);
                     this.getMyEffects().add(abilitySummon);
+                    break;
+                case TRANSFORM_INTO_ABILITY:
+                    TransformIntoMock abilityTransform = new TransformIntoMock(entry.getValue());
+                    this.getMyEffects().add(abilityTransform);
                     break;
                 default:
                     break;

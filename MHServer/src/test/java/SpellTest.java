@@ -77,6 +77,7 @@ public class SpellTest {
     @Test
     void imageMiroirTest() {
         imageMiroir = new SpellMock(imageMiroir);
+
         player1.setMyMana(10);
         assertFalse(imageMiroir.getPlayer().containsMinion(IMAGE_MIROIR));
         imageMiroir.activateEffect(null);
@@ -85,6 +86,18 @@ public class SpellTest {
         for (int i = 2; i < 4; i++) {
             assertEquals(IMAGE_MIROIR, player1.getMyMinions().get(i).getName());
         }
+    }
+
+    @Test
+    void metamorphoseTest() {
+        metamorphose = new SpellMock(metamorphose);
+
+        player1.setMyMana(10);
+        assertFalse(player2.containsMinion(MOUTON));
+        assertTrue(metamorphose.canCastSpell());
+        metamorphose.activateEffect(chefDeRaid);
+        assertEquals(MOUTON, chefDeRaid.getName());
+        assertTrue(player2.containsMinion(MOUTON));
     }
 
     /*@Test

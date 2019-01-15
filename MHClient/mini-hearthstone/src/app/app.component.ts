@@ -184,6 +184,7 @@ export class AppComponent {
         this.hisHero = null;
         this.myMinions = [];
         this.hisMinions = [];
+        this.myTargets = [];
     }
 
     openYourTurnPopup(resp) {
@@ -276,14 +277,12 @@ export class AppComponent {
     showMyMana(message){
 
         console.log('message brut: ' + message);
-        var parsed = JSON.parse(message);
-        this.myMana = parsed;
+        this.myMana = JSON.parse(message);
     }
 
     showHisMana(message){
         console.log('message brut: ' + message);
-        var parsed = JSON.parse(message);
-        this.hisMana = parsed;
+        this.hisMana = JSON.parse(message);
     }
 
     showHisHand(nbrCards){
@@ -350,14 +349,14 @@ export class AppComponent {
     }
 
     showTargets(message) {
-        var parsed = JSON.parse(message);
-        this.myTargets = parsed;
+        this.myTargets = JSON.parse(message);
         document.getElementById("cardPopupShowTarget").style.display = "block";
     }
 
     closeTargetPopup(){
         document.getElementById("cardPopupShowTarget").style.display = "none";
         document.getElementById("targetDetails").style.display = "none";
+        this.myTargets = [];
     }
 
     openTargetPopup() {
@@ -384,6 +383,7 @@ export class AppComponent {
         );
         this.closeTargetDetails(targetID);
         this.closeTargetPopup();
+        this.myTargets = [];
     }
 
     castSpellOnTarget(targetID){
@@ -398,6 +398,7 @@ export class AppComponent {
       document.getElementById("targetHeroPowerDetails").style.display = "none";
         this.closeTargetDetails(targetID);
         this.closeTargetSpellPopup();
+        this.myTargets = [];
     }
 
     attackHero(){
@@ -434,6 +435,7 @@ export class AppComponent {
         );
         this.closeTargetHeroPowerPopup();
         this.closeHeroPowerPopup();
+        this.myTargets = [];
     }
 
     useHeroPower(){

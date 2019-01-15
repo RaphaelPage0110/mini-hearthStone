@@ -2,6 +2,7 @@ import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
 import impl.Player;
+import mocks.HeroMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,3 +1,5 @@
+package mocks;
+
 import impl.ConcreteHero;
 
 import java.util.Map;

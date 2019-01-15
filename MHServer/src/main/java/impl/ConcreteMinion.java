@@ -128,7 +128,7 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
         return myDeathRattles;
     }
 
-    private void setMyDeathRattles(ArrayList<Effect> myDeathRattles) {
+    public void setMyDeathRattles(ArrayList<Effect> myDeathRattles) {
         this.myDeathRattles = myDeathRattles;
     }
 

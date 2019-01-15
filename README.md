@@ -1,4 +1,8 @@
 # mini-hearthStone
+# Authors : Raphaël Pagé, Henri Bouvet, Alexandre Melo, and Glenn Plouhinec.
+
+This is our M1 ALMA project for the module "Analyse, Conception et Mise en Oeuvre de Logiciels"
+
 
 `Pre-requisite`: This application requires an internet connection, Java 8.0, Maven 3.5 and NPM 6.4.
 

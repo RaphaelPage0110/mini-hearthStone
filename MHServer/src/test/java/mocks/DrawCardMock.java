@@ -1,6 +1,7 @@
 package mocks;
 
 import abstracts.Card;
+import impl.ConcreteSpell;
 import impl.EntitiesFactory;
 import impl.Player;
 import impl.behaviour.generic.notTargetedEffect.DrawCard;
@@ -9,13 +10,13 @@ import static abstracts.ConstsUtils.*;
 
 public class DrawCardMock extends DrawCard {
 
-  private Player player;
+  private ConcreteSpell spell;
 
   private int numberCards;
 
-  public DrawCardMock(Player player, int numberCards) {
-    this.player = player;
+  public DrawCardMock(ConcreteSpell concreteSpell, int numberCards) {
     this.numberCards = numberCards;
+    this.spell = concreteSpell;
   }
 
   @Override
@@ -72,7 +73,7 @@ public class DrawCardMock extends DrawCard {
           newCard = entitiesFactory.createSpell(MAITRISE_DU_BLOCAGE);
           break;
       }
-      player.addCardToHand(newCard);
+      spell.getPlayer().addCardToHand(newCard);
     }
   }
 }

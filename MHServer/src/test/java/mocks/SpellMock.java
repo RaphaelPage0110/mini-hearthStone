@@ -42,7 +42,7 @@ public class SpellMock extends ConcreteSpell {
           break;
         case DRAW_CARD_ABILITY:
           DrawCardMock abilityDraw =
-                  new DrawCardMock(this.player, Integer.parseInt(entry.getValue()));
+                  new DrawCardMock(this, Integer.parseInt(entry.getValue()));
           this.getMyEffects().add(abilityDraw);
           break;
         default:

@@ -1,7 +1,6 @@
 package abstracts;
 
 import impl.Player;
-import inter.Effect;
 import inter.Target;
 import org.springframework.data.annotation.Id;
 
@@ -11,6 +10,7 @@ import java.util.UUID;
 
 /**
  * Abstract representation of Minions and Spells.
+ *
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
@@ -25,7 +25,7 @@ public abstract class Card {
     /**
      * Reference the list of actions or behaviors of a this Card.
      */
-    protected Map<String,String> abilityKeyWord;
+    protected Map<String, String> abilityKeyWord;
 
     /**
      * the unique identifier of this card
@@ -165,25 +165,22 @@ public abstract class Card {
     }
 
     /**
-     * Affects the effect that this card wil have, on one or more targets.
-     * @param myTarget the affected target.
-     */
-    public void effect(Target myTarget) {
-        for (Effect action : myEffects) {
-            action.effect(myTarget);
-        }
-    }
-
-    /**
      * Constructor of Card. Initializes most of the properties of this class.
-     * @param type the type of the Card.
-     * @param requiredMana the mana cost of using the Card.
-     * @param abilityKeyWord  the list of actions or behaviors of a the Card.
-     * @param name the name of the Card.
-     * @param imgurl the URL of the Card image.
-     * @param text the description of the Card.
+     *
+     * @param type           the type of the Card.
+     * @param requiredMana   the mana cost of using the Card.
+     * @param abilityKeyWord the list of actions or behaviors of a the Card.
+     * @param name           the name of the Card.
+     * @param imgurl         the URL of the Card image.
+     * @param text           the description of the Card.
      */
-    public Card(CardType type, int requiredMana, Map<String, String> abilityKeyWord, String name, String imgurl, String text) {
+    public Card(
+            CardType type,
+            int requiredMana,
+            Map<String, String> abilityKeyWord,
+            String name,
+            String imgurl,
+            String text) {
         uniqueID = UUID.randomUUID().toString();
         this.abilityKeyWord = abilityKeyWord;
         this.text = text;
@@ -197,8 +194,18 @@ public abstract class Card {
     /**
      * Default empty constructor of Card.
      */
-    public Card(){
-         uniqueID = UUID.randomUUID().toString();
+    public Card() {
+        uniqueID = UUID.randomUUID().toString();
     }
 
+    /**
+     * Affects the effect that this card wil have, on one or more targets.
+     *
+     * @param myTarget the affected target.
+     */
+    public void effect(Target myTarget) {
+        for (Effect action : myEffects) {
+            action.effect(myTarget);
+        }
+    }
 }

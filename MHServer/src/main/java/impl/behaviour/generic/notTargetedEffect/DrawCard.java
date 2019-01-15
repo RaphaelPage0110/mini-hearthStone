@@ -1,10 +1,11 @@
 package impl.behaviour.generic.notTargetedEffect;
 
-import inter.NotTargetedEffect;
+import abstracts.NotTargetedEffect;
 
 /**
- * Class representing the special action "DrawCard" used for the "Shield Block" (fr:Maîtrise du blocage) spell.
- * Draw a card.
+ * Class representing the special action "DrawCard" used for the "Shield Block" (fr:Maîtrise du
+ * blocage) spell. Draw a card.
+ *
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
@@ -22,6 +23,7 @@ public class DrawCard extends NotTargetedEffect {
 
     /**
      * the drawing actions are implemented in the Application becaus ethey need to call the database
+     *
      * @return nulberCards the number of cards the player has to draw
      */
     public int getNumberDraw() {

@@ -1,107 +1,115 @@
-import static abstracts.Consts.*;
-import impl.*;
-
-import inter.Effect;
+import impl.ConcreteMinion;
+import impl.ConcreteSpell;
+import impl.EntitiesFactory;
+import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static abstracts.Consts.*;
+import static org.junit.Assert.assertEquals;
 
 public class SpellTest {
 
-    private ConcreteSpell benedictionDePuissance,
-            imageMiroir,
-            metamorphose,
-            explosionDesArcanes,
-            consecration,
-            tourbillon,
-            maitriseDuBlocage;
+  private ConcreteSpell benedictionDePuissance,
+          imageMiroir,
+          metamorphose,
+          explosionDesArcanes,
+          consecration,
+          tourbillon,
+          maitriseDuBlocage;
+  private ConcreteMinion sanglierBrocheroc, yetiNoroit, chefDeRaid, chevaucheurDeLoup;
+  private Player player1, player2;
 
-    private ConcreteMinion sanglierBrocheroc,yetiNoroit, chefDeRaid, chevaucheurDeLoup;
+  @BeforeEach
+  void setup() {
+    EntitiesFactory entitiesFactory = new EntitiesFactory();
 
-    private Player player1, player2;
+    // Spell creation
+    benedictionDePuissance = entitiesFactory.createSpell(BENEDICTION_DE_PUISSANCE);
+    imageMiroir = entitiesFactory.createSpell(IMAGE_MIROIR);
+    metamorphose = entitiesFactory.createSpell(METAMORPHOSE);
+    explosionDesArcanes = entitiesFactory.createSpell(EXPLOSION_DES_ARCANES);
+    consecration = entitiesFactory.createSpell(CONSECRATION);
+    tourbillon = entitiesFactory.createSpell(TOURBILLON);
+    maitriseDuBlocage = entitiesFactory.createSpell(MAITRISE_DU_BLOCAGE);
 
-    @BeforeEach
-    void setup() {
-        EntitiesFactory entitiesFactory = new EntitiesFactory();
+    // Minion
+    sanglierBrocheroc = entitiesFactory.createMinion(SANGLIER_BROCHEROC);
+    yetiNoroit = entitiesFactory.createMinion(YETI_NOROIT);
+    chefDeRaid = entitiesFactory.createMinion(CHEF_DE_RAID);
+    chevaucheurDeLoup = entitiesFactory.createMinion(CHEVAUCHEUR_DE_LOUP);
 
-        //Spell creation
-        benedictionDePuissance = entitiesFactory.createSpell(BENEDICTION_DE_PUISSANCE);
-        imageMiroir = entitiesFactory.createSpell(IMAGE_MIROIR);
-        metamorphose = entitiesFactory.createSpell(METAMORPHOSE);
-        explosionDesArcanes = entitiesFactory.createSpell(EXPLOSION_DES_ARCANES);
-        consecration = entitiesFactory.createSpell(CONSECRATION);
-        tourbillon = entitiesFactory.createSpell(TOURBILLON);
-        maitriseDuBlocage = entitiesFactory.createSpell(MAITRISE_DU_BLOCAGE);
+    player1 = new Player();
+    player2 = new Player();
 
-        //Minion
-        sanglierBrocheroc = entitiesFactory.createMinion(SANGLIER_BROCHEROC);
-        yetiNoroit = entitiesFactory.createMinion(YETI_NOROIT);
-        chefDeRaid = entitiesFactory.createMinion(CHEF_DE_RAID);
-        chevaucheurDeLoup = entitiesFactory.createMinion(CHEVAUCHEUR_DE_LOUP);
+    // Poorly managed bidirectional association (Player-Card)
+    player1.addCardToHand(benedictionDePuissance);
+    benedictionDePuissance.setPlayer(player1);
+    player1.addCardToHand(imageMiroir);
+    imageMiroir.setPlayer(player1);
+    player1.addCardToHand(metamorphose);
+    metamorphose.setPlayer(player1);
+    player1.addCardToHand(explosionDesArcanes);
+    explosionDesArcanes.setPlayer(player1);
+    player1.addCardToHand(consecration);
+    consecration.setPlayer(player1);
+    player1.addCardToHand(tourbillon);
+    tourbillon.setPlayer(player1);
+    player1.addCardToHand(maitriseDuBlocage);
+    maitriseDuBlocage.setPlayer(player1);
 
-        player1 = new Player();
-        player2 = new Player();
+    // Poorly managed bidirectional association (Player-Card)
+    player1.addMinion(sanglierBrocheroc);
+    sanglierBrocheroc.setPlayer(player1);
+    player1.addMinion(yetiNoroit);
+    yetiNoroit.setPlayer(player1);
 
-        //Poorly managed bidirectional association (Player-Card)
-        player1.addCardToHand(benedictionDePuissance); benedictionDePuissance.setPlayer(player1);
-        player1.addCardToHand(imageMiroir); imageMiroir.setPlayer(player1);
-        player1.addCardToHand(metamorphose); metamorphose.setPlayer(player1);
-        player1.addCardToHand(explosionDesArcanes); explosionDesArcanes.setPlayer(player1);
-        player1.addCardToHand(consecration); consecration.setPlayer(player1);
-        player1.addCardToHand(tourbillon); tourbillon.setPlayer(player1);
-        player1.addCardToHand(maitriseDuBlocage); maitriseDuBlocage.setPlayer(player1);
+    player2.addMinion(chefDeRaid);
+    chefDeRaid.setPlayer(player2);
+    player2.addMinion(chevaucheurDeLoup);
+    chevaucheurDeLoup.setPlayer(player2);
+  }
 
+  @Test
+  void benedictionDePuissanceTest() {
+    player1.setMyMana(10);
+    assertEquals(1, sanglierBrocheroc.getDamagePoints());
+    benedictionDePuissance.activateEffect(sanglierBrocheroc);
+    //        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
+    //            spellEffect.effect(sanglierBrocheroc);
+    //        }
+    assertEquals(4, sanglierBrocheroc.getDamagePoints());
 
-        //Poorly managed bidirectional association (Player-Card)
-        player1.addMinion(sanglierBrocheroc); sanglierBrocheroc.setPlayer(player1);
-        player1.addMinion(yetiNoroit); yetiNoroit.setPlayer(player1);
+    assertEquals(3, chevaucheurDeLoup.getDamagePoints());
+    benedictionDePuissance.activateEffect(chevaucheurDeLoup);
+    //        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
+    //            spellEffect.effect(chevaucheurDeLoup);
+    //        }
+    assertEquals(6, chevaucheurDeLoup.getDamagePoints());
+  }
 
-        player2.addMinion(chefDeRaid); chefDeRaid.setPlayer(player2);
-        player2.addMinion(chevaucheurDeLoup); chevaucheurDeLoup.setPlayer(player2);
+  /*@Test
+  void giveDamageTest() {
+      assertEquals(sanglierBrocheroc.getMaxHealthPoints(),sanglierBrocheroc.getCurrentHealthPoints());
+      sanglierBrocheroc.takeDamage(explosionDesArcanes.getDamagePoints());
+      assertEquals(0,sanglierBrocheroc.getCurrentHealthPoints());
+      assertTrue(sanglierBrocheroc.isDead());
 
-    }
+      yetiNoroit.takeDamage(tourbillon.getDamagePoints());
+      assertEquals(4,yetiNoroit.getCurrentHealthPoints());
 
-    @Test
-    void benedictionDePuissanceTest() {
-        player1.setMyMana(10);
-        assertEquals(1, sanglierBrocheroc.getDamagePoints());
-        benedictionDePuissance.activateEffect(sanglierBrocheroc);
-//        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
-//            spellEffect.effect(sanglierBrocheroc);
-//        }
-        assertEquals(4, sanglierBrocheroc.getDamagePoints());
+      assertFalse(yetiNoroit.isDead());
 
-        assertEquals(3, chevaucheurDeLoup.getDamagePoints());
-        benedictionDePuissance.activateEffect(chevaucheurDeLoup);
-//        for (Effect spellEffect : benedictionDePuissance.getMyEffects()) {
-//            spellEffect.effect(chevaucheurDeLoup);
-//        }
-        assertEquals(6, chevaucheurDeLoup.getDamagePoints());
-    }
+  }
 
-    /*@Test
-    void giveDamageTest() {
-        assertEquals(sanglierBrocheroc.getMaxHealthPoints(),sanglierBrocheroc.getCurrentHealthPoints());
-        sanglierBrocheroc.takeDamage(explosionDesArcanes.getDamagePoints());
-        assertEquals(0,sanglierBrocheroc.getCurrentHealthPoints());
-        assertTrue(sanglierBrocheroc.isDead());
+  @Test
+  void useManaTest() {
 
-        yetiNoroit.takeDamage(tourbillon.getDamagePoints());
-        assertEquals(4,yetiNoroit.getCurrentHealthPoints());
+      assertEquals(player1.getMyManaMax(),player1.getMyMana());
+      assertEquals(player1.getMyMana()-2,player1.getMyManaMax()-explosionDesArcanes.getRequiredMana());
 
-        assertFalse(yetiNoroit.isDead());
+      assertEquals(player1.getMyManaMax(),player1.getMyMana());
+      assertEquals(player1.getMyMana()-1,player1.getMyManaMax()-tourbillon.getRequiredMana());
 
-    }
-
-    @Test
-    void useManaTest() {
-
-        assertEquals(player1.getMyManaMax(),player1.getMyMana());
-        assertEquals(player1.getMyMana()-2,player1.getMyManaMax()-explosionDesArcanes.getRequiredMana());
-
-        assertEquals(player1.getMyManaMax(),player1.getMyMana());
-        assertEquals(player1.getMyMana()-1,player1.getMyManaMax()-tourbillon.getRequiredMana());
-
-    }*/
+  }*/
 }

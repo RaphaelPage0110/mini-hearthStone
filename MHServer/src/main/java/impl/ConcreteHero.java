@@ -1,11 +1,11 @@
 package impl;
 
 import abstracts.CardType;
+import abstracts.Effect;
+import abstracts.NotTargetedEffect;
 import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 import impl.behaviour.generic.notTargetedEffect.Summon;
 import impl.behaviour.generic.targetedEffect.DamageTarget;
-import inter.Effect;
-import inter.NotTargetedEffect;
 import inter.Target;
 import org.springframework.data.annotation.Id;
 
@@ -57,16 +57,22 @@ public class ConcreteHero implements Target {
     private Effect myEffect;
 
     private Player myPlayer;
-    private Map<String,String> abilityKeyWord;
+    private Map<String, String> abilityKeyWord;
     private String powerImgName;
     private String powerImgText;
     private String powerImgUrl;
     private boolean canUseHeroAbility;
 
-    public ConcreteHero() {}
+    public ConcreteHero() {
+    }
 
-
-    public ConcreteHero(CardType heroType, int maxHealthPoints, int armorPoints, Map<String,String> abilityKeyWord, String heroName, String imgurl) {
+    public ConcreteHero(
+            CardType heroType,
+            int maxHealthPoints,
+            int armorPoints,
+            Map<String, String> abilityKeyWord,
+            String heroName,
+            String imgurl) {
         super();
 
         this.heroType = heroType;
@@ -79,12 +85,6 @@ public class ConcreteHero implements Target {
         this.canUseHeroAbility = true;
 
         generateEffect(abilityKeyWord);
-
-    }
-
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getImgurl() {
@@ -94,7 +94,6 @@ public class ConcreteHero implements Target {
     public void setImgurl(String imgurl) {
         this.imgurl = imgurl;
     }
-
 
     public CardType getHeroType() {
         return heroType;
@@ -111,6 +110,10 @@ public class ConcreteHero implements Target {
      */
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -160,6 +163,7 @@ public class ConcreteHero implements Target {
 
     /**
      * Sets new value of heroName
+     *
      * @param heroName the name of the hero
      */
     public void setHeroName(String heroName) {
@@ -180,10 +184,6 @@ public class ConcreteHero implements Target {
 
     public void setMyPlayer(Player myPlayer) {
         this.myPlayer = myPlayer;
-    }
-
-    public void setCanUseHeroAbility(boolean canUseHeroAbility) {
-        this.canUseHeroAbility = canUseHeroAbility;
     }
 
     public String getPowerImgUrl() {
@@ -214,23 +214,26 @@ public class ConcreteHero implements Target {
         return canUseHeroAbility;
     }
 
+    public void setCanUseHeroAbility(boolean canUseHeroAbility) {
+        this.canUseHeroAbility = canUseHeroAbility;
+    }
+
     /**
-     * allows to generate the effect of a hero
-     * the abilities of the heroes are stored using a Map in the database in the form <key:value> where key is the
-     * ability keyword and value is its modifier
+     * allows to generate the effect of a hero the abilities of the heroes are stored using a Map in
+     * the database in the form <key:value> where key is the ability keyword and value is its modifier
+     *
      * @param abilityKeyWord a map containing the keywords of the abilities
      */
-    public void generateEffect(Map<String,String> abilityKeyWord){
+    public void generateEffect(Map<String, String> abilityKeyWord) {
 
         for (Map.Entry<String, String> entry : abilityKeyWord.entrySet()) {
 
-            switch(entry.getKey()) {
-
+            switch (entry.getKey()) {
                 case DAMAGE_TARGET_ABILITY:
                     DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityDamage);
                     break;
-                case MODIFY_ARMOR_ABILITY :
+                case MODIFY_ARMOR_ABILITY:
                     ModifyArmor abilityArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.setMyEffect(abilityArmor);
                     break;
@@ -244,21 +247,17 @@ public class ConcreteHero implements Target {
         }
     }
 
-    public Map<String,String> getAbilityKeyWord() {
+    public Map<String, String> getAbilityKeyWord() {
         return abilityKeyWord;
     }
 
-    public void setAbilityKeyWord(Map<String,String> abilityKeyWord) {
+    public void setAbilityKeyWord(Map<String, String> abilityKeyWord) {
         this.abilityKeyWord = abilityKeyWord;
-    }
-
-    @Override
-    public void setMaxHealthPoints(int healthPoints) {
-        this.maxHealthPoints = healthPoints;
     }
 
     /**
      * Allows a hero to activate its hero power
+     *
      * @param target the target on which the spell is cast.
      */
     public void activateEffect(Target target) {
@@ -273,11 +272,13 @@ public class ConcreteHero implements Target {
     }
 
     @Override
-    public void addDamagePoints(int bonusDamage) {}
+    public void addDamagePoints(int bonusDamage) {
+    }
 
     /**
-     * add the value in parameter to the maxHealthPoints of the hero
-     * and to the currentHealthPoints of the hero
+     * add the value in parameter to the maxHealthPoints of the hero and to the currentHealthPoints of
+     * the hero
+     *
      * @param bonusHealthPoints the health points that should be added to the heros life
      */
     @Override
@@ -289,6 +290,11 @@ public class ConcreteHero implements Target {
     @Override
     public int getMaxHealthPoints() {
         return this.maxHealthPoints;
+    }
+
+    @Override
+    public void setMaxHealthPoints(int healthPoints) {
+        this.maxHealthPoints = healthPoints;
     }
 
     /**
@@ -305,8 +311,7 @@ public class ConcreteHero implements Target {
                 this.armorPoints = 0;
             }
 
-            if (this.isDead())
-                this.dies();
+            if (this.isDead()) this.dies();
 
             return damageTaken;
         } else {
@@ -322,12 +327,12 @@ public class ConcreteHero implements Target {
     @Override
     public void heal(int healingPoints) {
         if (healingPoints >= 0) {
-            long sum = (long)this.currentHealthPoints + (long)healingPoints;
+            long sum = (long) this.currentHealthPoints + (long) healingPoints;
             int hp;
             if (sum >= Integer.MAX_VALUE) {
                 hp = Math.min(Integer.MAX_VALUE, this.maxHealthPoints);
             } else {
-                hp  = (int)Math.min(sum, (long) this.maxHealthPoints);
+                hp = (int) Math.min(sum, (long) this.maxHealthPoints);
             }
             this.currentHealthPoints = hp;
         }
@@ -345,7 +350,6 @@ public class ConcreteHero implements Target {
     public boolean isDead() {
 
         return currentHealthPoints <= 0;
-
     }
 
     /**
@@ -354,8 +358,6 @@ public class ConcreteHero implements Target {
     public void dies() {
 
         myPlayer.lost();
-
-
     }
 
     /**
@@ -370,12 +372,4 @@ public class ConcreteHero implements Target {
             return false;
         }
     }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Hero[id=%s, heroName='%s', maxHealthPoints='%s', armorPoints='%s']",
-                id, heroName, maxHealthPoints, armorPoints);
-    }
-
 }

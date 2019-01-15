@@ -1,13 +1,13 @@
 package impl.behaviour.generic.notTargetedEffect;
 
+import abstracts.NotTargetedEffect;
 import impl.ConcreteMinion;
 import impl.Player;
-import inter.NotTargetedEffect;
-
 
 /**
- * Class representing the special action "BuffAlliedMinions" used for the "Raid Leader" (fr:Chef de raid) minion.
- * Your other minions have +1 attack.
+ * Class representing the special action "BuffAlliedMinions" used for the "Raid Leader" (fr:Chef de
+ * raid) minion. Your other minions have +1 attack.
+ *
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
@@ -24,9 +24,9 @@ public class BuffAlliedMinions extends NotTargetedEffect {
         Player myPlayer = myMinion.getPlayer();
         int aura = myMinion.getBonus();
 
-        //the minion buffs all allies
+        // the minion buffs all allies
         myPlayer.addAura(aura);
-        //but not himself!
+        // but not himself!
         myMinion.addDamagePoints(-aura);
     }
 }

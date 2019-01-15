@@ -1,17 +1,18 @@
 package impl.behaviour.generic.notTargetedEffect;
 
+import abstracts.NotTargetedEffect;
 import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
-import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.ArrayList;
 
 /**
- * Class representing the special action "DamageAllOpponent" used for the "Consecration" spell.
- * Deal 2 damages to all opponents, including hero and minions.
+ * Class representing the special action "DamageAllOpponent" used for the "Consecration" spell. Deal
+ * 2 damages to all opponents, including hero and minions.
+ *
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
@@ -39,7 +40,6 @@ public class DamageAllOpponents extends NotTargetedEffect {
         for (Target target : myAdversaries) {
 
             target.takeDamage(damage);
-
         }
     }
 }

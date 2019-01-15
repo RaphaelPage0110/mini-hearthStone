@@ -1,15 +1,16 @@
 package impl.behaviour.generic.notTargetedEffect;
 
+import abstracts.NotTargetedEffect;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
-import inter.NotTargetedEffect;
 
 import java.util.ArrayList;
 
 /**
  * Class representing the special action "DamageEnemyMinions" used for the "Arcane Explosion" spell.
  * Deals damage to all enemy minions.
+ *
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
@@ -39,7 +40,5 @@ public class DamageEnemyMinions extends NotTargetedEffect {
                 hisMinions = myOpponent.getMyMinions();
             }
         }
-
-
     }
 }

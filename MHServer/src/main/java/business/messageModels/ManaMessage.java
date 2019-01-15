@@ -38,6 +38,4 @@ public class ManaMessage {
     public void setCurrentMana(int currentMana) {
         this.currentMana = currentMana;
     }
-
-
 }

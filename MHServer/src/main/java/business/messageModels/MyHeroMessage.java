@@ -1,7 +1,7 @@
 package business.messageModels;
 
+import abstracts.NotTargetedEffect;
 import impl.ConcreteHero;
-import inter.NotTargetedEffect;
 
 public class MyHeroMessage {
 
@@ -21,14 +21,14 @@ public class MyHeroMessage {
         this.currentHealthPoints = hero.getCurrentHealthPoints();
         this.heroName = hero.getHeroName();
         this.imgurl = hero.getImgurl();
-        this.powerImgUrl= hero.getPowerImgUrl();
+        this.powerImgUrl = hero.getPowerImgUrl();
         this.canUseHeroPower = hero.canUseHeroAbility();
         this.powerImgName = hero.getPowerImgName();
         this.powerImgText = hero.getPowerImgText();
 
         this.targetedHeroPower = !(hero.getMyEffect() instanceof NotTargetedEffect);
-
     }
+
     public int getArmorPoints() {
         return armorPoints;
     }

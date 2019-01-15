@@ -18,9 +18,9 @@ public interface MinionRepository extends MongoRepository<ConcreteMinion, String
 
     /**
      * find a minion in the database using its type (ex: CardType.COMMON)
+     *
      * @param cardType the type of the minion
      * @return an ArrayList of the ConcreteMinion whose type matches
      */
     ArrayList<ConcreteMinion> findByType(CardType cardType);
-
 }

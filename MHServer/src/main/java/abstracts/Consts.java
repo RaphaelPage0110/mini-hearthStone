@@ -8,8 +8,6 @@ public final class Consts {
 
     public static final int LIMIT_MANA_MAX = 10;
 
-
-
     /*----------ABILITIES----------*/
 
     public static final String DAMAGE_TARGET_ABILITY = "damageTarget";
@@ -22,9 +20,10 @@ public final class Consts {
 
     public static final String DAMAGE_ALL_OPPONENTS_ABILITY = "damageAllOpponents";
 
-    public static final String DAMAGE_ENEMY_MINIONS_ABILITY= "damageEnemyMinions";
+    public static final String DAMAGE_ENEMY_MINIONS_ABILITY = "damageEnemyMinions";
 
-    public static final String MODIFY_DAMAGE_POINTS_ONE_MINION_ABILITY = "modifyDamagePointsOneMinion";
+    public static final String MODIFY_DAMAGE_POINTS_ONE_MINION_ABILITY =
+            "modifyDamagePointsOneMinion";
 
     public static final String DAMAGE_ALL_MINIONS_ABILITY = "damageAllMinions";
 
@@ -40,8 +39,6 @@ public final class Consts {
 
     public static final String REMOVE_AURA_DEATH_RATTLE = "removeAura";
 
-
-
     /*----------NAMES----------*/
 
     /*-----HERO NAMES-----*/
@@ -51,7 +48,6 @@ public final class Consts {
     public static final String GARROSH = "Garrosh";
 
     public static final String UTHER = "Uther";
-
 
     /*-----MINION AND SPELL NAMES-----*/
 
@@ -86,5 +82,4 @@ public final class Consts {
     public static final String TOURBILLON = "Tourbillon";
 
     public static final String MAITRISE_DU_BLOCAGE = "Maîtrise du blocage";
-
 }

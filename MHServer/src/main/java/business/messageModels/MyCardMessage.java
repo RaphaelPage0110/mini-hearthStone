@@ -1,10 +1,10 @@
 package business.messageModels;
 
 import abstracts.Card;
+import abstracts.Effect;
+import abstracts.TargetedEffect;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
-import inter.Effect;
-import inter.TargetedEffect;
 import org.jetbrains.annotations.NotNull;
 
 public class MyCardMessage {
@@ -46,7 +46,6 @@ public class MyCardMessage {
 
     private boolean targetSpell;
 
-
     public MyCardMessage(@NotNull Card card) {
         id = card.getUniqueID();
         type = card.getType().toString();
@@ -57,7 +56,7 @@ public class MyCardMessage {
         if (card instanceof ConcreteMinion) {
             cardType = "minion";
             healthPoints = ((ConcreteMinion) card).getCurrentHealthPoints();
-            damagePoints =((ConcreteMinion) card).getDamagePoints() + card.getPlayer().getMyDamageAura();
+            damagePoints = ((ConcreteMinion) card).getDamagePoints() + card.getPlayer().getMyDamageAura();
             taunt = ((ConcreteMinion) card).isHasTaunt();
             canAttack = ((ConcreteMinion) card).isCanAttack();
             lifeSteal = ((ConcreteMinion) card).isHasLifesteal();
@@ -71,7 +70,6 @@ public class MyCardMessage {
                 }
             }
         }
-
     }
 
     public boolean isTaunt() {
@@ -177,6 +175,4 @@ public class MyCardMessage {
     public void setType(String type) {
         this.type = type;
     }
-
-
 }

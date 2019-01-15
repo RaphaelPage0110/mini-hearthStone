@@ -3,8 +3,8 @@ package business.messageModels;
 public class HisHandMessage {
     private int nbrCards;
 
-    public HisHandMessage(int nbr){
-        nbrCards=nbr;
+    public HisHandMessage(int nbr) {
+        nbrCards = nbr;
     }
 
     public int getNbrCards() {

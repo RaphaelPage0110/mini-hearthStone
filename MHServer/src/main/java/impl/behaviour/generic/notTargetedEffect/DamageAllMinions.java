@@ -1,16 +1,17 @@
 package impl.behaviour.generic.notTargetedEffect;
 
+import abstracts.NotTargetedEffect;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.Player;
-import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.ArrayList;
 
 /**
- * Class representing the special action "DamageAllMinions" used for the "Whirlwind" (fr:Tourbillon) spell.
- * Deal 1 damage to ALL minions (including yours).
+ * Class representing the special action "DamageAllMinions" used for the "Whirlwind" (fr:Tourbillon)
+ * spell. Deal 1 damage to ALL minions (including yours).
+ *
  * @author Raphaël Pagé & Henri Bouvet & Alexandre Melo & Glenn Plouhinec
  * @version 0.1
  */
@@ -38,7 +39,6 @@ public class DamageAllMinions extends NotTargetedEffect {
         for (Target target : myAdversaries) {
 
             target.takeDamage(damage);
-
         }
     }
 }

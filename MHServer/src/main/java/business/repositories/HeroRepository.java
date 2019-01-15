@@ -12,5 +12,4 @@ public interface HeroRepository extends MongoRepository<ConcreteHero, String> {
      * @return a ConcreteHero if the name matches
      */
     ConcreteHero findByHeroName(String heroName);
-
 }

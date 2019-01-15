@@ -30,8 +30,8 @@ public class GameController implements ClientServerInterface {
     private Application myApplication;
 
     private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
-    SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor
-            .create(SimpMessageType.MESSAGE);
+    SimpMessageHeaderAccessor headerAccessor =
+            SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
 
     private List<Player> waitingUsers = new ArrayList<>();
 
@@ -60,7 +60,9 @@ public class GameController implements ClientServerInterface {
 
         heroname = hero.getHeroName();
 
-        simpMessagingTemplate.convertAndSend("/queue/reply-user" + sessionId, new HelloMessage("Vous avez choisi " + heroname + "! En attente d'un autre joueur..."));
+        simpMessagingTemplate.convertAndSend(
+                "/queue/reply-user" + sessionId,
+                new HelloMessage("Vous avez choisi " + heroname + "! En attente d'un autre joueur..."));
 
         if (waitingUsers.size() == 2) {
             LOGGER.log(Level.INFO, "Starting game");
@@ -86,16 +88,16 @@ public class GameController implements ClientServerInterface {
                 break;
             }
         }
-        if (done){
-            simpMessagingTemplate.convertAndSend("/queue/reply-user" + sessionId, new HelloMessage("Recherche de partie annulée."));
-        }
-        else {
-            if(myApplication.getGame() != null){
+        if (done) {
+            simpMessagingTemplate.convertAndSend(
+                    "/queue/reply-user" + sessionId, new HelloMessage("Recherche de partie annulée."));
+        } else {
+            if (myApplication.getGame() != null) {
                 myApplication.gameOver(sessionId);
-            }
-            else
-            {
-                simpMessagingTemplate.convertAndSend("/queue/reply-user" + sessionId, new HelloMessage("Vous ne recherchiez pas de partie."));
+            } else {
+                simpMessagingTemplate.convertAndSend(
+                        "/queue/reply-user" + sessionId,
+                        new HelloMessage("Vous ne recherchiez pas de partie."));
             }
         }
     }
@@ -117,7 +119,6 @@ public class GameController implements ClientServerInterface {
     public void gameOver(@Header("simpSessionId") String sessionId) {
 
         myApplication.gameOver(sessionId);
-
     }
 
     /**
@@ -128,7 +129,6 @@ public class GameController implements ClientServerInterface {
     public void playMinion(@Header("simpSessionId") String sessionId, String idMinion) {
 
         myApplication.playMinionCard(idMinion, sessionId);
-
     }
 
     /**
@@ -136,10 +136,9 @@ public class GameController implements ClientServerInterface {
      */
     @MessageMapping("/playSpell")
     @SendTo("user/queue/reply_playSpell")
-    public void playSpell(@Header("simpSessionId") String sessionId, String idSpell){
+    public void playSpell(@Header("simpSessionId") String sessionId, String idSpell) {
 
         myApplication.playSpellCard(idSpell, null, sessionId);
-
     }
 
     /**
@@ -149,7 +148,7 @@ public class GameController implements ClientServerInterface {
     public void castSpellOnThisMinion(@Header("simpSessionId") String sessionId, String message) {
 
         JsonElement jelement = new JsonParser().parse(message);
-        JsonObject  jobject = jelement.getAsJsonObject();
+        JsonObject jobject = jelement.getAsJsonObject();
         JsonElement spellIDJson = jobject.get("spellID");
         JsonElement targetIDJson = jobject.get("targetID");
         String idSpell = spellIDJson.getAsString();
@@ -175,7 +174,7 @@ public class GameController implements ClientServerInterface {
     public void attackThisMinion(@Header("simpSessionId") String sessionId, String message) {
 
         JsonElement jelement = new JsonParser().parse(message);
-        JsonObject  jobject = jelement.getAsJsonObject();
+        JsonObject jobject = jelement.getAsJsonObject();
         JsonElement attackerIDJson = jobject.get("attackerID");
         JsonElement targetIDJson = jobject.get("targetID");
         String attackerID = attackerIDJson.getAsString();
@@ -187,7 +186,7 @@ public class GameController implements ClientServerInterface {
      * {@inheritDoc}
      */
     @MessageMapping("/attackHero")
-    public void attackHero(@Header("simpSessionId") String sessionId, String attackerID){
+    public void attackHero(@Header("simpSessionId") String sessionId, String attackerID) {
 
         myApplication.attackHero(attackerID);
     }
@@ -234,5 +233,4 @@ public class GameController implements ClientServerInterface {
     public List<Player> getWaitingUsers() {
         return this.waitingUsers;
     }
-
 }

@@ -12,7 +12,7 @@ import inter.Target;
 
 import java.util.Map;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 
 public class ConcreteSpell extends Card implements Cloneable {
 

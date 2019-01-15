@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import static abstracts.Consts.LIMIT_MANA_MAX;
+import static abstracts.ConstsUtils.LIMIT_MANA_MAX;
 
 @SpringBootApplication
 public class Application {
@@ -492,7 +492,7 @@ public class Application {
     // Player waitingPlayer = game.getWaitingPlayer();
     ConcreteHero hero = activePlayer.getMyHero();
 
-    if (hero.canUseHeroAbility()) {
+    if (hero.enoughManaForAbility()) {
 
       Effect heroPower = hero.getMyEffect();
 
@@ -539,7 +539,7 @@ public class Application {
     ConcreteHero hero = activePlayer.getMyHero();
     Target target;
 
-    if (hero.canUseHeroAbility()) {
+    if (hero.enoughManaForAbility()) {
 
       if (targetID.equals("hero")) {
         target = activePlayer.getOpponent().getMyHero();

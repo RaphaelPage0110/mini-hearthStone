@@ -4,7 +4,7 @@ import impl.ConcreteHero;
 
 import java.util.Map;
 
-import static abstracts.Consts.SUMMON_ABILITY;
+import static abstracts.ConstsUtils.SUMMON_ABILITY;
 
 public class HeroMock extends ConcreteHero {
 

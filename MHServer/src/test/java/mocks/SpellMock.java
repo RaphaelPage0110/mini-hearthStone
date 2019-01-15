@@ -5,7 +5,7 @@ import impl.behaviour.generic.notTargetedEffect.ModifyArmor;
 
 import java.util.Map;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 
 public class SpellMock extends ConcreteSpell {
 

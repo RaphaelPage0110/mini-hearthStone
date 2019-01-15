@@ -6,7 +6,7 @@ import impl.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 import static org.junit.Assert.*;
 
 class MinionTest {

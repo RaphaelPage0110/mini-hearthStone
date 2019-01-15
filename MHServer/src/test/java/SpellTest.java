@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 import static org.junit.Assert.*;
 
 public class SpellTest {

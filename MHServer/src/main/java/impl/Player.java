@@ -286,7 +286,9 @@ public class Player {
 
   public boolean containsMinion(String minionName) {
     for (ConcreteMinion minion : myMinions) {
-      if (minion.getName().equals(minionName)) return true;
+      if (minion.getName().equals(minionName)){
+        return true;
+      }
     }
     return false;
   }

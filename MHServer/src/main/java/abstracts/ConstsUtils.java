@@ -1,6 +1,6 @@
 package abstracts;
 
-public final class Consts {
+public final class ConstsUtils {
 
   /*----------GAME RULES----------*/
 

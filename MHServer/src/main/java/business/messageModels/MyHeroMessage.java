@@ -22,7 +22,7 @@ public class MyHeroMessage {
     this.heroName = hero.getHeroName();
     this.imgurl = hero.getImgurl();
     this.powerImgUrl = hero.getPowerImgUrl();
-    this.canUseHeroPower = hero.canUseHeroAbility();
+    this.canUseHeroPower = hero.enoughManaForAbility();
     this.powerImgName = hero.getPowerImgName();
     this.powerImgText = hero.getPowerImgText();
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static abstracts.CardType.*;
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 import static org.junit.Assert.*;
 
 class HeroTest {
@@ -66,32 +66,32 @@ class HeroTest {
 
   @Test
   void jainaHeroPowerTest() {
-    assertFalse(jaina.canUseHeroAbility()); // Player don't have enough mana
+    assertFalse(jaina.enoughManaForAbility()); // Player don't have enough mana
     jaina.activateEffect(yetiNoroit); // Jaina has the "Fireball" power
     assertEquals(yetiNoroit.getMaxHealthPoints(), yetiNoroit.getCurrentHealthPoints());
 
     player1.setMyMana(4);
-    assertTrue(jaina.canUseHeroAbility());
+    assertTrue(jaina.enoughManaForAbility());
     jaina.activateEffect(yetiNoroit);
     assertEquals(yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints());
-    assertFalse(jaina.canUseHeroAbility()); // We can't use hero power twice in a row !
+    assertFalse(jaina.enoughManaForAbility()); // We can't use hero power twice in a row !
     jaina.activateEffect(yetiNoroit);
     assertEquals(
             yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints()); // Hasn't changed
 
     player1.setMyMana(0);
     jaina.setCanUseHeroAbility(true);
-    assertFalse(jaina.canUseHeroAbility()); // Not enough mana
+    assertFalse(jaina.enoughManaForAbility()); // Not enough mana
     jaina.activateEffect(yetiNoroit);
     assertEquals(
             yetiNoroit.getMaxHealthPoints() - 1, yetiNoroit.getCurrentHealthPoints()); // Still OK
 
     player1.setMyMana(2);
     jaina.setCanUseHeroAbility(true);
-    assertTrue(jaina.canUseHeroAbility());
+    assertTrue(jaina.enoughManaForAbility());
     jaina.activateEffect(garrosh);
     assertEquals(garrosh.getMaxHealthPoints() - 1, garrosh.getCurrentHealthPoints());
-    assertFalse(jaina.canUseHeroAbility());
+    assertFalse(jaina.enoughManaForAbility());
     jaina.activateEffect(garrosh);
     assertEquals(
             garrosh.getMaxHealthPoints() - 1, garrosh.getCurrentHealthPoints()); // Checking no changes
@@ -99,35 +99,35 @@ class HeroTest {
 
   @Test
   void garroshHeroPowerTest() {
-    assertFalse(garrosh.canUseHeroAbility());
+    assertFalse(garrosh.enoughManaForAbility());
     assertEquals(0, garrosh.getArmorPoints());
     garrosh.activateEffect(null);
     assertEquals(0, garrosh.getArmorPoints());
 
     player2.setMyMana(4);
-    assertTrue(garrosh.canUseHeroAbility());
+    assertTrue(garrosh.enoughManaForAbility());
     assertEquals(0, garrosh.getArmorPoints());
     garrosh.activateEffect(null);
     assertEquals(2, garrosh.getArmorPoints());
-    assertFalse(garrosh.canUseHeroAbility());
+    assertFalse(garrosh.enoughManaForAbility());
     garrosh.activateEffect(null);
     assertEquals(2, garrosh.getArmorPoints());
 
     player2.setMyMana(2);
     garrosh.setCanUseHeroAbility(true);
-    assertTrue(garrosh.canUseHeroAbility());
+    assertTrue(garrosh.enoughManaForAbility());
     garrosh.activateEffect(null);
     assertEquals(4, garrosh.getArmorPoints()); // Cumulation of armor points
 
     player2.setMyMana(0);
     garrosh.setCanUseHeroAbility(true);
-    assertFalse(garrosh.canUseHeroAbility());
+    assertFalse(garrosh.enoughManaForAbility());
     garrosh.activateEffect(null);
     assertEquals(4, garrosh.getArmorPoints()); // Hasn't changed
 
     player2.setMyMana(2);
     garrosh.setCanUseHeroAbility(true);
-    assertTrue(garrosh.canUseHeroAbility());
+    assertTrue(garrosh.enoughManaForAbility());
     garrosh.activateEffect(uther); // Target is ignored for ths effect.
     assertEquals(6, garrosh.getArmorPoints()); // Cumulation of armor points
     assertEquals(uther.getMaxHealthPoints(), uther.getCurrentHealthPoints()); // Hasn't changed
@@ -137,19 +137,19 @@ class HeroTest {
   void utherHeroPowerTest() {
     uther = new HeroMock(uther);
 
-    assertFalse(uther.canUseHeroAbility());
+    assertFalse(uther.enoughManaForAbility());
     assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
     uther.activateEffect(null);
     assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
 
     player3.setMyMana(4);
-    assertTrue(uther.canUseHeroAbility());
+    assertTrue(uther.enoughManaForAbility());
     assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
     uther.activateEffect(null);
     assertTrue(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
     player3.setMyMinions(new ArrayList<ConcreteMinion>()); // Removing all minions
     assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent"));
-    assertFalse(uther.canUseHeroAbility()); // We can't use hero power twice in a row !
+    assertFalse(uther.enoughManaForAbility()); // We can't use hero power twice in a row !
     uther.activateEffect(null);
     assertFalse(uther.getMyPlayer().containsMinion("Recrue de la main d'argent")); // Hasn't changed
   }
@@ -163,7 +163,7 @@ class HeroTest {
     for (int i = 0; i < nb; i++) {
       player3.setMyMana(2);
       uther.setCanUseHeroAbility(true);
-      assertTrue(uther.canUseHeroAbility());
+      assertTrue(uther.enoughManaForAbility());
       uther.activateEffect(null);
     }
 

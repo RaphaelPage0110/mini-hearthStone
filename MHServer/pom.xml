@@ -22,16 +22,9 @@
             <version>2.0.10.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.1.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-core</artifactId>
@@ -90,18 +83,6 @@
             <version>5.0.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.9.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.9.0</version>
-            <scope>test</scope>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy -->
         <dependency>
             <groupId>net.bytebuddy</groupId>
@@ -117,7 +98,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations-java5</artifactId>
-            <version>RELEASE</version>
+            <version>LATEST</version>
             <scope>compile</scope>
         </dependency>
 
@@ -156,6 +137,18 @@
                 <version>3.0.0</version>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>/rulesets/java/braces.xml</ruleset>
+                        <ruleset>/rulesets/java/imports.xml</ruleset>
+                        <ruleset>/rulesets/java/sunsecure.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>

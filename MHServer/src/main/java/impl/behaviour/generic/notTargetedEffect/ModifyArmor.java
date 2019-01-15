@@ -31,7 +31,9 @@ public class ModifyArmor extends NotTargetedEffect {
   @Override
   public void effect() {
 
-    if (hero == null) hero = spell.getPlayer().getMyHero();
+    if (hero == null){
+      hero = spell.getPlayer().getMyHero();
+    }
     hero.addArmor(bonus);
   }
 }

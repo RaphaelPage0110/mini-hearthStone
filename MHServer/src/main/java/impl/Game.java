@@ -125,6 +125,8 @@ public class Game {
       return player1;
     } else if (player2.getSessionId().equals(id)) {
       return player2;
-    } else return null;
+    } else {
+      return null;
+    }
   }
 }

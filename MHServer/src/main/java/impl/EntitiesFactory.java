@@ -5,7 +5,7 @@ import abstracts.CardType;
 import java.util.HashMap;
 import java.util.Map;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 
 public class EntitiesFactory {
 

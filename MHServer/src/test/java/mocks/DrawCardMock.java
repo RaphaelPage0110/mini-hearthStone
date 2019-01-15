@@ -5,7 +5,7 @@ import impl.EntitiesFactory;
 import impl.Player;
 import impl.behaviour.generic.notTargetedEffect.DrawCard;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 
 public class DrawCardMock extends DrawCard {
 

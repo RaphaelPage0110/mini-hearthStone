@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Map;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 
 public class ConcreteHero implements Target {
 
@@ -261,7 +261,7 @@ public class ConcreteHero implements Target {
    * @param target the target on which the spell is cast.
    */
   public void activateEffect(Target target) {
-    if (canUseHeroAbility()) {
+    if (enoughManaForAbility()) {
       if (this.getMyEffect() instanceof NotTargetedEffect) {
         this.getMyEffect().effect();
       } else {
@@ -311,7 +311,9 @@ public class ConcreteHero implements Target {
         this.armorPoints = 0;
       }
 
-      if (this.isDead()) this.dies();
+      if (this.isDead()) {
+        this.dies();
+      }
 
       return damageTaken;
     } else {
@@ -365,7 +367,7 @@ public class ConcreteHero implements Target {
    *
    * @return true if the ability can be used
    */
-  public boolean canUseHeroAbility() {
+  public boolean enoughManaForAbility() {
     if (myPlayer.getMyMana() >= HERO_POWER_COST) {
       return canUseHeroAbility;
     } else {

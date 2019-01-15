@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static abstracts.Consts.*;
+import static abstracts.ConstsUtils.*;
 
 public class ConcreteMinion extends Card implements Cloneable, Target {
 
@@ -291,7 +291,9 @@ public class ConcreteMinion extends Card implements Cloneable, Target {
 
       this.currentHealthPoints = this.currentHealthPoints - damageTaken;
 
-      if (this.isDead()) this.dies();
+      if (this.isDead()) {
+        this.dies();
+      }
 
       return damageTaken;
 

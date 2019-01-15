@@ -214,29 +214,4 @@ public class SpellTest {
                     .size()); // We add a new card, then spell "maitriseDuBlocage" is remove from hand
     assertFalse(maitriseDuBlocage.canCastSpell());
   }
-
-  /*@Test
-  void giveDamageTest() {
-      assertEquals(sanglierBrocheroc.getMaxHealthPoints(),sanglierBrocheroc.getCurrentHealthPoints());
-      sanglierBrocheroc.takeDamage(explosionDesArcanes.getDamagePoints());
-      assertEquals(0,sanglierBrocheroc.getCurrentHealthPoints());
-      assertTrue(sanglierBrocheroc.isDead());
-
-      yetiNoroit.takeDamage(tourbillon.getDamagePoints());
-      assertEquals(4,yetiNoroit.getCurrentHealthPoints());
-
-      assertFalse(yetiNoroit.isDead());
-
-  }
-
-  @Test
-  void useManaTest() {
-
-      assertEquals(player1.getMyManaMax(),player1.getMyMana());
-      assertEquals(player1.getMyMana()-2,player1.getMyManaMax()-explosionDesArcanes.getRequiredMana());
-
-      assertEquals(player1.getMyManaMax(),player1.getMyMana());
-      assertEquals(player1.getMyMana()-1,player1.getMyManaMax()-tourbillon.getRequiredMana());
-
-  }*/
 }

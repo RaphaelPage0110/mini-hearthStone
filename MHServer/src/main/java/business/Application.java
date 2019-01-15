@@ -132,7 +132,45 @@ public class Application {
           minion.setCanAttack(true);
         }
         sendMinionsInPlay(player);
+
+        simpMessagingTemplate.convertAndSend(
+                "/queue/reply_yourTurn-user" + player.getSessionId(),
+                "<h4><b>C'est à vous!</b></h4>");
+        player.setPlayOrder(player.getPlayOrder() + 1);
+        game.setPassTurn(false);
+        // we increase the mana of each player during the first 10 turns
+        if (game.getTurn() <= LIMIT_MANA_MAX) {
+          player.addManaMax(1);
+        }
+        // we refill the players mana
+        player.setMyMana(player.getMyManaMax());
+
+        // we allow the player to use their heros ability
+        player.getMyHero().setCanUseHeroAbility(true);
+        sendOpponentPlayerHeroMessage(player.getOpponent());
+        sendPlayerHeroMessage(player);
+
+        // we send their mana to the user and his opponent
+        sendManaMessage(player);
+
+        draw(player);
+        sendHand(player);
+
+        //the active player can interract with the game
         action(player, game);
+
+        // the players minions cannot attack anymore
+        for (ConcreteMinion minion : player.getMyMinions()) {
+          minion.setCanAttack(false);
+        }
+
+        //the active player cannot use its hero ability anymore
+        player.getMyHero().setCanUseHeroAbility(false);
+
+        sendOpponentPlayerHeroMessage(player.getOpponent());
+        sendPlayerHeroMessage(player);
+        sendOpponentPlayerHeroMessage(player.getOpponent());
+        sendMinionsInPlay(player);
       }
     }
   }
@@ -196,28 +234,6 @@ public class Application {
    */
   @SuppressWarnings("PMD")
   private void action(@NotNull Player activePlayer, @NotNull Game game) {
-    simpMessagingTemplate.convertAndSend(
-            "/queue/reply_yourTurn-user" + activePlayer.getSessionId(),
-            "<h4><b>C'est à vous!</b></h4>");
-    activePlayer.setPlayOrder(activePlayer.getPlayOrder() + 1);
-    game.setPassTurn(false);
-    // we increase the mana of each player during the first 10 turns
-    if (game.getTurn() <= LIMIT_MANA_MAX) {
-      activePlayer.addManaMax(1);
-    }
-    // we refill the players mana
-    activePlayer.setMyMana(activePlayer.getMyManaMax());
-
-    // we allow the players to use their heros ability
-    activePlayer.getMyHero().setCanUseHeroAbility(true);
-    sendOpponentPlayerHeroMessage(activePlayer.getOpponent());
-    sendPlayerHeroMessage(activePlayer);
-
-    // we send their mana to the user and his opponent
-    sendManaMessage(activePlayer);
-
-    draw(activePlayer);
-    sendHand(activePlayer);
 
     // a player has 2 minutes to play
     StopWatch watch = new StopWatch();

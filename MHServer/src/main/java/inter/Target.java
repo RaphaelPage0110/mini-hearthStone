@@ -35,14 +35,10 @@ public interface Target {
    */
   void addDamagePoints(int bonusDamage);
 
-  /**
-   *
-   */
+  /** */
   void heal(int healthPoints);
 
-  /**
-   *
-   */
+  /** */
   void addMaxHealthPoints(int bonusHealthPoints);
 
   int getMaxHealthPoints();

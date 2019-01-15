@@ -28,7 +28,6 @@ public class DrawCardMock extends DrawCard {
 
             int random = (int) Math.floor(Math.random() * 14);
 
-
             switch (random) {
                 case 1:
                     newCard = entitiesFactory.createMinion(SANGLIER_BROCHEROC);
@@ -76,6 +75,4 @@ public class DrawCardMock extends DrawCard {
             player.addCardToHand(newCard);
         }
     }
-
-
 }

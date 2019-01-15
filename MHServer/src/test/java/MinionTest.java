@@ -416,8 +416,7 @@ class MinionTest {
     championFrisselame.attack(jaina);
     assertEquals(
             30,
-            jaina
-                    .getCurrentHealthPoints()); // Hero is injured and then healed with the same number of
+            jaina.getCurrentHealthPoints()); // Hero is injured and then healed with the same number of
     // HP
     assertFalse(championFrisselame.isCanAttack());
     assertTrue(championFrisselame.isHasLifesteal());

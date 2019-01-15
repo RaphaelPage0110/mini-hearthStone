@@ -1,22 +1,17 @@
 package mocks;
 
+import abstracts.Effect;
 import impl.ConcreteHero;
 import impl.ConcreteMinion;
 import impl.ConcreteSpell;
 import impl.EntitiesFactory;
 import impl.behaviour.generic.notTargetedEffect.Summon;
-import inter.Effect;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class SummonMock extends Summon {
-
-    @Override
-    public String getMyMinionKeyword() {
-        return myMinionKeyword;
-    }
 
     private String myMinionKeyword;
     private int numberSummoned;
@@ -38,6 +33,11 @@ public class SummonMock extends Summon {
     }
 
     @Override
+    public String getMyMinionKeyword() {
+        return myMinionKeyword;
+    }
+
+    @Override
     public void effect() {
         EntitiesFactory entitiesFactory = new EntitiesFactory();
 
@@ -52,8 +52,7 @@ public class SummonMock extends Summon {
                 spell.getPlayer().addMinion(minionToSummon);
             }
 
-
-            for (Effect effect : minionToSummon.getMyEffects() ) {
+            for (Effect effect : minionToSummon.getMyEffects()) {
                 effect.effect();
             }
         }

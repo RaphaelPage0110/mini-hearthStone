@@ -1,9 +1,9 @@
 package mocks;
 
+import abstracts.Effect;
 import impl.ConcreteMinion;
 import impl.EntitiesFactory;
 import impl.behaviour.generic.targetedEffect.TransformInto;
-import inter.Effect;
 import inter.Target;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class TransformIntoMock extends TransformInto {
 
     @Override
     public void effect(Target target) {
-        effect((ConcreteMinion)target);
+        effect((ConcreteMinion) target);
     }
 
     private void effect(ConcreteMinion target) {

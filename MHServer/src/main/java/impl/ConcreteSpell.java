@@ -2,12 +2,12 @@ package impl;
 
 import abstracts.Card;
 import abstracts.CardType;
+import abstracts.Effect;
+import abstracts.NotTargetedEffect;
 import impl.behaviour.generic.notTargetedEffect.*;
 import impl.behaviour.generic.targetedEffect.DamageTarget;
 import impl.behaviour.generic.targetedEffect.ModifyDamagePointsOneMinion;
 import impl.behaviour.generic.targetedEffect.TransformInto;
-import inter.Effect;
-import inter.NotTargetedEffect;
 import inter.Target;
 
 import java.util.Map;
@@ -19,19 +19,29 @@ public class ConcreteSpell extends Card implements Cloneable {
     /**
      * Default empty constructor of ConcreteSpell.
      */
-    public ConcreteSpell() {}
+    public ConcreteSpell() {
+    }
 
     /**
-     * Constructor of ConcreteSpell.Initializes most of the properties of this class. Activates the creation of Effects from abilityKeyword.
-     * @param type the type of the Card.
-     * @param requiredMana the mana cost of using the Card.
-     * @param bonus the bonus of damage, armor, health, or mana.
+     * Constructor of ConcreteSpell.Initializes most of the properties of this class. Activates the
+     * creation of Effects from abilityKeyword.
+     *
+     * @param type           the type of the Card.
+     * @param requiredMana   the mana cost of using the Card.
+     * @param bonus          the bonus of damage, armor, health, or mana.
      * @param abilityKeyWord the list of actions or behaviors of a the Card.
-     * @param name the name of the ConcreteSpell.
-     * @param imgurl the URL of the Card image.
-     * @param text the description of the Card.
+     * @param name           the name of the ConcreteSpell.
+     * @param imgurl         the URL of the Card image.
+     * @param text           the description of the Card.
      */
-    public ConcreteSpell(CardType type, int requiredMana, int bonus, Map<String, String> abilityKeyWord, String name, String imgurl, String text) {
+    public ConcreteSpell(
+            CardType type,
+            int requiredMana,
+            int bonus,
+            Map<String, String> abilityKeyWord,
+            String name,
+            String imgurl,
+            String text) {
         super(type, requiredMana, abilityKeyWord, name, imgurl, text);
         this.bonus = bonus;
 
@@ -44,7 +54,7 @@ public class ConcreteSpell extends Card implements Cloneable {
             // On récupère l'instance à renvoyer par l'appel de la
             // méthode super.clone()
             spell = (ConcreteSpell) super.clone();
-        } catch(CloneNotSupportedException cnse) {
+        } catch (CloneNotSupportedException cnse) {
             // Ne devrait jamais arriver car nous implémentons
             // l'interface Cloneable
             cnse.printStackTrace(System.err);
@@ -54,25 +64,21 @@ public class ConcreteSpell extends Card implements Cloneable {
         return spell;
     }
 
-
     public void generateEffect() {
         generateSpellEffect(this.abilityKeyWord);
     }
 
-
-
     /**
-     * allows to generate the effect of a card
-     * The abilities of the card are stored using a Map in the database in the form <key:value> where key is the
-     * ability keyword and value is its modifier
+     * allows to generate the effect of a card The abilities of the card are stored using a Map in the
+     * database in the form <key:value> where key is the ability keyword and value is its modifier
+     *
      * @param abilityKeyWords a map of the keywords of the abilities
      */
-    public void generateSpellEffect(Map<String,String> abilityKeyWords) {
+    public void generateSpellEffect(Map<String, String> abilityKeyWords) {
         for (Map.Entry<String, String> entry : abilityKeyWords.entrySet()) {
 
-            switch(entry.getKey()) {
-
-                case DAMAGE_TARGET_ABILITY: //Jaina's Fireball ? oops
+            switch (entry.getKey()) {
+                case DAMAGE_TARGET_ABILITY: // Jaina's Fireball ? oops
                     DamageTarget abilityDamage = new DamageTarget(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamage);
                     break;
@@ -88,27 +94,32 @@ public class ConcreteSpell extends Card implements Cloneable {
                     break;
 
                 case DAMAGE_ALL_OPPONENTS_ABILITY:
-                    DamageAllOpponents abilityDamageAllOpponents = new DamageAllOpponents(this, Integer.parseInt(entry.getValue()));
+                    DamageAllOpponents abilityDamageAllOpponents =
+                            new DamageAllOpponents(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamageAllOpponents);
                     break;
 
                 case DAMAGE_ENEMY_MINIONS_ABILITY:
-                    DamageEnemyMinions abilityDamageEnemyMinions = new DamageEnemyMinions(this, Integer.parseInt(entry.getValue()));
+                    DamageEnemyMinions abilityDamageEnemyMinions =
+                            new DamageEnemyMinions(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamageEnemyMinions);
                     break;
 
                 case MODIFY_DAMAGE_POINTS_ONE_MINION_ABILITY:
-                    ModifyDamagePointsOneMinion abilityBuffOneMinion = new ModifyDamagePointsOneMinion(Integer.parseInt(entry.getValue()));
+                    ModifyDamagePointsOneMinion abilityBuffOneMinion =
+                            new ModifyDamagePointsOneMinion(Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityBuffOneMinion);
                     break;
 
                 case DAMAGE_ALL_MINIONS_ABILITY:
-                    DamageAllMinions abilityDamageAllMinions = new DamageAllMinions(this, Integer.parseInt(entry.getValue()) );
+                    DamageAllMinions abilityDamageAllMinions =
+                            new DamageAllMinions(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityDamageAllMinions);
                     break;
 
                 case MODIFY_ARMOR_ABILITY:
-                    ModifyArmor abilityModifyArmor = new ModifyArmor(this, Integer.parseInt(entry.getValue()) );
+                    ModifyArmor abilityModifyArmor =
+                            new ModifyArmor(this, Integer.parseInt(entry.getValue()));
                     this.myEffects.add(abilityModifyArmor);
                     break;
 
@@ -119,7 +130,6 @@ public class ConcreteSpell extends Card implements Cloneable {
 
                 default:
                     break;
-
             }
         }
     }
@@ -128,33 +138,34 @@ public class ConcreteSpell extends Card implements Cloneable {
     public String toString() {
         return String.format(
                 "Spell[id=%s, spellName='%s', requiredMana=%s, type=%s, text='%s']",
-                 id, name, requiredMana, type, text);
+                id, name, requiredMana, type, text);
     }
 
     /**
      * Allows a player to cast a spell
+     *
      * @param target the target on which the spell is cast.
      */
     public void activateEffect(Target target) {
         if (canCastSpell()) {
             for (Effect spellEffect : myEffects) {
-                if (spellEffect instanceof NotTargetedEffect){
+                if (spellEffect instanceof NotTargetedEffect) {
                     spellEffect.effect();
                 } else {
                     spellEffect.effect(target);
                 }
             }
-            player.changeMana( - this.requiredMana);
+            player.changeMana(-this.requiredMana);
             player.removeCardFromHand(this);
         }
     }
 
     /**
      * Indicates if the spell can be cast.
+     *
      * @return true if the spell can be cast.
      */
     public boolean canCastSpell() {
-        return  player.getMyMana() >= this.requiredMana &&
-                player.getMyHand().contains(this);
+        return player.getMyMana() >= this.requiredMana && player.getMyHand().contains(this);
     }
 }

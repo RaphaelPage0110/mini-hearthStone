@@ -12,13 +12,13 @@ public class Player {
 
     private boolean passTurn;
     private Player opponent;
-    private ArrayList<ConcreteMinion> myMinions  = new ArrayList<>();
-    private ArrayList<Card> myHand  = new ArrayList<>();
+    private ArrayList<ConcreteMinion> myMinions = new ArrayList<>();
+    private ArrayList<Card> myHand = new ArrayList<>();
     private int myManaMax;
     private int myMana;
     private ArrayList<Card> myStock = new ArrayList<>();
-    private int myDamageAura; //used for spells that modifies the damage power of the minions
-    private int playOrder; //used to know if the player is playing first or second
+    private int myDamageAura; // used for spells that modifies the damage power of the minions
+    private int playOrder; // used to know if the player is playing first or second
 
     /**
      * Default empty Player constructor
@@ -29,12 +29,12 @@ public class Player {
         passTurn = true;
     }
 
-    public void setSessionId(String sessionId){
-        this.sessionId = sessionId;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public String getSessionId(){
-        return sessionId;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public int getMyDamageAura() {
@@ -51,7 +51,6 @@ public class Player {
     public void addCardToHand(Card card) {
 
         myHand.add(card);
-
     }
 
     public void removeCardFromHand(Card removedCard) {
@@ -83,6 +82,7 @@ public class Player {
 
     /**
      * Returns value of myHero
+     *
      * @return myHero the hero of the player
      */
     public ConcreteHero getMyHero() {
@@ -91,6 +91,7 @@ public class Player {
 
     /**
      * Sets new value of myHero
+     *
      * @param myHero the hero of the player
      */
     public void setMyHero(ConcreteHero myHero) {
@@ -99,6 +100,7 @@ public class Player {
 
     /**
      * Returns value of myManaMax
+     *
      * @return myManaMax the current mana of a player
      */
     public int getMyManaMax() {
@@ -106,19 +108,21 @@ public class Player {
     }
 
     /**
-     * add a value to the current mana count
-     * @param moreMana how much we want to increase the players mana
-     */
-    public void addManaMax(int moreMana) {
-        this.myManaMax += moreMana;
-    }
-
-    /**
      * Sets new value of myManaMax
+     *
      * @param myManaMax the current mana of a player
      */
     public void setMyManaMax(int myManaMax) {
         this.myManaMax = myManaMax;
+    }
+
+    /**
+     * add a value to the current mana count
+     *
+     * @param moreMana how much we want to increase the players mana
+     */
+    public void addManaMax(int moreMana) {
+        this.myManaMax += moreMana;
     }
 
     public int getMyMana() {
@@ -131,6 +135,7 @@ public class Player {
 
     /**
      * Returns value of myGame
+     *
      * @return myGame the game in which the player currently is
      */
     public Game getMyGame() {
@@ -139,6 +144,7 @@ public class Player {
 
     /**
      * Sets new value of myGame
+     *
      * @param myGame the game in which the player currently is
      */
     public void setMyGame(Game myGame) {
@@ -147,6 +153,7 @@ public class Player {
 
     /**
      * Returns value of myStock
+     *
      * @return myStock a part of the player's draw pile
      */
     public ArrayList<Card> getMyStock() {
@@ -155,6 +162,7 @@ public class Player {
 
     /**
      * add a new card to a Player's stock
+     *
      * @param newCard a card to add to the draw pile's stock
      */
     public void addCardToStock(Card newCard) {
@@ -175,6 +183,7 @@ public class Player {
 
     /**
      * Returns the value of the opponent.
+     *
      * @return this.opponent.
      */
     public Player getOpponent() {
@@ -183,6 +192,7 @@ public class Player {
 
     /**
      * Sets the new value of the opponent;
+     *
      * @param opponent the new value;
      */
     public void setOpponent(Player opponent) {
@@ -191,6 +201,7 @@ public class Player {
 
     /**
      * Increases the aura value.
+     *
      * @param additionalAura the bonus to add.
      */
     public void addAura(int additionalAura) {
@@ -199,12 +210,12 @@ public class Player {
 
     /**
      * remove a minion from the game ie when it dies
+     *
      * @param minion the minion to remove
      */
     void removeMinionFromPlay(ConcreteMinion minion) {
 
         myMinions.remove(minion);
-
     }
 
     /**
@@ -215,7 +226,6 @@ public class Player {
         myGame.setGameOver(true);
         myGame.setLoser(this);
         myGame.setWinner(this.getOpponent());
-
     }
 
     /**
@@ -224,7 +234,7 @@ public class Player {
     public ArrayList<ConcreteMinion> findTauntMinions() {
         ArrayList<ConcreteMinion> tauntMinions = new ArrayList<>();
         for (ConcreteMinion minion : myMinions) {
-            if(minion.isHasTaunt()){
+            if (minion.isHasTaunt()) {
                 tauntMinions.add(minion);
             }
         }
@@ -236,19 +246,21 @@ public class Player {
     }
 
     /**
-     * Return a card present in the players hand or that is on the board whose uniqueID matches the param
+     * Return a card present in the players hand or that is on the board whose uniqueID matches the
+     * param
+     *
      * @param id the uniqueId of the card
      * @return a card whose uniqueId matches the argument
      */
-    public Card findCardById(String id){
-        for (Card card : myHand){
-            if(card.getUniqueID().equals(id)){
+    public Card findCardById(String id) {
+        for (Card card : myHand) {
+            if (card.getUniqueID().equals(id)) {
                 return card;
             }
         }
 
-        for (Card card : myMinions){
-            if (card.getUniqueID().equals(id)){
+        for (Card card : myMinions) {
+            if (card.getUniqueID().equals(id)) {
                 return card;
             }
         }
@@ -257,10 +269,11 @@ public class Player {
 
     /**
      * add some mana to the player current mana
+     *
      * @param value the number of mana that should be added
      */
-    public void changeMana(int value){
-        myMana+=value;
+    public void changeMana(int value) {
+        myMana += value;
     }
 
     public boolean isPassTurn() {
@@ -272,9 +285,8 @@ public class Player {
     }
 
     public boolean containsMinion(String minionName) {
-        for(ConcreteMinion minion : myMinions) {
-            if (minion.getName().equals(minionName))
-                return true;
+        for (ConcreteMinion minion : myMinions) {
+            if (minion.getName().equals(minionName)) return true;
         }
         return false;
     }

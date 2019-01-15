@@ -26,51 +26,76 @@ public abstract class Card {
      * Reference the list of actions or behaviors of a this Card.
      */
     protected Map<String, String> abilityKeyWord;
-
+    /**
+     * A short description of this Card.
+     */
+    protected String text;
+    /**
+     * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
+     */
+    protected CardType type;
+    /**
+     * Indicates the player who have this card.
+     */
+    protected Player player;
+    /**
+     * Indicates the mana cost of this card.
+     */
+    protected int requiredMana;
+    /**
+     * The name of the card
+     */
+    protected String name;
+    /**
+     * Reference the list of actions or behaviors of this card.
+     */
+    protected ArrayList<Effect> myEffects;
+    /**
+     * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
+     */
+    protected int bonus;
+    /**
+     * The URL of the Card image
+     */
+    protected String imgurl;
     /**
      * the unique identifier of this card
      */
     private String uniqueID;
 
     /**
-     * A short description of this Card.
+     * Constructor of Card. Initializes most of the properties of this class.
+     *
+     * @param type           the type of the Card.
+     * @param requiredMana   the mana cost of using the Card.
+     * @param abilityKeyWord the list of actions or behaviors of a the Card.
+     * @param name           the name of the Card.
+     * @param imgurl         the URL of the Card image.
+     * @param text           the description of the Card.
      */
-    protected String text;
+    public Card(
+            CardType type,
+            int requiredMana,
+            Map<String, String> abilityKeyWord,
+            String name,
+            String imgurl,
+            String text) {
+        uniqueID = UUID.randomUUID().toString();
+        this.abilityKeyWord = abilityKeyWord;
+        this.text = text;
+        this.type = type;
+        this.requiredMana = requiredMana;
+        this.name = name;
+        this.imgurl = imgurl;
+        this.myEffects = new ArrayList<>();
+    }
 
     /**
-     * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
+     * Default empty constructor of Card.
      */
-    protected CardType type;
-
-    /**
-     * Indicates the player who have this card.
-     */
-    protected Player player;
-
-    /**
-     * Indicates the mana cost of this card.
-     */
-    protected int requiredMana;
-
-    /**
-     * The name of the card
-     */
-    protected String name;
-
-    /**
-     * Reference the list of actions or behaviors of this card.
-     */
-    protected ArrayList<Effect> myEffects;
-
-    /**
-     * Allows a Minion or a Spell to give a target a bonus of damage, armor, health, or mana.
-     */
-    protected int bonus;
-
-    /**
-     * The URL of the Card image
-     */
-    protected String imgurl;
+    public Card() {
+        uniqueID = UUID.randomUUID().toString();
+    }
 
     public String getId() {
         return id;
@@ -161,40 +186,6 @@ public abstract class Card {
     }
 
     public void setUniqueID() {
-        uniqueID = UUID.randomUUID().toString();
-    }
-
-    /**
-     * Constructor of Card. Initializes most of the properties of this class.
-     *
-     * @param type           the type of the Card.
-     * @param requiredMana   the mana cost of using the Card.
-     * @param abilityKeyWord the list of actions or behaviors of a the Card.
-     * @param name           the name of the Card.
-     * @param imgurl         the URL of the Card image.
-     * @param text           the description of the Card.
-     */
-    public Card(
-            CardType type,
-            int requiredMana,
-            Map<String, String> abilityKeyWord,
-            String name,
-            String imgurl,
-            String text) {
-        uniqueID = UUID.randomUUID().toString();
-        this.abilityKeyWord = abilityKeyWord;
-        this.text = text;
-        this.type = type;
-        this.requiredMana = requiredMana;
-        this.name = name;
-        this.imgurl = imgurl;
-        this.myEffects = new ArrayList<>();
-    }
-
-    /**
-     * Default empty constructor of Card.
-     */
-    public Card() {
         uniqueID = UUID.randomUUID().toString();
     }
 

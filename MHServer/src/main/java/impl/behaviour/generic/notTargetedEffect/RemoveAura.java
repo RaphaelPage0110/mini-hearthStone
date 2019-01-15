@@ -12,19 +12,19 @@ import impl.Player;
  */
 public class RemoveAura extends NotTargetedEffect {
 
-    private ConcreteMinion myMinion;
+  private ConcreteMinion myMinion;
 
-    public RemoveAura(ConcreteMinion minion) {
+  public RemoveAura(ConcreteMinion minion) {
 
-        this.myMinion = minion;
-    }
+    this.myMinion = minion;
+  }
 
-    @Override
-    public void effect() {
+  @Override
+  public void effect() {
 
-        Player player = myMinion.getPlayer();
-        int aura = myMinion.getBonus();
+    Player player = myMinion.getPlayer();
+    int aura = myMinion.getBonus();
 
-        player.addAura(-aura);
-    }
+    player.addAura(-aura);
+  }
 }

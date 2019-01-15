@@ -13,11 +13,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Taunt extends NotTargetedEffect {
 
-    public Taunt(@NotNull ConcreteMinion myMinion) {
-        myMinion.setHasTaunt(true);
-    }
+  public Taunt(@NotNull ConcreteMinion myMinion) {
+    myMinion.setHasTaunt(true);
+  }
 
-    @Override
-    public void effect() {
-    }
+  @Override
+  public void effect() {
+  }
 }

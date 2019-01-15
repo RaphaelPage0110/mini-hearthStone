@@ -16,29 +16,29 @@ import java.util.ArrayList;
  */
 public class DamageEnemyMinions extends NotTargetedEffect {
 
-    private ConcreteSpell mySpell;
-    private int damage;
+  private ConcreteSpell mySpell;
+  private int damage;
 
-    public DamageEnemyMinions(ConcreteSpell newSpell, int damage) {
-        this.mySpell = newSpell;
-        this.damage = damage;
+  public DamageEnemyMinions(ConcreteSpell newSpell, int damage) {
+    this.mySpell = newSpell;
+    this.damage = damage;
+  }
+
+  @Override
+  public void effect() {
+    Player myOpponent = mySpell.getPlayer().getOpponent();
+    ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
+    int i = 0;
+
+    while (i < hisMinions.size()) {
+      ConcreteMinion target = hisMinions.get(i);
+      if (target.getCurrentHealthPoints() > damage) {
+        target.takeDamage(damage);
+        i++;
+      } else {
+        target.takeDamage(damage);
+        hisMinions = myOpponent.getMyMinions();
+      }
     }
-
-    @Override
-    public void effect() {
-        Player myOpponent = mySpell.getPlayer().getOpponent();
-        ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
-        int i = 0;
-
-        while (i < hisMinions.size()) {
-            ConcreteMinion target = hisMinions.get(i);
-            if (target.getCurrentHealthPoints() > damage) {
-                target.takeDamage(damage);
-                i++;
-            } else {
-                target.takeDamage(damage);
-                hisMinions = myOpponent.getMyMinions();
-            }
-        }
-    }
+  }
 }

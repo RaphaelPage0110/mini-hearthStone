@@ -71,9 +71,7 @@ public class GameController implements ClientServerInterface {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/disconnectGame")
   @SendTo("user/queue/reply")
   public void disconnectFromGame(@Header("simpSessionId") String sessionId) {
@@ -100,18 +98,14 @@ public class GameController implements ClientServerInterface {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/passTurn")
   @SendTo("user/queue/reply_passTurn")
   public void passTurn(@Header("simpSessionId") String sessionId) {
     this.myApplication.passTurn(sessionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/gameOver")
   @SendTo("user/queue/reply_gameOver")
   public void gameOver(@Header("simpSessionId") String sessionId) {
@@ -119,9 +113,7 @@ public class GameController implements ClientServerInterface {
     myApplication.gameOver(sessionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/playMinion")
   @SendTo({"user/queue/reply_playMinion", "user/queue/reply_hePlayedMinion"})
   public void playMinion(@Header("simpSessionId") String sessionId, String idMinion) {
@@ -129,9 +121,7 @@ public class GameController implements ClientServerInterface {
     myApplication.playMinionCard(idMinion, sessionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/playSpell")
   @SendTo("user/queue/reply_playSpell")
   public void playSpell(@Header("simpSessionId") String sessionId, String idSpell) {
@@ -139,9 +129,7 @@ public class GameController implements ClientServerInterface {
     myApplication.playSpellCard(idSpell, null, sessionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/castSpellOnThisMinion")
   public void castSpellOnThisMinion(@Header("simpSessionId") String sessionId, String message) {
 
@@ -155,9 +143,7 @@ public class GameController implements ClientServerInterface {
     myApplication.playSpellCard(idSpell, targetID, sessionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/showTargetForMinion")
   @SendTo("user/queue/reply_showTargets")
   public void showPossibleTargetsForMinion(@Header("simpSessionId") String sessionId) {
@@ -165,9 +151,7 @@ public class GameController implements ClientServerInterface {
     myApplication.showPossibleTargetsForMinion();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/attackThisMinion")
   public void attackThisMinion(@Header("simpSessionId") String sessionId, String message) {
 
@@ -180,26 +164,20 @@ public class GameController implements ClientServerInterface {
     myApplication.attackMinion(attackerID, targetID);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/attackHero")
   public void attackHero(@Header("simpSessionId") String sessionId, String attackerID) {
 
     myApplication.attackHero(attackerID);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/useHeroPower")
   public void useHeroPower(@Header("simpSessionId") String sessionId) {
     myApplication.useHeroPower(sessionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @MessageMapping("/useHeroPowerOnTarget")
   public void useHeroPowerOnTarget(@Header("simpSessionId") String sessionId, String targetID) {
     myApplication.useHeroPowerOnTarget(sessionId, targetID);

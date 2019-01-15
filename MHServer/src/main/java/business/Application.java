@@ -114,9 +114,7 @@ public class Application {
     }
   }
 
-  /**
-   * manage the players turn
-   */
+  /** manage the players turn */
   private void playRound(@NotNull Game game) {
 
     Player firstToPlay = game.getPlayer1();
@@ -289,7 +287,7 @@ public class Application {
    * allows to attack a minion
    *
    * @param attackerID the uniqueId of the minion that attacks
-   * @param targetID   the uniqueId of the minion targeted
+   * @param targetID the uniqueId of the minion targeted
    */
   public void attackMinion(String attackerID, String targetID) {
 
@@ -350,8 +348,8 @@ public class Application {
    * Allows a player to play a spell card
    *
    * @param spellToPlayID the uniqueID of the spell
-   * @param idPlayer      the sessionId of the player
-   * @param idTarget      the uniqueID of the minion targeted
+   * @param idPlayer the sessionId of the player
+   * @param idTarget the uniqueID of the minion targeted
    */
   public void playSpellCard(String spellToPlayID, String idTarget, String idPlayer) {
 
@@ -455,7 +453,7 @@ public class Application {
    * allows a player to play a minion card
    *
    * @param minionToPlayID the uniqueID of the minion
-   * @param playerID       the sessionId of the player
+   * @param playerID the sessionId of the player
    */
   public void playMinionCard(String minionToPlayID, String playerID) {
 
@@ -534,7 +532,7 @@ public class Application {
    * allows a user to use a hero power that requires a target
    *
    * @param sessionId the sessionId of the player
-   * @param targetID  the uniqueId of the minion targeted
+   * @param targetID the uniqueId of the minion targeted
    */
   public void useHeroPowerOnTarget(String sessionId, String targetID) {
     Player activePlayer = game.getPlayerByID(sessionId);
@@ -566,7 +564,7 @@ public class Application {
    * sets what happens after a hero uses its hero ability
    *
    * @param player the sessionId of the player
-   * @param hero   the hero of the player
+   * @param hero the hero of the player
    */
   private void afterHeroPowerUsed(@NotNull Player player, @NotNull ConcreteHero hero) {
 
@@ -708,9 +706,7 @@ public class Application {
             "/queue/reply_playedMinion-user" + player.getOpponent().getSessionId(), myMinionsMessage);
   }
 
-  /**
-   * send the minions of both players in play to both of the players
-   */
+  /** send the minions of both players in play to both of the players */
   public void sendBothPlayersMinion() {
     sendMinionsInPlay(game.getActivePlayer());
     sendMinionsInPlay(game.getWaitingPlayer());

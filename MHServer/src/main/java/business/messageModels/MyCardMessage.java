@@ -15,21 +15,15 @@ public class MyCardMessage {
    */
   private int damagePoints;
 
-  /**
-   * The name of the card
-   */
+  /** The name of the card */
   private String name;
 
   private String imgurl;
 
-  /**
-   * Indicates the mana cost of this card.
-   */
+  /** Indicates the mana cost of this card. */
   private int requiredMana;
 
-  /**
-   * Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR.
-   */
+  /** Indicates the type of this card that can be COMMON, PALADIN, MAGE, or WARRIOR. */
   private String type;
 
   private int healthPoints;

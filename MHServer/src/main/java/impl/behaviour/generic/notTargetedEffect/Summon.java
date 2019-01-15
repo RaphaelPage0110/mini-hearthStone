@@ -15,30 +15,30 @@ import java.util.List;
  */
 public class Summon extends NotTargetedEffect {
 
-    private String myMinionKeyword;
-    private int numberSummoned;
+  private String myMinionKeyword;
+  private int numberSummoned;
 
-    public Summon() {
-    }
+  public Summon() {
+  }
 
-    public Summon(@NotNull String minionKeyword) {
+  public Summon(@NotNull String minionKeyword) {
 
-        // in the database, the summon action is sored as follow:
-        // "summon": "nameOfTheMinion, numberOfMinion"
-        // hence the reason why we need to split the received String
-        List<String> minionKeywords = Arrays.asList(minionKeyword.split(",[ ]*"));
-        myMinionKeyword = minionKeywords.get(0);
-        numberSummoned = Integer.parseInt(minionKeywords.get(1));
-    }
+    // in the database, the summon action is sored as follow:
+    // "summon": "nameOfTheMinion, numberOfMinion"
+    // hence the reason why we need to split the received String
+    List<String> minionKeywords = Arrays.asList(minionKeyword.split(",[ ]*"));
+    myMinionKeyword = minionKeywords.get(0);
+    numberSummoned = Integer.parseInt(minionKeywords.get(1));
+  }
 
-    public void effect() {
-    }
+  public void effect() {
+  }
 
-    public String getMyMinionKeyword() {
-        return myMinionKeyword;
-    }
+  public String getMyMinionKeyword() {
+    return myMinionKeyword;
+  }
 
-    public int getNumberSummoned() {
-        return numberSummoned;
-    }
+  public int getNumberSummoned() {
+    return numberSummoned;
+  }
 }

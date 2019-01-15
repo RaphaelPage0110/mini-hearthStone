@@ -13,11 +13,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class LifeSteal extends NotTargetedEffect {
 
-    public LifeSteal(@NotNull ConcreteMinion myMinion) {
-        myMinion.setHasLifesteal(true);
-    }
+  public LifeSteal(@NotNull ConcreteMinion myMinion) {
+    myMinion.setHasLifesteal(true);
+  }
 
-    @Override
-    public void effect() {
-    }
+  @Override
+  public void effect() {
+  }
 }

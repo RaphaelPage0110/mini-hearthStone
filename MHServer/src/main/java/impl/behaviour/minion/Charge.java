@@ -13,11 +13,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Charge extends NotTargetedEffect {
 
-    public Charge(@NotNull ConcreteMinion myMinion) {
-        myMinion.setCanAttack(true);
-    }
+  public Charge(@NotNull ConcreteMinion myMinion) {
+    myMinion.setCanAttack(true);
+  }
 
-    @Override
-    public void effect() {
-    }
+  @Override
+  public void effect() {
+  }
 }

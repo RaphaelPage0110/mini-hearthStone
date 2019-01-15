@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns="http://pmd.sourceforge.net/report/2.0.0"
+     xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd"
+     version="6.8.0" timestamp="2019-01-15T00:15:29.174">
+    <file name="D:\Dev\workspace\mini-hearthStone\MHServer\src\main\java\abstracts\NotTargetedEffect.java">
+        <violation beginline="3" endline="3" begincolumn="1" endcolumn="24" rule="ImportFromSamePackage"
+                   ruleset="Error Prone" package="abstracts" class="NotTargetedEffect"
+                   externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_errorprone.html#importfromsamepackage"
+                   priority="3">
+            No need to import a type that lives in the same package
+        </violation>
+    </file>
+    <file name="D:\Dev\workspace\mini-hearthStone\MHServer\src\main\java\business\GameTest.java">
+        <violation beginline="17" endline="17" begincolumn="1" endcolumn="25" rule="UnusedImports"
+                   ruleset="Best Practices" package="business" class="GameTest"
+                   externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_bestpractices.html#unusedimports"
+                   priority="4">
+            Avoid unused imports such as 'java.util.HashMap'
+        </violation>
+        <violation beginline="18" endline="18" begincolumn="1" endcolumn="21" rule="UnusedImports"
+                   ruleset="Best Practices" package="business" class="GameTest"
+                   externalInfoUrl="https://pmd.github.io/pmd-6.8.0/pmd_rules_java_bestpractices.html#unusedimports"
+                   priority="4">
+            Avoid unused imports such as 'java.util.Map'
+        </violation>
+    </file>
+</pmd>

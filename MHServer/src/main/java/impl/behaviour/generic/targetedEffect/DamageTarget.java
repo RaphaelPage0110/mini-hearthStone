@@ -12,14 +12,14 @@ import inter.Target;
  */
 public class DamageTarget extends TargetedEffect {
 
-    private int damage;
+  private int damage;
 
-    public DamageTarget(int damage) {
-        this.damage = damage;
-    }
+  public DamageTarget(int damage) {
+    this.damage = damage;
+  }
 
-    @Override
-    public void effect(Target myTarget) {
-        myTarget.takeDamage(damage);
-    }
+  @Override
+  public void effect(Target myTarget) {
+    myTarget.takeDamage(damage);
+  }
 }

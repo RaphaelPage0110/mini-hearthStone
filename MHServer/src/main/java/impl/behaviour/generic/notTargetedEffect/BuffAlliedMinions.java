@@ -13,20 +13,20 @@ import impl.Player;
  */
 public class BuffAlliedMinions extends NotTargetedEffect {
 
-    private ConcreteMinion myMinion;
+  private ConcreteMinion myMinion;
 
-    public BuffAlliedMinions(ConcreteMinion newMinion) {
-        this.myMinion = newMinion;
-    }
+  public BuffAlliedMinions(ConcreteMinion newMinion) {
+    this.myMinion = newMinion;
+  }
 
-    @Override
-    public void effect() {
-        Player myPlayer = myMinion.getPlayer();
-        int aura = myMinion.getBonus();
+  @Override
+  public void effect() {
+    Player myPlayer = myMinion.getPlayer();
+    int aura = myMinion.getBonus();
 
-        // the minion buffs all allies
-        myPlayer.addAura(aura);
-        // but not himself!
-        myMinion.addDamagePoints(-aura);
-    }
+    // the minion buffs all allies
+    myPlayer.addAura(aura);
+    // but not himself!
+    myMinion.addDamagePoints(-aura);
+  }
 }

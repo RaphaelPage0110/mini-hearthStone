@@ -18,28 +18,28 @@ import java.util.ArrayList;
  */
 public class DamageAllOpponents extends NotTargetedEffect {
 
-    private ConcreteSpell mySpell;
-    private int damage;
+  private ConcreteSpell mySpell;
+  private int damage;
 
-    public DamageAllOpponents(ConcreteSpell mySpell, int damage) {
-        this.mySpell = mySpell;
-        this.damage = damage;
+  public DamageAllOpponents(ConcreteSpell mySpell, int damage) {
+    this.mySpell = mySpell;
+    this.damage = damage;
+  }
+
+  @Override
+  public void effect() {
+
+    Player myPlayer = mySpell.getPlayer();
+    Player myOpponent = myPlayer.getOpponent();
+    ConcreteHero hisHero = myOpponent.getMyHero();
+    ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
+
+    ArrayList<Target> myAdversaries = new ArrayList<Target>(hisMinions);
+    myAdversaries.add(hisHero);
+
+    for (Target target : myAdversaries) {
+
+      target.takeDamage(damage);
     }
-
-    @Override
-    public void effect() {
-
-        Player myPlayer = mySpell.getPlayer();
-        Player myOpponent = myPlayer.getOpponent();
-        ConcreteHero hisHero = myOpponent.getMyHero();
-        ArrayList<ConcreteMinion> hisMinions = myOpponent.getMyMinions();
-
-        ArrayList<Target> myAdversaries = new ArrayList<Target>(hisMinions);
-        myAdversaries.add(hisHero);
-
-        for (Target target : myAdversaries) {
-
-            target.takeDamage(damage);
-        }
-    }
+  }
 }

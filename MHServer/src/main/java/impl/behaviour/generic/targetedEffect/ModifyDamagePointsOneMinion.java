@@ -12,15 +12,15 @@ import inter.Target;
  * @version 0.1
  */
 public class ModifyDamagePointsOneMinion extends TargetedEffect {
-    private int myDamage;
+  private int myDamage;
 
-    public ModifyDamagePointsOneMinion(int damage) {
-        this.myDamage = damage;
-    }
+  public ModifyDamagePointsOneMinion(int damage) {
+    this.myDamage = damage;
+  }
 
-    @Override
-    public void effect(Target myTarget) {
-        ConcreteMinion targetedMinion = (ConcreteMinion) myTarget;
-        targetedMinion.addDamagePoints(myDamage);
-    }
+  @Override
+  public void effect(Target myTarget) {
+    ConcreteMinion targetedMinion = (ConcreteMinion) myTarget;
+    targetedMinion.addDamagePoints(myDamage);
+  }
 }

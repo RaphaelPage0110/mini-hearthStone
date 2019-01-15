@@ -11,25 +11,25 @@ import abstracts.NotTargetedEffect;
  */
 public class DrawCard extends NotTargetedEffect {
 
-    private int numberCards;
+  private int numberCards;
 
-    public DrawCard() {
-    }
+  public DrawCard() {
+  }
 
-    public DrawCard(int numberCards) {
-        this.numberCards = numberCards;
-    }
+  public DrawCard(int numberCards) {
+    this.numberCards = numberCards;
+  }
 
-    @Override
-    public void effect() {
-    }
+  @Override
+  public void effect() {
+  }
 
-    /**
-     * the drawing actions are implemented in the Application because they need to call the database
-     *
-     * @return numberCards the number of cards the player has to draw
-     */
-    public int getNumberDraw() {
-        return numberCards;
-    }
+  /**
+   * the drawing actions are implemented in the Application because they need to call the database
+   *
+   * @return numberCards the number of cards the player has to draw
+   */
+  public int getNumberDraw() {
+    return numberCards;
+  }
 }

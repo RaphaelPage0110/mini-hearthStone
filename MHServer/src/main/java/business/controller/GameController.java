@@ -29,8 +29,10 @@ public class GameController implements ClientServerInterface {
   private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
   SimpMessageHeaderAccessor headerAccessor =
           SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+
   @Autowired
   private Application myApplication;
+
   private List<Player> waitingUsers = new ArrayList<>();
 
   @Autowired
@@ -88,7 +90,7 @@ public class GameController implements ClientServerInterface {
       simpMessagingTemplate.convertAndSend(
               "/queue/reply-user" + sessionId, new HelloMessage("Recherche de partie annulée."));
     } else {
-      if (myApplication.getGame() != null) {
+      if (myApplication.findPlayerById(sessionId) != null) {
         myApplication.gameOver(sessionId);
       } else {
         simpMessagingTemplate.convertAndSend(
@@ -148,7 +150,7 @@ public class GameController implements ClientServerInterface {
   @SendTo("user/queue/reply_showTargets")
   public void showPossibleTargetsForMinion(@Header("simpSessionId") String sessionId) {
 
-    myApplication.showPossibleTargetsForMinion();
+    myApplication.showPossibleTargetsForMinion(sessionId);
   }
 
   /** {@inheritDoc} */
@@ -161,14 +163,14 @@ public class GameController implements ClientServerInterface {
     JsonElement targetIDJson = jobject.get("targetID");
     String attackerID = attackerIDJson.getAsString();
     String targetID = targetIDJson.getAsString();
-    myApplication.attackMinion(attackerID, targetID);
+    myApplication.attackMinion(sessionId, attackerID, targetID);
   }
 
   /** {@inheritDoc} */
   @MessageMapping("/attackHero")
   public void attackHero(@Header("simpSessionId") String sessionId, String attackerID) {
 
-    myApplication.attackHero(attackerID);
+    myApplication.attackHero(sessionId, attackerID);
   }
 
   /** {@inheritDoc} */
@@ -181,10 +183,6 @@ public class GameController implements ClientServerInterface {
   @MessageMapping("/useHeroPowerOnTarget")
   public void useHeroPowerOnTarget(@Header("simpSessionId") String sessionId, String targetID) {
     myApplication.useHeroPowerOnTarget(sessionId, targetID);
-  }
-
-  public Application getApplication() {
-    return myApplication;
   }
 
   public GameController setApplication(Application application) {

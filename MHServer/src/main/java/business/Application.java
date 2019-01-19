@@ -33,7 +33,7 @@ public class Application {
   public MinionRepository minionRepository;
   @Autowired
   public SpellRepository spellRepository;
-  private Game game;
+  public ArrayList<Player> playerArrayList = new ArrayList<>();
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
@@ -41,20 +41,12 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
-  public Game getGame() {
-    return game;
-  }
-
-  public void setGame(Game game) {
-    this.game = game;
-  }
-
   /**
    * allows to create a new game of mini-hearthstone
    */
   public void createGame(Player player1, Player player2) {
 
-    this.game = new Game(player1, player2);
+    Game game = new Game(player1, player2);
     instanciatePlayers(game);
 
     while (!game.isGameOver()) {
@@ -74,6 +66,9 @@ public class Application {
 
     Player player1 = game.getPlayer1();
     Player player2 = game.getPlayer2();
+
+    playerArrayList.add(player1);
+    playerArrayList.add(player2);
 
     player1.setMyGame(game);
     player2.setMyGame(game);
@@ -173,6 +168,15 @@ public class Application {
         sendMinionsInPlay(player);
       }
     }
+  }
+
+  public Player findPlayerById(String playerId){
+    for (Player player : playerArrayList){
+      if(player.getSessionId().equals(playerId)){
+        return player;
+      }
+    }
+    return null;
   }
 
   /**
@@ -279,8 +283,10 @@ public class Application {
             "/queue/reply_passedTurn-user" + activePlayer.getSessionId(), "Passed turn");
   }
 
-  public void showPossibleTargetsForMinion() {
-    Player waitingPlayer = game.getWaitingPlayer();
+  public void showPossibleTargetsForMinion(String playerID) {
+
+    Player player = findPlayerById(playerID);
+    Player waitingPlayer = player.getOpponent();
     ArrayList<ConcreteMinion> targetMinions = waitingPlayer.findTauntMinions();
 
     if (targetMinions.size() == 0) {
@@ -305,16 +311,16 @@ public class Application {
    * @param attackerID the uniqueId of the minion that attacks
    * @param targetID the uniqueId of the minion targeted
    */
-  public void attackMinion(String attackerID, String targetID) {
+  public void attackMinion(String playerID, String attackerID, String targetID) {
 
-    Player activePlayer = game.getActivePlayer();
-    Player waitingPlayer = game.getWaitingPlayer();
+    Player activePlayer = findPlayerById(playerID);
+    Player waitingPlayer = activePlayer.getOpponent();
 
     ConcreteMinion minionThatAttacks = (ConcreteMinion) activePlayer.findCardById(attackerID);
     ConcreteMinion minionToAttack = (ConcreteMinion) waitingPlayer.findCardById(targetID);
 
     minionThatAttacks.attack(minionToAttack);
-    sendBothPlayersMinion();
+    sendBothPlayersMinion(activePlayer);
 
     if (minionThatAttacks.isHasLifesteal()) {
       // we are sending the active player hero status to both players in case the minion that
@@ -336,9 +342,9 @@ public class Application {
    *
    * @param attackerID : id of the attacker
    */
-  public void attackHero(String attackerID) {
+  public void attackHero(String idPlayer, String attackerID) {
 
-    Player activePlayer = game.getActivePlayer();
+    Player activePlayer = findPlayerById(idPlayer);
     Player waitingPlayer = activePlayer.getOpponent();
     ConcreteMinion minionThatAttacks = (ConcreteMinion) activePlayer.findCardById(attackerID);
 
@@ -369,7 +375,8 @@ public class Application {
    */
   public void playSpellCard(String spellToPlayID, String idTarget, String idPlayer) {
 
-    Player player = game.getPlayerByID(idPlayer);
+    Player player = findPlayerById(idPlayer);
+    Game game = player.getMyGame();
 
     // only the active player can play a spell card
     if (player == game.getActivePlayer()) {
@@ -473,7 +480,8 @@ public class Application {
    */
   public void playMinionCard(String minionToPlayID, String playerID) {
 
-    Player player = game.getPlayerByID(playerID);
+    Player player = findPlayerById(playerID);
+    Game game = player.getMyGame();
 
     // only the active player can play a minion card
     if (player == game.getActivePlayer()) {
@@ -503,9 +511,9 @@ public class Application {
    * @param sessionId the sessionId of the player
    */
   public void useHeroPower(String sessionId) {
-    Player activePlayer = game.getPlayerByID(sessionId);
-    // Player activePlayer = game.getActivePlayer();
-    // Player waitingPlayer = game.getWaitingPlayer();
+
+    Player activePlayer = findPlayerById(sessionId);
+
     ConcreteHero hero = activePlayer.getMyHero();
 
     if (hero.enoughManaForAbility()) {
@@ -534,7 +542,7 @@ public class Application {
             effect.effect();
           }
         }
-        sendBothPlayersMinion();
+        sendBothPlayersMinion(activePlayer);
       } else {
 
         activePlayer.getMyHero().activateEffect(null);
@@ -551,7 +559,7 @@ public class Application {
    * @param targetID the uniqueId of the minion targeted
    */
   public void useHeroPowerOnTarget(String sessionId, String targetID) {
-    Player activePlayer = game.getPlayerByID(sessionId);
+    Player activePlayer = findPlayerById(sessionId);
     ConcreteHero hero = activePlayer.getMyHero();
     Target target;
 
@@ -723,7 +731,9 @@ public class Application {
   }
 
   /** send the minions of both players in play to both of the players */
-  public void sendBothPlayersMinion() {
+  public void sendBothPlayersMinion(Player player) {
+    Game game = player.getMyGame();
+
     sendMinionsInPlay(game.getActivePlayer());
     sendMinionsInPlay(game.getWaitingPlayer());
   }
@@ -744,16 +754,20 @@ public class Application {
   }
 
   public void gameOver(String loserID) {
+    Player loser = findPlayerById(loserID);
+    Game game = loser.getMyGame();
 
-    Player loser = game.getPlayerByID(loserID);
     game.setLoser(loser);
     game.setWinner(loser.getOpponent());
     game.setGameOver(true);
     game.setPassTurn(true);
+    playerArrayList.remove(loser.getOpponent());
+    playerArrayList.remove(loser);
   }
 
   public void passTurn(String sessionId) {
-    Player passingTurn = game.getPlayerByID(sessionId);
+    Player passingTurn = findPlayerById(sessionId);
+    Game game = passingTurn.getMyGame();
 
     // only the active player can pass its turn
     if (passingTurn == game.getActivePlayer()) {

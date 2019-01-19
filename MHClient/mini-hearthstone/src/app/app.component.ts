@@ -169,7 +169,6 @@ export class AppComponent {
             '/gameOver',
             {}
         );
-        this.passTurn();
     }
 
     gameOver(resp) {

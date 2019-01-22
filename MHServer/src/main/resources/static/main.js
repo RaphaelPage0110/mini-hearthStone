@@ -125,7 +125,7 @@ var AppComponent = /** @class */ (function () {
         }
     };
     AppComponent.prototype.connect = function () {
-        var socket = new sockjs_client__WEBPACK_IMPORTED_MODULE_3__('http://localhost:8080/endpoint');
+        var socket = new sockjs_client__WEBPACK_IMPORTED_MODULE_3__('/endpoint');
         this.stompClient = _stomp_stompjs__WEBPACK_IMPORTED_MODULE_2__["Stomp"].over(socket);
         var _this = this;
         this.stompClient.connect({}, function (frame) {

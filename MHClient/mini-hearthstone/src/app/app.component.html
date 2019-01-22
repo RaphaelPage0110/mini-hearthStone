@@ -74,7 +74,7 @@
             <a (click)="openCardPopup(myCard.id)" >
                 <img [ngClass]="{
                 'taunt': myCard.taunt,
-                'canAttack': myCard.canAttack,
+                'canAttack':  myCard.canAttack && myCard.damagePoints>0,
                 'lifeSteal': myCard.lifeSteal}"
                      src= {{myCard.imgurl}} alt="Avatar">
             </a >
@@ -100,14 +100,14 @@
             <a (click)="openCardPopup(myCard.id)" >
                 <img [ngClass]="{
                 'taunt': myCard.taunt,
-                'canAttack': myCard.canAttack,
+                'canAttack': myCard.canAttack && myCard.damagePoints>0,
                 'lifeSteal': myCard.lifeSteal}"
                      src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
                 <form class="form-container">
-                    <button *ngIf="myCard.canAttack" class="btn btn-default" type="button" (click)="showTargetForMinion(myCard.id)">Attaquer</button>
+                    <button *ngIf="myCard.canAttack && myCard.damagePoints>0" class="btn btn-default" type="button" (click)="showTargetForMinion(myCard.id)">Attaquer</button>
                     <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
                     <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
                     <div class="containerCardDetails">

@@ -50,6 +50,12 @@
             <a class="card" >
                 <img src= {{hisHero?.imgurl}} alt="Avatar">
             </a>
+            <a *ngIf="hisHero?.canUseHeroPower" class="card"  style="display: inline-block" (click)="openHeroPowerPopup()">
+                <img  src= {{hisHero?.powerImgUrl}} alt="Avatar">
+            </a>
+            <div *ngIf="hisHero?.canUseHeroPower == false" class = "card">
+                <img  src= "https://bit.ly/2FmMVy7" alt="Avatar">
+            </div>
             <ul style="display: inline-block">
                 <li>Points de vie:  <b> {{hisHero?.currentHealthPoints}} </b> </li>
                 <li *ngIf="hisHero?.armorPoints>0">Armure: <b>{{hisHero?.armorPoints}}</b></li>

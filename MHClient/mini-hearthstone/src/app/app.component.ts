@@ -43,7 +43,7 @@ export class AppComponent {
     }
 
     connect() {
-        const socket = new SockJS('http://localhost:8080/endpoint');
+        const socket = new SockJS('/endpoint');
         this.stompClient = Stomp.over(socket);
 
         const _this = this;

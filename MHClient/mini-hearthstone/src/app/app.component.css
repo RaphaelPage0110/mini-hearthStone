@@ -74,14 +74,12 @@
 }
 
 .card {
-     margin-left: 10px;
-     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     margin-left: 1vw;
      transition: 0.3s;
      display:inline-block;
-     width: 5%;
-     padding: 5px;
+     height: 12vh;
      vertical-align: top;
- }
+}
 
 .targetDetails {
     margin-left: 10px;
@@ -119,22 +117,26 @@
     height: 84vh;
 }
 
-img {
-    width: 100%;
-    height: auto;
-    width: auto\9; /* ie8 */
-}
-
 .taunt {
+    margin-left: 1vw;
     border-top: solid #00ff24;
+    height: 12vh;
 }
 
 .canAttack {
+    margin-left: 1vw;
     border-right: solid #ff0000;
+    height: 12vh;
 }
 
 .lifeSteal {
+    margin-left: 1vw;
     border-left: solid #ffef00;
+    height: 12vh;
 }
 
+.heropower {
+    height: 8vh;
+    vertical-align: middle;
+}
 

@@ -45,16 +45,16 @@
 <div id="theBoard" style="display: none">
 
     <div id="parentHisHero" class="row">
-        <div >
+        <div class="card">
             <p style="display: inline-block" >Mana: </p> <b > {{hisMana?.currentMana}} / {{hisMana?.manaMax}} </b>
             <a class="card" >
-                <img src= {{hisHero?.imgurl}} alt="Avatar">
+                <img class="card" src= {{hisHero?.imgurl}} alt="Avatar">
             </a>
             <a *ngIf="hisHero?.canUseHeroPower" class="card"  style="display: inline-block" (click)="openHeroPowerPopup()">
-                <img  src= {{hisHero?.powerImgUrl}} alt="Avatar">
+                <img class="heropower"  src= {{hisHero?.powerImgUrl}} alt="Avatar">
             </a>
             <div *ngIf="hisHero?.canUseHeroPower == false" class = "card">
-                <img  src= "https://bit.ly/2FmMVy7" alt="Avatar">
+                <img class="heropower" src= "https://i.imgur.com/YB4MdzJ.jpg" alt="Avatar">
             </div>
             <ul style="display: inline-block">
                 <li>Points de vie:  <b> {{hisHero?.currentHealthPoints}} </b> </li>
@@ -65,7 +65,7 @@
 
     <div id="parentHisHand" class="row">
         <a class="card" *ngFor="let hisCard of hisHand" >
-            <img src= "https://bit.ly/2CMnTps" alt="Avatar">
+            <img class="card" src= "https://bit.ly/2CMnTps" alt="Avatar">
         </a>
     </div>
 
@@ -126,7 +126,7 @@
     <div id="parentMyHand" class="row">
         <div class="card" *ngFor="let myCard of myCards">
             <a (click)="openCardPopup(myCard.id)" >
-                <img src= {{myCard.imgurl}} alt="Avatar">
+                <img class="card" src= {{myCard.imgurl}} alt="Avatar">
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -141,7 +141,7 @@
                             <button *ngIf="myCard.targetSpell" class="btn btn-default" type="button" (click)="openPromptSpellTarget(myCard.id)">Choisir une cible</button>
                         </div>
                     </div>
-                    <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
+                    <img src={{myCard.imgurl}} alt="Avatar">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
                         <p>Coût: {{myCard.requiredMana}}</p>
@@ -169,13 +169,13 @@
                 <li>Aura : {{myMana?.aura}}</li>
             </ul>
             <a class="card"  >
-                <img src= {{myHero?.imgurl}} alt="Avatar">
+                <img class="card" src= {{myHero?.imgurl}} alt="Avatar">
             </a>
             <a *ngIf="myHero?.canUseHeroPower" class="card"  style="display: inline-block" (click)="openHeroPowerPopup()">
-                <img  src= {{myHero?.powerImgUrl}} alt="Avatar">
+                <img class="heropower" src= {{myHero?.powerImgUrl}} alt="Avatar">
             </a>
             <div *ngIf="myHero?.canUseHeroPower == false" class = "card">
-                <img  src= "https://bit.ly/2FmMVy7" alt="Avatar">
+                <img class="heropower"  src= "https://i.imgur.com/YB4MdzJ.jpg" alt="Avatar">
             </div>
 
             <div class="form-popup" id="heroPowerPopup" style="display: none">

@@ -82,7 +82,7 @@
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
                 <form class="form-container">
                     <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
-                    <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
+                    <img class="card" src={{myCard.imgurl}} alt="Avatar">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
                         <p>Cout: {{myCard.requiredMana}}</p>
@@ -109,7 +109,7 @@
                 <form class="form-container">
                     <button *ngIf="myCard.canAttack && myCard.damagePoints>0" class="btn btn-default" type="button" (click)="showTargetForMinion(myCard.id)">Attaquer</button>
                     <button type="submit" class="btn cancel" (click)="closeCardPopup(myCard.id)">Fermer</button>
-                    <img src={{myCard.imgurl}} alt="Avatar" style="width:100%">
+                    <img class="card" src={{myCard.imgurl}} alt="Avatar" >
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
                         <p>Coût: {{myCard.requiredMana}}</p>
@@ -141,7 +141,7 @@
                             <button *ngIf="myCard.targetSpell" class="btn btn-default" type="button" (click)="openPromptSpellTarget(myCard.id)">Choisir une cible</button>
                         </div>
                     </div>
-                    <img src={{myCard.imgurl}} alt="Avatar">
+                    <img class="card" src={{myCard.imgurl}} alt="Avatar">
                     <div class="containerCardDetails">
                         <h4><b>{{myCard.name}}</b></h4>
                         <p>Coût: {{myCard.requiredMana}}</p>
@@ -169,7 +169,7 @@
                 <li>Aura : {{myMana?.aura}}</li>
             </ul>
             <a class="card"  >
-                <img class="card" src= {{myHero?.imgurl}} alt="Avatar">
+                <img class="card" class="card" src= {{myHero?.imgurl}} alt="Avatar">
             </a>
             <a *ngIf="myHero?.canUseHeroPower" class="card"  style="display: inline-block" (click)="openHeroPowerPopup()">
                 <img class="heropower" src= {{myHero?.powerImgUrl}} alt="Avatar">
@@ -189,7 +189,7 @@
                             <button class="btn btn-default" type="button" (click)="useHeroPower()">Lancer le pouvoir héroïque</button>
                         </div>
                     </div>
-                    <img src={{myHero?.powerImgUrl}} alt="Avatar" style="width:100%">
+                    <img class="card" src={{myHero?.powerImgUrl}} alt="Avatar" >
                     <div class="containerCardDetails">
                         <h4><b>{{myHero?.powerImgName}}</b></h4>
                         <p>Coût: <b>2</b></p>
@@ -227,7 +227,7 @@
                         <form class="form-container">
                             <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
                             <button class="btn btn-default" type="button" (click)="attackThisMinion( myTarget.id)">Attaquer ce serviteur</button>
-                            <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
+                            <img class="card" src={{myTarget.imgurl}} alt="Avatar" >
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>
                                 {{myTarget.id}}
@@ -289,7 +289,7 @@
                         <form class="form-container">
                             <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
                             <button class="btn btn-default" type="button" (click)="castSpellOnTarget( myTarget.id)">Cibler ce serviteur</button>
-                            <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
+                            <img class="card" src={{myTarget.imgurl}} alt="Avatar" >
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>
                                 {{myTarget.id}}
@@ -329,7 +329,7 @@
                         <form class="form-container">
                             <button type="submit" class="btn cancel" (click)="closeTargetDetails(myTarget.id)">Fermer</button>
                             <button class="btn btn-default" type="button" (click)="castHeroPowerOnTarget( myTarget.id)">Cibler ce serviteur</button>
-                            <img src={{myTarget.imgurl}} alt="Avatar" style="width:100%">
+                            <img class="card" src={{myTarget.imgurl}} alt="Avatar" >
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>
                                 {{myTarget.id}}

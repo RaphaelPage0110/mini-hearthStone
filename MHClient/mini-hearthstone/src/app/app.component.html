@@ -11,37 +11,6 @@
 </head>
 
 <body>
-<div style="color: #000a6a; text-align: center; height: 16vh">
-    <h1>{{title}}</h1>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="connect">Connexion au serveur:</label>
-            <button id="connect" class="btn btn-default" type="button" [disabled]="!disabled" (click)="connect()">Connexion</button>
-            <button id="disconnect" class="btn btn-default" type="submit" [disabled]="disabled" (click)="disconnect()">Déconnexion</button>
-        </div>
-    </form>
-</div>
-<div id="gameSearch" style="display: none">
-    <div>
-        <button id="connectToGame" class="btn btn-default" type="button" (click)="openHeroSelect()">Trouver une partie</button>
-    </div>
-    <div>
-        <button id="cancelSearch" class="btn btn-default hiddenCancelButton" type="button" (click)="cancelSearch()">Annuler</button>
-    </div>
-    <div class="form-popup" id="heroSelectPop">
-        <form class="form-container">
-            <h1>Choix du héro</h1>
-            <select name="heroName" (change)="selectHeroHandler($event)">
-                <option value="Jaina">Jaina (mage)</option>
-                <option value="Garrosh">Garrosh (guerrier)</option>
-                <option value="Uther">Uther (paladin)</option>
-            </select>
-            <button id="findGame" class="btn btn-default" type="button" (click)="connectToGame()">Trouver une partie</button>
-            <button type="submit" class="btn cancel" (click)="closeHeroSelect()">Annuler</button>
-        </form>
-    </div>
-</div>
-
 <div id="theBoard" style="display: none">
 
     <div id="parentHisHero" class="row">
@@ -73,6 +42,7 @@
         <div class="card" *ngFor="let myCard of hisMinions">
             <a (click)="openCardPopup(myCard.id)" >
                 <img [ngClass]="{
+                'card': !myCard.canAttack && !myCard.taunt && !myCard.lifeSteal,
                 'taunt': myCard.taunt,
                 'canAttack':  myCard.canAttack && myCard.damagePoints>0,
                 'lifeSteal': myCard.lifeSteal}"
@@ -99,6 +69,7 @@
         <div class="card" *ngFor="let myCard of myMinions">
             <a (click)="openCardPopup(myCard.id)" >
                 <img [ngClass]="{
+                'card': !myCard.canAttack && !myCard.taunt && !myCard.lifeSteal,
                 'taunt': myCard.taunt,
                 'canAttack': myCard.canAttack && myCard.damagePoints>0,
                 'lifeSteal': myCard.lifeSteal}"
@@ -203,6 +174,51 @@
     </div>
 
 </div>
+<div style="color: #000a6a; text-align: center; height: 16vh">
+    <h1>{{title}}</h1>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="connect">Connexion au serveur:</label>
+            <button id="connect" class="btn btn-default" type="button" [disabled]="!disabled" (click)="connect()">Connexion</button>
+            <button id="disconnect" class="btn btn-default" type="submit" [disabled]="disabled" (click)="disconnect()">Déconnexion</button>
+        </div>
+    </form>
+</div>
+<div id="gameSearch" style="display: none">
+    <div>
+        <button id="connectToGame" class="btn btn-default" type="button" (click)="openHeroSelect()">Trouver une partie</button>
+    </div>
+    <div>
+        <button id="cancelSearch" class="btn btn-default hiddenCancelButton" type="button" (click)="cancelSearch()">Annuler</button>
+    </div>
+    <div class="form-popup" id="heroSelectPop">
+        <form class="form-container">
+            <h1>Choix du héro</h1>
+            <select name="heroName" (change)="selectHeroHandler($event)">
+                <option value="Jaina">Jaina (mage)</option>
+                <option value="Garrosh">Garrosh (guerrier)</option>
+                <option value="Uther">Uther (paladin)</option>
+            </select>
+            <button id="findGame" class="btn btn-default" type="button" (click)="connectToGame()">Trouver une partie</button>
+            <button type="submit" class="btn cancel" (click)="closeHeroSelect()">Annuler</button>
+        </form>
+    </div>
+</div>
+<div id="messageServer">
+    <table id="conversation" class="table table-striped" style="margin-top: 20px;">
+        <thead>
+        <tr>
+            <th>Messages serveur:</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let greeting of greetings">
+        <tr>
+            <td>{{greeting}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <div class="form-popup"  id="cardPopupShowTarget" style="display: none; z-index: 50">
 
     <form class="form-container">
@@ -215,6 +231,7 @@
                 <div id="targetImage">
                     <a (click)="openTargetDetails(myTarget.id)" >
                         <img [ngClass]="{
+                                        'card': !myTarget.canAttack && !myTarget.taunt && !myTarget.lifeSteal,
                                         'taunt': myTarget.taunt,
                                         'canAttack': myTarget.canAttack,
                                         'lifeSteal': myTarget.lifeSteal}"
@@ -250,21 +267,6 @@
         </div>
     </form>
 </div>
-<div id="messageServer">
-    <table id="conversation" class="table table-striped" style="margin-top: 20px;">
-        <thead>
-        <tr>
-            <th>Messages serveur:</th>
-        </tr>
-        </thead>
-        <tbody *ngFor="let greeting of greetings">
-        <tr>
-            <td>{{greeting}}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
 <div class="form-popup"  id="spellPopupShowTarget" style="display: none; z-index: 50">
 
     <form class="form-container">
@@ -277,6 +279,7 @@
                 <div id="targetSpellImage">
                     <a (click)="openTargetDetails(myTarget.id)" >
                         <img [ngClass]="{
+                                        'card': !myTarget.canAttack && !myTarget.taunt && !myTarget.lifeSteal,
                                         'taunt': myTarget.taunt,
                                         'canAttack': myTarget.canAttack,
                                         'lifeSteal': myTarget.lifeSteal}"
@@ -305,7 +308,6 @@
         </div>
     </form>
 </div>
-
 <div class="form-popup"  id="heroPowerPopupShowTarget" style="display: none; z-index: 50">
 
     <form class="form-container">
@@ -317,6 +319,7 @@
                 <div id="targetHeroPowerImage">
                     <a (click)="openTargetDetails(myTarget.id)" >
                         <img [ngClass]="{
+                                        'card': !myTarget.canAttack && !myTarget.taunt && !myTarget.lifeSteal,
                                         'taunt': myTarget.taunt,
                                         'canAttack': myTarget.canAttack,
                                         'lifeSteal': myTarget.lifeSteal}"

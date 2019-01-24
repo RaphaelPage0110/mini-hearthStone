@@ -29,6 +29,8 @@ export class AppComponent {
     minionThatAttackId : string;
     spellThatAttackId : string;
     spellTargets : any[] = [];
+    openedPopup: string = null;
+
     private stompClient = null;
 
     constructor() {
@@ -312,11 +314,16 @@ export class AppComponent {
     }
 
     openCardPopup(id) {
+        if(this.openedPopup!=null){
+            document.getElementById("cardPopup"+this.openedPopup).style.display = "none";
+        }
         document.getElementById("cardPopup"+id).style.display = "block";
+        this.openedPopup = id;
     }
 
     closeCardPopup(id){
         document.getElementById("cardPopup"+id).style.display = "none";
+        this.openedPopup = null;
     }
 
     playMinion(id){

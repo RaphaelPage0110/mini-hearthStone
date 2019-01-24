@@ -116,6 +116,7 @@ var AppComponent = /** @class */ (function () {
         this.canAttackHero = true;
         this.selectedHero = 'Jaina';
         this.spellTargets = [];
+        this.openedPopup = null;
         this.stompClient = null;
     }
     AppComponent.prototype.setConnected = function (connected) {
@@ -328,10 +329,15 @@ var AppComponent = /** @class */ (function () {
         document.getElementById("connectToGame").style.display = "block";
     };
     AppComponent.prototype.openCardPopup = function (id) {
+        if (this.openedPopup != null) {
+            document.getElementById("cardPopup" + this.openedPopup).style.display = "none";
+        }
         document.getElementById("cardPopup" + id).style.display = "block";
+        this.openedPopup = id;
     };
     AppComponent.prototype.closeCardPopup = function (id) {
         document.getElementById("cardPopup" + id).style.display = "none";
+        this.openedPopup = null;
     };
     AppComponent.prototype.playMinion = function (id) {
         this.stompClient.send('/playMinion', {}, id);

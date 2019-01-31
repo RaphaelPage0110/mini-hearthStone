@@ -41,12 +41,16 @@
     <div id="parentHisMinions" class="row">
         <div class="card" *ngFor="let myCard of hisMinions">
             <a (click)="openCardPopup(myCard.id)" >
-                <img [ngClass]="{
-                'card': !myCard.canAttack && !myCard.taunt && !myCard.lifeSteal,
-                'taunt': myCard.taunt,
-                'canAttack':  myCard.canAttack && myCard.damagePoints>0,
-                'lifeSteal': myCard.lifeSteal}"
-                     src= {{myCard.imgurl}} alt="Avatar">
+                <div class="cardImgContainer">
+                    <img [ngClass]="{
+                        'card': !myCard.canAttack && !myCard.taunt && !myCard.lifeSteal,
+                        'taunt': myCard.taunt,
+                        'canAttack':  myCard.canAttack && myCard.damagePoints>0,
+                        'lifeSteal': myCard.lifeSteal}"
+                         src= {{myCard.imgurl}} alt="Avatar">
+                    <div class="bottom-left">{{myCard.damagePoints}}</div>
+                    <div class="bottom-right">{{myCard.healthPoints}}</div>
+                </div>
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -68,12 +72,16 @@
     <div id="parentMyMinions" class="row">
         <div class="card" *ngFor="let myCard of myMinions">
             <a (click)="openCardPopup(myCard.id)" >
-                <img [ngClass]="{
-                'card': !myCard.canAttack && !myCard.taunt && !myCard.lifeSteal,
-                'taunt': myCard.taunt,
-                'canAttack': myCard.canAttack && myCard.damagePoints>0,
-                'lifeSteal': myCard.lifeSteal}"
-                     src= {{myCard.imgurl}} alt="Avatar">
+                <div class="cardImgContainer">
+                    <img [ngClass]="{
+                            'card': !myCard.canAttack && !myCard.taunt && !myCard.lifeSteal,
+                            'taunt': myCard.taunt,
+                            'canAttack': myCard.canAttack && myCard.damagePoints>0,
+                            'lifeSteal': myCard.lifeSteal}"
+                         src= {{myCard.imgurl}} alt="Avatar">
+                    <div class="bottom-left">{{myCard.damagePoints}}</div>
+                    <div class="bottom-right">{{myCard.healthPoints}}</div>
+                </div>
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -97,7 +105,13 @@
     <div id="parentMyHand" class="row">
         <div class="card" *ngFor="let myCard of myCards">
             <a (click)="openCardPopup(myCard.id)" >
-                <img class="card" src= {{myCard.imgurl}} alt="Avatar">
+                <div class="cardImgContainer">
+                    <img class="card" src= {{myCard.imgurl}} alt="Avatar">
+                    <div *ngIf="myCard.cardType === 'minion'" class="bottom-left">{{myCard.damagePoints}}</div>
+                    <div *ngIf="myCard.cardType === 'minion'" class="bottom-right">{{myCard.healthPoints}}</div>
+                    <div class="top-right">{{myCard.requiredMana}}</div>
+                </div>
+
             </a >
 
             <div class="form-popup"  [attr.id]="'cardPopup' + myCard.id" style="display: none">
@@ -228,14 +242,19 @@
 
         <div id="targetDetails" class="row" style="display: none">
             <div class="targetDetails" *ngFor="let myTarget of myTargets">
-                <div id="targetImage">
+                <div id="targetImage" class="card">
                     <a (click)="openTargetDetails(myTarget.id)" >
-                        <img [ngClass]="{
+                        <div class="cardImgContainer">
+                            <img [ngClass]="{
                                         'card': !myTarget.canAttack && !myTarget.taunt && !myTarget.lifeSteal,
                                         'taunt': myTarget.taunt,
                                         'canAttack': myTarget.canAttack,
                                         'lifeSteal': myTarget.lifeSteal}"
-                             src= {{myTarget.imgurl}} alt="Avatar">
+                                 src= {{myTarget.imgurl}} alt="Avatar">
+                            <div class="bottom-left">{{myTarget.damagePoints}}</div>
+                            <div class="bottom-right">{{myTarget.healthPoints}}</div>
+                        </div>
+
                     </a >
                 </div>
 
@@ -247,7 +266,6 @@
                             <img class="card" src={{myTarget.imgurl}} alt="Avatar" >
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>
-                                {{myTarget.id}}
                                 <p>Coût: {{myTarget.requiredMana}}</p>
                                 <p>Dégats: <b>{{myTarget.damagePoints}}</b></p>
                                 <p>Vie: <b>{{myTarget.healthPoints}}</b></p>
@@ -276,14 +294,19 @@
 
         <div id="targetSpellDetails" class="row" style="display: none">
             <div class="targetDetails" *ngFor="let myTarget of spellTargets">
-                <div id="targetSpellImage">
+                <div id="targetSpellImage" class="card">
                     <a (click)="openTargetDetails(myTarget.id)" >
-                        <img [ngClass]="{
+                        <div class="cardImgContainer">
+                            <img [ngClass]="{
                                         'card': !myTarget.canAttack && !myTarget.taunt && !myTarget.lifeSteal,
                                         'taunt': myTarget.taunt,
                                         'canAttack': myTarget.canAttack,
                                         'lifeSteal': myTarget.lifeSteal}"
-                             src= {{myTarget.imgurl}} alt="Avatar">
+                                 src= {{myTarget.imgurl}} alt="Avatar">
+                            <div class="bottom-left">{{myTarget.damagePoints}}</div>
+                            <div class="bottom-right">{{myTarget.healthPoints}}</div>
+                        </div>
+
                     </a >
                 </div>
 
@@ -295,7 +318,6 @@
                             <img class="card" src={{myTarget.imgurl}} alt="Avatar" >
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>
-                                {{myTarget.id}}
                                 <p>Coût: {{myTarget.requiredMana}}</p>
                                 <p>Dégats: <b>{{myTarget.damagePoints}}</b></p>
                                 <p>Vie: <b>{{myTarget.healthPoints}}</b></p>
@@ -316,14 +338,18 @@
         <button class="btn btn-default" type="button" (click)="openHeroPowerTargetList()">Cibler un serviteur ennemi</button>
         <div id="targetHeroPowerDetails" class="row" style="display: none">
             <div class="targetDetails" *ngFor="let myTarget of hisMinions">
-                <div id="targetHeroPowerImage">
+                <div id="targetHeroPowerImage" class="card">
                     <a (click)="openTargetDetails(myTarget.id)" >
-                        <img [ngClass]="{
+                        <div class="cardImgContainer">
+                            <img [ngClass]="{
                                         'card': !myTarget.canAttack && !myTarget.taunt && !myTarget.lifeSteal,
                                         'taunt': myTarget.taunt,
                                         'canAttack': myTarget.canAttack,
                                         'lifeSteal': myTarget.lifeSteal}"
-                             src= {{myTarget.imgurl}} alt="Avatar">
+                                 src= {{myTarget.imgurl}} alt="Avatar">
+                            <div class="bottom-left">{{myTarget.damagePoints}}</div>
+                            <div class="bottom-right">{{myTarget.healthPoints}}</div>
+                        </div>
                     </a >
                 </div>
 
@@ -335,7 +361,6 @@
                             <img class="card" src={{myTarget.imgurl}} alt="Avatar" >
                             <div class="containerCardDetails">
                                 <h4><b>{{myTarget.name}}</b></h4>
-                                {{myTarget.id}}
                                 <p>Coût: {{myTarget.requiredMana}}</p>
                                 <p>Dégats: <b>{{myTarget.damagePoints}}</b></p>
                                 <p>Vie: <b>{{myTarget.healthPoints}}</b></p>

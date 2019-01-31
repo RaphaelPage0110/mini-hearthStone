@@ -377,11 +377,11 @@ public class Application {
 
     Player player = findPlayerById(idPlayer);
     Game game = player.getMyGame();
+    ConcreteSpell spellToPlay = (ConcreteSpell) player.findCardById(spellToPlayID);
 
-    // only the active player can play a spell card
-    if (player == game.getActivePlayer()) {
+    // only the active player can play a spell card and only if he has enough mana
+    if (player == game.getActivePlayer() && player.getMyMana() >= spellToPlay.getRequiredMana()) {
 
-      ConcreteSpell spellToPlay = (ConcreteSpell) player.findCardById(spellToPlayID);
       player.changeMana(-spellToPlay.getRequiredMana());
 
       player.removeCardFromHand(spellToPlay);
@@ -482,10 +482,10 @@ public class Application {
 
     Player player = findPlayerById(playerID);
     Game game = player.getMyGame();
+    ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById(minionToPlayID);
 
-    // only the active player can play a minion card
-    if (player == game.getActivePlayer()) {
-      ConcreteMinion minionToPlay = (ConcreteMinion) player.findCardById(minionToPlayID);
+    // only the active player can play a minion card and only if he has enough mana
+    if (player == game.getActivePlayer() && player.getMyMana() >= minionToPlay.getRequiredMana()) {
 
       player.changeMana(-minionToPlay.getRequiredMana());
       player.removeCardFromHand(minionToPlay);

@@ -9,7 +9,7 @@ This is our M1 ALMA project for the module "Analyse, Conception et Mise en Oeuvr
 
 DISCLAIMER: For reasons beyond our control, the application does not work using the university of Nantes network. It seems that the access to the database hosting service (mLab) is blocked.
 
-`Server installation`: Open a console on MHServer and run "mvn clean install". You can then start it by running "mvn spring-boot:run".
+`Server installation`: Open a console on MHServer and run "mvn clean install". You can then start it by running "mvn spring-boot:run". Open your browser on "localhost:8080" to play the game. 
 
 The design folder contains UML class diagrams of the architecture of the server.
 
